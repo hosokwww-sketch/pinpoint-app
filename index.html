@@ -3,84 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PinPoint VPN — Личный кабинет</title>
+    <title>PinPoint Core</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #090A0F;
-            color: #F8FAFC;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        .glass {
-            background: rgba(22, 24, 35, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        body {
+            background: #09090b;
+            color: #ececed;
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 16px 14px 28px;
+            overflow-x: hidden;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .card {
+            background: #111114;
+            border: 1px solid #1f1f24;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .header-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .user-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #1a1a1f;
+            border: 1px solid #27272f;
+            object-cover: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: #71717a;
+        }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+            display: inline-block;
+            margin-right: 4px;
+        }
+        .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #71717a;
+            margin-bottom: 4px;
+        }
+        .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fafafa;
+        }
+        .slot-active {
+            border-left: 2px solid #fafafa;
+        }
+        .slot-empty {
+            border: 1px dashed #24242b;
+            background: #0d0d10;
+            text-align: center;
+            padding: 20px 14px;
+        }
+        .key-box {
+            background: #09090b;
+            border: 1px solid #1f1f24;
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .key-input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #a1a1aa;
+            font-size: 11px;
+            width: 100%;
+            pointer-events: none;
+        }
+        .btn-copy {
+            background: #1f1f24;
+            color: #fafafa;
+            border: 1px solid #2e2e38;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .btn-copy:active {
+            background: #2e2e38;
+            transform: scale(0.97);
+        }
+        .btn-action {
+            width: 100%;
+            background: #18181b;
+            color: #d4d4d8;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.15s ease;
+        }
+        .btn-action:active {
+            background: #27272a;
+            color: #fff;
+        }
+        .btn-primary {
+            width: 100%;
+            background: #fafafa;
+            color: #09090b;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: opacity 0.15s ease;
+        }
+        .btn-primary:active {
+            opacity: 0.85;
+        }
+        .badge {
+            font-size: 10px;
+            background: #18181b;
+            color: #a1a1aa;
+            border: 1px solid #27272a;
+            padding: 3px 6px;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="min-h-screen relative pb-10">
-    <canvas id="particlesCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+<body>
 
-    <div class="relative z-10 max-w-md mx-auto px-4 pt-6">
-        <div class="glass rounded-2xl p-4 mb-5 flex items-center justify-between shadow-lg">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-extrabold text-white text-lg shadow-md shadow-blue-500/20">
-                    P
-                </div>
-                <div>
-                    <div id="userName" class="font-bold text-sm text-white">Клиент PinPoint</div>
-                    <div id="userId" class="text-[11px] text-slate-400">ID: ...</div>
-                </div>
-            </div>
-            <div class="text-right">
-                <div class="text-[11px] text-slate-400">Слоты подписок</div>
-                <div id="slotsSummary" class="text-xs font-extrabold text-indigo-400">До 2 шт.</div>
+    <!-- Шапка профиля -->
+    <div class="card header-box">
+        <div class="user-block">
+            <img id="avatarImg" class="avatar" style="display:none;" alt="">
+            <div id="avatarFallback" class="avatar">PP</div>
+            <div>
+                <div id="uName" class="value" style="font-size: 14px;">CLIENT</div>
+                <div id="uId" class="mono" style="font-size: 11px; color: #52525b;">ID: 000000000</div>
             </div>
         </div>
-
-        <div class="flex items-center justify-between mb-3 px-1">
-            <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Подключенные подписки</h2>
-            <span class="text-[11px] text-slate-400">Лимит: 2 слота</span>
+        <div style="text-align: right;">
+            <div class="label">Баланс</div>
+            <div id="uBal" class="mono" style="font-size: 15px; font-weight: 700; color: #fafafa;">0 ₽</div>
         </div>
-
-        <div id="subsContainer" class="space-y-4 mb-6">
-            <div class="glass rounded-2xl p-5 border border-indigo-500/30">
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        🟢 Слот #1 • Активен
-                    </span>
-                    <span class="text-xs text-slate-400">Основной канал</span>
-                </div>
-                <div class="text-[11px] text-slate-400 mb-1.5">Ваш ключ подключения:</div>
-                <div class="flex gap-2">
-                    <input type="text" id="key-1" readonly value="Нажмите «Копировать ключ в боте», если ключ еще не скопирован" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-[11px] text-slate-300 font-mono focus:outline-none">
-                    <button onclick="copyKey('key-1', this)" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shrink-0">
-                        Копировать
-                    </button>
-                </div>
-            </div>
-
-            <div class="glass rounded-2xl p-5 border border-dashed border-white/10 text-center">
-                <div class="text-xs font-bold text-slate-400 mb-1">⚪️ Слот подписки #2 свободен</div>
-                <p class="text-[11px] text-slate-500">Вы можете подключить второе устройство или отдельный тариф в боте</p>
-            </div>
-        </div>
-
-        <div class="glass rounded-2xl p-4 mb-6 border-l-4 border-l-blue-500 text-xs text-slate-300 leading-relaxed">
-            💡 Управление подписками, пополнение баланса и смена тарифов осуществляются прямо в меню Telegram-бота.
-        </div>
-
-        <button onclick="Telegram.WebApp.close()" class="w-full py-3.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 text-white shadow-lg shadow-blue-600/25 transition">
-            Вернуться к боту
-        </button>
     </div>
+
+    <!-- Раздел подписок -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 2px 8px;">
+        <span class="label" style="margin: 0;">Слоты устройств</span>
+        <span id="slotsCount" class="mono badge">0 / 2 ACTIVE</span>
+    </div>
+
+    <div id="slotsBox"></div>
+
+    <button onclick="Telegram.WebApp.close()" class="btn-primary">ЗАКРЫТЬ КАБИНЕТ</button>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -88,62 +204,86 @@
         tg.ready();
 
         const user = tg.initDataUnsafe?.user;
-        const urlParams = new URLSearchParams(window.location.search);
-        const uid = user?.id || urlParams.get('user_id');
-        const uname = user?.first_name || user?.username;
+        const p = new URLSearchParams(window.location.search);
 
-        if (uname) document.getElementById('userName').innerText = uname;
-        if (uid) document.getElementById('userId').innerText = `ID: ${uid}`;
+        const uid = user?.id || p.get('user_id') || '404';
+        const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
+        const photo = user?.photo_url;
+        const balance = p.get('bal') || '0';
 
-        const passedKey = urlParams.get('key');
-        if (passedKey) {
-            document.getElementById('key-1').value = decodeURIComponent(passedKey);
+        document.getElementById('uName').innerText = uname;
+        document.getElementById('uId').innerText = `ID: ${uid}`;
+        document.getElementById('uBal').innerText = `${balance} ₽`;
+
+        if (photo) {
+            const img = document.getElementById('avatarImg');
+            img.src = photo;
+            img.style.display = 'block';
+            document.getElementById('avatarFallback').style.display = 'none';
+        } else {
+            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
-        function copyKey(inputId, btn) {
-            const input = document.getElementById(inputId);
-            if (input.value.startsWith('Нажмите')) {
-                tg.close();
-                return;
+        let subs = [];
+        try {
+            const rawSubs = p.get('subs');
+            if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
+        } catch (e) {}
+
+        const box = document.getElementById('slotsBox');
+        document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
+        let html = '';
+
+        for (let i = 0; i < 2; i++) {
+            const s = subs[i];
+            if (s) {
+                html += `
+                    <div class="card slot-active">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="status-dot"></span>
+                                    <span class="value" style="font-size: 13px;">SLOT #0${i+1}</span>
+                                    <span class="badge mono">${s.name}</span>
+                                </div>
+                                <div class="mono" style="font-size: 11px; color: #71717a; margin-top: 4px;">Срок: до ${s.until}</div>
+                            </div>
+                        </div>
+
+                        <div class="key-box">
+                            <input type="text" id="k_${i}" class="key-input mono" readonly value="${s.key}">
+                            <button onclick="copyK('k_${i}', this)" class="btn-copy mono">COPY</button>
+                        </div>
+
+                        <button onclick="Telegram.WebApp.close()" class="btn-action mono">
+                            ПРОДЛИТЬ ТАРИФ →
+                        </button>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="card slot-empty">
+                        <div class="mono" style="font-size: 12px; color: #71717a; margin-bottom: 8px;">[ СЛОТ #0${i+1} НЕ АКТИВЕН ]</div>
+                        <button onclick="Telegram.WebApp.close()" class="btn-action mono" style="background: transparent; border-color: #2e2e38;">
+                            + ПОДКЛЮЧИТЬ УСТРОЙСТВО
+                        </button>
+                    </div>
+                `;
             }
-            navigator.clipboard.writeText(input.value);
-            const oldText = btn.innerText;
-            btn.innerText = '✓ Скопировано';
-            btn.classList.replace('bg-blue-600', 'bg-emerald-600');
-            setTimeout(() => {
-                btn.innerText = oldText;
-                btn.classList.replace('bg-emerald-600', 'bg-blue-600');
-            }, 1800);
         }
+        box.innerHTML = html;
 
-        const canvas = document.getElementById('particlesCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
-        for (let i = 0; i < 35; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.8 + 0.5,
-                dx: (Math.random() - 0.5) * 0.4,
-                dy: (Math.random() - 0.5) * 0.4,
-                a: Math.random() * 0.4 + 0.15
-            });
+        function copyK(id, btn) {
+            const el = document.getElementById(id);
+            navigator.clipboard.writeText(el.value);
+            const def = btn.innerText;
+            btn.innerText = 'DONE';
+            btn.style.background = '#27272a';
+            setTimeout(() => {
+                btn.innerText = def;
+                btn.style.background = '#1f1f24';
+            }, 1200);
         }
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.dx; p.y += p.dy;
-                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-                ctx.fillStyle = `rgba(99, 102, 241, ${p.a})`;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        }
-        draw();
     </script>
 </body>
 </html>
