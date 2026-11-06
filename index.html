@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PinPoint VPN — Личный кабинет</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090A0F;
+            color: #F8FAFC;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass {
+            background: rgba(22, 24, 35, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative pb-10">
+    <canvas id="particlesCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <div class="relative z-10 max-w-md mx-auto px-4 pt-6">
+        <div class="glass rounded-2xl p-4 mb-5 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-extrabold text-white text-lg shadow-md shadow-blue-500/20">
+                    P
+                </div>
+                <div>
+                    <div id="userName" class="font-bold text-sm text-white">Клиент PinPoint</div>
+                    <div id="userId" class="text-[11px] text-slate-400">ID: ...</div>
+                </div>
+            </div>
+            <div class="text-right">
+                <div class="text-[11px] text-slate-400">Слоты подписок</div>
+                <div id="slotsSummary" class="text-xs font-extrabold text-indigo-400">До 2 шт.</div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-3 px-1">
+            <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Подключенные подписки</h2>
+            <span class="text-[11px] text-slate-400">Лимит: 2 слота</span>
+        </div>
+
+        <div id="subsContainer" class="space-y-4 mb-6">
+            <div class="glass rounded-2xl p-5 border border-indigo-500/30">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        🟢 Слот #1 • Активен
+                    </span>
+                    <span class="text-xs text-slate-400">Основной канал</span>
+                </div>
+                <div class="text-[11px] text-slate-400 mb-1.5">Ваш ключ подключения:</div>
+                <div class="flex gap-2">
+                    <input type="text" id="key-1" readonly value="Нажмите «Копировать ключ в боте», если ключ еще не скопирован" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-[11px] text-slate-300 font-mono focus:outline-none">
+                    <button onclick="copyKey('key-1', this)" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition shrink-0">
+                        Копировать
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-5 border border-dashed border-white/10 text-center">
+                <div class="text-xs font-bold text-slate-400 mb-1">⚪️ Слот подписки #2 свободен</div>
+                <p class="text-[11px] text-slate-500">Вы можете подключить второе устройство или отдельный тариф в боте</p>
+            </div>
+        </div>
+
+        <div class="glass rounded-2xl p-4 mb-6 border-l-4 border-l-blue-500 text-xs text-slate-300 leading-relaxed">
+            💡 Управление подписками, пополнение баланса и смена тарифов осуществляются прямо в меню Telegram-бота.
+        </div>
+
+        <button onclick="Telegram.WebApp.close()" class="w-full py-3.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 text-white shadow-lg shadow-blue-600/25 transition">
+            Вернуться к боту
+        </button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
+
+        const user = tg.initDataUnsafe?.user;
+        const urlParams = new URLSearchParams(window.location.search);
+        const uid = user?.id || urlParams.get('user_id');
+        const uname = user?.first_name || user?.username;
+
+        if (uname) document.getElementById('userName').innerText = uname;
+        if (uid) document.getElementById('userId').innerText = `ID: ${uid}`;
+
+        const passedKey = urlParams.get('key');
+        if (passedKey) {
+            document.getElementById('key-1').value = decodeURIComponent(passedKey);
+        }
+
+        function copyKey(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.value.startsWith('Нажмите')) {
+                tg.close();
+                return;
+            }
+            navigator.clipboard.writeText(input.value);
+            const oldText = btn.innerText;
+            btn.innerText = '✓ Скопировано';
+            btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+            setTimeout(() => {
+                btn.innerText = oldText;
+                btn.classList.replace('bg-emerald-600', 'bg-blue-600');
+            }, 1800);
+        }
+
+        const canvas = document.getElementById('particlesCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        for (let i = 0; i < 35; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 1.8 + 0.5,
+                dx: (Math.random() - 0.5) * 0.4,
+                dy: (Math.random() - 0.5) * 0.4,
+                a: Math.random() * 0.4 + 0.15
+            });
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.dx; p.y += p.dy;
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                ctx.fillStyle = `rgba(99, 102, 241, ${p.a})`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
