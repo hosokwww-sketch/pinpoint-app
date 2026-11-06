@@ -24,9 +24,7 @@
             padding: 16px 14px 28px;
             overflow-x: hidden;
         }
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
         .card {
             background: #111114;
             border: 1px solid #1f1f24;
@@ -45,12 +43,12 @@
             gap: 12px;
         }
         .avatar {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
-            background: #1a1a1f;
-            border: 1px solid #27272f;
-            object-cover: cover;
+            background: #18181b;
+            border: 1px solid #27272a;
+            object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,7 +66,7 @@
             margin-right: 4px;
         }
         .label {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: #71717a;
@@ -144,21 +142,35 @@
             background: #27272a;
             color: #fff;
         }
-        .btn-primary {
-            width: 100%;
+        .btn-topup {
             background: #fafafa;
             color: #09090b;
             border: none;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: opacity 0.15s;
+        }
+        .btn-topup:active { opacity: 0.8; }
+        .btn-primary {
+            width: 100%;
+            background: #18181b;
+            color: #a1a1aa;
+            border: 1px solid #27272a;
             border-radius: 10px;
-            padding: 13px;
-            font-size: 13px;
+            padding: 12px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             margin-top: 14px;
-            transition: opacity 0.15s ease;
+            transition: all 0.15s ease;
         }
         .btn-primary:active {
-            opacity: 0.85;
+            background: #27272a;
+            color: #fff;
         }
         .badge {
             font-size: 10px;
@@ -167,6 +179,70 @@
             border: 1px solid #27272a;
             padding: 3px 6px;
             border-radius: 4px;
+        }
+
+        /* Модалка пополнения баланса */
+        #payModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 14px;
+        }
+        .modal-box {
+            background: #111114;
+            border: 1px solid #27272a;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 400px;
+            padding: 18px;
+        }
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .amount-btn {
+            background: #18181b;
+            border: 1px solid #27272a;
+            color: #fafafa;
+            border-radius: 8px;
+            padding: 12px 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
+        .amount-btn:active, .amount-btn.active {
+            border-color: #fafafa;
+            background: #222226;
+        }
+        .custom-input {
+            width: 100%;
+            background: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fafafa;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 14px;
+        }
+        .btn-pay-now {
+            width: 100%;
+            background: #fafafa;
+            color: #09090b;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -185,6 +261,7 @@
         <div style="text-align: right;">
             <div class="label">Баланс</div>
             <div id="uBal" class="mono" style="font-size: 15px; font-weight: 700; color: #fafafa;">0 ₽</div>
+            <button onclick="openPayModal()" class="btn-topup mono">+ ПОПОЛНИТЬ</button>
         </div>
     </div>
 
@@ -196,7 +273,28 @@
 
     <div id="slotsBox"></div>
 
-    <button onclick="Telegram.WebApp.close()" class="btn-primary">ЗАКРЫТЬ КАБИНЕТ</button>
+    <button onclick="Telegram.WebApp.close()" class="btn-primary mono">ЗАКРЫТЬ КАБИНЕТ</button>
+
+    <!-- Модалка оплаты -->
+    <div id="payModal">
+        <div class="modal-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div class="value" style="font-size: 14px;">ПОПОЛНЕНИЕ БАЛАНСА</div>
+                <button onclick="closePayModal()" class="mono" style="background: none; border: none; color: #71717a; font-size: 16px; cursor: pointer;">✕</button>
+            </div>
+            <div class="label">Выберите или введите сумму (RUB)</div>
+
+            <div class="amount-grid">
+                <button onclick="setAmount(100)" class="amount-btn mono">100 ₽</button>
+                <button onclick="setAmount(200)" class="amount-btn mono">200 ₽</button>
+                <button onclick="setAmount(500)" class="amount-btn mono">500 ₽</button>
+            </div>
+
+            <input type="number" id="customAmount" class="custom-input mono" placeholder="Другая сумма (от 10 ₽)">
+
+            <button onclick="submitPayment()" class="btn-pay-now mono">ПЕРЕЙТИ К ОПЛАТЕ →</button>
+        </div>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
@@ -208,16 +306,18 @@
 
         const uid = user?.id || p.get('user_id') || '404';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
-        const photo = user?.photo_url;
         const balance = p.get('bal') || '0';
+        
+        // Читаем аватарку сначала из URL параметра (который передал бот), затем fallback из WebApp API
+        const avatarUrl = p.get('avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
         document.getElementById('uId').innerText = `ID: ${uid}`;
         document.getElementById('uBal').innerText = `${balance} ₽`;
 
-        if (photo) {
+        if (avatarUrl && avatarUrl !== 'none') {
             const img = document.getElementById('avatarImg');
-            img.src = photo;
+            img.src = decodeURIComponent(avatarUrl);
             img.style.display = 'block';
             document.getElementById('avatarFallback').style.display = 'none';
         } else {
@@ -255,17 +355,17 @@
                             <button onclick="copyK('k_${i}', this)" class="btn-copy mono">COPY</button>
                         </div>
 
-                        <button onclick="Telegram.WebApp.close()" class="btn-action mono">
-                            ПРОДЛИТЬ ТАРИФ →
+                        <button onclick="openPayModal()" class="btn-action mono">
+                            ⚡️ ПРОДЛИТЬ ЭТОТ СЛОТ
                         </button>
                     </div>
                 `;
             } else {
                 html += `
                     <div class="card slot-empty">
-                        <div class="mono" style="font-size: 12px; color: #71717a; margin-bottom: 8px;">[ СЛОТ #0${i+1} НЕ АКТИВЕН ]</div>
-                        <button onclick="Telegram.WebApp.close()" class="btn-action mono" style="background: transparent; border-color: #2e2e38;">
-                            + ПОДКЛЮЧИТЬ УСТРОЙСТВО
+                        <div class="mono" style="font-size: 12px; color: #71717a; margin-bottom: 8px;">[ СЛОТ #0${i+1} СВОБОДЕН ]</div>
+                        <button onclick="openPayModal()" class="btn-action mono" style="background: transparent; border-color: #2e2e38;">
+                            + ОФОРМИТЬ ПОДПИСКУ
                         </button>
                     </div>
                 `;
@@ -283,6 +383,30 @@
                 btn.innerText = def;
                 btn.style.background = '#1f1f24';
             }, 1200);
+        }
+
+        // Модалка оплаты
+        function openPayModal() {
+            document.getElementById('payModal').style.display = 'flex';
+        }
+        function closePayModal() {
+            document.getElementById('payModal').style.display = 'none';
+        }
+        function setAmount(val) {
+            document.getElementById('customAmount').value = val;
+        }
+
+        async function submitPayment() {
+            const inputVal = document.getElementById('customAmount').value;
+            const amount = parseInt(inputVal);
+            if (!amount || amount < 10) {
+                alert('Минимальная сумма пополнения — 10 ₽');
+                return;
+            }
+
+            // Шлем команду закрытия и открываем инвойс прямо в боте через deep-link
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${amount}`);
+            tg.close();
         }
     </script>
 </body>
