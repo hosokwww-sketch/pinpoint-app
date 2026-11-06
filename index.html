@@ -3,12 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PinPoint Core</title>
+    <title>PinPoint System</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #08080a;
+            --surface: #111114;
+            --surface-2: #18181c;
+            --border: #222228;
+            --text: #f4f4f6;
+            --muted: #71717a;
+            --accent: #fafafa;
+            --accent-fg: #08080a;
+            --status: #22c55e;
+            --font-main: 'Space Grotesk', sans-serif;
+        }
+
+        /* Темы без дешевых градиентов */
+        body[data-theme="obsidian"] {
+            --bg: #08080a; --surface: #111114; --surface-2: #18181c;
+            --border: #222228; --text: #f4f4f6; --muted: #71717a;
+            --accent: #fafafa; --accent-fg: #09090b; --status: #22c55e;
+        }
+        body[data-theme="tactical"] {
+            --bg: #0b0d0e; --surface: #121618; --surface-2: #191f22;
+            --border: #242c30; --text: #e2e8f0; --muted: #64748b;
+            --accent: #10b981; --accent-fg: #051611; --status: #10b981;
+        }
+        body[data-theme="amber"] {
+            --bg: #060606; --surface: #100f0d; --surface-2: #1a1714;
+            --border: #2b241d; --text: #fef3c7; --muted: #927c60;
+            --accent: #f59e0b; --accent-fg: #090601; --status: #f59e0b;
+        }
+        body[data-theme="frost"] {
+            --bg: #080b10; --surface: #10151f; --surface-2: #171f2e;
+            --border: #212c40; --text: #f0f9ff; --muted: #64748b;
+            --accent: #38bdf8; --accent-fg: #04131d; --status: #38bdf8;
+        }
+
+        /* Шрифты */
+        body[data-font="space"] { --font-main: 'Space Grotesk', sans-serif; }
+        body[data-font="mono"]  { --font-main: 'JetBrains Mono', monospace; }
+        body[data-font="manrope"] { --font-main: 'Manrope', sans-serif; }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,22 +56,94 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
         }
+
         body {
-            background: #09090b;
-            color: #ececed;
-            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-main);
             min-height: 100vh;
-            padding: 16px 14px 28px;
+            padding: 16px 14px 92px;
             overflow-x: hidden;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
+
         .mono { font-family: 'JetBrains Mono', monospace; }
+
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .app-layer {
+            position: relative;
+            z-index: 10;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        /* ЭКРАН ПРИВЕТСТВИЯ (WELCOME) */
+        #welcomeScreen {
+            position: fixed;
+            inset: 0;
+            background: #060608;
+            z-index: 300;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease;
+        }
+        .welcome-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fafafa;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .welcome-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #52525b;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.8s ease 0.2s;
+        }
+        .welcome-title.visible, .welcome-sub.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ЭКРАН ПЕРВИЧНОЙ НАСТРОЙКИ (ONBOARDING) */
+        #setupScreen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 250;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 28px 18px 24px;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #setupScreen.visible { opacity: 1; }
+
+        /* КАРТОЧКИ И БЛОКИ */
         .card {
-            background: #111114;
-            border: 1px solid #1f1f24;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 14px;
             margin-bottom: 12px;
+            transition: border-color 0.2s ease, background 0.2s ease;
         }
+
         .header-box {
             display: flex;
             align-items: center;
@@ -46,49 +158,62 @@
             width: 44px;
             height: 44px;
             border-radius: 10px;
-            background: #18181b;
-            border: 1px solid #27272a;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 15px;
-            color: #71717a;
+            color: var(--muted);
         }
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
-            display: inline-block;
-            margin-right: 4px;
-        }
+
         .label {
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: #71717a;
+            color: var(--muted);
             margin-bottom: 4px;
         }
         .value {
             font-size: 14px;
-            font-weight: 600;
-            color: #fafafa;
+            font-weight: 700;
+            color: var(--text);
         }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--status);
+            box-shadow: 0 0 8px var(--status);
+            display: inline-block;
+        }
+
+        .badge {
+            font-size: 10px;
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
         .slot-active {
-            border-left: 2px solid #fafafa;
+            border-left: 3px solid var(--accent);
         }
         .slot-empty {
-            border: 1px dashed #24242b;
-            background: #0d0d10;
+            border: 1px dashed var(--border);
+            background: transparent;
             text-align: center;
-            padding: 20px 14px;
+            padding: 22px 14px;
         }
+
         .key-box {
-            background: #09090b;
-            border: 1px solid #1f1f24;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 8px 10px;
             display: flex;
@@ -101,198 +226,463 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #a1a1aa;
+            color: var(--muted);
             font-size: 11px;
             width: 100%;
             pointer-events: none;
         }
-        .btn-copy {
-            background: #1f1f24;
-            color: #fafafa;
-            border: 1px solid #2e2e38;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-        .btn-copy:active {
-            background: #2e2e38;
-            transform: scale(0.97);
-        }
-        .btn-action {
-            width: 100%;
-            background: #18181b;
-            color: #d4d4d8;
-            border: 1px solid #27272a;
+
+        /* КНОПКИ */
+        .btn-accent {
+            background: var(--accent);
+            color: var(--accent-fg);
+            border: none;
             border-radius: 8px;
-            padding: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: opacity 0.15s ease, transform 0.1s ease;
+        }
+        .btn-accent:active { opacity: 0.85; transform: scale(0.98); }
+
+        .btn-ghost {
+            width: 100%;
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
             font-size: 12px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: background 0.15s ease;
+            transition: border-color 0.15s ease;
         }
-        .btn-action:active {
-            background: #27272a;
-            color: #fff;
+        .btn-ghost:active { border-color: var(--accent); }
+
+        /* СЕТКА ВЫБОРА ОПЦИЙ (ТЕМЫ / ШРИФТЫ) */
+        .opt-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
         }
-        .btn-topup {
-            background: #fafafa;
-            color: #09090b;
-            border: none;
-            border-radius: 6px;
-            padding: 5px 10px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 4px;
-            transition: opacity 0.15s;
+        .opt-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
         }
-        .btn-topup:active { opacity: 0.8; }
-        .btn-primary {
-            width: 100%;
-            background: #18181b;
-            color: #a1a1aa;
-            border: 1px solid #27272a;
+        .opt-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
             border-radius: 10px;
-            padding: 12px;
+            padding: 12px 10px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
-            margin-top: 14px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             transition: all 0.15s ease;
         }
-        .btn-primary:active {
-            background: #27272a;
-            color: #fff;
+        .opt-btn.active {
+            border-color: var(--accent);
+            background: var(--surface-2);
         }
-        .badge {
-            font-size: 10px;
-            background: #18181b;
-            color: #a1a1aa;
-            border: 1px solid #27272a;
-            padding: 3px 6px;
-            border-radius: 4px;
+        .swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Модалка пополнения баланса */
+        /* КАРТОЧКИ ТАРИФОВ */
+        .tariff-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .tariff-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .tariff-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .tariff-specs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 12px;
+            left: 14px;
+            right: 14px;
+            max-width: 440px;
+            margin: 0 auto;
+            background: rgba(17, 17, 20, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 6px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            z-index: 90;
+        }
+        .nav-item {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            padding: 10px 6px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .nav-item.active {
+            background: var(--surface-2);
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        /* МОДАЛКА ПОПОЛНЕНИЯ БАЛАНСА */
         #payModal {
             display: none;
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 100;
+            backdrop-filter: blur(6px);
+            z-index: 200;
             align-items: flex-end;
             justify-content: center;
             padding: 14px;
         }
         .modal-box {
-            background: #111114;
-            border: 1px solid #27272a;
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 14px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 18px;
-        }
-        .amount-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 14px 0;
-        }
-        .amount-btn {
-            background: #18181b;
-            border: 1px solid #27272a;
-            color: #fafafa;
-            border-radius: 8px;
-            padding: 12px 6px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-        }
-        .amount-btn:active, .amount-btn.active {
-            border-color: #fafafa;
-            background: #222226;
         }
         .custom-input {
             width: 100%;
-            background: #09090b;
-            border: 1px solid #27272a;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 10px 12px;
-            color: #fafafa;
+            padding: 11px 12px;
+            color: var(--text);
             font-size: 13px;
             outline: none;
-            margin-bottom: 14px;
-        }
-        .btn-pay-now {
-            width: 100%;
-            background: #fafafa;
-            color: #09090b;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
+            margin-bottom: 12px;
         }
     </style>
 </head>
-<body>
+<body data-theme="obsidian" data-font="space">
 
-    <!-- Шапка профиля -->
-    <div class="card header-box">
-        <div class="user-block">
-            <img id="avatarImg" class="avatar" style="display:none;" alt="">
-            <div id="avatarFallback" class="avatar">PP</div>
-            <div>
-                <div id="uName" class="value" style="font-size: 14px;">CLIENT</div>
-                <div id="uId" class="mono" style="font-size: 11px; color: #52525b;">ID: 000000000</div>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- 1. ЭКРАН ПЛАВНОГО ПРИВЕТСТВИЯ -->
+    <div id="welcomeScreen">
+        <div id="welcomeTitle" class="welcome-title">Добро пожаловать!</div>
+        <div id="welcomeSub" class="welcome-sub">PINPOINT CORE TERMINAL</div>
+    </div>
+
+    <!-- 2. ЭКРАН ВЫБОРА ТЕМЫ / ШРИФТА / АНИМАЦИИ ПРИ ПЕРВОМ ВХОДЕ -->
+    <div id="setupScreen">
+        <div>
+            <div class="mono" style="font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 6px;">ШАГ 01 // КОНФИГУРАЦИЯ ИНТЕРФЕЙСА</div>
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 6px;">Настройте терминал под себя</div>
+            <div style="font-size: 12px; color: var(--muted); margin-bottom: 22px;">Никаких шаблонных градиентов. Выберите строгую палитру, типографику и физику фона.</div>
+
+            <div class="label">Палитра интерфейса</div>
+            <div class="opt-grid">
+                <button onclick="applyTheme('obsidian')" data-t="obsidian" class="opt-btn">
+                    <span>Obsidian</span>
+                    <span class="swatch" style="background: #fafafa;"></span>
+                </button>
+                <button onclick="applyTheme('tactical')" data-t="tactical" class="opt-btn">
+                    <span>Tactical</span>
+                    <span class="swatch" style="background: #10b981;"></span>
+                </button>
+                <button onclick="applyTheme('amber')" data-t="amber" class="opt-btn">
+                    <span>Amber CRT</span>
+                    <span class="swatch" style="background: #f59e0b;"></span>
+                </button>
+                <button onclick="applyTheme('frost')" data-t="frost" class="opt-btn">
+                    <span>Nordic Frost</span>
+                    <span class="swatch" style="background: #38bdf8;"></span>
+                </button>
+            </div>
+
+            <div class="label">Типографика (Шрифт)</div>
+            <div class="opt-grid-3">
+                <button onclick="applyFont('space')" data-f="space" class="opt-btn" style="justify-content:center; font-family:'Space Grotesk';">Grotesk</button>
+                <button onclick="applyFont('mono')" data-f="mono" class="opt-btn" style="justify-content:center; font-family:'JetBrains Mono';">Mono</button>
+                <button onclick="applyFont('manrope')" data-f="manrope" class="opt-btn" style="justify-content:center; font-family:'Manrope';">Manrope</button>
+            </div>
+
+            <div class="label">Фоновая динамика</div>
+            <div class="opt-grid-3">
+                <button onclick="applyAnim('grid')" data-a="grid" class="opt-btn" style="justify-content:center;">Матрица</button>
+                <button onclick="applyAnim('dust')" data-a="dust" class="opt-btn" style="justify-content:center;">Частицы</button>
+                <button onclick="applyAnim('none')" data-a="none" class="opt-btn" style="justify-content:center;">Статика</button>
             </div>
         </div>
-        <div style="text-align: right;">
-            <div class="label">Баланс</div>
-            <div id="uBal" class="mono" style="font-size: 15px; font-weight: 700; color: #fafafa;">0 ₽</div>
-            <button onclick="openPayModal()" class="btn-topup mono">+ ПОПОЛНИТЬ</button>
+
+        <button onclick="finishOnboarding()" class="btn-accent" style="width: 100%; padding: 14px; font-size: 13px;">
+            СОХРАНИТЬ И ОТКРЫТЬ КАБИНЕТ →
+        </button>
+    </div>
+
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+    <div class="app-layer">
+        <!-- Шапка профиля (видна всегда) -->
+        <div class="card header-box">
+            <div class="user-block">
+                <img id="avatarImg" class="avatar" style="display:none;" alt="">
+                <div id="avatarFallback" class="avatar">PP</div>
+                <div>
+                    <div id="uName" class="value" style="font-size: 14px;">CLIENT</div>
+                    <div id="uId" class="mono" style="font-size: 11px; color: var(--muted);">ID: 000000000</div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div class="label">Баланс</div>
+                <div id="uBal" class="mono" style="font-size: 15px; font-weight: 700;">0 ₽</div>
+                <button onclick="openPayModal()" class="btn-accent mono" style="padding: 4px 9px; font-size: 10px; margin-top: 4px;">+ ПОПОЛНИТЬ</button>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 1: КАБИНЕТ И СЛОТЫ -->
+        <div id="tab-cabinet" class="tab-pane active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 2px 8px;">
+                <span class="label" style="margin: 0;">Активные каналы</span>
+                <span id="slotsCount" class="mono badge">0 / 2 ACTIVE</span>
+            </div>
+
+            <div id="slotsBox"></div>
+
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div class="value" style="font-size: 12px;">Нужен еще один канал?</div>
+                    <div style="font-size: 11px; color: var(--muted);">Доступно до 2 независимых подписок</div>
+                </div>
+                <button onclick="switchTab('tariffs')" class="btn-accent mono" style="font-size: 11px;">ТАРИФЫ →</button>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 2: ТАРИФЫ И ОПЛАТА -->
+        <div id="tab-tariffs" class="tab-pane">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 2px 8px;">
+                <span class="label" style="margin: 0;">Витрина тарифов</span>
+                <span class="mono badge">INSTANT ISSUE</span>
+            </div>
+
+            <!-- Тестовый период -->
+            <div class="tariff-card">
+                <div class="tariff-top">
+                    <div>
+                        <div class="value">🆓 Тестовый период</div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Проверка скорости и стабильности</div>
+                    </div>
+                    <div class="tariff-price mono">0 ₽</div>
+                </div>
+                <div class="tariff-specs">
+                    <span class="badge mono">⏱ 24 часа</span>
+                    <span class="badge mono">📦 10 ГБ</span>
+                    <span class="badge mono">📱 1 устройство</span>
+                </div>
+                <button onclick="buyTariff('test', 0)" class="btn-ghost mono">АКТИВИРОВАТЬ ТЕСТ →</button>
+            </div>
+
+            <!-- Старт -->
+            <div class="tariff-card">
+                <div class="tariff-top">
+                    <div>
+                        <div class="value">🚀 Тариф «Старт»</div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Оптимально для коротких поездок</div>
+                    </div>
+                    <div class="tariff-price mono">69 ₽</div>
+                </div>
+                <div class="tariff-specs">
+                    <span class="badge mono">⏱ 14 дней</span>
+                    <span class="badge mono">📦 50 ГБ</span>
+                    <span class="badge mono">📱 1 устройство</span>
+                </div>
+                <button onclick="buyTariff('start', 69)" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 69 ₽</button>
+            </div>
+
+            <!-- Базовый -->
+            <div class="tariff-card">
+                <div class="tariff-top">
+                    <div>
+                        <div class="value">⚡️ Тариф «Базовый»</div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Стандартный план на каждый день</div>
+                    </div>
+                    <div class="tariff-price mono">129 ₽</div>
+                </div>
+                <div class="tariff-specs">
+                    <span class="badge mono">⏱ 30 дней</span>
+                    <span class="badge mono">📦 129 ГБ</span>
+                    <span class="badge mono">📱 1 устройство</span>
+                </div>
+                <button onclick="buyTariff('base', 129)" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 129 ₽</button>
+            </div>
+
+            <!-- Продвинутый -->
+            <div class="tariff-card">
+                <div class="tariff-top">
+                    <div>
+                        <div class="value">💎 Тариф «Продвинутый»</div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Для телефона, ПК и планшета</div>
+                    </div>
+                    <div class="tariff-price mono">199 ₽</div>
+                </div>
+                <div class="tariff-specs">
+                    <span class="badge mono">⏱ 30 дней</span>
+                    <span class="badge mono">📦 300 ГБ</span>
+                    <span class="badge mono">📱 3 устройства</span>
+                </div>
+                <button onclick="buyTariff('pro', 199)" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 199 ₽</button>
+            </div>
+
+            <!-- Хит сезона -->
+            <div class="tariff-card" style="border-color: var(--accent);">
+                <div class="tariff-top">
+                    <div>
+                        <div class="value">🔥 ХИТ СЕЗОНА</div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Максимальная выгода на 3 месяца</div>
+                    </div>
+                    <div class="tariff-price mono">499 ₽</div>
+                </div>
+                <div class="tariff-specs">
+                    <span class="badge mono">⏱ 90 дней</span>
+                    <span class="badge mono">📦 900 ГБ</span>
+                    <span class="badge mono">📱 3 устройства</span>
+                </div>
+                <button onclick="buyTariff('hit', 499)" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 499 ₽</button>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 3: КАСТОМИЗАЦИЯ (ТЕМА, ШРИФТ, АНИМАЦИИ) -->
+        <div id="tab-style" class="tab-pane">
+            <div style="margin: 16px 2px 10px;">
+                <span class="label">Персонализация интерфейса</span>
+            </div>
+
+            <div class="card">
+                <div class="label" style="margin-bottom: 8px;">Цветовая схема</div>
+                <div class="opt-grid" style="margin-bottom: 4px;">
+                    <button onclick="applyTheme('obsidian')" data-t="obsidian" class="opt-btn">
+                        <span>Obsidian</span>
+                        <span class="swatch" style="background: #fafafa;"></span>
+                    </button>
+                    <button onclick="applyTheme('tactical')" data-t="tactical" class="opt-btn">
+                        <span>Tactical</span>
+                        <span class="swatch" style="background: #10b981;"></span>
+                    </button>
+                    <button onclick="applyTheme('amber')" data-t="amber" class="opt-btn">
+                        <span>Amber CRT</span>
+                        <span class="swatch" style="background: #f59e0b;"></span>
+                    </button>
+                    <button onclick="applyTheme('frost')" data-t="frost" class="opt-btn">
+                        <span>Nordic Frost</span>
+                        <span class="swatch" style="background: #38bdf8;"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label" style="margin-bottom: 8px;">Шрифт системы</div>
+                <div class="opt-grid-3" style="margin-bottom: 4px;">
+                    <button onclick="applyFont('space')" data-f="space" class="opt-btn" style="justify-content:center; font-family:'Space Grotesk';">Grotesk</button>
+                    <button onclick="applyFont('mono')" data-f="mono" class="opt-btn" style="justify-content:center; font-family:'JetBrains Mono';">Mono</button>
+                    <button onclick="applyFont('manrope')" data-f="manrope" class="opt-btn" style="justify-content:center; font-family:'Manrope';">Manrope</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="label" style="margin-bottom: 8px;">Фоновая анимация</div>
+                <div class="opt-grid-3" style="margin-bottom: 4px;">
+                    <button onclick="applyAnim('grid')" data-a="grid" class="opt-btn" style="justify-content:center;">Матрица</button>
+                    <button onclick="applyAnim('dust')" data-a="dust" class="opt-btn" style="justify-content:center;">Частицы</button>
+                    <button onclick="applyAnim('none')" data-a="none" class="opt-btn" style="justify-content:center;">Статика</button>
+                </div>
+            </div>
+
+            <button onclick="replayOnboarding()" class="btn-ghost mono" style="margin-top: 8px;">
+                ↻ ПОВТОРИТЬ ЭКРАН ПРИВЕТСТВИЯ
+            </button>
         </div>
     </div>
 
-    <!-- Раздел подписок -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 18px 2px 8px;">
-        <span class="label" style="margin: 0;">Слоты устройств</span>
-        <span id="slotsCount" class="mono badge">0 / 2 ACTIVE</span>
+    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+    <div class="bottom-nav">
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="nav-item active">
+            <span class="mono" style="font-size: 13px;">[ 01 ]</span>
+            <span>КАБИНЕТ</span>
+        </button>
+        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="nav-item">
+            <span class="mono" style="font-size: 13px;">[ 02 ]</span>
+            <span>ТАРИФЫ</span>
+        </button>
+        <button onclick="switchTab('style')" id="nav-style" class="nav-item">
+            <span class="mono" style="font-size: 13px;">[ 03 ]</span>
+            <span>ВИД</span>
+        </button>
     </div>
 
-    <div id="slotsBox"></div>
-
-    <button onclick="Telegram.WebApp.close()" class="btn-primary mono">ЗАКРЫТЬ КАБИНЕТ</button>
-
-    <!-- Модалка оплаты -->
+    <!-- МОДАЛКА ПОПОЛНЕНИЯ БАЛАНСА -->
     <div id="payModal">
         <div class="modal-box">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <div class="value" style="font-size: 14px;">ПОПОЛНЕНИЕ БАЛАНСА</div>
-                <button onclick="closePayModal()" class="mono" style="background: none; border: none; color: #71717a; font-size: 16px; cursor: pointer;">✕</button>
+                <button onclick="closePayModal()" class="mono" style="background: none; border: none; color: var(--muted); font-size: 16px; cursor: pointer;">✕</button>
             </div>
             <div class="label">Выберите или введите сумму (RUB)</div>
 
-            <div class="amount-grid">
-                <button onclick="setAmount(100)" class="amount-btn mono">100 ₽</button>
-                <button onclick="setAmount(200)" class="amount-btn mono">200 ₽</button>
-                <button onclick="setAmount(500)" class="amount-btn mono">500 ₽</button>
+            <div class="opt-grid-3" style="margin-top: 10px;">
+                <button onclick="setAmount(100)" class="opt-btn mono" style="justify-content:center;">100 ₽</button>
+                <button onclick="setAmount(200)" class="opt-btn mono" style="justify-content:center;">200 ₽</button>
+                <button onclick="setAmount(500)" class="opt-btn mono" style="justify-content:center;">500 ₽</button>
             </div>
 
             <input type="number" id="customAmount" class="custom-input mono" placeholder="Другая сумма (от 10 ₽)">
 
-            <button onclick="submitPayment()" class="btn-pay-now mono">ПЕРЕЙТИ К ОПЛАТЕ →</button>
+            <button onclick="submitPayment()" class="btn-accent mono" style="width: 100%; padding: 12px;">ПЕРЕЙТИ К ОПЛАТЕ →</button>
         </div>
     </div>
 
@@ -306,9 +696,7 @@
 
         const uid = user?.id || p.get('user_id') || '404';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
-        const balance = p.get('bal') || '0';
-        
-        // Читаем аватарку сначала из URL параметра (который передал бот), затем fallback из WebApp API
+        const balance = parseInt(p.get('bal') || '0', 10);
         const avatarUrl = p.get('avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
@@ -324,90 +712,222 @@
             document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
+        // Парсим подписки
         let subs = [];
         try {
             const rawSubs = p.get('subs');
             if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
         } catch (e) {}
 
-        const box = document.getElementById('slotsBox');
-        document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
-        let html = '';
+        function renderSlots() {
+            const box = document.getElementById('slotsBox');
+            document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
+            let html = '';
 
-        for (let i = 0; i < 2; i++) {
-            const s = subs[i];
-            if (s) {
-                html += `
-                    <div class="card slot-active">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                            <div>
-                                <div style="display: flex; align-items: center; gap: 6px;">
-                                    <span class="status-dot"></span>
-                                    <span class="value" style="font-size: 13px;">SLOT #0${i+1}</span>
-                                    <span class="badge mono">${s.name}</span>
+            for (let i = 0; i < 2; i++) {
+                const s = subs[i];
+                if (s) {
+                    html += `
+                        <div class="card slot-active">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 7px;">
+                                        <span class="status-dot"></span>
+                                        <span class="value" style="font-size: 13px;">SLOT #0${i+1}</span>
+                                        <span class="badge mono">${s.name}</span>
+                                    </div>
+                                    <div class="mono" style="font-size: 11px; color: var(--muted); margin-top: 4px;">Активен до: ${s.until}</div>
                                 </div>
-                                <div class="mono" style="font-size: 11px; color: #71717a; margin-top: 4px;">Срок: до ${s.until}</div>
                             </div>
-                        </div>
 
-                        <div class="key-box">
-                            <input type="text" id="k_${i}" class="key-input mono" readonly value="${s.key}">
-                            <button onclick="copyK('k_${i}', this)" class="btn-copy mono">COPY</button>
-                        </div>
+                            <div class="key-box">
+                                <input type="text" id="k_${i}" class="key-input mono" readonly value="${s.key}">
+                                <button onclick="copyK('k_${i}', this)" class="btn-accent mono" style="padding: 6px 12px; font-size: 11px;">COPY</button>
+                            </div>
 
-                        <button onclick="openPayModal()" class="btn-action mono">
-                            ⚡️ ПРОДЛИТЬ ЭТОТ СЛОТ
-                        </button>
-                    </div>
-                `;
-            } else {
-                html += `
-                    <div class="card slot-empty">
-                        <div class="mono" style="font-size: 12px; color: #71717a; margin-bottom: 8px;">[ СЛОТ #0${i+1} СВОБОДЕН ]</div>
-                        <button onclick="openPayModal()" class="btn-action mono" style="background: transparent; border-color: #2e2e38;">
-                            + ОФОРМИТЬ ПОДПИСКУ
-                        </button>
-                    </div>
-                `;
+                            <button onclick="switchTab('tariffs')" class="btn-ghost mono">
+                                ⚡️ ПРОДЛИТЬ / СМЕНИТЬ ТАРИФ
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="card slot-empty">
+                            <div class="mono" style="font-size: 11px; color: var(--muted); margin-bottom: 10px;">[ СЛОТ #0${i+1} СВОБОДЕН ]</div>
+                            <button onclick="switchTab('tariffs')" class="btn-ghost mono">
+                                + ВЫБРАТЬ ТАРИФ И ПОДКЛЮЧИТЬ
+                            </button>
+                        </div>
+                    `;
+                }
             }
+            box.innerHTML = html;
         }
-        box.innerHTML = html;
+        renderSlots();
 
         function copyK(id, btn) {
             const el = document.getElementById(id);
             navigator.clipboard.writeText(el.value);
             const def = btn.innerText;
-            btn.innerText = 'DONE';
-            btn.style.background = '#27272a';
-            setTimeout(() => {
-                btn.innerText = def;
-                btn.style.background = '#1f1f24';
-            }, 1200);
+            btn.innerText = 'COPIED';
+            setTimeout(() => { btn.innerText = def; }, 1300);
         }
 
-        // Модалка оплаты
-        function openPayModal() {
-            document.getElementById('payModal').style.display = 'flex';
-        }
-        function closePayModal() {
-            document.getElementById('payModal').style.display = 'none';
-        }
-        function setAmount(val) {
-            document.getElementById('customAmount').value = val;
+        // НАВИГАЦИЯ ПО ВКЛАДКАМ
+        function switchTab(tabName) {
+            ['cabinet', 'tariffs', 'style'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.toggle('active', t === tabName);
+                document.getElementById(`nav-${t}`).classList.toggle('active', t === tabName);
+            });
         }
 
-        async function submitPayment() {
-            const inputVal = document.getElementById('customAmount').value;
-            const amount = parseInt(inputVal);
+        // ПОКУПКА ТАРИФА НАПРЯМУЮ ИЗ MINI APP
+        function buyTariff(tariffId, price) {
+            if (subs.length >= 2) {
+                alert('У вас уже активны 2 подписки из 2 возможных!');
+                return;
+            }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${tariffId}`);
+            tg.close();
+        }
+
+        // МОДАЛКА ПОПОЛНЕНИЯ
+        function openPayModal() { document.getElementById('payModal').style.display = 'flex'; }
+        function closePayModal() { document.getElementById('payModal').style.display = 'none'; }
+        function setAmount(val) { document.getElementById('customAmount').value = val; }
+
+        function submitPayment() {
+            const amount = parseInt(document.getElementById('customAmount').value, 10);
             if (!amount || amount < 10) {
                 alert('Минимальная сумма пополнения — 10 ₽');
                 return;
             }
-
-            // Шлем команду закрытия и открываем инвойс прямо в боте через deep-link
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${amount}`);
             tg.close();
         }
+
+        // КАСТОМИЗАЦИЯ (ТЕМА, ШРИФТ, АНИМАЦИЯ)
+        let currentAnim = localStorage.getItem('pp_anim') || 'grid';
+
+        function applyTheme(t) {
+            document.body.setAttribute('data-theme', t);
+            localStorage.setItem('pp_theme', t);
+            document.querySelectorAll('[data-t]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-t') === t);
+            });
+        }
+
+        function applyFont(f) {
+            document.body.setAttribute('data-font', f);
+            localStorage.setItem('pp_font', f);
+            document.querySelectorAll('[data-f]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-f') === f);
+            });
+        }
+
+        function applyAnim(a) {
+            currentAnim = a;
+            localStorage.setItem('pp_anim', a);
+            document.querySelectorAll('[data-a]').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-a') === a);
+            });
+        }
+
+        // Инициализация сохраненных настроек
+        applyTheme(localStorage.getItem('pp_theme') || 'obsidian');
+        applyFont(localStorage.getItem('pp_font') || 'space');
+        applyAnim(currentAnim);
+
+        // ПЕРВЫЙ ЗАПУСК: ПЛАВНОЕ "ДОБРО ПОЖАЛОВАТЬ!" -> ВЫБОР ТЕМЫ
+        function runOnboardingSequence() {
+            const wScreen = document.getElementById('welcomeScreen');
+            const wTitle = document.getElementById('welcomeTitle');
+            const wSub = document.getElementById('welcomeSub');
+            const sScreen = document.getElementById('setupScreen');
+
+            wScreen.style.display = 'flex';
+            wScreen.style.opacity = '1';
+
+            setTimeout(() => {
+                wTitle.classList.add('visible');
+                wSub.classList.add('visible');
+            }, 120);
+
+            setTimeout(() => {
+                wTitle.classList.remove('visible');
+                wSub.classList.remove('visible');
+            }, 1900);
+
+            setTimeout(() => {
+                sScreen.style.display = 'flex';
+                requestAnimationFrame(() => sScreen.classList.add('visible'));
+                wScreen.style.opacity = '0';
+                setTimeout(() => { wScreen.style.display = 'none'; }, 600);
+            }, 2600);
+        }
+
+        function finishOnboarding() {
+            localStorage.setItem('pp_onboarded_v2', '1');
+            const sScreen = document.getElementById('setupScreen');
+            sScreen.classList.remove('visible');
+            setTimeout(() => { sScreen.style.display = 'none'; }, 400);
+        }
+
+        function replayOnboarding() {
+            localStorage.removeItem('pp_onboarded_v2');
+            runOnboardingSequence();
+        }
+
+        if (!localStorage.getItem('pp_onboarded_v2')) {
+            runOnboardingSequence();
+        }
+
+        // ОТРИСОВКА ФОНА (МАТРИЦА ИЛИ ЧАСТИЦЫ)
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const dots = Array.from({length: 28}, () => ({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.4 + 0.6
+        }));
+
+        let tick = 0;
+        function renderBg() {
+            ctx.clearRect(0, 0, w, h);
+            tick += 0.015;
+
+            if (currentAnim === 'grid') {
+                const step = 28;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
+                for (let x = 14; x < w; x += step) {
+                    for (let y = 14; y < h; y += step) {
+                        const wave = Math.sin(x * 0.02 + tick) * Math.cos(y * 0.02 + tick);
+                        if (wave > 0.2) {
+                            ctx.fillRect(x, y, 1.5, 1.5);
+                        }
+                    }
+                }
+            } else if (currentAnim === 'dust') {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
+                dots.forEach(d => {
+                    d.x += d.vx; d.y += d.vy;
+                    if (d.x < 0) d.x = w; if (d.x > w) d.x = 0;
+                    if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+            requestAnimationFrame(renderBg);
+        }
+        renderBg();
     </script>
 </body>
 </html>
