@@ -4,82 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>PINPOINT // OS v5.0</title>
+    <title>PinPoint Core</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cabinet+Grotesk:wght@500;700;800&family=Fragment+Mono&display=swap" rel="stylesheet">
     <style>
-        /* РАДИКАЛЬНО РАЗНЫЕ ТЕМЫ */
-        :root, body[data-theme="oled"] {
-            --bg: #000000;
-            --card: #0a0a0c;
-            --card-2: #141418;
-            --border: #27272f;
-            --text: #ffffff;
-            --muted: #71717a;
-            --accent: #ffffff;
-            --accent-text: #000000;
-            --ok: #22c55e;
-            --warn: #f59e0b;
-            --crit: #ef4444;
-            --radius: 0px;
-            --shadow: none;
+        /* ПАСТЕЛЬНЫЕ, БЛАГОРОДНЫЕ ТЕМЫ */
+        :root, body[data-theme="sage"] {
+            --bg: #0b0e0d;
+            --surface: #131816;
+            --surface-sub: #1a221f;
+            --border: #26332e;
+            --border-focus: #445951;
+            --text-main: #e8eee9;
+            --text-muted: #83978c;
+            --pastel: #9dbca9;
+            --pastel-soft: rgba(157, 188, 169, 0.12);
+            --pastel-fg: #0d1210;
+            --state-ok: #8ebd9e;
+            --state-warn: #d4a373;
+            --state-crit: #c97a7e;
+            --radius-box: 14px;
+            --radius-btn: 10px;
         }
 
-        body[data-theme="discord"] {
-            --bg: #1e1f22;
-            --card: #2b2d31;
-            --card-2: #313338;
-            --border: #3f4147;
-            --text: #f2f3f5;
-            --muted: #949ba4;
-            --accent: #5865f2;
-            --accent-text: #ffffff;
-            --ok: #23a55a;
-            --warn: #f0b232;
-            --crit: #f23f43;
-            --radius: 10px;
-            --shadow: 0 4px 12px rgba(0,0,0,0.25);
+        body[data-theme="mauve"] {
+            --bg: #0e0c12;
+            --surface: #17141e;
+            --surface-sub: #211c2a;
+            --border: #30293d;
+            --border-focus: #524766;
+            --text-main: #f0ecf5;
+            --text-muted: #968ca3;
+            --pastel: #bfaecf;
+            --pastel-soft: rgba(191, 174, 207, 0.12);
+            --pastel-fg: #120e17;
+            --state-ok: #a3c4bc;
+            --state-warn: #e0b084;
+            --state-crit: #d18288;
+            --radius-box: 14px;
+            --radius-btn: 10px;
         }
 
-        body[data-theme="matrix"] {
-            --bg: #020804;
-            --card: #05140a;
-            --card-2: #092212;
-            --border: #00ff66;
-            --text: #00ff66;
-            --muted: #1b8a46;
-            --accent: #00ff66;
-            --accent-text: #020804;
-            --ok: #00ff66;
-            --warn: #facc15;
-            --crit: #ff3333;
-            --radius: 2px;
-            --shadow: 0 0 10px rgba(0, 255, 102, 0.12);
+        body[data-theme="sand"] {
+            --bg: #0f0d0b;
+            --surface: #181512;
+            --surface-sub: #241f1a;
+            --border: #362e26;
+            --border-focus: #574b3e;
+            --text-main: #f2eee9;
+            --text-muted: #9c9084;
+            --pastel: #d6c2a8;
+            --pastel-soft: rgba(214, 194, 168, 0.12);
+            --pastel-fg: #14110d;
+            --state-ok: #a4b494;
+            --state-warn: #ddaa77;
+            --state-crit: #c77d75;
+            --radius-box: 14px;
+            --radius-btn: 10px;
         }
 
-        body[data-theme="brutal"] {
-            --bg: #e4e4e7;
-            --card: #f4f4f5;
-            --card-2: #ffffff;
-            --border: #09090b;
-            --text: #09090b;
-            --muted: #52525b;
-            --accent: #ff4500;
-            --accent-text: #ffffff;
-            --ok: #16a34a;
-            --warn: #d97706;
-            --crit: #dc2626;
-            --radius: 0px;
-            --shadow: 4px 4px 0px #09090b;
+        body[data-theme="slate"] {
+            --bg: #0b0e12;
+            --surface: #121820;
+            --surface-sub: #1a232f;
+            --border: #253344;
+            --border-focus: #3e536e;
+            --text-main: #edf2f7;
+            --text-muted: #8294a8;
+            --pastel: #9fb5cc;
+            --pastel-soft: rgba(159, 181, 204, 0.12);
+            --pastel-fg: #0d1217;
+            --state-ok: #88bcae;
+            --state-warn: #d4a77e;
+            --state-crit: #c97982;
+            --radius-box: 14px;
+            --radius-btn: 10px;
         }
 
-        body[data-font="space"] { font-family: 'Space Grotesk', sans-serif; }
-        body[data-font="mono"]  { font-family: 'JetBrains Mono', monospace; }
-        body[data-font="pixel"] { font-family: 'Press Start 2P', monospace; font-size: 10px; }
+        /* ШРИФТЫ */
+        body[data-font="jakarta"] { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body[data-font="cabinet"] { font-family: 'Cabinet Grotesk', -apple-system, sans-serif; }
+        body[data-font="fragment"] { font-family: 'Fragment Mono', monospace; font-size: 13px; }
 
         * {
             box-sizing: border-box;
@@ -91,392 +98,465 @@
 
         body {
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--text-main);
             min-height: 100vh;
-            padding: 12px 12px 104px;
+            padding: 14px 14px 104px;
             overflow-x: hidden;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease;
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
+        .mono { font-family: 'Fragment Mono', monospace; }
 
-        #bgCanvas {
+        #fxCanvas {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: 0;
+            opacity: 0.85;
         }
 
-        .container {
+        .view-layer {
             position: relative;
             z-index: 10;
             max-width: 440px;
             margin: 0 auto;
         }
 
-        /* СТАТУС БАР */
-        .topbar {
+        /* СТАТУС ВЕРХНЕЙ ПАНЕЛИ */
+        .status-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 4px 10px;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
+            padding: 6px 4px 12px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 14px;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
         }
-        .online-badge {
-            display: flex;
+        .status-badge {
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            color: var(--text);
-            font-weight: 800;
+            gap: 7px;
+            font-weight: 600;
+            color: var(--text-main);
         }
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--ok);
+        .soft-beacon {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--ok);
+            background: var(--state-ok);
+            box-shadow: 0 0 10px var(--state-ok);
         }
 
-        /* БАЗОВЫЙ БЛОК */
-        .panel {
-            background: var(--card);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 14px;
+        /* МОДУЛЬНЫЕ МАТОВЫЕ КАРТОЧКИ */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-box);
+            padding: 16px;
             margin-bottom: 12px;
+            transition: border-color 0.25s ease;
         }
 
-        /* ШАПКА ПРОФИЛЯ */
-        .profile-grid {
+        /* ОПЕРАТОР И БАЛАНС */
+        .profile-band {
             display: grid;
             grid-template-columns: 1fr auto;
             gap: 12px;
             align-items: center;
         }
-        .user-row {
+        .operator-meta {
             display: flex;
             align-items: center;
             gap: 12px;
             min-width: 0;
         }
-        .avatar-box {
-            width: 48px;
-            height: 48px;
-            background: var(--card-2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
+        .operator-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 800;
-            font-size: 18px;
-            color: var(--accent);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--pastel);
             flex-shrink: 0;
         }
-        .tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
+        .subhead {
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--muted);
+            color: var(--text-muted);
+            font-weight: 600;
         }
-        .uname {
+        .op-title {
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             margin: 2px 0;
+            letter-spacing: -0.01em;
         }
-        .bal-box {
+        .balance-cluster {
             text-align: right;
-            border-left: 1.5px dashed var(--border);
+            border-left: 1px solid var(--border);
             padding-left: 14px;
         }
-        .bal-val {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text);
+        .balance-num {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
             margin: 2px 0 6px;
+            letter-spacing: -0.02em;
         }
 
         /* КНОПКИ */
-        .btn-main {
-            background: var(--accent);
-            color: var(--accent-text);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            padding: 10px 14px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-        }
-        .btn-main:active { transform: scale(0.97); }
-        .btn-main:disabled { opacity: 0.4; pointer-events: none; }
-
-        .btn-sec {
-            background: var(--card-2);
-            color: var(--text);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            padding: 10px 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+        .btn-pastel {
+            background: var(--pastel);
+            color: var(--pastel-fg);
+            border: none;
+            border-radius: var(--radius-btn);
+            padding: 9px 14px;
+            font-size: 12px;
             font-weight: 700;
-            text-transform: uppercase;
+            font-family: inherit;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.1s ease;
+            letter-spacing: 0.01em;
+        }
+        .btn-pastel:active { opacity: 0.85; transform: scale(0.98); }
+        .btn-pastel:disabled { opacity: 0.35; pointer-events: none; }
+
+        .btn-subtle {
+            background: var(--surface-sub);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: border-color 0.2s ease;
         }
-        .btn-sec:active { border-color: var(--accent); }
+        .btn-subtle:active { border-color: var(--border-focus); }
 
-        /* СЕКЦИИ */
-        .sec-head {
+        /* РАЗДЕЛИТЕЛИ */
+        .section-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 16px 2px 8px;
+            margin: 18px 2px 10px;
         }
-        .sec-label {
-            font-family: 'JetBrains Mono', monospace;
+        .section-label {
             font-size: 11px;
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
-            color: var(--muted);
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
         }
-        .pill {
-            font-family: 'JetBrains Mono', monospace;
+        .pill-badge {
             font-size: 10px;
-            font-weight: 800;
-            padding: 3px 7px;
-            background: var(--card-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: var(--pastel-soft);
+            color: var(--pastel);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* СЛОТ ПОДПИСКИ */
-        .slot-top {
+        /* КАРТОЧКА СЛОТА */
+        .slot-unit-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
-        .slot-input {
+        .slot-name-field {
             background: transparent;
             border: none;
-            border-bottom: 1.5px dashed var(--border);
-            color: var(--text);
+            border-bottom: 1px dashed var(--border);
+            color: var(--text-main);
             font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            text-transform: uppercase;
-            width: 150px;
+            font-size: 14px;
+            font-weight: 700;
+            width: 160px;
             padding: 2px 0;
             outline: none;
         }
-        .slot-input:focus { border-bottom-color: var(--accent); }
+        .slot-name-field:focus { border-bottom-color: var(--pastel); }
 
-        .telemetry {
+        /* ИНДИКАТОР ТРАФИКА */
+        .traffic-harness {
             display: grid;
             grid-template-columns: 72px 1fr;
-            gap: 12px;
-            background: var(--card-2);
+            gap: 14px;
+            background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 10px;
-            margin-bottom: 10px;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 12px;
             align-items: center;
         }
-        .ring-wrap { position: relative; width: 68px; height: 68px; }
-        .ring-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
-        .ring-bg { fill: none; stroke: var(--border); stroke-width: 4; opacity: 0.35; }
-        .ring-fg { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: butt; }
-        .ring-val {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px; font-weight: 800;
+        .gauge-svg-wrap {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+        .gauge-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+        .gauge-track {
+            fill: none;
+            stroke: var(--surface);
+            stroke-width: 4.5;
+        }
+        .gauge-flow {
+            fill: none;
+            stroke: var(--pastel);
+            stroke-width: 4.5;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.9s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s;
+        }
+        .gauge-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .gauge-pct {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
-        .led-strip {
+        /* МЯГКИЙ СЕГМЕНТНЫЙ ИНДИКАТОР */
+        .pill-meter {
             display: grid;
-            grid-template-columns: repeat(16, 1fr);
+            grid-template-columns: repeat(14, 1fr);
             gap: 3px;
-            margin: 6px 0 8px;
+            margin: 7px 0 9px;
         }
-        .led { height: 8px; background: var(--bg); border: 1px solid var(--border); }
-        .led.on { background: var(--accent); border-color: var(--accent); }
-        .led.warn { background: var(--warn); border-color: var(--warn); }
-        .led.crit { background: var(--crit); border-color: var(--crit); }
+        .pill-cell {
+            height: 6px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.3s;
+        }
+        .pill-cell.filled { background: var(--pastel); opacity: 0.85; }
+        .pill-cell.warn { background: var(--state-warn); }
+        .pill-cell.crit { background: var(--state-crit); }
 
-        .key-row {
+        .meta-stamp {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ПОЛЕ КЛЮЧА */
+        .key-capsule {
             display: grid;
             grid-template-columns: 1fr auto auto;
             gap: 6px;
-            background: var(--card-2);
+            background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 6px 8px;
+            border-radius: var(--radius-btn);
+            padding: 7px 9px;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-        .key-field {
+        .key-text {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text);
-            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            font-family: 'Fragment Mono', monospace;
             font-size: 11px;
             width: 100%;
             pointer-events: none;
         }
 
-        /* СЕТКА ВЫБОРА ТЕМ И НАСТРОЕК */
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .opt-card {
-            background: var(--card-2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            color: var(--text);
+        /* ВИТРИНА ТАРИФОВ */
+        .tariff-slab {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-box);
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .tariff-slab.featured {
+            border-color: var(--pastel);
+            box-shadow: 0 0 20px var(--pastel-soft);
+        }
+
+        /* ПАНЕЛЬ ПЕРСОНАЛИЗАЦИИ */
+        .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .picker-cell {
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            color: var(--text-muted);
             padding: 12px 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            text-transform: uppercase;
+            transition: all 0.2s ease;
         }
-        .opt-card.active {
-            border-color: var(--accent);
-            background: var(--accent);
-            color: var(--accent-text);
+        .picker-cell.active {
+            border-color: var(--pastel);
+            background: var(--pastel-soft);
+            color: var(--pastel);
         }
-        .swatch { width: 14px; height: 14px; border: 1.5px solid currentColor; }
+        .tone-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: 0 0 6px currentColor;
+        }
 
-        .input-box {
+        .ambient-field {
             width: 100%;
-            background: var(--card-2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            padding: 10px 12px;
-            color: var(--text);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 11px 12px;
+            color: var(--text-main);
+            font-size: 13px;
             outline: none;
         }
+        .ambient-field:focus { border-color: var(--pastel); }
 
-        /* НИЖНИЙ ДОК */
-        .dock {
+        /* НАВИГАЦИОННАЯ ПАНЕЛЬ */
+        .bottom-shelf {
             position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--card);
-            border-top: 2px solid var(--border);
-            z-index: 95;
-            padding: 8px 12px 14px;
-        }
-        .dock-grid {
+            bottom: 12px;
+            left: 14px;
+            right: 14px;
             max-width: 440px;
             margin: 0 auto;
+            background: rgba(19, 24, 22, 0.92);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 6px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
+            z-index: 90;
         }
-        .dock-tab {
-            background: var(--card-2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius);
-            color: var(--muted);
+        .shelf-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
             padding: 10px 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             text-align: center;
-            text-transform: uppercase;
+            transition: all 0.2s ease;
         }
-        .dock-tab.active {
-            background: var(--accent);
-            color: var(--accent-text);
-            border-color: var(--border);
+        .shelf-tab.active {
+            background: var(--surface-sub);
+            color: var(--pastel);
+            font-weight: 700;
         }
 
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        /* МОДАЛЬНЫЕ ШТОРКИ */
-        .sheet-bg {
+        /* МАТОВАЯ ШТОРКА (BOTTOM SHEET) */
+        .curtain-wrap {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
             z-index: 200;
             display: none;
             align-items: flex-end;
             justify-content: center;
         }
-        .sheet-bg.active { display: flex; }
-        .sheet-box {
-            background: var(--card);
-            border-top: 3px solid var(--accent);
+        .curtain-wrap.active { display: flex; }
+        .curtain-panel {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
             width: 100%;
             max-width: 440px;
-            padding: 20px 14px 28px;
+            padding: 22px 16px 28px;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
-        /* ЭКРАН ПРИВЕТСТВИЯ */
-        #welcomeOverlay {
+        /* КИНЕМАТОГРАФИЧНЫЙ ВХОД */
+        #fadeIntro {
             position: fixed;
             inset: 0;
-            background: #000000;
+            background: #090c0b;
             z-index: 300;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.6s ease;
         }
-        .w-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
+        .fade-greeting {
+            font-size: 24px;
+            font-weight: 700;
             letter-spacing: 0.12em;
-            text-transform: uppercase;
+            color: #e5ece7;
             opacity: 0;
-            transform: translateY(8px);
-            transition: all 0.55s ease;
+            transform: scale(0.96);
+            filter: blur(8px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .w-sub {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: #22c55e;
-            margin-top: 8px;
+        .fade-caption {
+            font-size: 11px;
+            color: #7b9485;
+            margin-top: 10px;
             letter-spacing: 0.16em;
             opacity: 0;
-            transition: opacity 0.55s ease 0.15s;
+            filter: blur(4px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
         }
-        .w-title.on, .w-sub.on { opacity: 1; transform: translateY(0); }
+        .fade-greeting.show, .fade-caption.show {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+        }
 
-        #setupOverlay {
+        #firstRunConfig {
             position: fixed;
             inset: 0;
             background: var(--bg);
@@ -484,247 +564,279 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px 14px 24px;
+            padding: 24px 16px;
             overflow-y: auto;
         }
     </style>
 </head>
-<body data-theme="oled" data-font="space">
+<body data-theme="sage" data-font="jakarta">
 
-    <canvas id="bgCanvas"></canvas>
+    <canvas id="fxCanvas"></canvas>
 
-    <!-- 1. ЭКРАН ПРИВЕТСТВИЯ -->
-    <div id="welcomeOverlay">
-        <div id="wTitle" class="w-title">Добро пожаловать!</div>
-        <div id="wSub" class="w-sub">PINPOINT // TERMINAL v5.0</div>
+    <!-- 1. МЯГКИЙ КИНЕМАТОГРАФИЧНЫЙ ОНБОРДИНГ -->
+    <div id="fadeIntro">
+        <div id="introTitle" class="fade-greeting">Добро пожаловать</div>
+        <div id="introSub" class="fade-caption">ПРИВАТНЫЙ ТЕРМИНАЛ PINPOINT</div>
     </div>
 
-    <!-- 2. ЭКРАН ПЕРВИЧНОГО ВЫБОРА ТЕМЫ -->
-    <div id="setupOverlay">
+    <!-- 2. ЭКРАН ВЫБОРА ПАСТЕЛЬНЫХ ТОНОВ -->
+    <div id="firstRunConfig">
         <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="topbar"><span>STEP 01 // INIT</span><span>UI ENGINE</span></div>
-            <div style="font-size:18px; font-weight:800; text-transform:uppercase; margin-bottom:6px;">Выберите скин терминала</div>
-            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:16px;">Каждая тема полностью меняет архитектуру, цвета и рамки интерфейса.</div>
+            <div class="subhead" style="margin-bottom:4px;">ЭСТЕТИКА // 01</div>
+            <div style="font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-bottom:6px;">Настройка палитры</div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.4;">Мягкие пастельные оттенки, комфортные для глаз в любое время суток.</div>
 
-            <div class="sec-head"><span class="sec-label">1. Визуальная тема</span></div>
-            <div class="grid-2" style="margin-bottom:14px;">
-                <button onclick="setTheme('oled')" data-t="oled" class="opt-card"><span>OLED BLACK</span><span class="swatch" style="background:#000;"></span></button>
-                <button onclick="setTheme('discord')" data-t="discord" class="opt-card"><span>DISCORD</span><span class="swatch" style="background:#5865f2;"></span></button>
-                <button onclick="setTheme('matrix')" data-t="matrix" class="opt-card"><span>MATRIX CRT</span><span class="swatch" style="background:#00ff66;"></span></button>
-                <button onclick="setTheme('brutal')" data-t="brutal" class="opt-card"><span>BRUTAL LIGHT</span><span class="swatch" style="background:#ff4500;"></span></button>
+            <div class="section-row"><span class="section-label">Пастельная тема</span></div>
+            <div class="grid-duo" style="margin-bottom:14px;">
+                <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
+                    <span>МЯГКИЙ ШАЛФЕЙ</span><span class="tone-dot" style="background:#9dbca9; color:#9dbca9;"></span>
+                </button>
+                <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
+                    <span>ПЫЛЬНЫЙ РОЗАН</span><span class="tone-dot" style="background:#bfaecf; color:#bfaecf;"></span>
+                </button>
+                <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
+                    <span>ТЕПЛЫЙ КАШЕМИР</span><span class="tone-dot" style="background:#d6c2a8; color:#d6c2a8;"></span>
+                </button>
+                <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
+                    <span>СЕРЫЙ СЛАНЕЦ</span><span class="tone-dot" style="background:#9fb5cc; color:#9fb5cc;"></span>
+                </button>
             </div>
 
-            <div class="sec-head"><span class="sec-label">2. Шрифт</span></div>
-            <div class="grid-3" style="margin-bottom:14px;">
-                <button onclick="setFont('space')" data-f="space" class="opt-card" style="justify-content:center;">CLEAN</button>
-                <button onclick="setFont('mono')" data-f="mono" class="opt-card" style="justify-content:center;">MONO</button>
-                <button onclick="setFont('pixel')" data-f="pixel" class="opt-card" style="justify-content:center;">PIXEL</button>
+            <div class="section-row"><span class="section-label">Гарнитура шрифта</span></div>
+            <div class="grid-trio" style="margin-bottom:14px;">
+                <button onclick="setFontChoice('jakarta')" data-f="jakarta" class="picker-cell" style="justify-content:center; font-family:'Plus Jakarta Sans';">JAKARTA</button>
+                <button onclick="setFontChoice('cabinet')" data-f="cabinet" class="picker-cell" style="justify-content:center; font-family:'Cabinet Grotesk';">CABINET</button>
+                <button onclick="setFontChoice('fragment')" data-f="fragment" class="picker-cell" style="justify-content:center; font-family:'Fragment Mono';">FRAGMENT</button>
             </div>
 
-            <div class="sec-head"><span class="sec-label">3. Анимация фона</span></div>
-            <div class="grid-3">
-                <button onclick="setAnim('grid')" data-a="grid" class="opt-card" style="justify-content:center;">СЕТКА</button>
-                <button onclick="setAnim('dust')" data-a="dust" class="opt-card" style="justify-content:center;">ЧАСТИЦЫ</button>
-                <button onclick="setAnim('none')" data-a="none" class="opt-card" style="justify-content:center;">ВЫКЛ</button>
+            <div class="section-row"><span class="section-label">Динамика заднего плана</span></div>
+            <div class="grid-trio">
+                <button onclick="setBackdropFx('aurora')" data-a="aurora" class="picker-cell" style="justify-content:center;">ВУАЛЬ</button>
+                <button onclick="setBackdropFx('dust')" data-a="dust" class="picker-cell" style="justify-content:center;">ДРЕЙФ</button>
+                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ПОКОЙ</button>
             </div>
         </div>
 
-        <div style="max-width:440px; margin:0 auto; width:100%;">
-            <button onclick="closeSetup()" class="btn-main" style="width:100%; padding:14px;">
-                [ СОХРАНИТЬ И ЗАПУСТИТЬ → ]
+        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:20px;">
+            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:14px; font-size:13px;">
+                СОХРАНИТЬ И ОТКРЫТЬ КАБИНЕТ
             </button>
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
-    <div class="container">
-        <div class="topbar">
-            <div class="online-badge"><span class="dot"></span> PINPOINT OS // v5.0</div>
-            <div id="syncStatus">SYNC: OK</div>
+    <!-- ОСНОВНОЙ ЭКРАН СЕРВИСА -->
+    <div class="view-layer">
+        <div class="status-header">
+            <div class="status-badge"><span class="soft-beacon"></span> СЕТЬ PINPOINT АКТИВНА</div>
+            <div id="liveClock" class="mono">CONNECTED</div>
         </div>
 
-        <!-- Профиль и Баланс -->
-        <div class="panel profile-grid">
-            <div class="user-row">
-                <img id="avatarImg" class="avatar-box" style="display:none;" alt="">
-                <div id="avatarFallback" class="avatar-box">PP</div>
+        <!-- КАРТОЧКА ПРОФИЛЯ -->
+        <div class="card profile-band">
+            <div class="operator-meta">
+                <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
+                <div id="avatarFallback" class="operator-avatar">P</div>
                 <div style="min-width:0;">
-                    <div class="tag">OPERATOR</div>
-                    <div id="uName" class="uname">CLIENT</div>
-                    <div id="uId" class="tag">ID: 000000</div>
+                    <div class="subhead">УЧЕТНАЯ ЗАПИСЬ</div>
+                    <div id="uName" class="op-title">Клиент</div>
+                    <div id="uId" class="mono" style="font-size:11px; color:var(--text-muted);">ID: 000000</div>
                 </div>
             </div>
-            <div class="bal-box">
-                <div class="tag">БАЛАНС</div>
-                <div id="uBal" class="bal-val">0 ₽</div>
-                <button onclick="openModal('topupModal')" class="btn-main" style="padding:5px 10px; font-size:10px;">+ ПОПОЛНИТЬ</button>
+            <div class="balance-cluster">
+                <div class="subhead">БАЛАНС</div>
+                <div id="uBal" class="balance-num">0 ₽</div>
+                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:5px 10px; font-size:11px;">+ ПОПОЛНИТЬ</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 1: СЛОТЫ -->
-        <div id="tab-cabinet" class="tab-pane active">
-            <div class="sec-head">
-                <span class="sec-label">// АКТИВНЫЕ ПОДПИСКИ</span>
-                <span id="slotsCount" class="pill">0 / 2 ACTIVE</span>
+        <!-- ВКЛАДКА 1: КАБИНЕТ И СЛОТЫ -->
+        <div id="tab-cabinet" class="tab-content active">
+            <div class="section-row">
+                <span class="section-label">СЛОТЫ ПОДКЛЮЧЕНИЙ</span>
+                <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
             </div>
 
-            <div id="slotsContainer"></div>
+            <div id="slotsCluster"></div>
 
-            <!-- Промокод -->
-            <div class="sec-head"><span class="sec-label">// ПРОМОКОД</span></div>
-            <div class="panel" style="padding:10px;">
+            <!-- ПРОМОКОД -->
+            <div class="section-row"><span class="section-label">ВАУЧЕР ИЛИ ПРОМОКОД</span></div>
+            <div class="card" style="padding:10px;">
                 <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                    <input type="text" id="promoField" class="input-box" placeholder="ВВЕДИТЕ ПРОМОКОД" style="text-transform:uppercase;">
-                    <button onclick="sendPromo()" class="btn-main">ОК</button>
+                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="ВВЕДИТЕ КОД (PIN2026)" style="text-transform:uppercase;">
+                    <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
                 </div>
             </div>
 
-            <!-- Рефералка -->
-            <div class="panel" style="display:flex; justify-content:space-between; align-items:center;">
+            <!-- РЕФЕРАЛКА -->
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <div class="tag">РЕФЕРАЛЬНАЯ СЕТЬ // 15%</div>
-                    <div style="font-size:12px; font-weight:800; margin-top:2px;">15% с каждого пополнения друга</div>
+                    <div class="subhead">РЕФЕРАЛЬНАЯ ПРОГРАММА // 15%</div>
+                    <div style="font-size:13px; font-weight:700; margin-top:2px;">Получайте 15% с пополнений друзей</div>
                 </div>
-                <button onclick="copyRef(this)" class="btn-sec">ССЫЛКА</button>
+                <button onclick="copyRefLink(this)" class="btn-subtle">ССЫЛКА</button>
             </div>
         </div>
 
         <!-- ВКЛАДКА 2: ТАРИФЫ -->
-        <div id="tab-tariffs" class="tab-pane">
-            <div class="sec-head">
-                <span class="sec-label">// ВЫБОР ТАРИФА</span>
-                <span class="pill">INSTANT</span>
+        <div id="tab-tariffs" class="tab-content">
+            <div class="section-row">
+                <span class="section-label">ДОСТУПНЫЕ ПЛАНЫ</span>
+                <span class="pill-badge">МОМЕНТАЛЬНАЯ ВЫДАЧА</span>
             </div>
 
-            <div class="panel">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <div><div class="tag">TRIAL</div><div style="font-size:15px; font-weight:800;">🆓 ТЕСТОВЫЙ (24 ЧАСА)</div></div>
-                    <div class="mono" style="font-size:16px; font-weight:800;">0 ₽</div>
+            <div class="tariff-slab">
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">ТЕСТОВЫЙ ДОСТУП</div><div style="font-size:16px; font-weight:700;">🆓 24 Часа</div></div>
+                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">0 ₽</div>
                 </div>
-                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 10 ГБ • Лимит: 1 устройство</div>
-                <button onclick="buyPlan('test')" class="btn-sec" style="width:100%;">ПОЛУЧИТЬ ТЕСТОВЫЙ КЛЮЧ</button>
+                <div style="font-size:12px; color:var(--text-muted);">Трафик: 10 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">АКТИВИРОВАТЬ ТЕСТ</button>
             </div>
 
-            <div class="panel">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <div><div class="tag">TIER 01</div><div style="font-size:15px; font-weight:800;">🚀 СТАРТ (14 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:16px; font-weight:800;">69 ₽</div>
+            <div class="tariff-slab">
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">СТАРТОВЫЙ</div><div style="font-size:16px; font-weight:700;">🚀 Старт на 14 дней</div></div>
+                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">69 ₽</div>
                 </div>
-                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 50 ГБ • Лимит: 1 устройство</div>
-                <button onclick="buyPlan('start')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 69 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Трафик: 50 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ ЗА 69 ₽</button>
             </div>
 
-            <div class="panel">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <div><div class="tag">TIER 02</div><div style="font-size:15px; font-weight:800;">⚡️ БАЗОВЫЙ (30 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:16px; font-weight:800;">129 ₽</div>
+            <div class="tariff-slab">
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">БАЗОВЫЙ ПЛАН</div><div style="font-size:16px; font-weight:700;">⚡️ Базовый на 30 дней</div></div>
+                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">129 ₽</div>
                 </div>
-                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 129 ГБ • Лимит: 1 устройство</div>
-                <button onclick="buyPlan('base')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 129 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Трафик: 129 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ ЗА 129 ₽</button>
             </div>
 
-            <div class="panel">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <div><div class="tag">TIER 03</div><div style="font-size:15px; font-weight:800;">💎 ПРОДВИНУТЫЙ (30 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:16px; font-weight:800;">199 ₽</div>
+            <div class="tariff-slab">
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">МУЛЬТИ-УСТРОЙСТВО</div><div style="font-size:16px; font-weight:700;">💎 Продвинутый на 30 дней</div></div>
+                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">199 ₽</div>
                 </div>
-                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 300 ГБ • Лимит: 3 устройства</div>
-                <button onclick="buyPlan('pro')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 199 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Трафик: 300 ГБ • Лимит: 3 устройства</div>
+                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ ЗА 199 ₽</button>
             </div>
 
-            <div class="panel" style="border-width: 2.5px; border-color: var(--accent);">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <div><div class="tag" style="color:var(--accent);">MAX PERFORMANCE</div><div style="font-size:15px; font-weight:800;">🔥 ХИТ СЕЗОНА (90 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:16px; font-weight:800;">499 ₽</div>
+            <div class="tariff-slab featured">
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead" style="color:var(--pastel);">МАКСИМАЛЬНЫЙ СРОК</div><div style="font-size:16px; font-weight:700;">🔥 ХИТ СЕЗОНА на 90 дней</div></div>
+                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">499 ₽</div>
                 </div>
-                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 900 ГБ • Лимит: 3 устройства</div>
-                <button onclick="buyPlan('hit')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 499 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Трафик: 900 ГБ • Лимит: 3 устройства</div>
+                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ ЗА 499 ₽</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 3: ТЕМЫ И КАСТОМИЗАЦИЯ -->
-        <div id="tab-style" class="tab-pane">
-            <div class="sec-head"><span class="sec-label">// СМЕНА ТЕМЫ И ШРИФТА</span></div>
+        <!-- ВКЛАДКА 3: НАСТРОЙКИ СТИЛЯ -->
+        <div id="tab-style" class="tab-content">
+            <div class="section-row"><span class="section-label">ВИЗУАЛЬНЫЙ СТИЛЬ</span></div>
 
-            <div class="panel">
-                <div class="tag" style="margin-bottom:8px;">ТЕМА ИНТЕРФЕЙСА (МЕНЯЕТ ВСЁ)</div>
-                <div class="grid-2">
-                    <button onclick="setTheme('oled')" data-t="oled" class="opt-card"><span>OLED BLACK</span><span class="swatch" style="background:#000;"></span></button>
-                    <button onclick="setTheme('discord')" data-t="discord" class="opt-card"><span>DISCORD</span><span class="swatch" style="background:#5865f2;"></span></button>
-                    <button onclick="setTheme('matrix')" data-t="matrix" class="opt-card"><span>MATRIX CRT</span><span class="swatch" style="background:#00ff66;"></span></button>
-                    <button onclick="setTheme('brutal')" data-t="brutal" class="opt-card"><span>BRUTAL LIGHT</span><span class="swatch" style="background:#ff4500;"></span></button>
+            <div class="card">
+                <div class="subhead" style="margin-bottom:8px;">ЦВЕТОВАЯ ПАЛИТРА</div>
+                <div class="grid-duo">
+                    <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
+                        <span>МЯГКИЙ ШАЛФЕЙ</span><span class="tone-dot" style="background:#9dbca9; color:#9dbca9;"></span>
+                    </button>
+                    <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
+                        <span>ПЫЛЬНЫЙ РОЗАН</span><span class="tone-dot" style="background:#bfaecf; color:#bfaecf;"></span>
+                    </button>
+                    <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
+                        <span>ТЕПЛЫЙ КАШЕМИР</span><span class="tone-dot" style="background:#d6c2a8; color:#d6c2a8;"></span>
+                    </button>
+                    <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
+                        <span>СЕРЫЙ СЛАНЕЦ</span><span class="tone-dot" style="background:#9fb5cc; color:#9fb5cc;"></span>
+                    </button>
                 </div>
             </div>
 
-            <div class="panel">
-                <div class="tag" style="margin-bottom:8px;">ШРИФТ СИСТЕМЫ</div>
-                <div class="grid-3">
-                    <button onclick="setFont('space')" data-f="space" class="opt-card" style="justify-content:center;">CLEAN</button>
-                    <button onclick="setFont('mono')" data-f="mono" class="opt-card" style="justify-content:center;">MONO</button>
-                    <button onclick="setFont('pixel')" data-f="pixel" class="opt-card" style="justify-content:center;">PIXEL</button>
+            <div class="card">
+                <div class="subhead" style="margin-bottom:8px;">ТИПОГРАФИКА</div>
+                <div class="grid-trio">
+                    <button onclick="setFontChoice('jakarta')" data-f="jakarta" class="picker-cell" style="justify-content:center; font-family:'Plus Jakarta Sans';">JAKARTA</button>
+                    <button onclick="setFontChoice('cabinet')" data-f="cabinet" class="picker-cell" style="justify-content:center; font-family:'Cabinet Grotesk';">CABINET</button>
+                    <button onclick="setFontChoice('fragment')" data-f="fragment" class="picker-cell" style="justify-content:center; font-family:'Fragment Mono';">FRAGMENT</button>
                 </div>
             </div>
 
-            <div class="panel">
-                <div class="tag" style="margin-bottom:8px;">ФОНОВАЯ АНИМАЦИЯ</div>
-                <div class="grid-3">
-                    <button onclick="setAnim('grid')" data-a="grid" class="opt-card" style="justify-content:center;">СЕТКА</button>
-                    <button onclick="setAnim('dust')" data-a="dust" class="opt-card" style="justify-content:center;">ЧАСТИЦЫ</button>
-                    <button onclick="setAnim('none')" data-a="none" class="opt-card" style="justify-content:center;">ВЫКЛ</button>
+            <div class="card">
+                <div class="subhead" style="margin-bottom:8px;">АТМОСФЕРА ФОНА</div>
+                <div class="grid-trio">
+                    <button onclick="setBackdropFx('aurora')" data-a="aurora" class="picker-cell" style="justify-content:center;">ВУАЛЬ</button>
+                    <button onclick="setBackdropFx('dust')" data-a="dust" class="picker-cell" style="justify-content:center;">ДРЕЙФ</button>
+                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ПОКОЙ</button>
                 </div>
             </div>
 
-            <button onclick="replayIntro()" class="btn-sec" style="width:100%;">
-                ↻ ПОКАЗАТЬ ЭКРАН ПРИВЕТСТВИЯ ЗАНОВО
+            <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
+                ↻ ПОВТОРИТЬ ПРИВЕТСТВИЕ И ОНБОРДИНГ
             </button>
         </div>
     </div>
 
-    <!-- НИЖНЕЕ МЕНЮ -->
-    <div class="dock">
-        <div class="dock-grid">
-            <button onclick="openTab('cabinet')" id="nav-cabinet" class="dock-tab active">01 // КАБИНЕТ</button>
-            <button onclick="openTab('tariffs')" id="nav-tariffs" class="dock-tab">02 // ТАРИФЫ</button>
-            <button onclick="openTab('style')" id="nav-style" class="dock-tab">03 // ТЕМЫ</button>
+    <!-- НАВИГАЦИЯ -->
+    <div class="bottom-shelf">
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">КАБИНЕТ</button>
+        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">ТАРИФЫ</button>
+        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">ВИД</button>
+    </div>
+
+    <!-- ШТОРКА ДОКУПКИ ТРАФИКА -->
+    <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
+        <div class="curtain-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div>
+                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЙ ТРАФИК</div>
+                    <div style="font-size:16px; font-weight:700;">Пакет гигабайт</div>
+                </div>
+                <span id="boostSlotBadge" class="pill-badge">СЛОТ #1</span>
+            </div>
+
+            <div class="grid-trio" style="margin-bottom:16px;">
+                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+15 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">39 ₽</span>
+                </button>
+                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+50 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">89 ₽</span>
+                </button>
+                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+150 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">149 ₽</span>
+                </button>
+            </div>
+
+            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:14px;" disabled>
+                ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА
+            </button>
         </div>
     </div>
 
-    <!-- МОДАЛКА БУСТЕРОВ -->
-    <div id="boostModal" class="sheet-bg" onclick="if(event.target===this)closeModal('boostModal')">
-        <div class="sheet-box">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <div style="font-size:15px; font-weight:800;">⚡️ ДОКУПИТЬ ТРАФИК</div>
-                <span id="boostSlotBadge" class="pill">СЛОТ #1</span>
+    <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
+    <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
+        <div class="curtain-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div>
+                    <div class="subhead">ПОПОЛНЕНИЕ СЧЕТА</div>
+                    <div style="font-size:16px; font-weight:700;">Платежный шлюз Platega</div>
+                </div>
+                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:4px 8px;">✕</button>
             </div>
-            <div class="grid-3" style="margin-bottom:14px;">
-                <button onclick="pickBoost(15, 39)" id="b_15" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span>+15 ГБ</span><span style="font-size:10px; opacity:0.75;">39 ₽</span>
-                </button>
-                <button onclick="pickBoost(50, 89)" id="b_50" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span>+50 ГБ</span><span style="font-size:10px; opacity:0.75;">89 ₽</span>
-                </button>
-                <button onclick="pickBoost(150, 149)" id="b_150" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span>+150 ГБ</span><span style="font-size:10px; opacity:0.75;">149 ₽</span>
-                </button>
-            </div>
-            <button id="boostPayBtn" onclick="confirmBoost()" class="btn-main" style="width:100%; padding:13px;" disabled>ВЫБЕРИТЕ ПАКЕТ</button>
-        </div>
-    </div>
 
-    <!-- МОДАЛКА ПОПОЛНЕНИЯ -->
-    <div id="topupModal" class="sheet-bg" onclick="if(event.target===this)closeModal('topupModal')">
-        <div class="sheet-box">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <div style="font-size:15px; font-weight:800;">ПОПОЛНЕНИЕ БАЛАНСА</div>
-                <button onclick="closeModal('topupModal')" class="btn-sec" style="padding:4px 8px;">✕</button>
+            <div class="grid-trio" style="margin-bottom:12px;">
+                <button onclick="document.getElementById('topupInputVal').value=100" class="picker-cell" style="justify-content:center;">100 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=250" class="picker-cell" style="justify-content:center;">250 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=500" class="picker-cell" style="justify-content:center;">500 ₽</button>
             </div>
-            <div class="grid-3" style="margin-bottom:10px;">
-                <button onclick="document.getElementById('topupVal').value=100" class="opt-card" style="justify-content:center;">100 ₽</button>
-                <button onclick="document.getElementById('topupVal').value=250" class="opt-card" style="justify-content:center;">250 ₽</button>
-                <button onclick="document.getElementById('topupVal').value=500" class="opt-card" style="justify-content:center;">500 ₽</button>
-            </div>
-            <input type="number" id="topupVal" class="input-box" placeholder="СУММА В РУБЛЯХ (ОТ 10 ₽)" style="margin-bottom:12px;">
-            <button onclick="confirmTopup()" class="btn-main" style="width:100%; padding:13px;">ПЕРЕЙТИ К ОПЛАТЕ →</button>
+
+            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
+
+            <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:14px;">
+                СФОРМИРОВАТЬ СЧЕТ →
+            </button>
         </div>
     </div>
 
@@ -736,16 +848,16 @@
         const user = tg.initDataUnsafe?.user;
         const p = new URLSearchParams(window.location.search);
 
-        // ЖЕЛЕЗОБЕТОННАЯ СИНХРОНИЗАЦИЯ ДАННЫХ (URL + LOCALSTORAGE FALLBACK ДЛЯ BOTFATHER КНОПКИ)
-        if (p.has('bal')) localStorage.setItem('pp_cached_bal', p.get('bal'));
-        if (p.has('subs')) localStorage.setItem('pp_cached_subs', p.get('subs'));
-        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_cached_avatar', p.get('avatar'));
-        if (p.has('user_id')) localStorage.setItem('pp_cached_uid', p.get('user_id'));
+        // Кэширование для устойчивой работы через системную кнопку BotFather
+        if (p.has('bal')) localStorage.setItem('pp_c_bal', p.get('bal'));
+        if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
+        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_c_avatar', p.get('avatar'));
+        if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
 
-        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_cached_uid') || '404';
-        const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
-        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_cached_bal') ?? '0', 10);
-        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_cached_avatar') || user?.photo_url;
+        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
+        const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
+        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
+        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
         document.getElementById('uId').innerText = `ID: ${uid}`;
@@ -760,30 +872,35 @@
             document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
+        function haptic(style = 'light') {
+            try { tg.HapticFeedback.impactOccurred(style); } catch (e) {}
+        }
+
         let subs = [];
         try {
-            const rawSubs = p.get('subs') || localStorage.getItem('pp_cached_subs');
+            const rawSubs = p.get('subs') || localStorage.getItem('pp_c_subs');
             if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
         } catch (e) {
             subs = [];
         }
 
-        function makeLeds(pct) {
-            const total = 16;
-            const active = Math.round((pct / 100) * total);
-            let cls = 'on';
+        function renderMeter(pct) {
+            const count = 14;
+            const filled = Math.round((pct / 100) * count);
+            let cls = 'filled';
             if (pct <= 15) cls = 'crit';
             else if (pct <= 30) cls = 'warn';
-            let res = '';
-            for (let i = 0; i < total; i++) {
-                res += `<div class="led ${i < active ? cls : ''}"></div>`;
+
+            let out = '';
+            for (let i = 0; i < count; i++) {
+                out += `<div class="pill-cell ${i < filled ? cls : ''}"></div>`;
             }
-            return res;
+            return out;
         }
 
         function renderSlots() {
-            const box = document.getElementById('slotsContainer');
-            document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
+            const cluster = document.getElementById('slotsCluster');
+            document.getElementById('slotsCount').innerText = `${subs.length} / 2 АКТИВНО`;
             let html = '';
 
             for (let i = 0; i < 2; i++) {
@@ -795,229 +912,279 @@
                     const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
                     const slotId = s.id || (i + 1);
-                    const savedTitle = localStorage.getItem(`pp_slot_title_${slotId}`) || `СЛОТ #0${i + 1}`;
-                    const masked = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
+                    const savedName = localStorage.getItem(`pp_name_${slotId}`) || `СЛОТ #0${i + 1}`;
+                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
 
                     html += `
-                        <div class="panel">
-                            <div class="slot-top">
+                        <div class="card">
+                            <div class="slot-unit-header">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <span class="dot"></span>
-                                    <input type="text" class="slot-input" value="${savedTitle}" maxlength="16" onblur="localStorage.setItem('pp_slot_title_${slotId}', this.value)">
-                                    <span class="mono" style="font-size:10px; color:var(--muted);">[✎]</span>
+                                    <span class="soft-beacon"></span>
+                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="18" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
+                                    <span style="font-size:11px; color:var(--text-muted);">✎</span>
                                 </div>
-                                <span class="pill">${s.name}</span>
+                                <span class="pill-badge">${s.name}</span>
                             </div>
 
-                            <div class="telemetry">
-                                <div class="ring-wrap">
-                                    <svg class="ring-svg" viewBox="0 0 36 36">
-                                        <circle class="ring-bg" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="ring-fg" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
+                            <div class="traffic-harness">
+                                <div class="gauge-svg-wrap">
+                                    <svg class="gauge-svg" viewBox="0 0 36 36">
+                                        <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
+                                        <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
                                     </svg>
-                                    <div class="ring-val">${pct}%</div>
+                                    <div class="gauge-center">
+                                        <span class="gauge-pct">${pct}%</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                        <span class="tag">ОСТАТОК ТРАФИКА</span>
-                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} / ${totalGb} ГБ</span>
+                                        <span class="subhead">ОСТАТОК КВОТЫ</span>
+                                        <span class="mono" style="font-size:14px; font-weight:700;">${leftGb} <span style="font-size:10px; color:var(--text-muted);">/ ${totalGb} ГБ</span></span>
                                     </div>
-                                    <div class="led-strip">${makeLeds(pct)}</div>
-                                    <div style="display:flex; justify-content:space-between;" class="tag">
+                                    <div class="pill-meter">${renderMeter(pct)}</div>
+                                    <div class="meta-stamp">
                                         <span>ДО: ${s.until}</span>
                                         <span>УСТР: ${s.dev || 1}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="key-row">
-                                <input type="text" id="key_${i}" class="key-field" data-raw="${s.key}" data-mask="${masked}" data-open="0" readonly value="${masked}">
-                                <button onclick="toggleMask('key_${i}', this)" class="btn-sec" style="padding:6px 8px;">👁</button>
-                                <button onclick="copyKey('key_${i}', this)" class="btn-main" style="padding:6px 10px;">COPY</button>
+                            <div class="key-capsule">
+                                <input type="text" id="k_${i}" class="key-text" data-raw="${s.key}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
+                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:5px 8px; font-size:11px;">👁</button>
+                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-pastel" style="padding:6px 10px; font-size:11px;">COPY</button>
                             </div>
 
-                            <div class="grid-2">
-                                <button onclick="openBoostModal(${i + 1})" class="btn-sec">⚡️ +ТРАФИК</button>
-                                <button onclick="openTab('tariffs')" class="btn-sec">↻ ТАРИФЫ</button>
+                            <div class="grid-duo">
+                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">⚡️ +ТРАФИК</button>
+                                <button onclick="switchTab('tariffs')" class="btn-subtle">↻ ПЛАНЫ</button>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="panel" style="border-style:dashed; text-align:center; padding:22px 14px;">
-                            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:12px;">[ СЛОТ ПОДПИСКИ #0${i + 1} СВОБОДЕН ]</div>
-                            <button onclick="openTab('tariffs')" class="btn-main">+ ПОДКЛЮЧИТЬ ТАРИФ</button>
+                        <div class="card" style="border-style:dashed; text-align:center; padding:22px 14px;">
+                            <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">// СЛОТ ПОДКЛЮЧЕНИЯ #0${i + 1} СВОБОДЕН</div>
+                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ТАРИФ</button>
                         </div>
                     `;
                 }
             }
-            box.innerHTML = html;
+            cluster.innerHTML = html;
         }
         renderSlots();
 
-        function toggleMask(id, btn) {
+        function toggleKeyReveal(id, btn) {
             const el = document.getElementById(id);
-            const isOpen = el.getAttribute('data-open') === '1';
-            el.value = isOpen ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
-            el.setAttribute('data-open', isOpen ? '0' : '1');
+            const open = el.getAttribute('data-open') === '1';
+            el.value = open ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
+            el.setAttribute('data-open', open ? '0' : '1');
+            haptic('light');
         }
 
-        function copyKey(id, btn) {
+        function copyKeyValue(id, btn) {
             const raw = document.getElementById(id).getAttribute('data-raw');
             navigator.clipboard.writeText(raw);
             const old = btn.innerText;
-            btn.innerText = 'OK!';
+            btn.innerText = 'OK';
             setTimeout(() => { btn.innerText = old; }, 1200);
+            haptic('medium');
         }
 
-        function copyRef(btn) {
+        function copyRefLink(btn) {
             navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
             const old = btn.innerText;
             btn.innerText = 'СКОПИРОВАНО';
             setTimeout(() => { btn.innerText = old; }, 1300);
+            haptic('light');
         }
 
-        function openTab(tab) {
+        function switchTab(tab) {
             ['cabinet', 'tariffs', 'style'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
                 document.getElementById(`nav-${t}`).classList.toggle('active', t === tab);
             });
+            haptic('light');
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function openCurtain(id) { document.getElementById(id).classList.add('active'); haptic('light'); }
+        function closeCurtain(id) { document.getElementById(id).classList.remove('active'); }
 
-        let chosenGb = 0;
-        let chosenSlot = 1;
-        function openBoostModal(slotNum) {
-            chosenSlot = slotNum;
-            chosenGb = 0;
-            document.getElementById('boostSlotBadge').innerText = `СЛОТ #0${slotNum}`;
-            const b = document.getElementById('boostPayBtn');
-            b.disabled = true;
-            b.innerText = 'ВЫБЕРИТЕ ПАКЕТ';
-            document.querySelectorAll('.boost-item').forEach(el => el.classList.remove('active'));
-            openModal('boostModal');
+        let chosenBoostGb = 0;
+        let chosenSlotNum = 1;
+
+        function triggerBooster(num) {
+            chosenSlotNum = num;
+            chosenBoostGb = 0;
+            document.getElementById('boostSlotBadge').innerText = `СЛОТ #0${num}`;
+            const btn = document.getElementById('boostPayBtn');
+            btn.disabled = true;
+            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА';
+            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
+            openCurtain('boosterSheet');
         }
-        function pickBoost(gb, price) {
-            chosenGb = gb;
-            document.querySelectorAll('.boost-item').forEach(el => el.classList.remove('active'));
+
+        function chooseBoost(gb, price) {
+            chosenBoostGb = gb;
+            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
             document.getElementById(`b_${gb}`).classList.add('active');
-            const b = document.getElementById('boostPayBtn');
-            b.disabled = false;
-            b.innerText = `ОПЛАТИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
+            const btn = document.getElementById('boostPayBtn');
+            btn.disabled = false;
+            btn.innerText = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
+            haptic('light');
         }
-        function confirmBoost() {
-            if (!chosenGb) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenGb}_${chosenSlot}`);
+
+        function dispatchBoost() {
+            if (!chosenBoostGb) return;
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenBoostGb}_${chosenSlotNum}`);
             tg.close();
         }
 
-        function confirmTopup() {
-            const v = parseInt(document.getElementById('topupVal').value, 10);
-            if (!v || v < 10) { alert('Минимум 10 ₽'); return; }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${v}`);
+        function dispatchTopup() {
+            const val = parseInt(document.getElementById('topupInputVal').value, 10);
+            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
             tg.close();
         }
 
-        function buyPlan(planId) {
-            if (subs.length >= 2) { alert('У вас уже активны 2 из 2 слотов!'); return; }
+        function requestTariff(planId) {
+            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
             tg.close();
         }
 
-        function sendPromo() {
-            const c = document.getElementById('promoField').value.trim();
-            if (!c) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(c)}`);
+        function applyPromoCode() {
+            const val = document.getElementById('promoInput').value.trim();
+            if (!val) return;
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(val)}`);
             tg.close();
         }
 
-        // ТЕМЫ, ШРИФТЫ, АНИМАЦИИ
-        let curAnim = localStorage.getItem('pp_anim_v5') || 'grid';
-        function setTheme(t) {
+        // ПАСТЕЛЬНЫЕ ТЕМЫ И ШРИФТЫ
+        let currentFx = localStorage.getItem('pp_fx_v6') || 'aurora';
+
+        function setPastelTheme(t) {
             document.body.setAttribute('data-theme', t);
-            localStorage.setItem('pp_theme_v5', t);
+            localStorage.setItem('pp_theme_v6', t);
             document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
+            haptic('light');
         }
-        function setFont(f) {
+        function setFontChoice(f) {
             document.body.setAttribute('data-font', f);
-            localStorage.setItem('pp_font_v5', f);
+            localStorage.setItem('pp_font_v6', f);
             document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
+            haptic('light');
         }
-        function setAnim(a) {
-            curAnim = a;
-            localStorage.setItem('pp_anim_v5', a);
+        function setBackdropFx(a) {
+            currentFx = a;
+            localStorage.setItem('pp_fx_v6', a);
             document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
+            haptic('light');
         }
 
-        setTheme(localStorage.getItem('pp_theme_v5') || 'oled');
-        setFont(localStorage.getItem('pp_font_v5') || 'space');
-        setAnim(curAnim);
+        setPastelTheme(localStorage.getItem('pp_theme_v6') || 'sage');
+        setFontChoice(localStorage.getItem('pp_font_v6') || 'jakarta');
+        setBackdropFx(currentFx);
 
-        function startIntro() {
-            const w = document.getElementById('welcomeOverlay');
-            const wt = document.getElementById('wTitle');
-            const ws = document.getElementById('wSub');
-            const s = document.getElementById('setupOverlay');
+        // КИНЕМАТОГРАФИЧНЫЙ ОНБОРДИНГ
+        function executeIntro() {
+            const intro = document.getElementById('fadeIntro');
+            const tit = document.getElementById('introTitle');
+            const sub = document.getElementById('introSub');
+            const cfg = document.getElementById('firstRunConfig');
 
-            w.style.display = 'flex';
-            w.style.opacity = '1';
-            setTimeout(() => { wt.classList.add('on'); ws.classList.add('on'); }, 80);
-            setTimeout(() => { wt.classList.remove('on'); ws.classList.remove('on'); }, 1650);
+            intro.style.display = 'flex';
+            intro.style.opacity = '1';
+
+            setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 120);
+            setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
             setTimeout(() => {
-                s.style.display = 'flex';
-                w.style.opacity = '0';
-                setTimeout(() => { w.style.display = 'none'; }, 400);
-            }, 2200);
+                cfg.style.display = 'flex';
+                intro.style.opacity = '0';
+                setTimeout(() => { intro.style.display = 'none'; }, 550);
+            }, 2450);
         }
-        function closeSetup() {
-            localStorage.setItem('pp_onboarded_v5', '1');
-            document.getElementById('setupOverlay').style.display = 'none';
+
+        function completeFirstRun() {
+            localStorage.setItem('pp_onboarded_v6', '1');
+            document.getElementById('firstRunConfig').style.display = 'none';
+            haptic('medium');
         }
+
         function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v5');
-            startIntro();
-        }
-        if (!localStorage.getItem('pp_onboarded_v5')) {
-            startIntro();
+            localStorage.removeItem('pp_onboarded_v6');
+            executeIntro();
         }
 
-        // ФОНОВЫЙ КАНВАС
-        const cvs = document.getElementById('bgCanvas');
-        const ctx = cvs.getContext('2d');
-        let cw, ch;
-        function resize() { cw = cvs.width = window.innerWidth; ch = cvs.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
+        if (!localStorage.getItem('pp_onboarded_v6')) {
+            executeIntro();
+        }
 
-        const pts = Array.from({ length: 25 }, () => ({
-            x: Math.random() * cw, y: Math.random() * ch,
-            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
+        // АНИМАЦИИ: AURORA HAZE (ВУАЛЬ) ИЛИ ЗВЕЗДНЫЙ ДРЕЙФ
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const dustFleet = Array.from({ length: 24 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.2,
+            vy: (Math.random() - 0.5) * 0.2,
+            r: Math.random() * 1.5 + 0.8
         }));
-        let tk = 0;
-        function loop() {
-            ctx.clearRect(0, 0, cw, ch);
-            tk += 0.02;
-            const isLight = document.body.getAttribute('data-theme') === 'brutal';
-            ctx.fillStyle = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)';
-            if (curAnim === 'grid') {
-                for (let x = 16; x < cw; x += 26) {
-                    for (let y = 16; y < ch; y += 26) {
-                        if (Math.sin(x * 0.02 + tk) * Math.cos(y * 0.02 + tk) > 0.15) ctx.fillRect(x, y, 2, 2);
-                    }
-                }
-            } else if (curAnim === 'dust') {
-                pts.forEach(d => {
+
+        let hazeTick = 0;
+
+        function animateBackdrop() {
+            ctx.clearRect(0, 0, width, height);
+            hazeTick += 0.008;
+
+            if (currentFx === 'aurora') {
+                // Мягкие пастельные пятна тумана
+                const grad1 = ctx.createRadialGradient(
+                    width * 0.3 + Math.sin(hazeTick) * 60,
+                    height * 0.25 + Math.cos(hazeTick * 0.8) * 50,
+                    20,
+                    width * 0.3, height * 0.25, 240
+                );
+                grad1.addColorStop(0, 'rgba(157, 188, 169, 0.08)');
+                grad1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = grad1;
+                ctx.fillRect(0, 0, width, height);
+
+                const grad2 = ctx.createRadialGradient(
+                    width * 0.75 + Math.cos(hazeTick * 0.9) * 50,
+                    height * 0.65 + Math.sin(hazeTick) * 60,
+                    30,
+                    width * 0.75, height * 0.65, 260
+                );
+                grad2.addColorStop(0, 'rgba(191, 174, 207, 0.06)');
+                grad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = grad2;
+                ctx.fillRect(0, 0, width, height);
+            } else if (currentFx === 'dust') {
+                // Медленные микро-частицы
+                ctx.fillStyle = 'rgba(232, 238, 233, 0.16)';
+                dustFleet.forEach(d => {
                     d.x += d.vx; d.y += d.vy;
-                    if (d.x < 0) d.x = cw; if (d.x > cw) d.x = 0;
-                    if (d.y < 0) d.y = ch; if (d.y > ch) d.y = 0;
-                    ctx.fillRect(d.x, d.y, 2, 2);
+                    if (d.x < 0) d.x = width; if (d.x > width) d.x = 0;
+                    if (d.y < 0) d.y = height; if (d.y > height) d.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                    ctx.fill();
                 });
             }
-            requestAnimationFrame(loop);
+
+            requestAnimationFrame(animateBackdrop);
         }
-        loop();
+        animateBackdrop();
     </script>
 </body>
 </html>
