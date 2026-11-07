@@ -8,42 +8,100 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ПАСТЕЛЬНЫЕ ПАЛИТРЫ */
+        /* ==========================================
+           ДИЗАЙН-СИСТЕМА: SOFT NORDIC MINIMALISM
+           ========================================== */
+        
+        /* 1. ШАЛФЕЙ (Спокойный темный пастельный) */
         :root, body[data-theme="sage"] {
-            --bg: #0c0f0e; --surface: #141917; --surface-sub: #1b2320; --border: #283730;
-            --border-glow: rgba(162, 196, 177, 0.18); --text-main: #edf2ee; --text-muted: #859b8f;
-            --pastel: #a2c4b1; --pastel-soft: rgba(162, 196, 177, 0.14); --pastel-fg: #0c120f;
-            --state-ok: #8ebd9e; --state-warn: #e2b07e; --state-crit: #d68388;
-            --radius-box: 16px; --radius-btn: 12px;
+            --bg: #0d1110;
+            --bg-grad: radial-gradient(circle at 20% 0%, rgba(168, 213, 186, 0.12), transparent 45%),
+                       radial-gradient(circle at 85% 90%, rgba(168, 213, 186, 0.06), transparent 40%);
+            --surface: rgba(22, 29, 27, 0.78);
+            --surface-sub: rgba(31, 41, 38, 0.65);
+            --border: rgba(168, 213, 186, 0.14);
+            --border-glow: rgba(168, 213, 186, 0.22);
+            --text-main: #f2f7f4;
+            --text-muted: #8ea398;
+            --pastel: #a8d5ba;
+            --pastel-soft: rgba(168, 213, 186, 0.14);
+            --pastel-fg: #0b1710;
+            --particle-color: 168, 213, 186;
+            --state-ok: #8ce0a8;
+            --state-warn: #f3c68f;
+            --state-crit: #eb8c92;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
         }
+
+        /* 2. АМЕТИСТ (Глубокий черно-фиолетовый минимализм) */
         body[data-theme="mauve"] {
-            --bg: #0f0d14; --surface: #181520; --surface-sub: #221e2e; --border: #322b42;
-            --border-glow: rgba(198, 183, 219, 0.18); --text-main: #f3eff8; --text-muted: #9c91ad;
-            --pastel: #c6b7db; --pastel-soft: rgba(198, 183, 219, 0.14); --pastel-fg: #130f1b;
-            --state-ok: #a7ccc3; --state-warn: #e7b78f; --state-crit: #db8b91;
-            --radius-box: 16px; --radius-btn: 12px;
+            --bg: #0b0912;
+            --bg-grad: radial-gradient(circle at 20% 0%, rgba(203, 180, 232, 0.15), transparent 48%),
+                       radial-gradient(circle at 85% 90%, rgba(160, 130, 215, 0.08), transparent 42%);
+            --surface: rgba(20, 17, 30, 0.8);
+            --surface-sub: rgba(30, 25, 44, 0.68);
+            --border: rgba(203, 180, 232, 0.15);
+            --border-glow: rgba(203, 180, 232, 0.25);
+            --text-main: #f6f3fc;
+            --text-muted: #9a90ad;
+            --pastel: #cbb4e8;
+            --pastel-soft: rgba(203, 180, 232, 0.15);
+            --pastel-fg: #120c1c;
+            --particle-color: 203, 180, 232;
+            --state-ok: #9ee0c2;
+            --state-warn: #f2c396;
+            --state-crit: #eb8f9c;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
         }
+
+        /* 3. СЛИВОЧНЫЙ ШЕЛК (Светлая нежная пастель для мамы) */
         body[data-theme="sand"] {
-            --bg: #100e0c; --surface: #191612; --surface-sub: #25201a; --border: #383027;
-            --border-glow: rgba(220, 204, 182, 0.18); --text-main: #f5f1eb; --text-muted: #a19588;
-            --pastel: #dcc8b0; --pastel-soft: rgba(220, 200, 176, 0.14); --pastel-fg: #15120e;
-            --state-ok: #abc19b; --state-warn: #e5b281; --state-crit: #d4857d;
-            --radius-box: 16px; --radius-btn: 12px;
+            --bg: #f6f4f0;
+            --bg-grad: radial-gradient(circle at 15% 0%, rgba(141, 175, 155, 0.22), transparent 45%),
+                       radial-gradient(circle at 90% 85%, rgba(212, 163, 145, 0.16), transparent 40%);
+            --surface: rgba(255, 255, 255, 0.88);
+            --surface-sub: rgba(242, 238, 231, 0.85);
+            --border: rgba(40, 50, 45, 0.09);
+            --border-glow: rgba(92, 133, 110, 0.2);
+            --text-main: #1d2420;
+            --text-muted: #6c7a72;
+            --pastel: #5c856e;
+            --pastel-soft: rgba(92, 133, 110, 0.12);
+            --pastel-fg: #ffffff;
+            --particle-color: 92, 133, 110;
+            --state-ok: #4ca36d;
+            --state-warn: #d98e3b;
+            --state-crit: #cc545c;
+            --shadow: 0 10px 28px rgba(35, 45, 40, 0.06);
         }
+
+        /* 4. НОРДИЧЕСКИЙ ЛЕД (Чистый голубой минимализм) */
         body[data-theme="slate"] {
-            --bg: #0c0f14; --surface: #131922; --surface-sub: #1b2432; --border: #27374a;
-            --border-glow: rgba(169, 192, 217, 0.18); --text-main: #eff4fa; --text-muted: #889eb5;
-            --pastel: #a9c0d9; --pastel-soft: rgba(169, 192, 217, 0.14); --pastel-fg: #0d131a;
-            --state-ok: #93c9bc; --state-warn: #e0b087; --state-crit: #d6858e;
-            --radius-box: 16px; --radius-btn: 12px;
+            --bg: #0b0f16;
+            --bg-grad: radial-gradient(circle at 20% 0%, rgba(167, 199, 231, 0.14), transparent 45%),
+                       radial-gradient(circle at 85% 90%, rgba(167, 199, 231, 0.06), transparent 40%);
+            --surface: rgba(18, 25, 36, 0.78);
+            --surface-sub: rgba(26, 36, 51, 0.65);
+            --border: rgba(167, 199, 231, 0.14);
+            --border-glow: rgba(167, 199, 231, 0.22);
+            --text-main: #f0f5fa;
+            --text-muted: #8a9eb5;
+            --pastel: #a7c7e7;
+            --pastel-soft: rgba(167, 199, 231, 0.14);
+            --pastel-fg: #0b1420;
+            --particle-color: 167, 199, 231;
+            --state-ok: #8ad6c6;
+            --state-warn: #ebb888;
+            --state-crit: #e68a94;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
         }
 
         /* ШРИФТЫ */
-        body[data-font="sora"] { font-family: 'Sora', sans-serif; }
-        body[data-font="geist"] { font-family: 'Geist Mono', monospace; font-size: 13px; }
-        body[data-font="epilogue"] { font-family: 'Epilogue', sans-serif; }
+        body[data-font="sora"] { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+        body[data-font="geist"] { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+        body[data-font="epilogue"] { font-family: 'Inter', -apple-system, sans-serif; }
 
         * {
             box-sizing: border-box;
@@ -55,22 +113,24 @@
 
         body {
             background-color: var(--bg);
+            background-image: var(--bg-grad);
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
-            padding: 14px 14px 108px;
+            padding: 16px 16px 115px;
             overflow-x: hidden;
-            transition: background-color 0.4s cubic-bezier(0.2, 0, 0, 1), color 0.4s cubic-bezier(0.2, 0, 0, 1);
+            transition: background-color 0.35s ease, color 0.35s ease;
         }
 
-        .mono { font-family: 'Geist Mono', monospace; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
         #fxCanvas {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 0;
-            opacity: 0.35;
-            transition: opacity 0.5s ease;
+            z-index: 1;
+            opacity: 0.75;
+            transition: opacity 0.4s ease;
         }
 
         .view-layer {
@@ -80,50 +140,26 @@
             margin: 0 auto;
         }
 
-        /* ВЕРХНИЙ СТАТУС */
-        .status-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 4px 12px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 14px;
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.04em;
-        }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        .soft-beacon {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--state-ok);
-            box-shadow: 0 0 10px var(--state-ok);
-        }
-
-        /* КАРТОЧКА */
+        /* БАЗОВАЯ КАРТОЧКА */
         .card, .tariff-slab {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--radius-box);
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border-radius: 22px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             transition: border-color 0.25s ease, background-color 0.25s ease;
         }
 
-        /* ПРОФИЛЬ */
+        /* ВЕРХНИЙ ПРОФИЛЬ И БАЛАНС */
         .profile-band {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 12px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
         }
         .operator-meta {
             display: flex;
@@ -132,17 +168,17 @@
             min-width: 0;
         }
         .operator-avatar {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: var(--surface-sub);
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: var(--pastel-soft);
             border: 1px solid var(--border);
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
+            font-weight: 800;
+            font-size: 18px;
             color: var(--pastel);
             flex-shrink: 0;
         }
@@ -151,51 +187,56 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
         }
         .op-title {
-            font-size: 15px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 800;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             margin: 2px 0;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
         .balance-cluster {
             text-align: right;
-            border-left: 1px solid var(--border);
-            padding-left: 14px;
+            background: var(--surface-sub);
+            padding: 10px 14px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
         }
         .balance-num {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 19px;
+            font-weight: 800;
             color: var(--text-main);
-            margin: 2px 0 6px;
+            margin: 1px 0 6px;
             letter-spacing: -0.02em;
         }
 
-        /* КНОПКИ */
+        /* КНОПКИ (ЧИСТЫЕ, ПОНЯТНЫЕ, ТАКТИЛЬНЫЕ) */
         .btn-pastel {
             background: var(--pastel);
             color: var(--pastel-fg);
             border: none;
-            border-radius: var(--radius-btn);
-            padding: 10px 14px;
-            font-size: 12px;
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-size: 13px;
             font-weight: 700;
             font-family: inherit;
             cursor: pointer;
-            letter-spacing: 0.01em;
-            transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
-            will-change: transform, opacity;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: opacity 0.2s ease, transform 0.15s ease;
         }
         .btn-pastel:active {
             opacity: 0.88;
             transform: scale(0.98);
         }
         .btn-pastel:disabled {
-            opacity: 0.35;
+            opacity: 0.4;
             pointer-events: none;
         }
 
@@ -203,48 +244,46 @@
             background: var(--surface-sub);
             color: var(--text-main);
             border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
-            padding: 10px 12px;
+            border-radius: 14px;
+            padding: 11px 14px;
             font-size: 12px;
             font-weight: 600;
             font-family: inherit;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
-            will-change: transform;
+            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
         }
         .btn-subtle:active {
             border-color: var(--pastel);
             transform: scale(0.98);
         }
 
+        /* ЗАГОЛОВКИ СЕКЦИЙ */
         .section-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 18px 2px 10px;
+            margin: 20px 4px 10px;
         }
         .section-label {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
             color: var(--text-muted);
+            letter-spacing: 0.02em;
         }
         .pill-badge {
-            font-size: 10px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 99px;
             background: var(--pastel-soft);
             color: var(--pastel);
-            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* КАНАЛ СВЯЗИ */
+        /* КАРТОЧКА ПОДКЛЮЧЕНИЯ (СЛОТ) */
         .slot-unit-header {
             display: flex;
             justify-content: space-between;
@@ -253,37 +292,45 @@
             border-bottom: 1px solid var(--border);
             margin-bottom: 14px;
         }
+        .soft-beacon {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--state-ok);
+            box-shadow: 0 0 10px var(--state-ok);
+            flex-shrink: 0;
+        }
         .slot-name-field {
             background: transparent;
             border: none;
             border-bottom: 1px dashed var(--border);
             color: var(--text-main);
             font-family: inherit;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
-            width: 160px;
+            width: 155px;
             padding: 2px 0;
             outline: none;
-            transition: border-color 0.25s ease;
+            transition: border-color 0.2s ease;
         }
         .slot-name-field:focus { border-bottom-color: var(--pastel); }
 
-        /* ТЕЛЕМЕТРИЯ */
+        /* ВИЗУАЛИЗАЦИЯ ТРАФИКА (ПРОСТАЯ И ПОНЯТНАЯ) */
         .traffic-harness {
             display: grid;
-            grid-template-columns: 72px 1fr;
+            grid-template-columns: 74px 1fr;
             gap: 14px;
             background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 12px;
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 14px;
             align-items: center;
         }
         .gauge-svg-wrap {
             position: relative;
-            width: 70px;
-            height: 70px;
+            width: 72px;
+            height: 72px;
         }
         .gauge-svg {
             transform: rotate(-90deg);
@@ -292,7 +339,7 @@
         }
         .gauge-track {
             fill: none;
-            stroke: var(--surface);
+            stroke: var(--border);
             stroke-width: 4.5;
         }
         .gauge-flow {
@@ -300,7 +347,7 @@
             stroke: var(--pastel);
             stroke-width: 4.5;
             stroke-linecap: round;
-            transition: stroke-dasharray 0.6s cubic-bezier(0.2, 0, 0, 1), stroke 0.3s ease;
+            transition: stroke-dasharray 0.6s ease;
         }
         .gauge-center {
             position: absolute;
@@ -311,24 +358,22 @@
             justify-content: center;
         }
         .gauge-pct {
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 14px;
+            font-weight: 800;
         }
 
         .pill-meter {
             display: grid;
             grid-template-columns: repeat(14, 1fr);
             gap: 3px;
-            margin: 7px 0 9px;
+            margin: 8px 0 10px;
         }
         .pill-cell {
             height: 6px;
-            border-radius: 2px;
-            background: rgba(255, 255, 255, 0.05);
-            transition: background 0.3s ease;
+            border-radius: 3px;
+            background: var(--border);
         }
-        .pill-cell.filled { background: var(--pastel); opacity: 0.9; }
+        .pill-cell.filled { background: var(--pastel); }
         .pill-cell.warn { background: var(--state-warn); }
         .pill-cell.crit { background: var(--state-crit); }
 
@@ -337,30 +382,56 @@
             justify-content: space-between;
             font-size: 11px;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
+        /* БЛОК КЛЮЧА И БЫСТРОГО ПОДКЛЮЧЕНИЯ */
+        .connect-action-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
         .key-capsule {
             display: grid;
             grid-template-columns: 1fr auto auto;
             gap: 6px;
             background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
-            padding: 7px 9px;
+            border-radius: 14px;
+            padding: 8px 10px;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .key-text {
             background: transparent;
             border: none;
             outline: none;
             color: var(--text-muted);
-            font-family: 'Geist Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             width: 100%;
             pointer-events: none;
         }
 
+        /* ПРОГРЕСС-БАР РЕФЕРАЛКИ (5% -> 25%) */
+        .ref-progress-track {
+            width: 100%;
+            height: 8px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 10px 0 8px;
+        }
+        .ref-progress-bar {
+            height: 100%;
+            background: var(--pastel);
+            border-radius: 99px;
+            transition: width 0.5s ease;
+        }
+
+        /* КАРТОЧКИ ТАРИФОВ */
         .tariff-slab {
             display: flex;
             flex-direction: column;
@@ -368,30 +439,33 @@
         }
         .tariff-slab.featured {
             border-color: var(--pastel);
-            box-shadow: 0 0 24px var(--border-glow);
+            box-shadow: 0 8px 30px var(--border-glow);
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 6px;
         }
 
-        /* СЕТКА НАСТРОЕК */
+        /* СЕТКИ И ВЫБОР ОПЦИЙ */
         .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .picker-cell {
             background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
+            border-radius: 14px;
             color: var(--text-muted);
-            padding: 12px 10px;
+            padding: 12px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1), color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
-            will-change: transform;
-        }
-        .picker-cell:active {
-            transform: scale(0.98);
+            transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
         }
         .picker-cell.active {
             border-color: var(--pastel);
@@ -399,68 +473,65 @@
             color: var(--pastel);
         }
         .tone-dot {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            box-shadow: 0 0 8px currentColor;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .ambient-field {
             width: 100%;
             background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
-            padding: 11px 12px;
+            border-radius: 14px;
+            padding: 12px 14px;
             color: var(--text-main);
             font-size: 13px;
+            font-family: inherit;
             outline: none;
             transition: border-color 0.25s ease;
         }
         .ambient-field:focus { border-color: var(--pastel); }
 
-        /* НАВИГАЦИОННАЯ ПАНЕЛЬ */
+        /* ПЛАВАЮЩАЯ НИЖНЯЯ НАВИГАЦИЯ */
         .bottom-shelf {
             position: fixed;
-            bottom: 12px;
-            left: 14px;
-            right: 14px;
+            bottom: 14px;
+            left: 16px;
+            right: 16px;
             max-width: 440px;
             margin: 0 auto;
-            background: rgba(20, 25, 23, 0.94);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background: var(--surface);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
             border: 1px solid var(--border);
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 6px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
             z-index: 90;
-            transition: border-color 0.3s ease;
+            box-shadow: var(--shadow);
         }
         .shelf-tab {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 10px 6px;
-            border-radius: 12px;
-            font-size: 11px;
+            padding: 11px 6px;
+            border-radius: 14px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.05em;
             font-family: inherit;
             cursor: pointer;
             text-align: center;
-            transition: background-color 0.2s cubic-bezier(0.2, 0, 0, 1), color 0.2s cubic-bezier(0.2, 0, 0, 1);
+            transition: background-color 0.22s ease, color 0.22s ease;
         }
         .shelf-tab.active {
-            background: var(--surface-sub);
-            color: var(--pastel);
+            background: var(--pastel);
+            color: var(--pastel-fg);
         }
 
-        /* 
-           ТОЧНАЯ АНИМАЦИЯ ВКЛАДОК:
-           Плавный мягкий фейд без скачков высоты, рывков и дерганий 
-        */
+        /* ПЛАВНЫЕ ВКЛАДКИ (ЧИСТЫЙ FADE БЕЗ СКАЧКОВ И ДЕРГАНИЙ) */
         .tab-content {
             display: block;
             visibility: hidden;
@@ -468,30 +539,26 @@
             overflow: hidden;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.28s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0.28s;
-            will-change: opacity;
+            transition: opacity 0.26s ease, visibility 0s linear 0.26s;
         }
         .tab-content.active {
             visibility: visible;
             height: auto;
             overflow: visible;
             pointer-events: auto;
-            transition: opacity 0.28s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0s;
+            transition: opacity 0.26s ease, visibility 0s linear 0s;
         }
         .tab-content.show {
             opacity: 1;
         }
 
-        /* 
-           ШТОРКА (МОДАЛКА):
-           Плавный fade-in фона и мягкий, шелковистый выкат панели на 24px вверх без резких прыжков
-        */
+        /* МОДАЛЬНЫЕ ОКНА (ШТОРКИ) */
         .curtain-wrap {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 200;
             display: flex;
             align-items: flex-end;
@@ -499,73 +566,77 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0.3s linear;
-            will-change: opacity;
+            transition: opacity 0.28s ease, visibility 0.28s linear;
         }
         .curtain-wrap.active {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0s;
+            transition: opacity 0.28s ease, visibility 0s linear 0s;
         }
         .curtain-panel {
-            background: var(--surface);
+            background: var(--bg);
             border-top: 1px solid var(--border);
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
+            border-top-left-radius: 26px;
+            border-top-right-radius: 26px;
             width: 100%;
             max-width: 440px;
-            padding: 22px 16px 28px;
-            transform: translateY(24px);
-            opacity: 0.9;
-            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.2, 0, 0, 1);
-            will-change: transform, opacity;
+            padding: 22px 18px 30px;
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: translateY(18px);
+            opacity: 0.95;
+            transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease;
         }
         .curtain-wrap.active .curtain-panel {
             transform: translateY(0);
             opacity: 1;
         }
 
-        /* ОНБОРДИНГ */
+        /* QR КОД БОКС */
+        .qr-box {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 18px;
+            margin: 12px auto;
+            width: fit-content;
+        }
+        .qr-box.active { display: flex; }
+
+        /* ВСТУПИТЕЛЬНАЯ ЗАСТАВКА */
         #fadeIntro {
             position: fixed;
             inset: 0;
-            background: #090c0b;
+            background: var(--bg);
             z-index: 300;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.2, 0, 0, 1);
-            will-change: opacity;
+            transition: opacity 0.5s ease;
         }
         .fade-greeting {
             font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            color: #e5ece7;
+            font-weight: 800;
+            color: var(--text-main);
             opacity: 0;
-            transform: scale(0.97);
-            transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
+            transition: opacity 0.6s ease;
         }
         .fade-caption {
-            font-size: 11px;
-            color: #7b9485;
-            margin-top: 10px;
-            letter-spacing: 0.16em;
+            font-size: 12px;
+            color: var(--pastel);
+            margin-top: 8px;
+            letter-spacing: 0.1em;
+            font-weight: 600;
             opacity: 0;
-            transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1) 0.1s;
-            will-change: opacity;
+            transition: opacity 0.6s ease 0.15s;
         }
-        .fade-greeting.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .fade-caption.show {
-            opacity: 1;
-        }
+        .fade-greeting.show, .fade-caption.show { opacity: 1; }
 
         #firstRunConfig {
             position: fixed;
@@ -575,75 +646,68 @@
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            padding: 24px 16px;
+            padding: 26px 18px;
             overflow-y: auto;
             opacity: 0;
-            transition: opacity 0.4s cubic-bezier(0.2, 0, 0, 1);
-            will-change: opacity;
+            transition: opacity 0.35s ease;
         }
-        #firstRunConfig.show {
-            opacity: 1;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                transition-duration: 0.01ms !important;
-                animation-duration: 0.01ms !important;
-            }
-        }
+        #firstRunConfig.show { opacity: 1; }
     </style>
 </head>
 <body data-theme="sage" data-font="sora">
 
+    <!-- ФОНОВЫЕ ЧАСТИЦЫ -->
     <canvas id="fxCanvas"></canvas>
 
     <!-- 1. ПРИВЕТСТВИЕ -->
     <div id="fadeIntro">
-        <div id="introTitle" class="fade-greeting">Добро пожаловать</div>
-        <div id="introSub" class="fade-caption">ЗАЩИЩЁННЫЙ VPN-КАНАЛ / PINPOINT</div>
+        <div id="introTitle" class="fade-greeting">PinPoint VPN</div>
+        <div id="introSub" class="fade-caption">ПРОСТОЙ И БЫСТРЫЙ ИНТЕРНЕТ</div>
     </div>
 
     <!-- 2. ПЕРВИЧНАЯ НАСТРОЙКА -->
     <div id="firstRunConfig">
         <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="subhead" style="margin-bottom:4px;">ИНИЦИАЛИЗАЦИЯ // 01</div>
-            <div style="font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-bottom:6px;">Настройка вида</div>
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.4;">Мягкие пастельные оттенки, созданные для спокойной работы без усталости глаз.</div>
+            <div class="subhead" style="margin-bottom:4px;">ДОБРО ПОЖАЛОВАТЬ</div>
+            <div style="font-size:22px; font-weight:800; margin-bottom:6px;">Выберите оформление</div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.45;">
+                Спокойные пастельные тона или строгий минимализм — настройте приложение под себя.
+            </div>
 
-            <div class="section-row"><span class="section-label">Цвет</span></div>
-            <div class="grid-duo" style="margin-bottom:14px;">
+            <div class="section-row"><span class="section-label">Цветовая палитра</span></div>
+            <div class="grid-duo" style="margin-bottom:16px;">
                 <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                    <span>ЗЕЛЁНЫЙ</span><span class="tone-dot" style="background:#a2c4b1; color:#a2c4b1;"></span>
+                    <span>🌿 Шалфей</span><span class="tone-dot" style="background:#a8d5ba;"></span>
                 </button>
                 <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                    <span>ЛИЛОВЫЙ</span><span class="tone-dot" style="background:#c6b7db; color:#c6b7db;"></span>
+                    <span>🔮 Аметист</span><span class="tone-dot" style="background:#cbb4e8;"></span>
                 </button>
                 <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                    <span>БЕЖЕВЫЙ</span><span class="tone-dot" style="background:#dcc8b0; color:#dcc8b0;"></span>
+                    <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f6f4f0; border-color:#5c856e;"></span>
                 </button>
                 <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                    <span>СИНИЙ</span><span class="tone-dot" style="background:#a9c0d9; color:#a9c0d9;"></span>
+                    <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                 </button>
             </div>
 
-            <div class="section-row"><span class="section-label">Шрифт</span></div>
-            <div class="grid-trio" style="margin-bottom:14px;">
-                <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">МОНО</button>
-                <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
+            <div class="section-row"><span class="section-label">Стиль текста</span></div>
+            <div class="grid-trio" style="margin-bottom:16px;">
+                <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
+                <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
+                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
             </div>
 
-            <div class="section-row"><span class="section-label">Фон</span></div>
+            <div class="section-row"><span class="section-label">Анимация фона</span></div>
             <div class="grid-trio">
                 <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
-                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">МЯГКИЙ ТУМАН</button>
-                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ЭФФЕКТОВ</button>
+                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
+                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ЧИСТЫЙ</button>
             </div>
         </div>
 
-        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:20px;">
-            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:14px; font-size:13px;">
-                СОХРАНИТЬ НАСТРОЙКИ →
+        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:24px;">
+            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:15px; font-size:14px;">
+                ГОТОВО, НАЧАТЬ РАБОТУ →
             </button>
         </div>
     </div>
@@ -651,13 +715,13 @@
     <!-- ГЛАВНЫЙ ЭКРАН -->
     <div class="view-layer">
 
-        <!-- КАРТОЧКА ПРОФИЛЯ -->
+        <!-- ШАПКА ПРОФИЛЯ И БАЛАНСА -->
         <div class="card profile-band">
             <div class="operator-meta">
                 <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
                 <div id="avatarFallback" class="operator-avatar">P</div>
                 <div style="min-width:0;">
-                    <div class="subhead">ПРОФИЛЬ КЛИЕНТА</div>
+                    <div class="subhead">ВАШ ПРОФИЛЬ</div>
                     <div id="uName" class="op-title">Клиент</div>
                     <div id="uId" class="mono" style="font-size:11px; color:var(--text-muted);">ID: 000000</div>
                 </div>
@@ -665,142 +729,236 @@
             <div class="balance-cluster">
                 <div class="subhead">БАЛАНС</div>
                 <div id="uBal" class="balance-num">0 ₽</div>
-                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:5px 10px; font-size:11px;">+ ДОБАВИТЬ СРЕДСТВА</button>
+                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:6px 12px; font-size:11px; border-radius:10px;">
+                    + ПОПОЛНИТЬ
+                </button>
             </div>
         </div>
 
-        <!-- 01 // ОБЗОР (БЫВШИЙ КАБИНЕТ) -->
+        <!-- ВКЛАДКА 1: МОЙ VPN (ГЛАВНАЯ) -->
         <div id="tab-cabinet" class="tab-content active show">
             <div class="section-row">
-                <span class="section-label">КАНАЛЫ СВЯЗИ</span>
+                <span class="section-label">МОИ ПОДКЛЮЧЕНИЯ</span>
                 <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
             </div>
 
+            <!-- СЛОТЫ ПОДПИСОК -->
             <div id="slotsCluster"></div>
 
-            <!-- ПРОМОКОД НА СКИДКУ -->
-            <div class="section-row"><span class="section-label">ПРОМОКОД НА СКИДКУ</span></div>
-            <div class="card" style="padding:10px;">
-                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите промокод, например (Pin2026)" style="text-transform:uppercase;">
-                    <button onclick="applyPromoCode()" class="btn-pastel">АКТИВИРОВАТЬ</button>
+            <!-- ПАРТНЕРСКАЯ ПРОГРАММА (5% -> 25%) -->
+            <div class="section-row">
+                <span class="section-label">БОНУСНАЯ ПРОГРАММА</span>
+                <span id="refBadgePct" class="pill-badge">СТАВКА: 5%</span>
+            </div>
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <div>
+                        <div style="font-size:15px; font-weight:800;">Приглашайте друзей</div>
+                        <div id="refSubtitle" style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                            +1% к доходу за каждого оплатившего друга (до 25%)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ref-progress-track">
+                    <div id="refProgressBar" class="ref-progress-bar" style="width: 20%;"></div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-bottom:14px;">
+                    <span>Активных друзей: <b id="refFriendsCount" style="color:var(--text-main);">0</b> / 20</span>
+                    <span>Заработано: <b id="refEarnedSum" style="color:var(--pastel);">0 ₽</b></span>
+                </div>
+
+                <div class="grid-duo">
+                    <button onclick="shareRefLink()" class="btn-pastel" style="padding:11px;">
+                        💌 ОТПРАВИТЬ ДРУГУ
+                    </button>
+                    <button onclick="copyRefLink(this)" class="btn-subtle" style="padding:11px;">
+                        📋 СКОПИРОВАТЬ
+                    </button>
                 </div>
             </div>
 
-            <!-- ПАРТНЕРСКИЙ ДОХОД -->
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <div class="subhead">ПАРТНЕРСКИЙ ДОХОД // 15%</div>
-                    <div style="font-size:13px; font-weight:700; margin-top:2px;">Пожизненный процент с друзей</div>
+            <!-- ПРОМОКОД -->
+            <div class="section-row"><span class="section-label">ЕСТЬ ПРОМОКОД?</span></div>
+            <div class="card" style="padding:12px;">
+                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите код (например: PIN2026)" style="text-transform:uppercase;">
+                    <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
                 </div>
-                <button onclick="copyRefLink(this)" class="btn-subtle">ПОДЕЛИТЬСЯ</button>
             </div>
         </div>
 
-        <!-- 02 // ПОДПИСКИ (БЫВШИЕ ТАРИФЫ) -->
+        <!-- ВКЛАДКА 2: ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-content">
             <div class="section-row">
-                <span class="section-label">КАТАЛОГ ПОДПИСОК</span>
-                <span class="pill-badge">МОМЕНТАЛЬНЫЙ ВЫПУСК</span>
+                <span class="section-label">ВЫБЕРИТЕ ТАРИФ</span>
+                <span class="pill-badge">ФИН • ГЕР • НИД • ПОЛ</span>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ОЗНАКОМЛЕНИЕ</div><div style="font-size:16px; font-weight:700;">🆓 24 Часа</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">0 ₽</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="subhead">ПОПРОБОВАТЬ БЕСПЛАТНО</div>
+                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🆓 Тест на 24 часа</div>
+                    </div>
+                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">0 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 10 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">ЗАПУСТИТЬ ТЕСТ</button>
+                <div style="font-size:12px; color:var(--text-muted);">10 ГБ трафика • 1 устройство • Все локации</div>
+                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">
+                    ВКЛЮЧИТЬ БЕСПЛАТНЫЙ ТЕСТ
+                </button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ПЕРИОД: 14 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">🚀 Тариф «Старт»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">69 ₽</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="subhead">НА 2 НЕДЕЛИ</div>
+                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🚀 Тариф «Старт»</div>
+                    </div>
+                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">69 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 50 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 69 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">50 ГБ трафика • 1 устройство • Высокая скорость</div>
+                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                    ПОДКЛЮЧИТЬ ЗА 69 ₽
+                </button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ПЕРИОД: 30 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">⚡️ Тариф «Базовый»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">129 ₽</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="subhead">НА 1 МЕСЯЦ (ОПТИМАЛЬНО)</div>
+                        <div style="font-size:17px; font-weight:800; margin-top:2px;">⚡️ Тариф «Базовый»</div>
+                    </div>
+                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">129 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 129 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 129 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">129 ГБ трафика • 1 устройство • Без ограничений скорости</div>
+                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                    ПОДКЛЮЧИТЬ ЗА 129 ₽
+                </button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">МУЛЬТИ-ПОДКЛЮЧЕНИЕ</div><div style="font-size:16px; font-weight:700;">💎 Тариф «Продвинутый»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">199 ₽</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="subhead">ДЛЯ СЕБЯ И БЛИЗКИХ (30 ДНЕЙ)</div>
+                        <div style="font-size:17px; font-weight:800; margin-top:2px;">💎 Тариф «Продвинутый»</div>
+                    </div>
+                    <div>
+                        <span class="old-price">249 ₽</span>
+                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">199 ₽</span>
+                    </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 300 ГБ • Лимит: 3 устройства</div>
-                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 199 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">300 ГБ трафика • До 3 устройств одновременно</div>
+                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                    ПОДКЛЮЧИТЬ ЗА 199 ₽
+                </button>
             </div>
 
             <div class="tariff-slab featured">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead" style="color:var(--pastel);">МАКСИМАЛЬНАЯ ВЫГОДА</div><div style="font-size:16px; font-weight:700;">🔥 ХИТ СЕЗОНА (90 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">499 ₽</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div class="subhead" style="color:var(--pastel);">ВЫГОДА 25% • НА 3 МЕСЯЦА</div>
+                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА (90 дней)</div>
+                    </div>
+                    <div>
+                        <span class="old-price">650 ₽</span>
+                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">499 ₽</span>
+                    </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 900 ГБ • Лимит: 3 устройства</div>
-                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 499 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">900 ГБ трафика • До 3 устройств (телефон, ПК, планшет)</div>
+                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 499 ₽
+                </button>
             </div>
         </div>
 
-        <!-- 03 // ЭСТЕТИКА (БЫВШИЙ ВИД) -->
+        <!-- ВКЛАДКА 3: ОФОРМЛЕНИЕ -->
         <div id="tab-style" class="tab-content">
-            <div class="section-row"><span class="section-label">НАСТРОЙКИ ВИДА</span></div>
+            <div class="section-row"><span class="section-label">ВНЕШНИЙ ВИД ПРИЛОЖЕНИЯ</span></div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ЦВЕТ ИНТЕРФЕЙСА</div>
+                <div class="subhead" style="margin-bottom:10px;">ЦВЕТОВАЯ ТЕМА</div>
                 <div class="grid-duo">
                     <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                        <span>ЗЕЛЁНЫЙ</span><span class="tone-dot" style="background:#a2c4b1; color:#a2c4b1;"></span>
+                        <span>🌿 Шалфей</span><span class="tone-dot" style="background:#a8d5ba;"></span>
                     </button>
                     <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                        <span>ЛИЛОВЫЙ</span><span class="tone-dot" style="background:#c6b7db; color:#c6b7db;"></span>
+                        <span>🔮 Аметист</span><span class="tone-dot" style="background:#cbb4e8;"></span>
                     </button>
                     <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                        <span>БЕЖЕВЫЙ</span><span class="tone-dot" style="background:#dcc8b0; color:#dcc8b0;"></span>
+                        <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f6f4f0; border-color:#5c856e;"></span>
                     </button>
                     <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                        <span>СИНИЙ</span><span class="tone-dot" style="background:#a9c0d9; color:#a9c0d9;"></span>
+                        <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                     </button>
                 </div>
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ШРИФТ</div>
+                <div class="subhead" style="margin-bottom:10px;">ШРИФТ</div>
                 <div class="grid-trio">
-                    <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">МОНО</button>
-                    <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
+                    <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
+                    <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
+                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
                 </div>
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ФОН</div>
+                <div class="subhead" style="margin-bottom:10px;">ЖИВОЙ ФОН</div>
                 <div class="grid-trio">
                     <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
-                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">МЯГКИЙ ТУМАН</button>
-                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ЭФФЕКТОВ</button>
+                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
+                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ФОНА</button>
                 </div>
             </div>
 
             <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
-                ↻ ПЕРЕЗАПУСТИТЬ ВСТУПЛЕНИЕ
+                ↻ ПОКАЗАТЬ ЭКРАН ПРИВЕТСТВИЯ
             </button>
         </div>
     </div>
 
-    <!-- ДОК-ПАНЕЛЬ НАВИГАЦИИ -->
+    <!-- НИЖНЕЕ МЕНЮ (ПОНЯТНОЕ С ПЕРВОГО ВЗГЛЯДА) -->
     <div class="bottom-shelf">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">01 // СЕТЬ</button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">02 // ДОСТУП</button>
-        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">03 // СЦЕНА</button>
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">🛡 Мой VPN</button>
+        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">💎 Тарифы</button>
+        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">🎨 Вид</button>
+    </div>
+
+    <!-- ШТОРКА БЫСТРОГО ПОДКЛЮЧЕНИЯ В 1 КЛИК + QR -->
+    <div id="connectSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('connectSheet')">
+        <div class="curtain-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div>
+                    <div class="subhead">НАСТРОЙКА В 1 КЛИК</div>
+                    <div style="font-size:18px; font-weight:800;">Подключение устройства</div>
+                </div>
+                <button onclick="closeCurtain('connectSheet')" class="btn-subtle" style="padding:6px 10px;">✕</button>
+            </div>
+
+            <div class="grid-duo" style="margin-bottom:14px;">
+                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell" style="justify-content:center;">🍏 iPhone / iPad / Mac</button>
+                <button id="plat_android" onclick="renderAppList('android')" class="picker-cell" style="justify-content:center;">🤖 Android / Windows</button>
+            </div>
+
+            <div id="appsContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
+
+            <!-- QR КОД ДЛЯ ПОДКЛЮЧЕНИЯ С ДРУГОГО УСТРОЙСТВА -->
+            <div id="qrBox" class="qr-box">
+                <img id="qrImage" src="" alt="QR Code" style="width:170px; height:170px; border-radius:8px;">
+                <div style="color:#111; font-size:11px; font-weight:700; margin-top:8px;">Отсканируйте камерой в VPN-приложении</div>
+            </div>
+
+            <div class="grid-duo">
+                <button onclick="toggleQrCode()" class="btn-subtle" style="padding:12px;">
+                    📷 QR-КОД
+                </button>
+                <button onclick="copyCurrentKeyDirectly()" class="btn-subtle" style="padding:12px;">
+                    📋 СКОПИРОВАТЬ КЛЮЧ
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- ШТОРКА ДОЗАПРАВКИ ТРАФИКА -->
@@ -808,29 +966,29 @@
         <div class="curtain-panel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">ЭКСТРЕННАЯ ДОЗАПРАВКА</div>
-                    <div style="font-size:16px; font-weight:700;">Пакет трафика</div>
+                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЕ ГИГАБАЙТЫ</div>
+                    <div style="font-size:18px; font-weight:800;">Пакет трафика</div>
                 </div>
-                <span id="boostSlotBadge" class="pill-badge">КАНАЛ #1</span>
+                <span id="boostSlotBadge" class="pill-badge">СЛОТ #1</span>
             </div>
 
             <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+15 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">39 ₽</span>
+                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
+                    <span style="font-size:12px; color:var(--text-muted);">39 ₽</span>
                 </button>
-                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+50 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">89 ₽</span>
+                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
+                    <span style="font-size:12px; color:var(--text-muted);">89 ₽</span>
                 </button>
-                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+150 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">149 ₽</span>
+                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
+                    <span style="font-size:12px; color:var(--text-muted);">149 ₽</span>
                 </button>
             </div>
 
-            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:14px;" disabled>
-                ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА
+            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:15px;" disabled>
+                ВЫБЕРИТЕ ПАКЕТ ТРАФИКА
             </button>
         </div>
     </div>
@@ -840,22 +998,22 @@
         <div class="curtain-panel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">ПОПОЛНЕНИЕ СЧЕТА</div>
-                    <div style="font-size:16px; font-weight:700;">Шлюз Platega</div>
+                    <div class="subhead">БЫСТРОЕ ПОПОЛНЕНИЕ</div>
+                    <div style="font-size:18px; font-weight:800;">Пополнить баланс</div>
                 </div>
-                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:4px 8px;">✕</button>
+                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:6px 10px;">✕</button>
             </div>
 
             <div class="grid-trio" style="margin-bottom:12px;">
-                <button onclick="document.getElementById('topupInputVal').value=100" class="picker-cell" style="justify-content:center;">100 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=250" class="picker-cell" style="justify-content:center;">250 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=500" class="picker-cell" style="justify-content:center;">500 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=129" class="picker-cell" style="justify-content:center;">129 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell" style="justify-content:center;">199 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell" style="justify-content:center;">499 ₽</button>
             </div>
 
-            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
+            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
 
-            <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:14px;">
-                СФОРМИРОВАТЬ СЧЕТ →
+            <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:15px;">
+                ПЕРЕЙТИ К ОПЛАТЕ →
             </button>
         </div>
     </div>
@@ -872,15 +1030,32 @@
         if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
         if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_c_avatar', p.get('avatar'));
         if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
+        if (p.has('ref_cnt')) localStorage.setItem('pp_c_ref_cnt', p.get('ref_cnt'));
+        if (p.has('ref_earn')) localStorage.setItem('pp_c_ref_earn', p.get('ref_earn'));
 
         const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
         const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
+        const refCount = parseInt(p.get('ref_cnt') ?? localStorage.getItem('pp_c_ref_cnt') ?? '0', 10);
+        const refEarned = parseInt(p.get('ref_earn') ?? localStorage.getItem('pp_c_ref_earn') ?? '0', 10);
         const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
         document.getElementById('uId').innerText = `ID: ${uid}`;
         document.getElementById('uBal').innerText = `${balance} ₽`;
+
+        // Расчет прогрессивной рефералки (5% база + 1% за каждого оплатившего друга, макс 25%)
+        const currentRefPct = Math.min(25, 5 + refCount);
+        const refProgressWidth = Math.min(100, Math.max(8, (refCount / 20) * 100));
+        document.getElementById('refBadgePct').innerText = `ВАШ БОНУС: ${currentRefPct}%`;
+        document.getElementById('refFriendsCount').innerText = refCount;
+        document.getElementById('refEarnedSum').innerText = `${refEarned} ₽`;
+        document.getElementById('refProgressBar').style.width = `${refProgressWidth}%`;
+        if (currentRefPct < 25) {
+            document.getElementById('refSubtitle').innerText = `Пригласите еще 1 друга, чтобы получать ${currentRefPct + 1}% с пополнений`;
+        } else {
+            document.getElementById('refSubtitle').innerText = `Максимальный уровень 25% достигнут!`;
+        }
 
         if (avatarUrl && avatarUrl !== 'none') {
             const img = document.getElementById('avatarImg');
@@ -931,16 +1106,16 @@
                     const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
                     const slotId = s.id || (i + 1);
-                    const savedName = localStorage.getItem(`pp_name_${slotId}`) || `КАНАЛ #0${i + 1}`;
-                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
+                    const savedName = localStorage.getItem(`pp_name_${slotId}`) || `Мое подключение #${i + 1}`;
+                    const maskedKey = s.key ? s.key.slice(0, 16) + '••••••••••••' : 'N/A';
 
                     html += `
                         <div class="card">
                             <div class="slot-unit-header">
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     <span class="soft-beacon"></span>
-                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="18" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
-                                    <span style="font-size:11px; color:var(--text-muted);">✎</span>
+                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="20" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
+                                    <span style="font-size:12px; color:var(--text-muted);">✎</span>
                                 </div>
                                 <span class="pill-badge">${s.name}</span>
                             </div>
@@ -957,34 +1132,40 @@
                                 </div>
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                        <span class="subhead">ТЕЛЕМЕТРИЯ ТРАФИКА</span>
-                                        <span class="mono" style="font-size:14px; font-weight:700;">${leftGb} <span style="font-size:10px; color:var(--text-muted);">/ ${totalGb} ГБ</span></span>
+                                        <span class="subhead">ОСТАТОК ТРАФИКА</span>
+                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} <span style="font-size:11px; color:var(--text-muted); font-weight:500;">из ${totalGb} ГБ</span></span>
                                     </div>
                                     <div class="pill-meter">${renderMeter(pct)}</div>
                                     <div class="meta-stamp">
-                                        <span>ДО: ${s.until}</span>
-                                        <span>УСТР: ${s.dev || 1}</span>
+                                        <span>Активен до: ${s.until}</span>
+                                        <span>Устройств: ${s.dev || 1}</span>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- ГЛАВНАЯ КНОПКА ДЛЯ ПАПЫ И МАМЫ: ПОДКЛЮЧИТЬ В 1 КЛИК -->
+                            <button onclick="openConnectModal('${s.key}')" class="btn-pastel" style="width:100%; padding:13px; margin-bottom:10px; font-size:13px;">
+                                ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
+                            </button>
+
                             <div class="key-capsule">
                                 <input type="text" id="k_${i}" class="key-text" data-raw="${s.key}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
-                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:5px 8px; font-size:11px;">👁</button>
-                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-pastel" style="padding:6px 10px; font-size:11px;">ЗАБРАТЬ</button>
+                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:6px 10px; font-size:11px;">👁</button>
+                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-subtle" style="padding:6px 12px; font-size:11px;">КОПИРОВАТЬ</button>
                             </div>
 
                             <div class="grid-duo">
-                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">⚡️ +ТРАФИК</button>
-                                <button onclick="switchTab('tariffs')" class="btn-subtle">↻ ТАРИФЫ</button>
+                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">➕ Добавить ГБ</button>
+                                <button onclick="switchTab('tariffs')" class="btn-subtle">🔄 Сменить тариф</button>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="card" style="border-style:dashed; text-align:center; padding:22px 14px;">
-                            <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">// СВОБОДНЫЙ СЛОТ #0${i + 1}</div>
-                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ПОДПИСКУ</button>
+                        <div class="card" style="border-style:dashed; text-align:center; padding:26px 16px;">
+                            <div style="font-size:14px; font-weight:700; margin-bottom:4px;">Свободный слот #${i + 1}</div>
+                            <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Подключите телефон, компьютер или телевизор</div>
+                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ТАРИФ</button>
                         </div>
                     `;
                 }
@@ -992,6 +1173,122 @@
             cluster.innerHTML = html;
         }
         renderSlots();
+
+        /* ==========================================
+           УМНОЕ ПОДКЛЮЧЕНИЕ В 1 КЛИК + QR-КОД
+           ========================================== */
+        let activeKeyForConnect = '';
+
+        const VPN_APPS = {
+            ios: [
+                {
+                    name: "Hiddify",
+                    desc: "Нажмите «Установить» -> затем «Войти»",
+                    deepLink: (url) => `hiddify://install-sub?url=${encodeURIComponent(url)}`,
+                    storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
+                },
+                {
+                    name: "V2rayTun",
+                    desc: "Простой и надежный клиент для iPhone",
+                    deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
+                    storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
+                },
+                {
+                    name: "Happ Proxy",
+                    desc: "Быстрое подключение • App Store",
+                    deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
+                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
+                }
+            ],
+            android: [
+                {
+                    name: "Hiddify",
+                    desc: "Лучший выбор для Android и Windows",
+                    deepLink: (url) => `hiddify://install-sub?url=${encodeURIComponent(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
+                },
+                {
+                    name: "V2rayTun",
+                    desc: "Удобное подключение одной кнопкой",
+                    deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=com.v2raytun.android"
+                },
+                {
+                    name: "Happ",
+                    desc: "Минималистичный клиент • Google Play",
+                    deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
+                }
+            ]
+        };
+
+        function detectDevicePlatform() {
+            const tgPlatform = (window.Telegram?.WebApp?.platform || '').toLowerCase();
+            const ua = navigator.userAgent.toLowerCase();
+            if (tgPlatform === 'ios' || tgPlatform === 'macos' || /iphone|ipad|ipod|macintosh/.test(ua)) {
+                return 'ios';
+            }
+            return 'android';
+        }
+
+        function openConnectModal(key) {
+            activeKeyForConnect = key;
+            document.getElementById('qrBox').classList.remove('active');
+            const platform = detectDevicePlatform();
+            renderAppList(platform);
+            openCurtain('connectSheet');
+            haptic('light');
+        }
+
+        function renderAppList(platform) {
+            document.getElementById('plat_ios').classList.toggle('active', platform === 'ios');
+            document.getElementById('plat_android').classList.toggle('active', platform === 'android');
+
+            const container = document.getElementById('appsContainer');
+            const apps = VPN_APPS[platform] || VPN_APPS.android;
+
+            container.innerHTML = apps.map(app => `
+                <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:16px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                    <div style="min-width:0;">
+                        <div style="font-size:14px; font-weight:800;">${app.name}</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${app.desc}</div>
+                    </div>
+                    <div style="display:flex; gap:6px; flex-shrink:0;">
+                        <button onclick="tg.openLink('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">
+                            СКАЧАТЬ
+                        </button>
+                        <button onclick="launchVpnApp('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">
+                            ПОДКЛЮЧИТЬ
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function launchVpnApp(deepLink) {
+            navigator.clipboard.writeText(activeKeyForConnect);
+            haptic('medium');
+            window.location.href = deepLink;
+        }
+
+        function toggleQrCode() {
+            const box = document.getElementById('qrBox');
+            const img = document.getElementById('qrImage');
+            if (box.classList.contains('active')) {
+                box.classList.remove('active');
+            } else {
+                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(activeKeyForConnect)}`;
+                box.classList.add('active');
+            }
+            haptic('light');
+        }
+
+        function copyCurrentKeyDirectly() {
+            navigator.clipboard.writeText(activeKeyForConnect);
+            haptic('medium');
+            closeCurtain('connectSheet');
+            try { tg.showAlert('✅ Ключ скопирован! Вставьте его в приложение.'); } catch(e) {}
+        }
 
         function toggleKeyReveal(id, btn) {
             const el = document.getElementById(id);
@@ -1005,17 +1302,23 @@
             const raw = document.getElementById(id).getAttribute('data-raw');
             navigator.clipboard.writeText(raw);
             const old = btn.innerText;
-            btn.innerText = 'OK';
-            setTimeout(() => { btn.innerText = old; }, 1200);
+            btn.innerText = '✓ СКОПИРОВАНО';
+            setTimeout(() => { btn.innerText = old; }, 1300);
             haptic('medium');
         }
 
         function copyRefLink(btn) {
             navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
             const old = btn.innerText;
-            btn.innerText = 'СКОПИРОВАНО';
+            btn.innerText = '✓ СКОПИРОВАНО';
             setTimeout(() => { btn.innerText = old; }, 1300);
             haptic('light');
+        }
+
+        function shareRefLink() {
+            const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
+            const text = `Держи быстрый и стабильный VPN без рекламы и ограничений! 24 часа теста бесплатно:`;
+            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);
         }
 
         /* ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК */
@@ -1047,10 +1350,10 @@
         function triggerBooster(num) {
             chosenSlotNum = num;
             chosenBoostGb = 0;
-            document.getElementById('boostSlotBadge').innerText = `КАНАЛ #0${num}`;
+            document.getElementById('boostSlotBadge').innerText = `СЛОТ #${num}`;
             const btn = document.getElementById('boostPayBtn');
             btn.disabled = true;
-            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА';
+            btn.innerText = 'ВЫБЕРИТЕ ПАКЕТ ТРАФИКА';
             document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
             openCurtain('boosterSheet');
         }
@@ -1061,7 +1364,7 @@
             document.getElementById(`b_${gb}`).classList.add('active');
             const btn = document.getElementById('boostPayBtn');
             btn.disabled = false;
-            btn.innerText = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
+            btn.innerText = `ДОБАВИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
             haptic('light');
         }
 
@@ -1073,13 +1376,13 @@
 
         function dispatchTopup() {
             const val = parseInt(document.getElementById('topupInputVal').value, 10);
-            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
+            if (!val || val < 10) { alert('Минимальная сумма пополнения — 10 ₽'); return; }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
             tg.close();
         }
 
         function requestTariff(planId) {
-            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
+            if (subs.length >= 2) { alert('У вас уже подключены оба доступных слота!'); return; }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
             tg.close();
         }
@@ -1091,12 +1394,26 @@
             tg.close();
         }
 
-        // ТЕМЫ, ШРИФТЫ, АНИМАЦИИ
+        /* ==========================================
+           ТЕМЫ, ШРИФТЫ И ЖИВЫЕ ПАРТИКЛЫ (ИСПРАВЛЕНО)
+           ========================================== */
         let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
+        let currentParticleRgb = '168, 213, 186';
+
+        function updateParticleColorFromTheme(t) {
+            const map = {
+                sage: '168, 213, 186',
+                mauve: '203, 180, 232',
+                sand: '92, 133, 110',
+                slate: '167, 199, 231'
+            };
+            currentParticleRgb = map[t] || '168, 213, 186';
+        }
 
         function setPastelTheme(t) {
             document.body.setAttribute('data-theme', t);
             localStorage.setItem('pp_theme_v7', t);
+            updateParticleColorFromTheme(t);
             document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
             haptic('light');
         }
@@ -1111,7 +1428,6 @@
             localStorage.setItem('pp_fx_v7', a);
             document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
             haptic('light');
-            if (typeof animateCanvas === 'function') animateCanvas(1000);
         }
 
         setPastelTheme(localStorage.getItem('pp_theme_v7') || 'sage');
@@ -1128,14 +1444,14 @@
             intro.style.display = 'flex';
             requestAnimationFrame(() => {
                 intro.style.opacity = '1';
-                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 120);
-                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
+                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 100);
+                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1700);
                 setTimeout(() => {
                     cfg.style.display = 'flex';
                     requestAnimationFrame(() => { cfg.classList.add('show'); });
                     intro.style.opacity = '0';
-                    setTimeout(() => { intro.style.display = 'none'; }, 550);
-                }, 2450);
+                    setTimeout(() => { intro.style.display = 'none'; }, 500);
+                }, 2200);
             });
         }
 
@@ -1143,9 +1459,7 @@
             localStorage.setItem('pp_onboarded_v7', '1');
             const cfg = document.getElementById('firstRunConfig');
             cfg.classList.remove('show');
-            setTimeout(() => {
-                cfg.style.display = 'none';
-            }, 400);
+            setTimeout(() => { cfg.style.display = 'none'; }, 350);
             haptic('medium');
         }
 
@@ -1158,7 +1472,7 @@
             executeIntro();
         }
 
-        // РЕНДЕР ФОНА
+        // ЖИВОЙ ЦИКЛ ПАРТИКЛОВ И СИЯНИЯ НА CANVAS
         const canvas = document.getElementById('fxCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -1170,12 +1484,12 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const silkParticles = Array.from({ length: 18 }, () => ({
+        const silkParticles = Array.from({ length: 28 }, () => ({
             x: Math.random() * width,
             y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.22,
-            vy: (Math.random() - 0.5) * 0.22,
-            r: Math.random() * 1.4 + 0.7,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            r: Math.random() * 1.8 + 1.0,
             sinSeed: Math.random() * Math.PI * 2
         }));
 
@@ -1183,42 +1497,41 @@
         let lastFxFrame = 0;
 
         function animateCanvas(now = 0) {
-            if (now - lastFxFrame < 40) {
-                requestAnimationFrame(animateCanvas);
-                return;
-            }
+            requestAnimationFrame(animateCanvas);
+            if (now - lastFxFrame < 33) return; // Стабильные ~30 FPS без нагрева телефона
             lastFxFrame = now;
+
             ctx.clearRect(0, 0, width, height);
-            fxTick += 0.01;
+            if (currentFx === 'none') return;
+
+            fxTick += 0.015;
 
             if (currentFx === 'silk') {
-                ctx.fillStyle = 'rgba(224, 232, 202, 0.42)';
-                ctx.shadowBlur = 0;
-                ctx.shadowColor = 'transparent';
-                silkParticles.forEach((p, idx) => {
-                    p.sinSeed += 0.015;
-                    p.x += p.vx + Math.sin(p.sinSeed) * 0.15;
-                    p.y += p.vy + Math.cos(p.sinSeed) * 0.15;
+                ctx.fillStyle = `rgba(${currentParticleRgb}, 0.55)`;
+                silkParticles.forEach((pt, idx) => {
+                    pt.sinSeed += 0.02;
+                    pt.x += pt.vx + Math.sin(pt.sinSeed) * 0.2;
+                    pt.y += pt.vy + Math.cos(pt.sinSeed) * 0.2;
 
-                    if (p.x < 0) p.x = width;
-                    if (p.x > width) p.x = 0;
-                    if (p.y < 0) p.y = height;
-                    if (p.y > height) p.y = 0;
+                    if (pt.x < 0) pt.x = width;
+                    if (pt.x > width) pt.x = 0;
+                    if (pt.y < 0) pt.y = height;
+                    if (pt.y > height) pt.y = 0;
 
                     ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
                     ctx.fill();
 
                     for (let j = idx + 1; j < silkParticles.length; j++) {
                         const p2 = silkParticles[j];
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
+                        const dx = pt.x - p2.x;
+                        const dy = pt.y - p2.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 65) {
-                            ctx.strokeStyle = `rgba(190, 210, 160, ${0.08 * (1 - dist / 65)})`;
-                            ctx.lineWidth = 0.55;
+                        if (dist < 85) {
+                            ctx.strokeStyle = `rgba(${currentParticleRgb}, ${0.18 * (1 - dist / 85)})`;
+                            ctx.lineWidth = 0.8;
                             ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
+                            ctx.moveTo(pt.x, pt.y);
                             ctx.lineTo(p2.x, p2.y);
                             ctx.stroke();
                         }
@@ -1226,29 +1539,29 @@
                 });
             } else if (currentFx === 'haze') {
                 const g1 = ctx.createRadialGradient(
-                    width * 0.35 + Math.sin(fxTick) * 70,
-                    height * 0.3 + Math.cos(fxTick * 0.8) * 50,
-                    15,
-                    width * 0.35, height * 0.3, 260
+                    width * 0.3 + Math.sin(fxTick) * 60,
+                    height * 0.28 + Math.cos(fxTick * 0.8) * 50,
+                    10,
+                    width * 0.3, height * 0.28, 260
                 );
-                g1.addColorStop(0, 'rgba(162, 196, 177, 0.09)');
+                g1.addColorStop(0, `rgba(${currentParticleRgb}, 0.16)`);
                 g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
                 ctx.fillStyle = g1;
                 ctx.fillRect(0, 0, width, height);
 
                 const g2 = ctx.createRadialGradient(
-                    width * 0.7 + Math.cos(fxTick * 0.9) * 60,
-                    height * 0.7 + Math.sin(fxTick) * 60,
-                    20,
-                    width * 0.7, height * 0.7, 280
+                    width * 0.72 + Math.cos(fxTick * 0.9) * 60,
+                    height * 0.72 + Math.sin(fxTick) * 60,
+                    15,
+                    width * 0.72, height * 0.72, 280
                 );
-                g2.addColorStop(0, 'rgba(198, 183, 219, 0.07)');
+                g2.addColorStop(0, `rgba(${currentParticleRgb}, 0.12)`);
                 g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
                 ctx.fillStyle = g2;
                 ctx.fillRect(0, 0, width, height);
             }
         }
-        animateCanvas(1000);
+        requestAnimationFrame(animateCanvas);
     </script>
 </body>
 </html>
