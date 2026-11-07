@@ -4,75 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>PinPoint Network</title>
-
+    <title>PinPoint VPN</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        :root,
-        body[data-theme="sage"],
-        body[data-theme="mauve"],
-        body[data-theme="sand"],
-        body[data-theme="slate"] {
-            color-scheme: light;
-
-            --bg: #fbf8f5;
-            --surface: #fffdfb;
-            --surface-sub: #f5f0ed;
-            --border: #eae1df;
-            --border-glow: rgba(183, 151, 173, .16);
-
-            --text-main: #39333a;
-            --text-muted: #938792;
-
-            --pastel: #a987a8;
-            --pastel-soft: #f1e8f1;
-            --pastel-fg: #ffffff;
-
-            --state-ok: #80ad94;
-            --state-warn: #d7a56f;
-            --state-crit: #cc858e;
-
-            --radius-box: 22px;
-            --radius-btn: 15px;
+        /* ПАСТЕЛЬНЫЕ ПАЛИТРЫ */
+        :root, body[data-theme="sage"] {
+            --bg: #0c0f0e; --surface: #141917; --surface-sub: #1b2320; --border: #283730;
+            --border-glow: rgba(162, 196, 177, 0.18); --text-main: #edf2ee; --text-muted: #859b8f;
+            --pastel: #a2c4b1; --pastel-soft: rgba(162, 196, 177, 0.14); --pastel-fg: #0c120f;
+            --state-ok: #8ebd9e; --state-warn: #e2b07e; --state-crit: #d68388;
+            --radius-box: 16px; --radius-btn: 12px;
         }
-
-        body[data-theme="sage"] {
-            --pastel: #81a994;
-            --pastel-soft: #eaf2ec;
-        }
-
         body[data-theme="mauve"] {
-            --pastel: #a987a8;
-            --pastel-soft: #f1e8f1;
+            --bg: #0f0d14; --surface: #181520; --surface-sub: #221e2e; --border: #322b42;
+            --border-glow: rgba(198, 183, 219, 0.18); --text-main: #f3eff8; --text-muted: #9c91ad;
+            --pastel: #c6b7db; --pastel-soft: rgba(198, 183, 219, 0.14); --pastel-fg: #130f1b;
+            --state-ok: #a7ccc3; --state-warn: #e7b78f; --state-crit: #db8b91;
+            --radius-box: 16px; --radius-btn: 12px;
         }
-
         body[data-theme="sand"] {
-            --pastel: #bd9873;
-            --pastel-soft: #f5eee5;
+            --bg: #100e0c; --surface: #191612; --surface-sub: #25201a; --border: #383027;
+            --border-glow: rgba(220, 204, 182, 0.18); --text-main: #f5f1eb; --text-muted: #a19588;
+            --pastel: #dcc8b0; --pastel-soft: rgba(220, 200, 176, 0.14); --pastel-fg: #15120e;
+            --state-ok: #abc19b; --state-warn: #e5b281; --state-crit: #d4857d;
+            --radius-box: 16px; --radius-btn: 12px;
         }
-
         body[data-theme="slate"] {
-            --pastel: #829cb4;
-            --pastel-soft: #eaf0f5;
+            --bg: #0c0f14; --surface: #131922; --surface-sub: #1b2432; --border: #27374a;
+            --border-glow: rgba(169, 192, 217, 0.18); --text-main: #eff4fa; --text-muted: #889eb5;
+            --pastel: #a9c0d9; --pastel-soft: rgba(169, 192, 217, 0.14); --pastel-fg: #0d131a;
+            --state-ok: #93c9bc; --state-warn: #e0b087; --state-crit: #d6858e;
+            --radius-box: 16px; --radius-btn: 12px;
         }
 
-        body[data-font="sora"] {
-            font-family: "Sora", sans-serif;
-        }
-
-        body[data-font="geist"] {
-            font-family: "Geist Mono", monospace;
-            font-size: 13px;
-        }
-
-        body[data-font="epilogue"] {
-            font-family: "Epilogue", sans-serif;
-        }
+        /* ШРИФТЫ */
+        body[data-font="sora"] { font-family: 'Sora', sans-serif; }
+        body[data-font="geist"] { font-family: 'Geist Mono', monospace; font-size: 13px; }
+        body[data-font="epilogue"] { font-family: 'Epilogue', sans-serif; }
 
         * {
             box-sizing: border-box;
@@ -82,299 +53,255 @@
             user-select: none;
         }
 
-        input {
-            user-select: text;
-        }
-
         body {
-            min-height: 100vh;
-            padding: 18px 15px 112px;
-            overflow-x: hidden;
-            background:
-                radial-gradient(ellipse at 0% 0%, rgba(241, 226, 231, .58), transparent 42%),
-                radial-gradient(ellipse at 100% 18%, rgba(229, 235, 226, .48), transparent 36%),
-                var(--bg);
+            background-color: var(--bg);
             color: var(--text-main);
-            transition: background-color .3s ease, color .3s ease;
+            min-height: 100vh;
+            padding: 14px 14px 108px;
+            overflow-x: hidden;
+            transition: background-color 0.4s cubic-bezier(0.2, 0, 0, 1), color 0.4s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        button,
-        input {
-            font: inherit;
-        }
-
-        button {
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        .mono {
-            font-family: "Geist Mono", monospace;
-        }
+        .mono { font-family: 'Geist Mono', monospace; }
 
         #fxCanvas {
             position: fixed;
             inset: 0;
-            z-index: 0;
-            width: 100%;
-            height: 100%;
             pointer-events: none;
-            opacity: .65;
+            z-index: 0;
+            opacity: 0.35;
+            transition: opacity 0.5s ease;
         }
 
         .view-layer {
             position: relative;
             z-index: 10;
-            width: 100%;
-            max-width: 480px;
+            max-width: 440px;
             margin: 0 auto;
         }
 
+        /* ВЕРХНИЙ СТАТУС */
         .status-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            padding: 8px 4px 15px;
-            margin-bottom: 18px;
+            padding: 6px 4px 12px;
             border-bottom: 1px solid var(--border);
+            margin-bottom: 14px;
+            font-size: 11px;
             color: var(--text-muted);
-            font-size: 10px;
-            letter-spacing: .055em;
+            letter-spacing: 0.04em;
         }
-
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-main);
+            gap: 7px;
             font-weight: 600;
+            color: var(--text-main);
         }
-
         .soft-beacon {
-            width: 8px;
-            height: 8px;
-            flex: 0 0 auto;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--state-ok);
-            box-shadow: 0 0 0 4px rgba(128, 173, 148, .13);
+            box-shadow: 0 0 10px var(--state-ok);
         }
 
-        .card,
-        .tariff-slab {
-            padding: 18px;
-            margin-bottom: 14px;
-            background: rgba(255, 253, 251, .92);
+        /* КАРТОЧКА */
+        .card, .tariff-slab {
+            background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-box);
-            box-shadow: 0 7px 22px rgba(87, 66, 76, .045);
-            transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: border-color 0.25s ease, background-color 0.25s ease;
         }
 
+        /* ПРОФИЛЬ */
         .profile-band {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            align-items: center;
+            grid-template-columns: 1fr auto;
             gap: 12px;
+            align-items: center;
         }
-
         .operator-meta {
             display: flex;
             align-items: center;
             gap: 12px;
             min-width: 0;
         }
-
         .operator-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            object-fit: cover;
             display: flex;
-            flex: 0 0 auto;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
-            border: 1px solid transparent;
-            border-radius: 17px;
-            background: var(--pastel-soft);
-            color: var(--pastel);
-            object-fit: cover;
-            font-size: 17px;
             font-weight: 700;
+            font-size: 16px;
+            color: var(--pastel);
+            flex-shrink: 0;
         }
-
         .subhead {
-            color: var(--text-muted);
             font-size: 10px;
-            font-weight: 600;
-            letter-spacing: .085em;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
         }
-
         .op-title {
-            overflow: hidden;
-            margin: 3px 0;
-            color: var(--text-main);
             font-size: 15px;
             font-weight: 700;
-            letter-spacing: -.01em;
-            text-overflow: ellipsis;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 2px 0;
+            letter-spacing: -0.01em;
         }
-
         .balance-cluster {
-            padding-left: 14px;
-            border-left: 1px solid var(--border);
             text-align: right;
+            border-left: 1px solid var(--border);
+            padding-left: 14px;
         }
-
         .balance-num {
-            margin: 3px 0 7px;
-            color: var(--text-main);
             font-size: 18px;
             font-weight: 700;
-            letter-spacing: -.02em;
+            color: var(--text-main);
+            margin: 2px 0 6px;
+            letter-spacing: -0.02em;
         }
 
-        .btn-pastel,
+        /* КНОПКИ */
+        .btn-pastel {
+            background: var(--pastel);
+            color: var(--pastel-fg);
+            border: none;
+            border-radius: var(--radius-btn);
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            letter-spacing: 0.01em;
+            transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform, opacity;
+        }
+        .btn-pastel:active {
+            opacity: 0.88;
+            transform: scale(0.98);
+        }
+        .btn-pastel:disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
         .btn-subtle {
-            display: inline-flex;
+            background: var(--surface-sub);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            min-height: 38px;
-            padding: 10px 14px;
-            border-radius: var(--radius-btn);
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            transition: transform .16s ease, background-color .18s ease,
-                color .18s ease, border-color .18s ease, box-shadow .18s ease;
+            transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform;
         }
-
-        .btn-pastel {
-            border: 0;
-            background: var(--pastel);
-            box-shadow: 0 4px 12px rgba(90, 70, 90, .09);
-            color: #fff;
-        }
-
-        .btn-pastel:active,
-        .btn-subtle:active,
-        .picker-cell:active {
-            transform: scale(.97);
-        }
-
-        .btn-pastel:disabled {
-            opacity: .45;
-            pointer-events: none;
-            box-shadow: none;
-        }
-
-        .btn-subtle {
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .btn-subtle:hover,
-        .btn-subtle:focus-visible {
+        .btn-subtle:active {
             border-color: var(--pastel);
-            color: var(--pastel);
+            transform: scale(0.98);
         }
 
         .section-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin: 22px 3px 11px;
+            margin: 18px 2px 10px;
         }
-
         .section-label {
-            color: var(--text-muted);
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: .085em;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
         }
-
         .pill-badge {
-            padding: 5px 10px;
-            border: 1px solid transparent;
-            border-radius: 999px;
-            background: var(--pastel-soft);
-            color: var(--pastel);
             font-size: 10px;
             font-weight: 600;
-            text-align: center;
+            padding: 3px 8px;
+            border-radius: 20px;
+            background: var(--pastel-soft);
+            color: var(--pastel);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
+        /* КАНАЛ СВЯЗИ */
         .slot-unit-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
             padding-bottom: 12px;
-            margin-bottom: 14px;
             border-bottom: 1px solid var(--border);
+            margin-bottom: 14px;
         }
-
         .slot-name-field {
-            width: min(160px, 36vw);
-            padding: 2px 0;
-            border: 0;
-            border-bottom: 1px dashed #ded3d8;
-            outline: 0;
             background: transparent;
+            border: none;
+            border-bottom: 1px dashed var(--border);
             color: var(--text-main);
+            font-family: inherit;
             font-size: 14px;
             font-weight: 700;
+            width: 160px;
+            padding: 2px 0;
+            outline: none;
+            transition: border-color 0.25s ease;
         }
+        .slot-name-field:focus { border-bottom-color: var(--pastel); }
 
-        .slot-name-field:focus {
-            border-bottom-color: var(--pastel);
-        }
-
+        /* ТЕЛЕМЕТРИЯ */
         .traffic-harness {
             display: grid;
-            grid-template-columns: 72px minmax(0, 1fr);
-            align-items: center;
+            grid-template-columns: 72px 1fr;
             gap: 14px;
-            padding: 13px;
-            margin-bottom: 12px;
+            background: var(--surface-sub);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            background: #faf6f4;
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 12px;
+            align-items: center;
         }
-
         .gauge-svg-wrap {
             position: relative;
             width: 70px;
             height: 70px;
         }
-
         .gauge-svg {
+            transform: rotate(-90deg);
             width: 100%;
             height: 100%;
-            transform: rotate(-90deg);
         }
-
-        .gauge-track,
-        .gauge-flow {
+        .gauge-track {
             fill: none;
+            stroke: var(--surface);
             stroke-width: 4.5;
         }
-
-        .gauge-track {
-            stroke: #e9e1df;
-        }
-
         .gauge-flow {
+            fill: none;
             stroke: var(--pastel);
+            stroke-width: 4.5;
             stroke-linecap: round;
-            transition: stroke-dasharray .9s ease, stroke .3s ease;
+            transition: stroke-dasharray 0.6s cubic-bezier(0.2, 0, 0, 1), stroke 0.3s ease;
         }
-
         .gauge-center {
             position: absolute;
             inset: 0;
@@ -383,10 +310,10 @@
             align-items: center;
             justify-content: center;
         }
-
         .gauge-pct {
             font-size: 13px;
             font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .pill-meter {
@@ -395,54 +322,42 @@
             gap: 3px;
             margin: 7px 0 9px;
         }
-
         .pill-cell {
             height: 6px;
-            border-radius: 3px;
-            background: #eae4e3;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.3s ease;
         }
-
-        .pill-cell.filled {
-            background: var(--pastel);
-        }
-
-        .pill-cell.warn {
-            background: var(--state-warn);
-        }
-
-        .pill-cell.crit {
-            background: var(--state-crit);
-        }
+        .pill-cell.filled { background: var(--pastel); opacity: 0.9; }
+        .pill-cell.warn { background: var(--state-warn); }
+        .pill-cell.crit { background: var(--state-crit); }
 
         .meta-stamp {
             display: flex;
             justify-content: space-between;
-            gap: 8px;
+            font-size: 11px;
             color: var(--text-muted);
-            font-size: 10px;
         }
 
         .key-capsule {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
-            align-items: center;
+            grid-template-columns: 1fr auto auto;
             gap: 6px;
-            padding: 7px 9px;
-            margin-bottom: 12px;
+            background: var(--surface-sub);
             border: 1px solid var(--border);
             border-radius: var(--radius-btn);
-            background: #faf6f4;
+            padding: 7px 9px;
+            align-items: center;
+            margin-bottom: 12px;
         }
-
         .key-text {
-            width: 100%;
-            min-width: 0;
-            border: 0;
-            outline: 0;
             background: transparent;
+            border: none;
+            outline: none;
             color: var(--text-muted);
-            font-family: "Geist Mono", monospace;
+            font-family: 'Geist Mono', monospace;
             font-size: 11px;
+            width: 100%;
             pointer-events: none;
         }
 
@@ -451,1152 +366,889 @@
             flex-direction: column;
             gap: 10px;
         }
-
         .tariff-slab.featured {
-            border-color: color-mix(in srgb, var(--pastel) 58%, white);
-            box-shadow: 0 9px 28px var(--border-glow);
+            border-color: var(--pastel);
+            box-shadow: 0 0 24px var(--border-glow);
         }
 
-        .grid-duo {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
-        }
-
-        .grid-trio {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
-        }
-
+        /* СЕТКА НАСТРОЕК */
+        .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .picker-cell {
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            color: var(--text-muted);
+            padding: 12px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            min-width: 0;
-            min-height: 44px;
-            padding: 11px 10px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
-            background: #faf6f4;
-            color: var(--text-main);
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            transition: transform .16s ease, background-color .18s ease,
-                color .18s ease, border-color .18s ease;
+            transition: border-color 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s cubic-bezier(0.2, 0, 0, 1), color 0.2s cubic-bezier(0.2, 0, 0, 1), transform 0.15s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform;
         }
-
-        .picker-cell:hover {
-            border-color: color-mix(in srgb, var(--pastel) 60%, white);
+        .picker-cell:active {
+            transform: scale(0.98);
         }
-
         .picker-cell.active {
             border-color: var(--pastel);
             background: var(--pastel-soft);
             color: var(--pastel);
         }
-
         .tone-dot {
             width: 12px;
             height: 12px;
-            flex: 0 0 auto;
             border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
         }
 
         .ambient-field {
             width: 100%;
-            min-height: 44px;
-            padding: 11px 12px;
+            background: var(--surface-sub);
             border: 1px solid var(--border);
             border-radius: var(--radius-btn);
-            outline: 0;
-            background: #faf6f4;
+            padding: 11px 12px;
             color: var(--text-main);
             font-size: 13px;
+            outline: none;
+            transition: border-color 0.25s ease;
         }
+        .ambient-field:focus { border-color: var(--pastel); }
 
-        .ambient-field::placeholder {
-            color: #aa9fa7;
-        }
-
-        .ambient-field:focus {
-            border-color: var(--pastel);
-        }
-
+        /* НАВИГАЦИОННАЯ ПАНЕЛЬ */
         .bottom-shelf {
             position: fixed;
-            z-index: 90;
-            bottom: max(12px, env(safe-area-inset-bottom));
-            left: 50%;
+            bottom: 12px;
+            left: 14px;
+            right: 14px;
+            max-width: 440px;
+            margin: 0 auto;
+            background: rgba(20, 25, 23, 0.94);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 6px;
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            width: min(480px, calc(100% - 28px));
-            padding: 7px;
-            transform: translateX(-50%);
-            border: 1px solid rgba(234, 225, 223, .95);
-            border-radius: 22px;
-            background: rgba(255, 253, 251, .91);
-            box-shadow: 0 12px 32px rgba(76, 58, 67, .12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            z-index: 90;
+            transition: border-color 0.3s ease;
         }
-
         .shelf-tab {
-            min-height: 42px;
-            padding: 9px 5px;
-            border: 0;
-            border-radius: 15px;
             background: transparent;
+            border: none;
             color: var(--text-muted);
-            cursor: pointer;
-            font-size: 10px;
+            padding: 10px 6px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: .015em;
-            transition: background-color .18s ease, color .18s ease;
+            letter-spacing: 0.05em;
+            font-family: inherit;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s cubic-bezier(0.2, 0, 0, 1), color 0.2s cubic-bezier(0.2, 0, 0, 1);
         }
-
         .shelf-tab.active {
-            background: var(--pastel-soft);
+            background: var(--surface-sub);
             color: var(--pastel);
         }
 
+        /* 
+           ТОЧНАЯ АНИМАЦИЯ ВКЛАДОК:
+           Плавный мягкий фейд без скачков высоты, рывков и дерганий 
+        */
         .tab-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity .25s ease, transform .25s ease;
-        }
-
-        .tab-content.active {
             display: block;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.28s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0.28s;
+            will-change: opacity;
         }
-
+        .tab-content.active {
+            visibility: visible;
+            height: auto;
+            overflow: visible;
+            pointer-events: auto;
+            transition: opacity 0.28s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0s;
+        }
         .tab-content.show {
             opacity: 1;
-            transform: translateY(0);
         }
 
+        /* 
+           ШТОРКА (МОДАЛКА):
+           Плавный fade-in фона и мягкий, шелковистый выкат панели на 24px вверх без резких прыжков
+        */
         .curtain-wrap {
             position: fixed;
-            z-index: 200;
             inset: 0;
-            display: none;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
             align-items: flex-end;
             justify-content: center;
-            background: rgba(60, 48, 58, .28);
-            backdrop-filter: blur(7px);
-            -webkit-backdrop-filter: blur(7px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0.3s linear;
+            will-change: opacity;
         }
-
         .curtain-wrap.active {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), visibility 0s linear 0s;
         }
-
         .curtain-panel {
-            width: min(100%, 480px);
-            padding: 23px 18px max(28px, env(safe-area-inset-bottom));
-            border: 1px solid var(--border);
-            border-bottom: 0;
-            border-radius: 25px 25px 0 0;
             background: var(--surface);
-            box-shadow: 0 -12px 36px rgba(76, 58, 67, .12);
-            animation: slideUp .3s ease;
+            border-top: 1px solid var(--border);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            padding: 22px 16px 28px;
+            transform: translateY(24px);
+            opacity: 0.9;
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s cubic-bezier(0.2, 0, 0, 1);
+            will-change: transform, opacity;
+        }
+        .curtain-wrap.active .curtain-panel {
+            transform: translateY(0);
+            opacity: 1;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
+        /* ОНБОРДИНГ */
         #fadeIntro {
             position: fixed;
-            z-index: 300;
             inset: 0;
+            background: #090c0b;
+            z-index: 300;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background:
-                radial-gradient(ellipse at 50% 35%, #f3e8ed, transparent 58%),
-                #fbf8f5;
-            transition: opacity .6s ease;
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.2, 0, 0, 1);
+            will-change: opacity;
         }
-
         .fade-greeting {
-            color: #51444f;
             font-size: 24px;
             font-weight: 700;
-            letter-spacing: .04em;
+            letter-spacing: 0.12em;
+            color: #e5ece7;
             opacity: 0;
-            transform: scale(.96);
-            filter: blur(8px);
-            transition: all .9s ease;
+            transform: scale(0.97);
+            transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
         }
-
         .fade-caption {
-            margin-top: 10px;
-            color: #a18b9a;
             font-size: 11px;
-            letter-spacing: .12em;
+            color: #7b9485;
+            margin-top: 10px;
+            letter-spacing: 0.16em;
             opacity: 0;
-            filter: blur(4px);
-            transition: all .9s ease .2s;
+            transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1) 0.1s;
+            will-change: opacity;
         }
-
-        .fade-greeting.show,
-        .fade-caption.show {
+        .fade-greeting.show {
             opacity: 1;
             transform: scale(1);
-            filter: blur(0);
+        }
+        .fade-caption.show {
+            opacity: 1;
         }
 
         #firstRunConfig {
             position: fixed;
-            z-index: 260;
             inset: 0;
+            background: var(--bg);
+            z-index: 260;
             display: none;
             flex-direction: column;
             justify-content: space-between;
-            overflow-y: auto;
             padding: 24px 16px;
-            background:
-                radial-gradient(ellipse at 100% 0%, rgba(241, 226, 231, .56), transparent 40%),
-                var(--bg);
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.2, 0, 0, 1);
+            will-change: opacity;
         }
-
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border-radius: 99px;
-            background: #d8cbd1;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        @media (max-width: 360px) {
-            body {
-                padding-right: 11px;
-                padding-left: 11px;
-            }
-
-            .card,
-            .tariff-slab {
-                padding: 14px;
-            }
-
-            .bottom-shelf {
-                width: calc(100% - 22px);
-            }
-
-            .shelf-tab {
-                font-size: 9px;
-            }
-
-            .traffic-harness {
-                grid-template-columns: 62px minmax(0, 1fr);
-                gap: 9px;
-                padding: 10px;
-            }
-
-            .gauge-svg-wrap {
-                width: 60px;
-                height: 60px;
-            }
+        #firstRunConfig.show {
+            opacity: 1;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
             }
         }
     </style>
 </head>
-
 <body data-theme="sage" data-font="sora">
+
     <canvas id="fxCanvas"></canvas>
 
-    <!-- Приветствие -->
+    <!-- 1. ПРИВЕТСТВИЕ -->
     <div id="fadeIntro">
         <div id="introTitle" class="fade-greeting">Добро пожаловать</div>
-        <div id="introSub" class="fade-caption">ПРИВАТНАЯ СЕТЬ PINPOINT</div>
+        <div id="introSub" class="fade-caption">ЗАЩИЩЁННЫЙ VPN-КАНАЛ / PINPOINT</div>
     </div>
 
-    <!-- Первичная настройка -->
+    <!-- 2. ПЕРВИЧНАЯ НАСТРОЙКА -->
     <div id="firstRunConfig">
-        <div style="max-width:480px; margin:0 auto; width:100%;">
-            <div class="subhead" style="margin-bottom:4px;">НАСТРОЙКА · 01</div>
-            <div style="font-size:20px; font-weight:700; margin-bottom:6px;">Оформление меню</div>
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.5;">
-                Выберите оттенок, шрифт и фоновую атмосферу.
-            </div>
+        <div style="max-width:440px; margin:0 auto; width:100%;">
+            <div class="subhead" style="margin-bottom:4px;">ИНИЦИАЛИЗАЦИЯ // 01</div>
+            <div style="font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-bottom:6px;">Настройка вида</div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.4;">Мягкие пастельные оттенки, созданные для спокойной работы без усталости глаз.</div>
 
-            <div class="section-row"><span class="section-label">Цветовая палитра</span></div>
+            <div class="section-row"><span class="section-label">Цвет</span></div>
             <div class="grid-duo" style="margin-bottom:14px;">
                 <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                    <span>МЯГКИЙ ШАЛФЕЙ</span>
-                    <span class="tone-dot" style="background:#81a994"></span>
+                    <span>ЗЕЛЁНЫЙ</span><span class="tone-dot" style="background:#a2c4b1; color:#a2c4b1;"></span>
                 </button>
                 <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                    <span>ПЫЛЬНЫЙ РОЗАН</span>
-                    <span class="tone-dot" style="background:#a987a8"></span>
+                    <span>ЛИЛОВЫЙ</span><span class="tone-dot" style="background:#c6b7db; color:#c6b7db;"></span>
                 </button>
                 <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                    <span>ТЁПЛЫЙ КАШЕМИР</span>
-                    <span class="tone-dot" style="background:#bd9873"></span>
+                    <span>БЕЖЕВЫЙ</span><span class="tone-dot" style="background:#dcc8b0; color:#dcc8b0;"></span>
                 </button>
                 <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                    <span>СЕРЫЙ СЛАНЕЦ</span>
-                    <span class="tone-dot" style="background:#829cb4"></span>
+                    <span>СИНИЙ</span><span class="tone-dot" style="background:#a9c0d9; color:#a9c0d9;"></span>
                 </button>
             </div>
 
             <div class="section-row"><span class="section-label">Шрифт</span></div>
             <div class="grid-trio" style="margin-bottom:14px;">
                 <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">GEIST</button>
+                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">МОНО</button>
                 <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
             </div>
 
-            <div class="section-row"><span class="section-label">Фоновая атмосфера</span></div>
+            <div class="section-row"><span class="section-label">Фон</span></div>
             <div class="grid-trio">
-                <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ШЁЛК</button>
-                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">ТУМАН</button>
-                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ТИШИНА</button>
+                <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
+                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">МЯГКИЙ ТУМАН</button>
+                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ЭФФЕКТОВ</button>
             </div>
         </div>
 
-        <div style="max-width:480px; margin:20px auto 0; width:100%;">
-            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:14px;">
-                ПРИМЕНИТЬ И ВОЙТИ
+        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:20px;">
+            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:14px; font-size:13px;">
+                СОХРАНИТЬ НАСТРОЙКИ →
             </button>
         </div>
     </div>
 
-    <!-- Основное меню -->
-    <main class="view-layer">
-        <div class="status-header">
-            <div class="status-badge"><span class="soft-beacon"></span> ЗАЩИЩЁННОЕ СОЕДИНЕНИЕ</div>
-            <div id="liveClock" class="mono">ONLINE</div>
-        </div>
+    <!-- ГЛАВНЫЙ ЭКРАН -->
+    <div class="view-layer">
 
-        <section class="card profile-band">
+        <!-- КАРТОЧКА ПРОФИЛЯ -->
+        <div class="card profile-band">
             <div class="operator-meta">
-                <img id="avatarImg" class="operator-avatar" style="display:none;" alt="Аватар профиля">
+                <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
                 <div id="avatarFallback" class="operator-avatar">P</div>
                 <div style="min-width:0;">
-                    <div class="subhead">ВАШ ПРОФИЛЬ</div>
+                    <div class="subhead">ПРОФИЛЬ КЛИЕНТА</div>
                     <div id="uName" class="op-title">Клиент</div>
                     <div id="uId" class="mono" style="font-size:11px; color:var(--text-muted);">ID: 000000</div>
                 </div>
             </div>
-
             <div class="balance-cluster">
                 <div class="subhead">БАЛАНС</div>
                 <div id="uBal" class="balance-num">0 ₽</div>
-                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:6px 10px; font-size:10px;">
-                    + ПОПОЛНИТЬ
-                </button>
+                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:5px 10px; font-size:11px;">+ ДОБАВИТЬ СРЕДСТВА</button>
             </div>
-        </section>
+        </div>
 
-        <!-- Обзор -->
-        <section id="tab-cabinet" class="tab-content active show">
+        <!-- 01 // ОБЗОР (БЫВШИЙ КАБИНЕТ) -->
+        <div id="tab-cabinet" class="tab-content active show">
             <div class="section-row">
-                <span class="section-label">Мои подключения</span>
+                <span class="section-label">КАНАЛЫ СВЯЗИ</span>
                 <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
             </div>
 
             <div id="slotsCluster"></div>
 
-            <div class="section-row">
-                <span class="section-label">Промокод</span>
-            </div>
-
+            <!-- ПРОМОКОД НА СКИДКУ -->
+            <div class="section-row"><span class="section-label">ПРОМОКОД НА СКИДКУ</span></div>
             <div class="card" style="padding:10px;">
-                <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px;">
-                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите промокод" style="text-transform:uppercase;">
-                    <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
+                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите промокод, например (Pin2026)" style="text-transform:uppercase;">
+                    <button onclick="applyPromoCode()" class="btn-pastel">АКТИВИРОВАТЬ</button>
                 </div>
             </div>
 
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <!-- ПАРТНЕРСКИЙ ДОХОД -->
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <div class="subhead">ПАРТНЁРСКАЯ ПРОГРАММА · 15%</div>
-                    <div style="font-size:13px; font-weight:700; margin-top:4px;">Доход за приглашённых друзей</div>
+                    <div class="subhead">ПАРТНЕРСКИЙ ДОХОД // 15%</div>
+                    <div style="font-size:13px; font-weight:700; margin-top:2px;">Пожизненный процент с друзей</div>
                 </div>
-                <button onclick="copyRefLink(this)" class="btn-subtle">ССЫЛКА</button>
+                <button onclick="copyRefLink(this)" class="btn-subtle">ПОДЕЛИТЬСЯ</button>
             </div>
-        </section>
+        </div>
 
-        <!-- Подписки -->
-        <section id="tab-tariffs" class="tab-content">
+        <!-- 02 // ПОДПИСКИ (БЫВШИЕ ТАРИФЫ) -->
+        <div id="tab-tariffs" class="tab-content">
             <div class="section-row">
-                <span class="section-label">Подписки</span>
-                <span class="pill-badge">БЫСТРОЕ ПОДКЛЮЧЕНИЕ</span>
+                <span class="section-label">КАТАЛОГ ПОДПИСОК</span>
+                <span class="pill-badge">МОМЕНТАЛЬНЫЙ ВЫПУСК</span>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; gap:10px;">
-                    <div>
-                        <div class="subhead">ПРОБНЫЙ ДОСТУП</div>
-                        <div style="font-size:16px; font-weight:700;">24 часа</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">ОЗНАКОМЛЕНИЕ</div><div style="font-size:16px; font-weight:700;">🆓 24 Часа</div></div>
                     <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">0 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">10 ГБ · 1 устройство</div>
-                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">ПОДКЛЮЧИТЬ</button>
+                <div style="font-size:12px; color:var(--text-muted);">Квота: 10 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">ЗАПУСТИТЬ ТЕСТ</button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; gap:10px;">
-                    <div>
-                        <div class="subhead">14 ДНЕЙ</div>
-                        <div style="font-size:16px; font-weight:700;">Тариф «Старт»</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">ПЕРИОД: 14 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">🚀 Тариф «Старт»</div></div>
                     <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">69 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">50 ГБ · 1 устройство</div>
-                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЫБРАТЬ · 69 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Квота: 50 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 69 ₽</button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; gap:10px;">
-                    <div>
-                        <div class="subhead">30 ДНЕЙ</div>
-                        <div style="font-size:16px; font-weight:700;">Тариф «Базовый»</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">ПЕРИОД: 30 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">⚡️ Тариф «Базовый»</div></div>
                     <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">129 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">129 ГБ · 1 устройство</div>
-                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЫБРАТЬ · 129 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Квота: 129 ГБ • Лимит: 1 устройство</div>
+                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 129 ₽</button>
             </div>
 
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; gap:10px;">
-                    <div>
-                        <div class="subhead">ДЛЯ НЕСКОЛЬКИХ УСТРОЙСТВ</div>
-                        <div style="font-size:16px; font-weight:700;">Тариф «Продвинутый»</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead">МУЛЬТИ-ПОДКЛЮЧЕНИЕ</div><div style="font-size:16px; font-weight:700;">💎 Тариф «Продвинутый»</div></div>
                     <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">199 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">300 ГБ · до 3 устройств</div>
-                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЫБРАТЬ · 199 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Квота: 300 ГБ • Лимит: 3 устройства</div>
+                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 199 ₽</button>
             </div>
 
             <div class="tariff-slab featured">
-                <div style="display:flex; justify-content:space-between; gap:10px;">
-                    <div>
-                        <div class="subhead" style="color:var(--pastel);">ВЫГОДНЫЙ ВАРИАНТ</div>
-                        <div style="font-size:16px; font-weight:700;">90 дней</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><div class="subhead" style="color:var(--pastel);">МАКСИМАЛЬНАЯ ВЫГОДА</div><div style="font-size:16px; font-weight:700;">🔥 ХИТ СЕЗОНА (90 ДНЕЙ)</div></div>
                     <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">499 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">900 ГБ · до 3 устройств</div>
-                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЫБРАТЬ · 499 ₽</button>
+                <div style="font-size:12px; color:var(--text-muted);">Квота: 900 ГБ • Лимит: 3 устройства</div>
+                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">ВЗЯТЬ ДОСТУП // 499 ₽</button>
             </div>
-        </section>
+        </div>
 
-        <!-- Оформление -->
-        <section id="tab-style" class="tab-content">
-            <div class="section-row">
-                <span class="section-label">Оформление меню</span>
-            </div>
+        <!-- 03 // ЭСТЕТИКА (БЫВШИЙ ВИД) -->
+        <div id="tab-style" class="tab-content">
+            <div class="section-row"><span class="section-label">НАСТРОЙКИ ВИДА</span></div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:9px;">ЦВЕТОВАЯ ПАЛИТРА</div>
+                <div class="subhead" style="margin-bottom:8px;">ЦВЕТ ИНТЕРФЕЙСА</div>
                 <div class="grid-duo">
                     <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                        <span>ШАЛФЕЙ</span><span class="tone-dot" style="background:#81a994"></span>
+                        <span>ЗЕЛЁНЫЙ</span><span class="tone-dot" style="background:#a2c4b1; color:#a2c4b1;"></span>
                     </button>
                     <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                        <span>РОЗАН</span><span class="tone-dot" style="background:#a987a8"></span>
+                        <span>ЛИЛОВЫЙ</span><span class="tone-dot" style="background:#c6b7db; color:#c6b7db;"></span>
                     </button>
                     <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                        <span>КАШЕМИР</span><span class="tone-dot" style="background:#bd9873"></span>
+                        <span>БЕЖЕВЫЙ</span><span class="tone-dot" style="background:#dcc8b0; color:#dcc8b0;"></span>
                     </button>
                     <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                        <span>СЛАНЕЦ</span><span class="tone-dot" style="background:#829cb4"></span>
+                        <span>СИНИЙ</span><span class="tone-dot" style="background:#a9c0d9; color:#a9c0d9;"></span>
                     </button>
                 </div>
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:9px;">ШРИФТ</div>
+                <div class="subhead" style="margin-bottom:8px;">ШРИФТ</div>
                 <div class="grid-trio">
                     <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">GEIST</button>
+                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">МОНО</button>
                     <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
                 </div>
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:9px;">ФОНОВАЯ АТМОСФЕРА</div>
+                <div class="subhead" style="margin-bottom:8px;">ФОН</div>
                 <div class="grid-trio">
-                    <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ШЁЛК</button>
-                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">ТУМАН</button>
-                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ТИШИНА</button>
+                    <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
+                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">МЯГКИЙ ТУМАН</button>
+                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ЭФФЕКТОВ</button>
                 </div>
             </div>
 
             <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
-                ПОВТОРИТЬ ПРИВЕТСТВИЕ
-            </button>
-        </section>
-    </main>
-
-    <!-- Нижняя навигация -->
-    <nav class="bottom-shelf">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">ОБЗОР</button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">ПОДПИСКИ</button>
-        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">ОФОРМЛЕНИЕ</button>
-    </nav>
-
-    <!-- Покупка дополнительного трафика -->
-    <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
-        <div class="curtain-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px;">
-                <div>
-                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЙ ТРАФИК</div>
-                    <div style="font-size:16px; font-weight:700;">Пакет трафика</div>
-                </div>
-                <span id="boostSlotBadge" class="pill-badge">КАНАЛ #01</span>
-            </div>
-
-            <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15,39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px;">+15 ГБ</span><span style="font-size:11px; color:var(--text-muted);">39 ₽</span>
-                </button>
-                <button onclick="chooseBoost(50,89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px;">+50 ГБ</span><span style="font-size:11px; color:var(--text-muted);">89 ₽</span>
-                </button>
-                <button onclick="chooseBoost(150,149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px;">+150 ГБ</span><span style="font-size:11px; color:var(--text-muted);">149 ₽</span>
-                </button>
-            </div>
-
-            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:14px;" disabled>
-                ВЫБЕРИТЕ ОБЪЁМ ПАКЕТА
+                ↻ ПЕРЕЗАПУСТИТЬ ВСТУПЛЕНИЕ
             </button>
         </div>
     </div>
 
-    <!-- Пополнение баланса -->
+    <!-- ДОК-ПАНЕЛЬ НАВИГАЦИИ -->
+    <div class="bottom-shelf">
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">01 // СЕТЬ</button>
+        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">02 // ДОСТУП</button>
+        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">03 // СЦЕНА</button>
+    </div>
+
+    <!-- ШТОРКА ДОЗАПРАВКИ ТРАФИКА -->
+    <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
+        <div class="curtain-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <div>
+                    <div class="subhead">ЭКСТРЕННАЯ ДОЗАПРАВКА</div>
+                    <div style="font-size:16px; font-weight:700;">Пакет трафика</div>
+                </div>
+                <span id="boostSlotBadge" class="pill-badge">КАНАЛ #1</span>
+            </div>
+
+            <div class="grid-trio" style="margin-bottom:16px;">
+                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+15 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">39 ₽</span>
+                </button>
+                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+50 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">89 ₽</span>
+                </button>
+                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--text-main);">+150 ГБ</span>
+                    <span style="font-size:11px; color:var(--text-muted);">149 ₽</span>
+                </button>
+            </div>
+
+            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:14px;" disabled>
+                ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА
+            </button>
+        </div>
+    </div>
+
+    <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
     <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
         <div class="curtain-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">ПОПОЛНЕНИЕ СЧЁТА</div>
-                    <div style="font-size:16px; font-weight:700;">Выберите сумму</div>
+                    <div class="subhead">ПОПОЛНЕНИЕ СЧЕТА</div>
+                    <div style="font-size:16px; font-weight:700;">Шлюз Platega</div>
                 </div>
-                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="min-height:32px; padding:4px 9px;">✕</button>
+                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:4px 8px;">✕</button>
             </div>
 
             <div class="grid-trio" style="margin-bottom:12px;">
-                <button onclick="setTopupAmount(100)" class="picker-cell" style="justify-content:center;">100 ₽</button>
-                <button onclick="setTopupAmount(250)" class="picker-cell" style="justify-content:center;">250 ₽</button>
-                <button onclick="setTopupAmount(500)" class="picker-cell" style="justify-content:center;">500 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=100" class="picker-cell" style="justify-content:center;">100 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=250" class="picker-cell" style="justify-content:center;">250 ₽</button>
+                <button onclick="document.getElementById('topupInputVal').value=500" class="picker-cell" style="justify-content:center;">500 ₽</button>
             </div>
 
-            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Сумма в рублях (от 10 ₽)" min="10" inputmode="numeric" style="margin-bottom:14px;">
+            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
 
             <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:14px;">
-                СФОРМИРОВАТЬ СЧЁТ →
+                СФОРМИРОВАТЬ СЧЕТ →
             </button>
         </div>
     </div>
 
     <script>
-        const tg = window.Telegram?.WebApp || {
-            initDataUnsafe: {},
-            ready() {},
-            expand() {},
-            close() {},
-            openTelegramLink(url) {
-                window.open(url, "_blank");
-            },
-            HapticFeedback: {
-                impactOccurred() {}
-            }
-        };
-
-        tg.ready();
+        const tg = window.Telegram.WebApp;
         tg.expand();
+        tg.ready();
 
         const user = tg.initDataUnsafe?.user;
-        const params = new URLSearchParams(window.location.search);
+        const p = new URLSearchParams(window.location.search);
 
-        if (params.has("bal")) localStorage.setItem("pp_c_bal", params.get("bal"));
-        if (params.has("subs")) localStorage.setItem("pp_c_subs", params.get("subs"));
-        if (params.has("avatar") && params.get("avatar") !== "none") {
-            localStorage.setItem("pp_c_avatar", params.get("avatar"));
-        }
-        if (params.has("user_id")) localStorage.setItem("pp_c_uid", params.get("user_id"));
+        if (p.has('bal')) localStorage.setItem('pp_c_bal', p.get('bal'));
+        if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
+        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_c_avatar', p.get('avatar'));
+        if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
 
-        const uid = user?.id || params.get("user_id") || localStorage.getItem("pp_c_uid") || "404";
-        const username = user?.username
-            ? "@" + user.username
-            : (user?.first_name || "Клиент");
+        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
+        const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
+        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
+        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
 
-        const balance = parseInt(
-            params.get("bal") ?? localStorage.getItem("pp_c_bal") ?? "0",
-            10
-        ) || 0;
+        document.getElementById('uName').innerText = uname;
+        document.getElementById('uId').innerText = `ID: ${uid}`;
+        document.getElementById('uBal').innerText = `${balance} ₽`;
 
-        const avatarUrl = params.get("avatar")
-            || localStorage.getItem("pp_c_avatar")
-            || user?.photo_url;
-
-        document.getElementById("uName").textContent = username;
-        document.getElementById("uId").textContent = `ID: ${uid}`;
-        document.getElementById("uBal").textContent = `${balance} ₽`;
-
-        if (avatarUrl && avatarUrl !== "none") {
-            const avatar = document.getElementById("avatarImg");
-            avatar.src = avatarUrl;
-            avatar.style.display = "block";
-            document.getElementById("avatarFallback").style.display = "none";
+        if (avatarUrl && avatarUrl !== 'none') {
+            const img = document.getElementById('avatarImg');
+            img.src = decodeURIComponent(avatarUrl);
+            img.style.display = 'block';
+            document.getElementById('avatarFallback').style.display = 'none';
         } else {
-            document.getElementById("avatarFallback").textContent =
-                username.replace("@", "").charAt(0).toUpperCase() || "К";
+            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
-        function haptic(style = "light") {
-            try {
-                tg.HapticFeedback?.impactOccurred(style);
-            } catch (error) {
-                // Тактильная отдача недоступна вне Telegram.
-            }
+        function haptic(style = 'light') {
+            try { tg.HapticFeedback.impactOccurred(style); } catch (e) {}
         }
 
         let subs = [];
-
         try {
-            const rawSubs = params.get("subs") || localStorage.getItem("pp_c_subs");
-            if (rawSubs) {
-                const decodedSubs = decodeURIComponent(rawSubs);
-                const parsedSubs = JSON.parse(decodedSubs);
-                subs = Array.isArray(parsedSubs) ? parsedSubs : [];
-            }
-        } catch (error) {
+            const rawSubs = p.get('subs') || localStorage.getItem('pp_c_subs');
+            if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
+        } catch (e) {
             subs = [];
         }
 
-        function escapeHTML(value) {
-            return String(value ?? "").replace(/[&<>"']/g, char => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            })[char]);
-        }
-
-        function renderMeter(percent) {
+        function renderMeter(pct) {
             const count = 14;
-            const filled = Math.round((percent / 100) * count);
-            let className = "filled";
+            const filled = Math.round((pct / 100) * count);
+            let cls = 'filled';
+            if (pct <= 15) cls = 'crit';
+            else if (pct <= 30) cls = 'warn';
 
-            if (percent <= 15) className = "crit";
-            else if (percent <= 30) className = "warn";
-
-            let result = "";
-
+            let out = '';
             for (let i = 0; i < count; i++) {
-                result += `<div class="pill-cell ${i < filled ? className : ""}"></div>`;
+                out += `<div class="pill-cell ${i < filled ? cls : ''}"></div>`;
             }
-
-            return result;
+            return out;
         }
 
         function renderSlots() {
-            const cluster = document.getElementById("slotsCluster");
-            document.getElementById("slotsCount").textContent = `${subs.length} / 2 АКТИВНО`;
-
-            let html = "";
+            const cluster = document.getElementById('slotsCluster');
+            document.getElementById('slotsCount').innerText = `${subs.length} / 2 АКТИВНО`;
+            let html = '';
 
             for (let i = 0; i < 2; i++) {
-                const subscription = subs[i];
-
-                if (subscription) {
-                    const totalGb = Math.max(0, parseFloat(subscription.gb || 100) || 100);
-                    const usedGb = Math.max(0, parseFloat(subscription.used_gb || 0) || 0);
+                const s = subs[i];
+                if (s) {
+                    const totalGb = parseFloat(s.gb || 100);
+                    const usedGb = parseFloat(s.used_gb || 0);
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
-                    const percent = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
+                    const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
-                    const slotId = subscription.id || (i + 1);
+                    const slotId = s.id || (i + 1);
                     const savedName = localStorage.getItem(`pp_name_${slotId}`) || `КАНАЛ #0${i + 1}`;
-                    const maskedKey = subscription.key
-                        ? String(subscription.key).slice(0, 14) + "••••••••••••••••"
-                        : "N/A";
+                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
 
                     html += `
-                        <article class="card">
+                        <div class="card">
                             <div class="slot-unit-header">
-                                <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+                                <div style="display:flex; align-items:center; gap:8px;">
                                     <span class="soft-beacon"></span>
-                                    <input
-                                        type="text"
-                                        class="slot-name-field"
-                                        value="${escapeHTML(savedName)}"
-                                        maxlength="18"
-                                        aria-label="Название канала"
-                                        onblur="localStorage.setItem('pp_name_${escapeHTML(slotId)}', this.value)"
-                                    >
+                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="18" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
                                     <span style="font-size:11px; color:var(--text-muted);">✎</span>
                                 </div>
-                                <span class="pill-badge">${escapeHTML(subscription.name || "Подписка")}</span>
+                                <span class="pill-badge">${s.name}</span>
                             </div>
 
                             <div class="traffic-harness">
                                 <div class="gauge-svg-wrap">
-                                    <svg class="gauge-svg" viewBox="0 0 36 36" aria-hidden="true">
+                                    <svg class="gauge-svg" viewBox="0 0 36 36">
                                         <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${percent}, 100"></circle>
+                                        <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
                                     </svg>
                                     <div class="gauge-center">
-                                        <span class="gauge-pct">${percent}%</span>
+                                        <span class="gauge-pct">${pct}%</span>
                                     </div>
                                 </div>
-
-                                <div style="min-width:0;">
-                                    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:8px;">
-                                        <span class="subhead">ОСТАТОК ТРАФИКА</span>
-                                        <span class="mono" style="font-size:13px; font-weight:700; white-space:nowrap;">
-                                            ${leftGb}
-                                            <span style="font-size:10px; color:var(--text-muted);">/ ${totalGb} ГБ</span>
-                                        </span>
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                        <span class="subhead">ТЕЛЕМЕТРИЯ ТРАФИКА</span>
+                                        <span class="mono" style="font-size:14px; font-weight:700;">${leftGb} <span style="font-size:10px; color:var(--text-muted);">/ ${totalGb} ГБ</span></span>
                                     </div>
-                                    <div class="pill-meter">${renderMeter(percent)}</div>
+                                    <div class="pill-meter">${renderMeter(pct)}</div>
                                     <div class="meta-stamp">
-                                        <span>ДО: ${escapeHTML(subscription.until || "—")}</span>
-                                        <span>УСТРОЙСТВ: ${escapeHTML(subscription.dev || 1)}</span>
+                                        <span>ДО: ${s.until}</span>
+                                        <span>УСТР: ${s.dev || 1}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="key-capsule">
-                                <input
-                                    type="text"
-                                    id="k_${i}"
-                                    class="key-text"
-                                    data-raw="${escapeHTML(subscription.key || "")}"
-                                    data-mask="${escapeHTML(maskedKey)}"
-                                    data-open="0"
-                                    readonly
-                                    value="${escapeHTML(maskedKey)}"
-                                    aria-label="Ключ подключения"
-                                >
-                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="min-height:32px; padding:5px 8px;" aria-label="Показать или скрыть ключ">👁</button>
-                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-pastel" style="min-height:32px; padding:6px 10px; font-size:11px;">КОПИРОВАТЬ</button>
+                                <input type="text" id="k_${i}" class="key-text" data-raw="${s.key}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
+                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:5px 8px; font-size:11px;">👁</button>
+                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-pastel" style="padding:6px 10px; font-size:11px;">ЗАБРАТЬ</button>
                             </div>
 
                             <div class="grid-duo">
-                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">+ ДОБАВИТЬ ТРАФИК</button>
-                                <button onclick="switchTab('tariffs')" class="btn-subtle">СМЕНИТЬ ТАРИФ</button>
+                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">⚡️ +ТРАФИК</button>
+                                <button onclick="switchTab('tariffs')" class="btn-subtle">↻ ТАРИФЫ</button>
                             </div>
-                        </article>
+                        </div>
                     `;
                 } else {
                     html += `
-                        <article class="card" style="border-style:dashed; text-align:center; padding:22px 14px;">
-                            <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">
-                                СВОБОДНЫЙ СЛОТ #0${i + 1}
-                            </div>
-                            <button onclick="switchTab('tariffs')" class="btn-pastel">
-                                ВЫБРАТЬ ПОДПИСКУ
-                            </button>
-                        </article>
+                        <div class="card" style="border-style:dashed; text-align:center; padding:22px 14px;">
+                            <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">// СВОБОДНЫЙ СЛОТ #0${i + 1}</div>
+                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ПОДПИСКУ</button>
+                        </div>
                     `;
                 }
             }
-
             cluster.innerHTML = html;
         }
+        renderSlots();
 
-        function toggleKeyReveal(id) {
-            const input = document.getElementById(id);
-            if (!input) return;
-
-            const isOpen = input.getAttribute("data-open") === "1";
-            input.value = isOpen
-                ? input.getAttribute("data-mask")
-                : input.getAttribute("data-raw");
-
-            input.setAttribute("data-open", isOpen ? "0" : "1");
-            haptic("light");
+        function toggleKeyReveal(id, btn) {
+            const el = document.getElementById(id);
+            const open = el.getAttribute('data-open') === '1';
+            el.value = open ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
+            el.setAttribute('data-open', open ? '0' : '1');
+            haptic('light');
         }
 
-        async function copyText(text) {
-            try {
-                if (navigator.clipboard && window.isSecureContext) {
-                    await navigator.clipboard.writeText(text);
-                    return true;
-                }
-            } catch (error) {
-                // Используем резервный способ копирования ниже.
-            }
-
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            textarea.style.position = "fixed";
-            textarea.style.opacity = "0";
-            document.body.appendChild(textarea);
-            textarea.select();
-
-            let success = false;
-            try {
-                success = document.execCommand("copy");
-            } catch (error) {
-                success = false;
-            }
-
-            textarea.remove();
-            return success;
+        function copyKeyValue(id, btn) {
+            const raw = document.getElementById(id).getAttribute('data-raw');
+            navigator.clipboard.writeText(raw);
+            const old = btn.innerText;
+            btn.innerText = 'OK';
+            setTimeout(() => { btn.innerText = old; }, 1200);
+            haptic('medium');
         }
 
-        async function copyKeyValue(id, button) {
-            const input = document.getElementById(id);
-            if (!input) return;
-
-            const success = await copyText(input.getAttribute("data-raw") || "");
-            const originalText = button.textContent;
-
-            button.textContent = success ? "ГОТОВО" : "ОШИБКА";
-            setTimeout(() => {
-                button.textContent = originalText;
-            }, 1200);
-
-            haptic("medium");
+        function copyRefLink(btn) {
+            navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
+            const old = btn.innerText;
+            btn.innerText = 'СКОПИРОВАНО';
+            setTimeout(() => { btn.innerText = old; }, 1300);
+            haptic('light');
         }
 
-        async function copyRefLink(button) {
-            const success = await copyText(`https://t.me/PinPointVPN_bot?start=${uid}`);
-            const originalText = button.textContent;
-
-            button.textContent = success ? "СКОПИРОВАНО" : "ОШИБКА";
-            setTimeout(() => {
-                button.textContent = originalText;
-            }, 1300);
-
-            haptic("light");
-        }
-
+        /* ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК */
         function switchTab(tab) {
-            ["cabinet", "tariffs", "style"].forEach(name => {
-                const panel = document.getElementById(`tab-${name}`);
-                const button = document.getElementById(`nav-${name}`);
-                const selected = name === tab;
-
-                panel.classList.toggle("active", selected);
-                button.classList.toggle("active", selected);
-
-                if (selected) {
-                    requestAnimationFrame(() => panel.classList.add("show"));
+            ['cabinet', 'tariffs', 'style'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`nav-${t}`);
+                if (t === tab) {
+                    el.classList.add('active');
+                    requestAnimationFrame(() => {
+                        el.classList.add('show');
+                    });
+                    btn.classList.add('active');
                 } else {
-                    panel.classList.remove("show");
+                    el.classList.remove('show');
+                    el.classList.remove('active');
+                    btn.classList.remove('active');
                 }
             });
-
-            haptic("light");
+            haptic('light');
         }
 
-        function openCurtain(id) {
-            document.getElementById(id)?.classList.add("active");
-            haptic("light");
-        }
-
-        function closeCurtain(id) {
-            document.getElementById(id)?.classList.remove("active");
-        }
-
-        function setTopupAmount(amount) {
-            document.getElementById("topupInputVal").value = amount;
-        }
+        function openCurtain(id) { document.getElementById(id).classList.add('active'); haptic('light'); }
+        function closeCurtain(id) { document.getElementById(id).classList.remove('active'); }
 
         let chosenBoostGb = 0;
         let chosenSlotNum = 1;
 
-        function triggerBooster(number) {
-            chosenSlotNum = number;
+        function triggerBooster(num) {
+            chosenSlotNum = num;
             chosenBoostGb = 0;
-
-            document.getElementById("boostSlotBadge").textContent = `КАНАЛ #0${number}`;
-
-            const button = document.getElementById("boostPayBtn");
-            button.disabled = true;
-            button.textContent = "ВЫБЕРИТЕ ОБЪЁМ ПАКЕТА";
-
-            document.querySelectorAll(".boost-unit").forEach(item => {
-                item.classList.remove("active");
-            });
-
-            openCurtain("boosterSheet");
+            document.getElementById('boostSlotBadge').innerText = `КАНАЛ #0${num}`;
+            const btn = document.getElementById('boostPayBtn');
+            btn.disabled = true;
+            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА';
+            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
+            openCurtain('boosterSheet');
         }
 
         function chooseBoost(gb, price) {
             chosenBoostGb = gb;
-
-            document.querySelectorAll(".boost-unit").forEach(item => {
-                item.classList.remove("active");
-            });
-
-            document.getElementById(`b_${gb}`)?.classList.add("active");
-
-            const button = document.getElementById("boostPayBtn");
-            button.disabled = false;
-            button.textContent = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
-
-            haptic("light");
-        }
-
-        function openBotLink(startParameter) {
-            const url = `https://t.me/PinPointVPN_bot?start=${startParameter}`;
-
-            try {
-                if (tg.openTelegramLink) {
-                    tg.openTelegramLink(url);
-                } else {
-                    window.open(url, "_blank");
-                }
-
-                if (tg.close) tg.close();
-            } catch (error) {
-                window.open(url, "_blank");
-            }
+            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
+            document.getElementById(`b_${gb}`).classList.add('active');
+            const btn = document.getElementById('boostPayBtn');
+            btn.disabled = false;
+            btn.innerText = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
+            haptic('light');
         }
 
         function dispatchBoost() {
             if (!chosenBoostGb) return;
-            openBotLink(`boost_${chosenBoostGb}_${chosenSlotNum}`);
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenBoostGb}_${chosenSlotNum}`);
+            tg.close();
         }
 
         function dispatchTopup() {
-            const value = parseInt(document.getElementById("topupInputVal").value, 10);
-
-            if (!value || value < 10) {
-                alert("Минимальная сумма пополнения — 10 ₽");
-                return;
-            }
-
-            openBotLink(`topup_${value}`);
+            const val = parseInt(document.getElementById('topupInputVal').value, 10);
+            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
+            tg.close();
         }
 
         function requestTariff(planId) {
-            if (subs.length >= 2) {
-                alert("Оба доступных слота уже заняты.");
-                return;
-            }
-
-            openBotLink(`buy_${planId}`);
+            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
+            tg.close();
         }
 
         function applyPromoCode() {
-            const value = document.getElementById("promoInput").value.trim();
-            if (!value) return;
-
-            openBotLink(`promo_${encodeURIComponent(value)}`);
+            const val = document.getElementById('promoInput').value.trim();
+            if (!val) return;
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(val)}`);
+            tg.close();
         }
 
-        let currentFx = localStorage.getItem("pp_fx_v7") || "silk";
+        // ТЕМЫ, ШРИФТЫ, АНИМАЦИИ
+        let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
 
-        function setPastelTheme(theme) {
-            document.body.setAttribute("data-theme", theme);
-            localStorage.setItem("pp_theme_v7", theme);
-
-            document.querySelectorAll("[data-t]").forEach(button => {
-                button.classList.toggle("active", button.getAttribute("data-t") === theme);
-            });
-
-            haptic("light");
+        function setPastelTheme(t) {
+            document.body.setAttribute('data-theme', t);
+            localStorage.setItem('pp_theme_v7', t);
+            document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
+            haptic('light');
+        }
+        function setFontChoice(f) {
+            document.body.setAttribute('data-font', f);
+            localStorage.setItem('pp_font_v7', f);
+            document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
+            haptic('light');
+        }
+        function setBackdropFx(a) {
+            currentFx = a;
+            localStorage.setItem('pp_fx_v7', a);
+            document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
+            haptic('light');
+            if (typeof animateCanvas === 'function') animateCanvas(1000);
         }
 
-        function setFontChoice(font) {
-            document.body.setAttribute("data-font", font);
-            localStorage.setItem("pp_font_v7", font);
-
-            document.querySelectorAll("[data-f]").forEach(button => {
-                button.classList.toggle("active", button.getAttribute("data-f") === font);
-            });
-
-            haptic("light");
-        }
-
-        function setBackdropFx(effect) {
-            currentFx = effect;
-            localStorage.setItem("pp_fx_v7", effect);
-
-            document.querySelectorAll("[data-a]").forEach(button => {
-                button.classList.toggle("active", button.getAttribute("data-a") === effect);
-            });
-
-            haptic("light");
-        }
-
-        setPastelTheme(localStorage.getItem("pp_theme_v7") || "sage");
-        setFontChoice(localStorage.getItem("pp_font_v7") || "sora");
+        setPastelTheme(localStorage.getItem('pp_theme_v7') || 'sage');
+        setFontChoice(localStorage.getItem('pp_font_v7') || 'sora');
         setBackdropFx(currentFx);
 
+        // ОНБОРДИНГ
         function executeIntro() {
-            const intro = document.getElementById("fadeIntro");
-            const title = document.getElementById("introTitle");
-            const subtitle = document.getElementById("introSub");
-            const config = document.getElementById("firstRunConfig");
+            const intro = document.getElementById('fadeIntro');
+            const tit = document.getElementById('introTitle');
+            const sub = document.getElementById('introSub');
+            const cfg = document.getElementById('firstRunConfig');
 
-            title.classList.remove("show");
-            subtitle.classList.remove("show");
-
-            intro.style.display = "flex";
-            intro.style.opacity = "1";
-
-            setTimeout(() => {
-                title.classList.add("show");
-                subtitle.classList.add("show");
-            }, 120);
-
-            setTimeout(() => {
-                title.classList.remove("show");
-                subtitle.classList.remove("show");
-            }, 1850);
-
-            setTimeout(() => {
-                config.style.display = "flex";
-                intro.style.opacity = "0";
-
+            intro.style.display = 'flex';
+            requestAnimationFrame(() => {
+                intro.style.opacity = '1';
+                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 120);
+                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
                 setTimeout(() => {
-                    intro.style.display = "none";
-                }, 550);
-            }, 2450);
+                    cfg.style.display = 'flex';
+                    requestAnimationFrame(() => { cfg.classList.add('show'); });
+                    intro.style.opacity = '0';
+                    setTimeout(() => { intro.style.display = 'none'; }, 550);
+                }, 2450);
+            });
         }
 
         function completeFirstRun() {
-            localStorage.setItem("pp_onboarded_v7", "1");
-            document.getElementById("firstRunConfig").style.display = "none";
-            haptic("medium");
+            localStorage.setItem('pp_onboarded_v7', '1');
+            const cfg = document.getElementById('firstRunConfig');
+            cfg.classList.remove('show');
+            setTimeout(() => {
+                cfg.style.display = 'none';
+            }, 400);
+            haptic('medium');
         }
 
         function replayIntro() {
-            localStorage.removeItem("pp_onboarded_v7");
+            localStorage.removeItem('pp_onboarded_v7');
             executeIntro();
         }
 
-        if (!localStorage.getItem("pp_onboarded_v7")) {
+        if (!localStorage.getItem('pp_onboarded_v7')) {
             executeIntro();
         }
 
-        const canvas = document.getElementById("fxCanvas");
-        const context = canvas.getContext("2d");
-        let canvasWidth = 0;
-        let canvasHeight = 0;
-        let fxTick = 0;
+        // РЕНДЕР ФОНА
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
 
         function resizeCanvas() {
-            const ratio = Math.min(window.devicePixelRatio || 1, 2);
-            canvasWidth = window.innerWidth;
-            canvasHeight = window.innerHeight;
-
-            canvas.width = canvasWidth * ratio;
-            canvas.height = canvasHeight * ratio;
-            canvas.style.width = `${canvasWidth}px`;
-            canvas.style.height = `${canvasHeight}px`;
-            context.setTransform(ratio, 0, 0, ratio, 0, 0);
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
-
-        window.addEventListener("resize", resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const silkParticles = Array.from({ length: 22 }, () => ({
-            x: Math.random() * canvasWidth,
-            y: Math.random() * canvasHeight,
-            vx: (Math.random() - .5) * .18,
-            vy: (Math.random() - .5) * .18,
-            r: Math.random() * 1.5 + .5,
-            seed: Math.random() * Math.PI * 2
+        const silkParticles = Array.from({ length: 18 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+            r: Math.random() * 1.4 + 0.7,
+            sinSeed: Math.random() * Math.PI * 2
         }));
 
-        function animateCanvas() {
-            context.clearRect(0, 0, canvasWidth, canvasHeight);
-            fxTick += .008;
+        let fxTick = 0;
+        let lastFxFrame = 0;
 
-            if (currentFx === "silk") {
-                context.fillStyle = "rgba(169, 135, 168, .23)";
+        function animateCanvas(now = 0) {
+            if (now - lastFxFrame < 40) {
+                requestAnimationFrame(animateCanvas);
+                return;
+            }
+            lastFxFrame = now;
+            ctx.clearRect(0, 0, width, height);
+            fxTick += 0.01;
 
-                silkParticles.forEach((particle, index) => {
-                    particle.seed += .012;
-                    particle.x += particle.vx + Math.sin(particle.seed) * .12;
-                    particle.y += particle.vy + Math.cos(particle.seed) * .12;
+            if (currentFx === 'silk') {
+                ctx.fillStyle = 'rgba(224, 232, 202, 0.42)';
+                ctx.shadowBlur = 0;
+                ctx.shadowColor = 'transparent';
+                silkParticles.forEach((p, idx) => {
+                    p.sinSeed += 0.015;
+                    p.x += p.vx + Math.sin(p.sinSeed) * 0.15;
+                    p.y += p.vy + Math.cos(p.sinSeed) * 0.15;
 
-                    if (particle.x < 0) particle.x = canvasWidth;
-                    if (particle.x > canvasWidth) particle.x = 0;
-                    if (particle.y < 0) particle.y = canvasHeight;
-                    if (particle.y > canvasHeight) particle.y = 0;
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
 
-                    context.beginPath();
-                    context.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
-                    context.fill();
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
 
-                    for (let next = index + 1; next < silkParticles.length; next++) {
-                        const other = silkParticles[next];
-                        const dx = particle.x - other.x;
-                        const dy = particle.y - other.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < 65) {
-                            context.strokeStyle = `rgba(169, 135, 168, ${.10 * (1 - distance / 65)})`;
-                            context.lineWidth = .7;
-                            context.beginPath();
-                            context.moveTo(particle.x, particle.y);
-                            context.lineTo(other.x, other.y);
-                            context.stroke();
+                    for (let j = idx + 1; j < silkParticles.length; j++) {
+                        const p2 = silkParticles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 65) {
+                            ctx.strokeStyle = `rgba(190, 210, 160, ${0.08 * (1 - dist / 65)})`;
+                            ctx.lineWidth = 0.55;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
                         }
                     }
                 });
-            } else if (currentFx === "haze") {
-                const gradientOne = context.createRadialGradient(
-                    canvasWidth * .35 + Math.sin(fxTick) * 55,
-                    canvasHeight * .3 + Math.cos(fxTick * .8) * 40,
-                    10,
-                    canvasWidth * .35,
-                    canvasHeight * .3,
-                    250
+            } else if (currentFx === 'haze') {
+                const g1 = ctx.createRadialGradient(
+                    width * 0.35 + Math.sin(fxTick) * 70,
+                    height * 0.3 + Math.cos(fxTick * 0.8) * 50,
+                    15,
+                    width * 0.35, height * 0.3, 260
                 );
+                g1.addColorStop(0, 'rgba(162, 196, 177, 0.09)');
+                g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = g1;
+                ctx.fillRect(0, 0, width, height);
 
-                gradientOne.addColorStop(0, "rgba(169, 135, 168, .12)");
-                gradientOne.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-                context.fillStyle = gradientOne;
-                context.fillRect(0, 0, canvasWidth, canvasHeight);
-
-                const gradientTwo = context.createRadialGradient(
-                    canvasWidth * .7 + Math.cos(fxTick * .9) * 50,
-                    canvasHeight * .7 + Math.sin(fxTick) * 45,
-                    10,
-                    canvasWidth * .7,
-                    canvasHeight * .7,
-                    260
+                const g2 = ctx.createRadialGradient(
+                    width * 0.7 + Math.cos(fxTick * 0.9) * 60,
+                    height * 0.7 + Math.sin(fxTick) * 60,
+                    20,
+                    width * 0.7, height * 0.7, 280
                 );
-
-                gradientTwo.addColorStop(0, "rgba(129, 169, 148, .10)");
-                gradientTwo.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-                context.fillStyle = gradientTwo;
-                context.fillRect(0, 0, canvasWidth, canvasHeight);
+                g2.addColorStop(0, 'rgba(198, 183, 219, 0.07)');
+                g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = g2;
+                ctx.fillRect(0, 0, width, height);
             }
-
-            requestAnimationFrame(animateCanvas);
         }
-
-        animateCanvas();
+        animateCanvas(1000);
     </script>
 </body>
 </html>
