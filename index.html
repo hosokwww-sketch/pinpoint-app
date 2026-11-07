@@ -3,51 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PinPoint System</title>
+    <title>PINPOINT // CORE OS</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #08080a;
-            --surface: #111114;
-            --surface-2: #18181c;
-            --border: #24242b;
-            --text: #f4f4f6;
-            --muted: #71717a;
-            --accent: #fafafa;
-            --accent-fg: #08080a;
-            --status: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --font-main: 'Space Grotesk', sans-serif;
+            --bg: #050506;
+            --panel: #0c0c0f;
+            --panel-hi: #131318;
+            --line: #22222a;
+            --line-hi: #383844;
+            --fg: #f4f4f6;
+            --muted: #6e6e7a;
+            --accent: #ffffff;
+            --accent-fg: #050506;
+            --ok: #10b981;
+            --warn: #f59e0b;
+            --crit: #ef4444;
+            --font-ui: 'Space Grotesk', sans-serif;
         }
 
+        /* 4 ИНДУСТРИАЛЬНЫЕ ТЕМЫ */
         body[data-theme="obsidian"] {
-            --bg: #08080a; --surface: #111114; --surface-2: #18181c;
-            --border: #24242b; --text: #f4f4f6; --muted: #71717a;
-            --accent: #fafafa; --accent-fg: #09090b; --status: #22c55e;
+            --bg: #040405; --panel: #0b0b0e; --panel-hi: #121217;
+            --line: #202028; --line-hi: #3a3a48; --fg: #f4f4f6;
+            --muted: #686875; --accent: #ffffff; --accent-fg: #040405; --ok: #22c55e;
         }
         body[data-theme="tactical"] {
-            --bg: #0a0d0c; --surface: #111615; --surface-2: #171f1d;
-            --border: #23302c; --text: #e2e8f0; --muted: #64748b;
-            --accent: #10b981; --accent-fg: #04130e; --status: #10b981;
+            --bg: #060908; --panel: #0c1210; --panel-hi: #121c18;
+            --line: #1c2b26; --line-hi: #2d473e; --fg: #e2f1ec;
+            --muted: #5c7a70; --accent: #10b981; --accent-fg: #04120d; --ok: #10b981;
         }
         body[data-theme="amber"] {
-            --bg: #070605; --surface: #110f0c; --surface-2: #1a1612;
-            --border: #2c241b; --text: #fef3c7; --muted: #927c60;
-            --accent: #f59e0b; --accent-fg: #090601; --status: #f59e0b;
+            --bg: #070503; --panel: #100c08; --panel-hi: #1a130d;
+            --line: #2b1f14; --line-hi: #4a3520; --fg: #fef3c7;
+            --muted: #8c6f4d; --accent: #f59e0b; --accent-fg: #0a0600; --ok: #f59e0b;
         }
         body[data-theme="frost"] {
-            --bg: #070a0f; --surface: #0f141d; --surface-2: #161e2b;
-            --border: #222e42; --text: #f0f9ff; --muted: #64748b;
-            --accent: #38bdf8; --accent-fg: #04131d; --status: #38bdf8;
+            --bg: #05080c; --panel: #0b1018; --panel-hi: #121a27;
+            --line: #1c283b; --line-hi: #2f4363; --fg: #f0f9ff;
+            --muted: #647894; --accent: #38bdf8; --accent-fg: #04111c; --ok: #38bdf8;
         }
 
-        body[data-font="space"]   { --font-main: 'Space Grotesk', sans-serif; }
-        body[data-font="mono"]    { --font-main: 'JetBrains Mono', monospace; }
-        body[data-font="manrope"] { --font-main: 'Manrope', sans-serif; }
+        body[data-font="space"]   { --font-ui: 'Space Grotesk', sans-serif; }
+        body[data-font="mono"]    { --font-ui: 'JetBrains Mono', monospace; }
+        body[data-font="manrope"] { --font-ui: 'Manrope', sans-serif; }
 
         * {
             box-sizing: border-box;
@@ -59,12 +61,11 @@
 
         body {
             background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-main);
+            color: var(--fg);
+            font-family: var(--font-ui);
             min-height: 100vh;
-            padding: 14px 14px 96px;
+            padding: 10px 12px 100px;
             overflow-x: hidden;
-            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
@@ -76,407 +77,552 @@
             z-index: 0;
         }
 
-        .app-layer {
+        .hud-wrapper {
             position: relative;
             z-index: 10;
             max-width: 440px;
             margin: 0 auto;
         }
 
-        /* 1. WELCOME SCREEN */
-        #welcomeScreen {
-            position: fixed;
-            inset: 0;
-            background: #060608;
-            z-index: 300;
-            display: none;
+        /* ВЕРХНЯЯ СИСТЕМНАЯ ТЕЛЕМЕТРИЯ */
+        .sys-topbar {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: opacity 0.5s ease;
-        }
-        .welcome-title {
-            font-size: 21px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #fafafa;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .welcome-sub {
+            padding: 6px 2px 10px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 12px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            letter-spacing: 0.14em;
-            color: #52525b;
-            margin-top: 8px;
-            opacity: 0;
-            transition: opacity 0.7s ease 0.15s;
+            color: var(--muted);
+            letter-spacing: 0.08em;
         }
-        .welcome-title.visible, .welcome-sub.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .sys-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--fg);
+            font-weight: 700;
+        }
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--ok);
+            box-shadow: 0 0 8px var(--ok);
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
         }
 
-        /* 2. SETUP SCREEN */
-        #setupScreen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 250;
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 24px 16px 20px;
-            overflow-y: auto;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        #setupScreen.visible { opacity: 1; }
-
-        /* CARDS & LAYOUT */
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+        /* ТЕХНИЧЕСКИЙ МОДУЛЬ С УГЛОВЫМИ ЗАСЕЧКАМИ */
+        .hw-box {
+            position: relative;
+            background: var(--panel);
+            border: 1px solid var(--line);
             padding: 14px;
             margin-bottom: 12px;
         }
-        .header-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .hw-box::before, .hw-box::after {
+            content: '';
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-color: var(--accent);
+            pointer-events: none;
+            opacity: 0.65;
         }
-        .user-block {
-            display: flex;
-            align-items: center;
+        .hw-box::before {
+            top: -1px; left: -1px;
+            border-top: 2px solid var(--accent);
+            border-left: 2px solid var(--accent);
+        }
+        .hw-box::after {
+            bottom: -1px; right: -1px;
+            border-bottom: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+        }
+
+        /* ПРОФИЛЬ И БАЛАНС (КОМАНДНАЯ ПАНЕЛЬ) */
+        .id-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
             gap: 12px;
+            align-items: center;
         }
-        .avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
+        .operator-info {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+        }
+        .hw-avatar {
+            width: 46px;
+            height: 46px;
+            background: var(--panel-hi);
+            border: 1px solid var(--line-hi);
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 15px;
-            color: var(--muted);
-        }
-        .label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--muted);
-            margin-bottom: 4px;
-        }
-        .value {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-        }
-        .badge {
-            font-size: 10px;
-            background: var(--surface-2);
-            color: var(--text);
-            border: 1px solid var(--border);
-            padding: 3px 7px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--status);
-            box-shadow: 0 0 8px var(--status);
-            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--accent);
             flex-shrink: 0;
         }
-
-        /* SLOT CARDS */
-        .slot-active {
-            border-left: 3px solid var(--accent);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .slot-empty {
-            border: 1px dashed var(--border);
-            background: transparent;
-            text-align: center;
-            padding: 22px 14px;
-        }
-        .slot-name-input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px dashed var(--border);
-            color: var(--text);
-            font-size: 13px;
-            font-weight: 700;
-            font-family: inherit;
-            outline: none;
-            width: 155px;
-            padding: 2px 0;
+        .op-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--muted);
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
-        .slot-name-input:focus {
-            border-bottom: 1px solid var(--accent);
+        .op-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--fg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 1px 0 2px;
+        }
+        .op-uid {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
         }
 
-        /* TRAFFIC RING */
-        .traffic-grid {
-            display: grid;
-            grid-template-columns: 58px 1fr;
-            gap: 12px;
+        .funds-panel {
+            border-left: 1px dashed var(--line-hi);
+            padding-left: 14px;
+            text-align: right;
+        }
+        .funds-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--fg);
+            margin: 2px 0 6px;
+        }
+
+        /* ЗАГОЛОВКИ СЕКЦИЙ */
+        .sec-bar {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin: 16px 0 8px;
+            padding: 0 2px;
+        }
+        .sec-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sec-title::before {
+            content: '//';
+            color: var(--accent);
+        }
+        .hw-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            background: var(--panel-hi);
+            border: 1px solid var(--line-hi);
+            color: var(--fg);
+        }
+
+        /* КАРТОЧКА СЛОТА (NODE UNIT) */
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 12px;
+        }
+        .node-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .node-idx {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            background: var(--accent);
+            color: var(--accent-fg);
+            padding: 2px 5px;
+        }
+        .node-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed var(--line-hi);
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            width: 145px;
+            padding: 1px 0;
+            outline: none;
+        }
+        .node-input:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        /* ТЕЛЕМЕТРИЯ ТРАФИКА: РАДАР + 20-СЕГМЕНТНЫЙ LED БАР */
+        .telemetry-box {
+            display: grid;
+            grid-template-columns: 74px 1fr;
+            gap: 12px;
             background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 12px;
+            border: 1px solid var(--line);
+            padding: 10px;
+            margin-bottom: 10px;
+            align-items: center;
         }
-        .ring-container {
+        .radar-wrap {
             position: relative;
-            width: 54px;
-            height: 54px;
+            width: 70px;
+            height: 70px;
         }
-        .ring-svg {
+        .radar-svg {
             transform: rotate(-90deg);
             width: 100%;
             height: 100%;
         }
-        .ring-bg {
+        .radar-track {
             fill: none;
-            stroke: var(--surface-2);
-            stroke-width: 3.6;
+            stroke: var(--panel-hi);
+            stroke-width: 3.5;
         }
-        .ring-progress {
+        .radar-dash {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 1;
+            stroke-dasharray: 2, 2;
+        }
+        .radar-fill {
             fill: none;
             stroke: var(--accent);
-            stroke-width: 3.6;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.8s ease;
+            stroke-width: 3.5;
+            stroke-linecap: butt;
+            transition: stroke-dasharray 0.7s ease;
         }
-        .ring-text {
+        .radar-center {
             position: absolute;
             inset: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .radar-pct {
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .radar-lbl {
+            font-size: 7px;
+            color: var(--muted);
+            margin-top: 2px;
+            letter-spacing: 0.08em;
         }
 
-        /* KEY INPUT & BUTTONS */
-        .key-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+        .led-bar {
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            gap: 2px;
+            margin: 6px 0 8px;
         }
-        .key-input {
+        .led-seg {
+            height: 7px;
+            background: var(--panel-hi);
+        }
+        .led-seg.on {
+            background: var(--accent);
+            box-shadow: 0 0 4px var(--accent);
+        }
+        .led-seg.warn { background: var(--warn); box-shadow: 0 0 4px var(--warn); }
+        .led-seg.crit { background: var(--crit); box-shadow: 0 0 4px var(--crit); }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            border-top: 1px dashed var(--line);
+            padding-top: 5px;
+        }
+
+        /* СТРОКА КЛЮЧА С МАСКОЙ БЕЗОПАСНОСТИ */
+        .cipher-bar {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 6px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            padding: 6px 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cipher-input {
             background: transparent;
             border: none;
             outline: none;
             color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             width: 100%;
             pointer-events: none;
         }
 
-        .btn-accent {
+        /* ИНДУСТРИАЛЬНЫЕ КНОПКИ */
+        .hw-btn {
             background: var(--accent);
             color: var(--accent-fg);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: opacity 0.15s ease, transform 0.1s ease;
-            text-transform: uppercase;
-        }
-        .btn-accent:active { opacity: 0.85; transform: scale(0.98); }
-        .btn-accent:disabled { opacity: 0.4; pointer-events: none; }
-
-        .btn-ghost {
-            width: 100%;
-            background: var(--surface-2);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 12px;
+            border: 1px solid var(--accent);
+            padding: 9px 12px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            font-weight: 600;
-            font-family: inherit;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: transform 0.08s ease, opacity 0.15s ease;
+        }
+        .hw-btn:active { transform: scale(0.98); opacity: 0.85; }
+        .hw-btn:disabled { opacity: 0.35; pointer-events: none; }
+
+        .hw-btn-ghost {
+            background: var(--panel-hi);
+            color: var(--fg);
+            border: 1px solid var(--line-hi);
+            padding: 9px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: border-color 0.15s ease;
-            text-transform: uppercase;
+            transition: border-color 0.15s ease, background 0.15s ease;
         }
-        .btn-ghost:active { border-color: var(--accent); }
-
-        .btn-copy {
-            background: var(--surface-2);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            flex-shrink: 0;
+        .hw-btn-ghost:active {
+            border-color: var(--accent);
+            background: var(--line);
         }
 
-        /* GRIDS & OPTIONS */
-        .opt-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 14px;
+        /* ПУСТОЙ СЛОТ */
+        .empty-node {
+            border: 1px dashed var(--line-hi);
+            background: rgba(12, 12, 15, 0.5);
+            padding: 20px 14px;
+            text-align: center;
+            margin-bottom: 12px;
         }
-        .opt-grid-3 {
+
+        /* СЕТКА ТАРИФОВ (СПЕЦИФИКАЦИИ СЕРВЕРОВ) */
+        .spec-card {
+            position: relative;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+        .spec-card.flagship {
+            border-color: var(--accent);
+        }
+        .spec-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .spec-matrix {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 14px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
-        .opt-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--text);
-            border-radius: 10px;
+        .spec-cell {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            padding: 6px 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .spec-cell-lbl { font-size: 8px; color: var(--muted); display: block; }
+        .spec-cell-val { font-size: 11px; font-weight: 700; color: var(--fg); }
+
+        /* НАСТРОЙКИ И СЕЛЕКТОРЫ */
+        .cfg-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .cfg-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .cfg-btn {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            color: var(--muted);
             padding: 11px 10px;
-            font-size: 12px;
-            font-weight: 600;
-            font-family: inherit;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: border-color 0.15s ease, background 0.15s ease;
+            text-transform: uppercase;
         }
-        .opt-btn.active {
+        .cfg-btn.active {
             border-color: var(--accent);
-            background: var(--surface-2);
+            color: var(--fg);
+            background: var(--panel-hi);
         }
-        .swatch {
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+        .swatch-box { width: 10px; height: 10px; border: 1px solid rgba(255,255,255,0.3); }
 
-        .tariff-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .custom-input {
+        .hw-input {
             width: 100%;
             background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            border: 1px solid var(--line-hi);
             padding: 10px 12px;
-            color: var(--text);
+            color: var(--fg);
+            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             outline: none;
         }
-        .custom-input:focus { border-color: var(--accent); }
+        .hw-input:focus { border-color: var(--accent); }
 
-        /* BOTTOM BAR */
-        .bottom-nav {
+        /* НИЖНЯЯ ДОК-СТАНЦИЯ */
+        .bottom-dock {
             position: fixed;
-            bottom: 12px;
-            left: 14px;
-            right: 14px;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(8, 8, 10, 0.96);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--line-hi);
+            z-index: 95;
+            padding: 8px 12px 14px;
+        }
+        .dock-inner {
             max-width: 440px;
             margin: 0 auto;
-            background: rgba(17, 17, 20, 0.94);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 6px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            z-index: 90;
+            gap: 8px;
         }
-        .nav-item {
-            background: transparent;
-            border: 1px solid transparent;
+        .dock-btn {
+            background: var(--panel);
+            border: 1px solid var(--line);
             color: var(--muted);
             padding: 9px 6px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-            font-family: inherit;
+            font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            transition: all 0.15s ease;
+            align-items: flex-start;
+            padding-left: 12px;
+            position: relative;
         }
-        .nav-item.active {
-            background: var(--surface-2);
-            color: var(--accent);
-            border-color: var(--border);
+        .dock-btn.active {
+            border-color: var(--accent);
+            color: var(--fg);
+            background: var(--panel-hi);
         }
+        .dock-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+        .dock-idx { font-size: 9px; opacity: 0.6; }
+        .dock-lbl { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; margin-top: 2px; }
 
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
 
-        /* BOTTOM SHEETS (BOOSTER & TOPUP) */
-        .sheet-overlay {
+        /* ВЫДВИЖНЫЕ ТЕРМИНАЛЬНЫЕ ШТОРКИ (SHEETS) */
+        .sheet-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(4px);
             z-index: 200;
             display: flex;
             align-items: flex-end;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.2s ease;
         }
-        .sheet-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .sheet-content {
-            background: var(--surface);
+        .sheet-backdrop.active { opacity: 1; pointer-events: auto; }
+        .sheet-modal {
+            background: var(--panel);
+            border-top: 2px solid var(--accent);
             width: 100%;
             max-width: 440px;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
-            padding: 20px 16px 24px;
-            border-top: 1px solid var(--border);
+            padding: 18px 14px 26px;
             transform: translateY(100%);
-            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .sheet-overlay.active .sheet-content {
-            transform: translateY(0);
+        .sheet-backdrop.active .sheet-modal { transform: translateY(0); }
+
+        /* ЭКРАН ПЕРВИЧНОГО ЗАПУСКА (BOOTLOADER) */
+        #bootScreen {
+            position: fixed;
+            inset: 0;
+            background: #040405;
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.45s ease;
+        }
+        .boot-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.6s ease;
+        }
+        .boot-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #686875;
+            margin-top: 8px;
+            letter-spacing: 0.16em;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.15s;
+        }
+        .boot-title.on, .boot-sub.on { opacity: 1; transform: translateY(0); }
+
+        #initConfigScreen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 260;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 14px 24px;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -484,285 +630,312 @@
 
     <canvas id="bgCanvas"></canvas>
 
-    <!-- 1. ЭКРАН ПРИВЕТСТВИЯ -->
-    <div id="welcomeScreen">
-        <div id="welcomeTitle" class="welcome-title">Добро пожаловать!</div>
-        <div id="welcomeSub" class="welcome-sub">PINPOINT CORE SYSTEM</div>
+    <!-- 1. ЭКРАН ЗАГРУЗКИ ПРИ ПЕРВОМ ВХОДЕ -->
+    <div id="bootScreen">
+        <div id="bootTitle" class="boot-title">Добро пожаловать!</div>
+        <div id="bootSub" class="boot-sub">PINPOINT // OS INITIALIZED</div>
     </div>
 
-    <!-- 2. ЭКРАН ПЕРВИЧНОЙ НАСТРОЙКИ -->
-    <div id="setupScreen">
-        <div style="max-width: 440px; margin: 0 auto; width: 100%;">
-            <div class="mono" style="font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 6px;">ШАГ 01 // ИНИЦИАЛИЗАЦИЯ</div>
-            <div style="font-size: 19px; font-weight: 700; margin-bottom: 6px;">Конфигурация терминала</div>
-            <div style="font-size: 12px; color: var(--muted); margin-bottom: 20px;">Выберите строгую палитру, типографику и физику фона. Настройки можно изменить в любой момент.</div>
+    <!-- 2. ПЕРВИЧНЫЙ КОНФИГУРАТОР СИСТЕМЫ -->
+    <div id="initConfigScreen">
+        <div style="max-width:440px; margin:0 auto; width:100%;">
+            <div class="sys-topbar">
+                <span>BOOT // STEP 01</span>
+                <span>HARDWARE SETUP</span>
+            </div>
+            <div style="font-size:18px; font-weight:800; text-transform:uppercase; margin-bottom:4px;">Калибровка интерфейса</div>
+            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:18px;">Выберите аппаратную схему, шрифт и режим отрисовки фона.</div>
 
-            <div class="label">Палитра интерфейса</div>
-            <div class="opt-grid">
-                <button onclick="applyTheme('obsidian')" data-t="obsidian" class="opt-btn"><span>Obsidian</span><span class="swatch" style="background: #fafafa;"></span></button>
-                <button onclick="applyTheme('tactical')" data-t="tactical" class="opt-btn"><span>Tactical</span><span class="swatch" style="background: #10b981;"></span></button>
-                <button onclick="applyTheme('amber')" data-t="amber" class="opt-btn"><span>Amber CRT</span><span class="swatch" style="background: #f59e0b;"></span></button>
-                <button onclick="applyTheme('frost')" data-t="frost" class="opt-btn"><span>Nordic Frost</span><span class="swatch" style="background: #38bdf8;"></span></button>
+            <div class="sec-bar"><span class="sec-title">Цветовой профиль</span></div>
+            <div class="cfg-grid-2" style="margin-bottom:14px;">
+                <button onclick="applyTheme('obsidian')" data-t="obsidian" class="cfg-btn"><span>OBSIDIAN</span><span class="swatch-box" style="background:#fff;"></span></button>
+                <button onclick="applyTheme('tactical')" data-t="tactical" class="cfg-btn"><span>TACTICAL</span><span class="swatch-box" style="background:#10b981;"></span></button>
+                <button onclick="applyTheme('amber')" data-t="amber" class="cfg-btn"><span>AMBER CRT</span><span class="swatch-box" style="background:#f59e0b;"></span></button>
+                <button onclick="applyTheme('frost')" data-t="frost" class="cfg-btn"><span>FROST</span><span class="swatch-box" style="background:#38bdf8;"></span></button>
             </div>
 
-            <div class="label">Шрифт системы</div>
-            <div class="opt-grid-3">
-                <button onclick="applyFont('space')" data-f="space" class="opt-btn" style="justify-content:center; font-family:'Space Grotesk';">Grotesk</button>
-                <button onclick="applyFont('mono')" data-f="mono" class="opt-btn" style="justify-content:center; font-family:'JetBrains Mono';">Mono</button>
-                <button onclick="applyFont('manrope')" data-f="manrope" class="opt-btn" style="justify-content:center; font-family:'Manrope';">Manrope</button>
+            <div class="sec-bar"><span class="sec-title">Гарнитура шрифта</span></div>
+            <div class="cfg-grid-3" style="margin-bottom:14px;">
+                <button onclick="applyFont('space')" data-f="space" class="cfg-btn" style="justify-content:center;">GROTESK</button>
+                <button onclick="applyFont('mono')" data-f="mono" class="cfg-btn" style="justify-content:center;">MONO</button>
+                <button onclick="applyFont('manrope')" data-f="manrope" class="cfg-btn" style="justify-content:center;">MANROPE</button>
             </div>
 
-            <div class="label">Фоновая динамика</div>
-            <div class="opt-grid-3">
-                <button onclick="applyAnim('grid')" data-a="grid" class="opt-btn" style="justify-content:center;">Матрица</button>
-                <button onclick="applyAnim('dust')" data-a="dust" class="opt-btn" style="justify-content:center;">Частицы</button>
-                <button onclick="applyAnim('none')" data-a="none" class="opt-btn" style="justify-content:center;">Статика</button>
+            <div class="sec-bar"><span class="sec-title">Фоновый радар</span></div>
+            <div class="cfg-grid-3">
+                <button onclick="applyAnim('grid')" data-a="grid" class="cfg-btn" style="justify-content:center;">МАТРИЦА</button>
+                <button onclick="applyAnim('dust')" data-a="dust" class="cfg-btn" style="justify-content:center;">ЧАСТИЦЫ</button>
+                <button onclick="applyAnim('none')" data-a="none" class="cfg-btn" style="justify-content:center;">ВЫКЛ</button>
             </div>
         </div>
 
-        <div style="max-width: 440px; margin: 0 auto; width: 100%;">
-            <button onclick="finishOnboarding()" class="btn-accent mono" style="width: 100%; padding: 14px;">
-                ЗАПУСТИТЬ ТЕРМИНАЛ →
+        <div style="max-width:440px; margin:0 auto; width:100%;">
+            <button onclick="finishBoot()" class="hw-btn" style="width:100%; padding:14px;">
+                [ ПОДТВЕРДИТЬ И ВОЙТИ В ТЕРМИНАЛ ]
             </button>
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ СЛОЙ ПРИЛОЖЕНИЯ -->
-    <div class="app-layer">
-        <!-- Шапка профиля -->
-        <div class="card header-box">
-            <div class="user-block">
-                <img id="avatarImg" class="avatar" style="display:none;" alt="">
-                <div id="avatarFallback" class="avatar">PP</div>
-                <div>
-                    <div id="uName" class="value" style="font-size: 14px;">CLIENT</div>
-                    <div id="uId" class="mono" style="font-size: 11px; color: var(--muted);">ID: 000000000</div>
+    <!-- ОСНОВНОЙ HUD-ТЕРМИНАЛ -->
+    <div class="hud-wrapper">
+        <!-- Системный статус-бар -->
+        <div class="sys-topbar">
+            <div class="sys-pill"><span class="pulse-dot"></span> SYS.ONLINE // CORE v3.4</div>
+            <div>TLS: VLESS-REALITY</div>
+        </div>
+
+        <!-- Командный блок оператора и баланса -->
+        <div class="hw-box id-grid">
+            <div class="operator-info">
+                <img id="avatarImg" class="hw-avatar" style="display:none;" alt="">
+                <div id="avatarFallback" class="hw-avatar">PP</div>
+                <div style="min-width:0;">
+                    <div class="op-tag">OPERATOR // VERIFIED</div>
+                    <div id="uName" class="op-name">CLIENT</div>
+                    <div id="uId" class="op-uid">UID: 000000000</div>
                 </div>
             </div>
-            <div style="text-align: right;">
-                <div class="label">Баланс</div>
-                <div id="uBal" class="mono" style="font-size: 15px; font-weight: 700;">0 ₽</div>
-                <button onclick="openTopupSheet()" class="btn-accent mono" style="padding: 4px 9px; font-size: 10px; margin-top: 4px;">+ ПОПОЛНИТЬ</button>
+            <div class="funds-panel">
+                <div class="op-tag">CREDITS</div>
+                <div id="uBal" class="funds-val">0 ₽</div>
+                <button onclick="openSheet('topupSheet')" class="hw-btn" style="padding:5px 9px; font-size:10px;">+ ПОПОЛНИТЬ</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 1: КАБИНЕТ -->
+        <!-- МОДУЛЬ 01: СЛОТЫ И УПРАВЛЕНИЕ -->
         <div id="tab-cabinet" class="tab-pane active">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 2px 8px;">
-                <span class="label" style="margin: 0;">Конфигурация слотов</span>
-                <span id="slotsCount" class="mono badge">0 / 2 ACTIVE</span>
+            <div class="sec-bar">
+                <span class="sec-title">Активные узлы (Слоты)</span>
+                <span id="slotsBadge" class="hw-tag">0 / 2 NODES</span>
             </div>
 
-            <div id="slotsBox"></div>
+            <div id="nodesContainer"></div>
 
-            <!-- Карточка промокода -->
-            <div class="card">
-                <div class="label" style="margin-bottom: 6px;">Активация промокода</div>
-                <div style="display: flex; gap: 8px;">
-                    <input type="text" id="promoInput" class="custom-input mono" placeholder="ВВЕДИТЕ КОД (НАПР. PIN2026)" style="text-transform: uppercase;">
-                    <button onclick="activatePromo()" class="btn-accent mono" style="padding: 0 16px; flex-shrink: 0;">ОК</button>
+            <!-- Блок ввода промокода -->
+            <div class="sec-bar">
+                <span class="sec-title">Ввод ваучера / промокода</span>
+            </div>
+            <div class="hw-box" style="padding:10px;">
+                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+                    <input type="text" id="promoInput" class="hw-input" placeholder="КОД АКТИВАЦИИ (НАПР. PIN2026)" style="text-transform:uppercase;">
+                    <button onclick="activatePromo()" class="hw-btn" style="padding:0 16px;">ВВЕСТИ</button>
                 </div>
+            </div>
+
+            <!-- Партнерский модуль 15% + Поддержка -->
+            <div class="hw-box" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div class="op-tag">AFFILIATE PROTOCOL // 15%</div>
+                    <div style="font-size:12px; font-weight:700; margin-top:2px;">Приглашай друзей — 15% на баланс</div>
+                </div>
+                <button onclick="copyRefLink(this)" class="hw-btn-ghost">[ СКОПИРОВАТЬ ССЫЛКУ ]</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 2: ТАРИФЫ -->
+        <!-- МОДУЛЬ 02: СЕРВЕРНЫЕ ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-pane">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 2px 8px;">
-                <span class="label" style="margin: 0;">Тарифные планы</span>
-                <span class="mono badge">INSTANT KEY</span>
+            <div class="sec-bar">
+                <span class="sec-title">Спецификации тарифов</span>
+                <span class="hw-tag">AUTO-ISSUE</span>
             </div>
 
-            <!-- Тестовый период -->
-            <div class="tariff-card">
-                <div class="header-box">
+            <!-- Тест -->
+            <div class="spec-card">
+                <div class="spec-head">
                     <div>
-                        <div class="value">🆓 Тестовый период</div>
-                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Доступен при подписке на канал проекта</div>
+                        <div class="op-tag">TRIAL ALLOCATION</div>
+                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🆓 ТЕСТОВЫЙ ДОСТУП</div>
                     </div>
-                    <div class="mono" style="font-size: 15px; font-weight: 700; color: var(--accent);">0 ₽</div>
+                    <div class="mono" style="font-size:16px; font-weight:800;">0 ₽</div>
                 </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <span class="badge mono">⏱ 24 часа</span>
-                    <span class="badge mono">📦 10 ГБ</span>
-                    <span class="badge mono">📱 1 устр.</span>
+                <div class="spec-matrix">
+                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">24 ЧАСА</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">10 ГБ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
                 </div>
-                <button onclick="buyTariff('test')" class="btn-ghost mono">АКТИВИРОВАТЬ ТЕСТ →</button>
+                <button onclick="buyTariff('test')" class="hw-btn-ghost" style="width:100%;">[ АКТИВИРОВАТЬ ТЕСТОВЫЙ УЗЕЛ ]</button>
             </div>
 
             <!-- Старт -->
-            <div class="tariff-card">
-                <div class="header-box">
+            <div class="spec-card">
+                <div class="spec-head">
                     <div>
-                        <div class="value">🚀 Старт</div>
-                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Базовый доступ на 2 недели</div>
+                        <div class="op-tag">TIER 01 // SHORT</div>
+                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🚀 ТАРИФ «СТАРТ»</div>
                     </div>
-                    <div class="mono" style="font-size: 15px; font-weight: 700; color: var(--accent);">69 ₽</div>
+                    <div class="mono" style="font-size:16px; font-weight:800;">69 ₽</div>
                 </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <span class="badge mono">⏱ 14 дней</span>
-                    <span class="badge mono">📦 50 ГБ</span>
-                    <span class="badge mono">📱 1 устр.</span>
+                <div class="spec-matrix">
+                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">14 ДНЕЙ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">50 ГБ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
                 </div>
-                <button onclick="buyTariff('start')" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 69 ₽</button>
+                <button onclick="buyTariff('start')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 69 ₽</button>
             </div>
 
             <!-- Базовый -->
-            <div class="tariff-card">
-                <div class="header-box">
+            <div class="spec-card">
+                <div class="spec-head">
                     <div>
-                        <div class="value">⚡️ Базовый</div>
-                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Оптимальный план на месяц</div>
+                        <div class="op-tag">TIER 02 // STANDARD</div>
+                        <div style="font-size:15px; font-weight:800; margin-top:2px;">⚡️ ТАРИФ «БАЗОВЫЙ»</div>
                     </div>
-                    <div class="mono" style="font-size: 15px; font-weight: 700; color: var(--accent);">129 ₽</div>
+                    <div class="mono" style="font-size:16px; font-weight:800;">129 ₽</div>
                 </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <span class="badge mono">⏱ 30 дней</span>
-                    <span class="badge mono">📦 129 ГБ</span>
-                    <span class="badge mono">📱 1 устр.</span>
+                <div class="spec-matrix">
+                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">30 ДНЕЙ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">129 ГБ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
                 </div>
-                <button onclick="buyTariff('base')" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 129 ₽</button>
+                <button onclick="buyTariff('base')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 129 ₽</button>
             </div>
 
             <!-- Продвинутый -->
-            <div class="tariff-card">
-                <div class="header-box">
+            <div class="spec-card">
+                <div class="spec-head">
                     <div>
-                        <div class="value">💎 Продвинутый</div>
-                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Для смартфона, ПК и планшета</div>
+                        <div class="op-tag">TIER 03 // MULTI-NODE</div>
+                        <div style="font-size:15px; font-weight:800; margin-top:2px;">💎 ТАРИФ «ПРОДВИНУТЫЙ»</div>
                     </div>
-                    <div class="mono" style="font-size: 15px; font-weight: 700; color: var(--accent);">199 ₽</div>
+                    <div class="mono" style="font-size:16px; font-weight:800;">199 ₽</div>
                 </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <span class="badge mono">⏱ 30 дней</span>
-                    <span class="badge mono">📦 300 ГБ</span>
-                    <span class="badge mono">📱 3 устр.</span>
+                <div class="spec-matrix">
+                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">30 ДНЕЙ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">300 ГБ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">3 УСТР.</span></div>
                 </div>
-                <button onclick="buyTariff('pro')" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 199 ₽</button>
+                <button onclick="buyTariff('pro')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 199 ₽</button>
             </div>
 
             <!-- Хит сезона -->
-            <div class="tariff-card" style="border-color: var(--accent);">
-                <div class="header-box">
+            <div class="spec-card flagship">
+                <div class="spec-head">
                     <div>
-                        <div class="value">🔥 ХИТ СЕЗОНА</div>
-                        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">Максимальный запас на 3 месяца</div>
+                        <div class="op-tag" style="color:var(--accent);">TIER 04 // MAX PERFORMANCE</div>
+                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА</div>
                     </div>
-                    <div class="mono" style="font-size: 15px; font-weight: 700; color: var(--accent);">499 ₽</div>
+                    <div class="mono" style="font-size:16px; font-weight:800; color:var(--accent);">499 ₽</div>
                 </div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    <span class="badge mono">⏱ 90 дней</span>
-                    <span class="badge mono">📦 900 ГБ</span>
-                    <span class="badge mono">📱 3 устр.</span>
+                <div class="spec-matrix">
+                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">90 ДНЕЙ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">900 ГБ</span></div>
+                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">3 УСТР.</span></div>
                 </div>
-                <button onclick="buyTariff('hit')" class="btn-accent mono" style="width:100%;">ОФОРМИТЬ ЗА 499 ₽</button>
+                <button onclick="buyTariff('hit')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 499 ₽</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 3: ВИД -->
+        <!-- МОДУЛЬ 03: СИСТЕМНЫЕ НАСТРОЙКИ -->
         <div id="tab-style" class="tab-pane">
-            <div style="margin: 16px 2px 8px;">
-                <span class="label">Персонализация терминала</span>
+            <div class="sec-bar">
+                <span class="sec-title">Параметры отображения</span>
             </div>
 
-            <div class="card">
-                <div class="label" style="margin-bottom: 8px;">Цветовая палитра</div>
-                <div class="opt-grid" style="margin-bottom: 0;">
-                    <button onclick="applyTheme('obsidian')" data-t="obsidian" class="opt-btn"><span>Obsidian</span><span class="swatch" style="background: #fafafa;"></span></button>
-                    <button onclick="applyTheme('tactical')" data-t="tactical" class="opt-btn"><span>Tactical</span><span class="swatch" style="background: #10b981;"></span></button>
-                    <button onclick="applyTheme('amber')" data-t="amber" class="opt-btn"><span>Amber CRT</span><span class="swatch" style="background: #f59e0b;"></span></button>
-                    <button onclick="applyTheme('frost')" data-t="frost" class="opt-btn"><span>Nordic Frost</span><span class="swatch" style="background: #38bdf8;"></span></button>
+            <div class="hw-box">
+                <div class="op-tag" style="margin-bottom:8px;">ПАЛИТРА ТЕРМИНАЛА</div>
+                <div class="cfg-grid-2">
+                    <button onclick="applyTheme('obsidian')" data-t="obsidian" class="cfg-btn"><span>OBSIDIAN</span><span class="swatch-box" style="background:#fff;"></span></button>
+                    <button onclick="applyTheme('tactical')" data-t="tactical" class="cfg-btn"><span>TACTICAL</span><span class="swatch-box" style="background:#10b981;"></span></button>
+                    <button onclick="applyTheme('amber')" data-t="amber" class="cfg-btn"><span>AMBER CRT</span><span class="swatch-box" style="background:#f59e0b;"></span></button>
+                    <button onclick="applyTheme('frost')" data-t="frost" class="cfg-btn"><span>FROST</span><span class="swatch-box" style="background:#38bdf8;"></span></button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="label" style="margin-bottom: 8px;">Шрифт системы</div>
-                <div class="opt-grid-3" style="margin-bottom: 0;">
-                    <button onclick="applyFont('space')" data-f="space" class="opt-btn" style="justify-content:center; font-family:'Space Grotesk';">Grotesk</button>
-                    <button onclick="applyFont('mono')" data-f="mono" class="opt-btn" style="justify-content:center; font-family:'JetBrains Mono';">Mono</button>
-                    <button onclick="applyFont('manrope')" data-f="manrope" class="opt-btn" style="justify-content:center; font-family:'Manrope';">Manrope</button>
+            <div class="hw-box">
+                <div class="op-tag" style="margin-bottom:8px;">ТИПОГРАФИКА</div>
+                <div class="cfg-grid-3">
+                    <button onclick="applyFont('space')" data-f="space" class="cfg-btn" style="justify-content:center;">GROTESK</button>
+                    <button onclick="applyFont('mono')" data-f="mono" class="cfg-btn" style="justify-content:center;">MONO</button>
+                    <button onclick="applyFont('manrope')" data-f="manrope" class="cfg-btn" style="justify-content:center;">MANROPE</button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="label" style="margin-bottom: 8px;">Фоновая динамика</div>
-                <div class="opt-grid-3" style="margin-bottom: 0;">
-                    <button onclick="applyAnim('grid')" data-a="grid" class="opt-btn" style="justify-content:center;">Матрица</button>
-                    <button onclick="applyAnim('dust')" data-a="dust" class="opt-btn" style="justify-content:center;">Частицы</button>
-                    <button onclick="applyAnim('none')" data-a="none" class="opt-btn" style="justify-content:center;">Статика</button>
+            <div class="hw-box">
+                <div class="op-tag" style="margin-bottom:8px;">ФОНОВЫЙ РАДАР</div>
+                <div class="cfg-grid-3">
+                    <button onclick="applyAnim('grid')" data-a="grid" class="cfg-btn" style="justify-content:center;">МАТРИЦА</button>
+                    <button onclick="applyAnim('dust')" data-a="dust" class="cfg-btn" style="justify-content:center;">ЧАСТИЦЫ</button>
+                    <button onclick="applyAnim('none')" data-a="none" class="cfg-btn" style="justify-content:center;">ВЫКЛ</button>
                 </div>
             </div>
 
-            <button onclick="replayOnboarding()" class="btn-ghost mono">
-                ↻ ЗАПУСТИТЬ ПРИВЕТСТВИЕ ЗАНОВО
+            <button onclick="replayBoot()" class="hw-btn-ghost" style="width:100%;">
+                [ ↻ ПЕРЕЗАПУСТИТЬ ЭКРАН ИНИЦИАЛИЗАЦИИ ]
             </button>
         </div>
     </div>
 
-    <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
-    <div class="bottom-nav">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="nav-item active">
-            <span class="mono" style="font-size: 12px;">[ 01 ]</span>
-            <span>КАБИНЕТ</span>
-        </button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="nav-item">
-            <span class="mono" style="font-size: 12px;">[ 02 ]</span>
-            <span>ТАРИФЫ</span>
-        </button>
-        <button onclick="switchTab('style')" id="nav-style" class="nav-item">
-            <span class="mono" style="font-size: 12px;">[ 03 ]</span>
-            <span>ВИД</span>
-        </button>
+    <!-- НИЖНЯЯ ДОК-СТАНЦИЯ -->
+    <div class="bottom-dock">
+        <div class="dock-inner">
+            <button onclick="switchTab('cabinet')" id="nav-cabinet" class="dock-btn active">
+                <span class="dock-idx">MOD // 01</span>
+                <span class="dock-lbl">УЗЛЫ</span>
+            </button>
+            <button onclick="switchTab('tariffs')" id="nav-tariffs" class="dock-btn">
+                <span class="dock-idx">MOD // 02</span>
+                <span class="dock-lbl">ТАРИФЫ</span>
+            </button>
+            <button onclick="switchTab('style')" id="nav-style" class="dock-btn">
+                <span class="dock-idx">MOD // 03</span>
+                <span class="dock-lbl">СИСТЕМА</span>
+            </button>
+        </div>
     </div>
 
-    <!-- ШТОРКА БУСТЕРОВ ТРАФИКА -->
-    <div id="boosterSheet" class="sheet-overlay" onclick="closeSheet(event, 'boosterSheet')">
-        <div class="sheet-content">
-            <div class="header-box" style="margin-bottom: 14px;">
-                <div class="value">⚡️ ДОКУПИТЬ ТРАФИК</div>
-                <div class="mono badge">СЛОТ <span id="boostSlotLabel">#01</span></div>
-            </div>
-            <div class="label" style="margin-bottom: 10px;">Выберите пакет гигабайт (суммируется с текущим):</div>
-
-            <div class="opt-grid-3" style="margin-bottom: 16px;">
-                <button onclick="selectBoost(15, 39)" id="b_15" class="opt-btn mono boost-btn" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span style="font-size:13px; color:var(--text);">+15 ГБ</span>
-                    <span style="font-size:11px; color:var(--muted);">39 ₽</span>
-                </button>
-                <button onclick="selectBoost(50, 89)" id="b_50" class="opt-btn mono boost-btn" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span style="font-size:13px; color:var(--text);">+50 ГБ</span>
-                    <span style="font-size:11px; color:var(--muted);">89 ₽</span>
-                </button>
-                <button onclick="selectBoost(150, 149)" id="b_150" class="opt-btn mono boost-btn" style="flex-direction:column; gap:4px; justify-content:center;">
-                    <span style="font-size:13px; color:var(--text);">+150 ГБ</span>
-                    <span style="font-size:11px; color:var(--muted);">149 ₽</span>
-                </button>
+    <!-- ШТОРКА ЭКСТРЕННЫХ БУСТЕРОВ ТРАФИКА -->
+    <div id="boosterSheet" class="sheet-backdrop" onclick="closeSheetBg(event, 'boosterSheet')">
+        <div class="sheet-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div>
+                    <div class="op-tag">EMERGENCY QUOTA INJECTION</div>
+                    <div style="font-size:15px; font-weight:800;">⚡️ ДОКУПКА ТРАФИКА</div>
+                </div>
+                <span id="boostNodeTag" class="hw-tag">NODE #01</span>
             </div>
 
-            <button id="boostPayBtn" onclick="payBoost()" class="btn-accent mono" style="width: 100%; padding: 13px;" disabled>
-                ВЫБЕРИТЕ ПАКЕТ
+            <div class="cfg-grid-3" style="margin-bottom:16px;">
+                <button onclick="selectBoost(15, 39)" id="b_15" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--fg);">+15 ГБ</span>
+                    <span style="font-size:10px; color:var(--muted);">39 ₽</span>
+                </button>
+                <button onclick="selectBoost(50, 89)" id="b_50" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--fg);">+50 ГБ</span>
+                    <span style="font-size:10px; color:var(--muted);">89 ₽</span>
+                </button>
+                <button onclick="selectBoost(150, 149)" id="b_150" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
+                    <span style="font-size:13px; color:var(--fg);">+150 ГБ</span>
+                    <span style="font-size:10px; color:var(--muted);">149 ₽</span>
+                </button>
+            </div>
+
+            <button id="boostConfirmBtn" onclick="payBoost()" class="hw-btn" style="width:100%; padding:13px;" disabled>
+                ВЫБЕРИТЕ ОБЪЕМ КВОТЫ
             </button>
         </div>
     </div>
 
     <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
-    <div id="topupSheet" class="sheet-overlay" onclick="closeSheet(event, 'topupSheet')">
-        <div class="sheet-content">
-            <div class="header-box" style="margin-bottom: 12px;">
-                <div class="value">ПОПОЛНЕНИЕ БАЛАНСА</div>
-                <button onclick="document.getElementById('topupSheet').classList.remove('active')" class="mono" style="background:none; border:none; color:var(--muted); font-size:16px; cursor:pointer;">✕</button>
-            </div>
-            <div class="label" style="margin-bottom: 8px;">Выберите или введите сумму (RUB):</div>
-
-            <div class="opt-grid-3" style="margin-bottom: 10px;">
-                <button onclick="document.getElementById('topupInput').value = 100" class="opt-btn mono" style="justify-content:center;">100 ₽</button>
-                <button onclick="document.getElementById('topupInput').value = 250" class="opt-btn mono" style="justify-content:center;">250 ₽</button>
-                <button onclick="document.getElementById('topupInput').value = 500" class="opt-btn mono" style="justify-content:center;">500 ₽</button>
+    <div id="topupSheet" class="sheet-backdrop" onclick="closeSheetBg(event, 'topupSheet')">
+        <div class="sheet-modal">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div>
+                    <div class="op-tag">PAYMENT GATEWAY // PLATEGA</div>
+                    <div style="font-size:15px; font-weight:800;">ПОПОЛНЕНИЕ СЧЕТА</div>
+                </div>
+                <button onclick="closeSheet('topupSheet')" class="hw-btn-ghost" style="padding:4px 8px;">✕</button>
             </div>
 
-            <input type="number" id="topupInput" class="custom-input mono" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom: 14px;">
+            <div class="cfg-grid-3" style="margin-bottom:10px;">
+                <button onclick="document.getElementById('topupInput').value=100" class="cfg-btn" style="justify-content:center;">100 ₽</button>
+                <button onclick="document.getElementById('topupInput').value=250" class="cfg-btn" style="justify-content:center;">250 ₽</button>
+                <button onclick="document.getElementById('topupInput').value=500" class="cfg-btn" style="justify-content:center;">500 ₽</button>
+            </div>
 
-            <button onclick="submitTopup()" class="btn-accent mono" style="width: 100%; padding: 13px;">
-                ПЕРЕЙТИ К ОПЛАТЕ →
+            <input type="number" id="topupInput" class="hw-input" placeholder="СУММА В РУБЛЯХ (ОТ 10 ₽)" style="margin-bottom:14px;">
+
+            <button onclick="submitTopup()" class="hw-btn" style="width:100%; padding:13px;">
+                [ СФОРМИРОВАТЬ СЧЕТ НА ОПЛАТУ → ]
             </button>
         </div>
     </div>
@@ -776,12 +949,12 @@
         const p = new URLSearchParams(window.location.search);
 
         const uid = user?.id || p.get('user_id') || '404';
-        const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
+        const uname = user?.username ? '@' + user.username : (user?.first_name || 'OPERATOR');
         const balance = parseInt(p.get('bal') || '0', 10);
         const avatarUrl = p.get('avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
-        document.getElementById('uId').innerText = `ID: ${uid}`;
+        document.getElementById('uId').innerText = `UID: ${uid}`;
         document.getElementById('uBal').innerText = `${balance} ₽`;
 
         if (avatarUrl && avatarUrl !== 'none') {
@@ -793,8 +966,8 @@
             document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
-        function haptic(type = 'light') {
-            try { tg.HapticFeedback.impactOccurred(type); } catch (e) {}
+        function haptic(t = 'light') {
+            try { tg.HapticFeedback.impactOccurred(t); } catch (e) {}
         }
 
         let subs = [];
@@ -803,9 +976,23 @@
             if (raw) subs = JSON.parse(decodeURIComponent(raw));
         } catch (e) {}
 
-        function renderSlots() {
-            const box = document.getElementById('slotsBox');
-            document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
+        function buildLedBar(percent) {
+            const totalSegs = 20;
+            const activeSegs = Math.round((percent / 100) * totalSegs);
+            let cls = 'on';
+            if (percent <= 15) cls = 'crit';
+            else if (percent <= 30) cls = 'warn';
+
+            let segsHtml = '';
+            for (let s = 0; s < totalSegs; s++) {
+                segsHtml += `<div class="led-seg ${s < activeSegs ? cls : ''}"></div>`;
+            }
+            return segsHtml;
+        }
+
+        function renderNodes() {
+            const box = document.getElementById('nodesContainer');
+            document.getElementById('slotsBadge').innerText = `${subs.length} / 2 NODES`;
             let html = '';
 
             for (let i = 0; i < 2; i++) {
@@ -814,58 +1001,71 @@
                     const totalGb = parseFloat(s.gb || 100);
                     const usedGb = parseFloat(s.used_gb || 0);
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
-                    const percent = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
+                    const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
-                    let ringColor = 'var(--accent)';
-                    if (percent <= 15) ringColor = 'var(--danger)';
-                    else if (percent <= 30) ringColor = 'var(--warning)';
+                    let strokeCol = 'var(--accent)';
+                    if (pct <= 15) strokeCol = 'var(--crit)';
+                    else if (pct <= 30) strokeCol = 'var(--warn)';
 
-                    const slotKeyId = s.id || (i + 1);
-                    const savedName = localStorage.getItem(`pp_slot_name_${slotKeyId}`) || `SLOT #0${i + 1}`;
+                    const slotId = s.id || (i + 1);
+                    const customName = localStorage.getItem(`pp_node_${slotId}`) || `NODE_0${i + 1}`;
+                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••••' : 'N/A';
 
                     html += `
-                        <div class="card slot-active">
-                            <div class="header-box" style="border-bottom: 1px solid var(--border); padding-bottom: 10px;">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <span class="status-dot"></span>
-                                    <input type="text" class="slot-name-input" value="${savedName}" maxlength="18" onblur="saveSlotName('${slotKeyId}', this.value)" placeholder="НАЗВАНИЕ...">
-                                    <span style="font-size:10px; color:var(--muted);">✎</span>
+                        <div class="hw-box">
+                            <div class="node-header">
+                                <div class="node-title-wrap">
+                                    <span class="node-idx">0${i + 1}</span>
+                                    <input type="text" class="node-input" value="${customName}" maxlength="16" onblur="saveNodeName('${slotId}', this.value)">
+                                    <span class="mono" style="font-size:10px; color:var(--muted);">[✎]</span>
                                 </div>
-                                <span class="badge mono">${s.name}</span>
+                                <span class="hw-tag">${s.name}</span>
                             </div>
 
-                            <div class="traffic-grid">
-                                <div class="ring-container">
-                                    <svg class="ring-svg" viewBox="0 0 36 36">
-                                        <circle class="ring-bg" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="ring-progress" cx="18" cy="18" r="15.9155" stroke="${ringColor}" stroke-dasharray="${percent}, 100"></circle>
+                            <div class="telemetry-box">
+                                <div class="radar-wrap">
+                                    <svg class="radar-svg" viewBox="0 0 36 36">
+                                        <circle class="radar-track" cx="18" cy="18" r="15.9155"></circle>
+                                        <circle class="radar-dash" cx="18" cy="18" r="12.5"></circle>
+                                        <circle class="radar-fill" cx="18" cy="18" r="15.9155" stroke="${strokeCol}" stroke-dasharray="${pct}, 100"></circle>
                                     </svg>
-                                    <div class="ring-text mono" style="color:${ringColor};">${percent}%</div>
+                                    <div class="radar-center">
+                                        <span class="radar-pct" style="color:${strokeCol};">${pct}%</span>
+                                        <span class="radar-lbl">LEFT</span>
+                                    </div>
                                 </div>
+
                                 <div>
-                                    <div class="value" style="font-size:15px;">${leftGb} ГБ <span style="font-size:11px; color:var(--muted); font-weight:500;">из ${totalGb} ГБ</span></div>
-                                    <div class="mono" style="font-size:11px; color:var(--muted); margin-top:4px;">Активен до: ${s.until}</div>
-                                    <div class="mono" style="font-size:10px; color:var(--muted); margin-top:2px;">Лимит устройств: ${s.dev || 1}</div>
+                                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                        <span class="op-tag">AVAILABLE QUOTA</span>
+                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} <span style="font-size:10px; color:var(--muted);">/ ${totalGb} GB</span></span>
+                                    </div>
+                                    <div class="led-bar">${buildLedBar(pct)}</div>
+                                    <div class="meta-row">
+                                        <span>EXP: ${s.until}</span>
+                                        <span>DEV: ${s.dev || 1} MAX</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="key-box">
-                                <input type="text" id="k_${i}" class="key-input mono" readonly value="${s.key}">
-                                <button onclick="copyK('k_${i}', this)" class="btn-copy mono">COPY</button>
+                            <div class="cipher-bar">
+                                <input type="text" id="k_${i}" class="cipher-input" data-raw="${s.key}" data-masked="${maskedKey}" data-shown="0" readonly value="${maskedKey}">
+                                <button onclick="toggleKeyMask('k_${i}', this)" class="hw-btn-ghost" style="padding:5px 8px;">EYE</button>
+                                <button onclick="copyKey('k_${i}', this)" class="hw-btn" style="padding:5px 10px; font-size:10px;">COPY</button>
                             </div>
 
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                                <button onclick="openBooster(${i + 1})" class="btn-ghost mono">⚡️ +ТРАФИК</button>
-                                <button onclick="switchTab('tariffs')" class="btn-ghost mono">↻ ТАРИФЫ</button>
+                                <button onclick="openBooster(${i + 1})" class="hw-btn-ghost">[ ⚡️ +ТРАФИК ]</button>
+                                <button onclick="switchTab('tariffs')" class="hw-btn-ghost">[ ↻ ПРОДЛИТЬ ]</button>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="card slot-empty">
-                            <div class="mono" style="font-size: 11px; color: var(--muted); margin-bottom: 12px;">[ СЛОТ #0${i + 1} СВОБОДЕН ]</div>
-                            <button onclick="switchTab('tariffs')" class="btn-ghost mono">
-                                + ВЫБРАТЬ ТАРИФ И ПОДКЛЮЧИТЬ
+                        <div class="empty-node">
+                            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">// СЛОТ УЗЛА #0${i + 1} НЕ ИНИЦИАЛИЗИРОВАН</div>
+                            <button onclick="switchTab('tariffs')" class="hw-btn-ghost" style="margin:0 auto;">
+                                [ + РАЗВЕРНУТЬ НОВЫЙ УЗЕЛ ]
                             </button>
                         </div>
                     `;
@@ -873,19 +1073,37 @@
             }
             box.innerHTML = html;
         }
-        renderSlots();
+        renderNodes();
 
-        function saveSlotName(id, val) {
-            const clean = val.trim() || `SLOT #0${id}`;
-            localStorage.setItem(`pp_slot_name_${id}`, clean);
+        function saveNodeName(id, val) {
+            const cl = val.trim() || `NODE_0${id}`;
+            localStorage.setItem(`pp_node_${id}`, cl);
         }
 
-        function copyK(id, btn) {
-            const val = document.getElementById(id).value;
-            navigator.clipboard.writeText(val);
-            const prev = btn.innerText;
-            btn.innerText = 'COPIED';
-            setTimeout(() => { btn.innerText = prev; }, 1200);
+        function toggleKeyMask(id, btn) {
+            const el = document.getElementById(id);
+            const shown = el.getAttribute('data-shown') === '1';
+            el.value = shown ? el.getAttribute('data-masked') : el.getAttribute('data-raw');
+            el.setAttribute('data-shown', shown ? '0' : '1');
+            btn.innerText = shown ? 'EYE' : 'HIDE';
+            haptic('light');
+        }
+
+        function copyKey(id, btn) {
+            const raw = document.getElementById(id).getAttribute('data-raw');
+            navigator.clipboard.writeText(raw);
+            const old = btn.innerText;
+            btn.innerText = 'DONE';
+            setTimeout(() => { btn.innerText = old; }, 1200);
+            haptic('medium');
+        }
+
+        function copyRefLink(btn) {
+            const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
+            navigator.clipboard.writeText(link);
+            const old = btn.innerText;
+            btn.innerText = '[ ССЫЛКА В БУФЕРЕ ]';
+            setTimeout(() => { btn.innerText = old; }, 1400);
             haptic('light');
         }
 
@@ -897,29 +1115,39 @@
             haptic('light');
         }
 
-        // БУСТЕРЫ
+        // ШТОРКИ И БУСТЕРЫ
         let selectedBoostGb = 0;
         let selectedSlotNum = 1;
+
+        function openSheet(id) {
+            document.getElementById(id).classList.add('active');
+            haptic('light');
+        }
+        function closeSheet(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        function closeSheetBg(e, id) {
+            if (e.target.id === id) closeSheet(id);
+        }
 
         function openBooster(slotNum) {
             selectedSlotNum = slotNum;
             selectedBoostGb = 0;
-            document.getElementById('boostSlotLabel').innerText = `#0${slotNum}`;
-            const btn = document.getElementById('boostPayBtn');
-            btn.innerText = 'ВЫБЕРИТЕ ПАКЕТ';
+            document.getElementById('boostNodeTag').innerText = `NODE #0${slotNum}`;
+            const btn = document.getElementById('boostConfirmBtn');
             btn.disabled = true;
-            document.querySelectorAll('.boost-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('boosterSheet').classList.add('active');
-            haptic('medium');
+            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ КВОТЫ';
+            document.querySelectorAll('.boost-opt').forEach(b => b.classList.remove('active'));
+            openSheet('boosterSheet');
         }
 
         function selectBoost(gb, price) {
             selectedBoostGb = gb;
-            document.querySelectorAll('.boost-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.boost-opt').forEach(b => b.classList.remove('active'));
             document.getElementById(`b_${gb}`).classList.add('active');
-            const btn = document.getElementById('boostPayBtn');
+            const btn = document.getElementById('boostConfirmBtn');
             btn.disabled = false;
-            btn.innerText = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
+            btn.innerText = `[ ОПЛАТИТЬ +${gb} ГБ ЗА ${price} ₽ → ]`;
             haptic('light');
         }
 
@@ -927,18 +1155,6 @@
             if (!selectedBoostGb) return;
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${selectedBoostGb}_${selectedSlotNum}`);
             tg.close();
-        }
-
-        // ПОПОЛНЕНИЕ И ПОКУПКА
-        function openTopupSheet() {
-            document.getElementById('topupSheet').classList.add('active');
-            haptic('light');
-        }
-
-        function closeSheet(e, id) {
-            if (e.target.id === id) {
-                document.getElementById(id).classList.remove('active');
-            }
         }
 
         function submitTopup() {
@@ -953,7 +1169,7 @@
 
         function buyTariff(tId) {
             if (subs.length >= 2) {
-                alert('У вас уже заняты оба слота (2 из 2)!');
+                alert('Достигнут лимит: 2 из 2 активных узлов!');
                 return;
             }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${tId}`);
@@ -967,7 +1183,7 @@
             tg.close();
         }
 
-        // КАСТОМИЗАЦИЯ И ОНБОРДИНГ
+        // ТЕМЫ И ШРИФТЫ
         let currentAnim = localStorage.getItem('pp_anim') || 'grid';
 
         function applyTheme(t) {
@@ -975,13 +1191,11 @@
             localStorage.setItem('pp_theme', t);
             document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
         }
-
         function applyFont(f) {
             document.body.setAttribute('data-font', f);
             localStorage.setItem('pp_font', f);
             document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
         }
-
         function applyAnim(a) {
             currentAnim = a;
             localStorage.setItem('pp_anim', a);
@@ -992,51 +1206,49 @@
         applyFont(localStorage.getItem('pp_font') || 'space');
         applyAnim(currentAnim);
 
-        function runOnboardingSequence() {
-            const wScreen = document.getElementById('welcomeScreen');
-            const wTitle = document.getElementById('welcomeTitle');
-            const wSub = document.getElementById('welcomeSub');
-            const sScreen = document.getElementById('setupScreen');
+        // ОНБОРДИНГ ПРИ ПЕРВОМ ВХОДЕ
+        function runBootSequence() {
+            const bScreen = document.getElementById('bootScreen');
+            const bTitle = document.getElementById('bootTitle');
+            const bSub = document.getElementById('bootSub');
+            const cScreen = document.getElementById('initConfigScreen');
 
-            wScreen.style.display = 'flex';
-            wScreen.style.opacity = '1';
-
-            setTimeout(() => {
-                wTitle.classList.add('visible');
-                wSub.classList.add('visible');
-            }, 100);
+            bScreen.style.display = 'flex';
+            bScreen.style.opacity = '1';
 
             setTimeout(() => {
-                wTitle.classList.remove('visible');
-                wSub.classList.remove('visible');
-            }, 1800);
+                bTitle.classList.add('on');
+                bSub.classList.add('on');
+            }, 80);
 
             setTimeout(() => {
-                sScreen.style.display = 'flex';
-                requestAnimationFrame(() => sScreen.classList.add('visible'));
-                wScreen.style.opacity = '0';
-                setTimeout(() => { wScreen.style.display = 'none'; }, 550);
-            }, 2450);
+                bTitle.classList.remove('on');
+                bSub.classList.remove('on');
+            }, 1750);
+
+            setTimeout(() => {
+                cScreen.style.display = 'flex';
+                bScreen.style.opacity = '0';
+                setTimeout(() => { bScreen.style.display = 'none'; }, 450);
+            }, 2300);
         }
 
-        function finishOnboarding() {
-            localStorage.setItem('pp_onboarded_v3', '1');
-            const sScreen = document.getElementById('setupScreen');
-            sScreen.classList.remove('visible');
-            setTimeout(() => { sScreen.style.display = 'none'; }, 350);
+        function finishBoot() {
+            localStorage.setItem('pp_boot_v4', '1');
+            document.getElementById('initConfigScreen').style.display = 'none';
             haptic('medium');
         }
 
-        function replayOnboarding() {
-            localStorage.removeItem('pp_onboarded_v3');
-            runOnboardingSequence();
+        function replayBoot() {
+            localStorage.removeItem('pp_boot_v4');
+            runBootSequence();
         }
 
-        if (!localStorage.getItem('pp_onboarded_v3')) {
-            runOnboardingSequence();
+        if (!localStorage.getItem('pp_boot_v4')) {
+            runBootSequence();
         }
 
-        // КАНВАС-АНИМАЦИЯ
+        // ФОНОВЫЙ ИНДУСТРИАЛЬНЫЙ РАДАР
         const cvs = document.getElementById('bgCanvas');
         const ctx = cvs.getContext('2d');
         let w, h;
@@ -1044,39 +1256,36 @@
         window.addEventListener('resize', resize);
         resize();
 
-        const particles = Array.from({ length: 28 }, () => ({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            r: Math.random() * 1.4 + 0.6
+        const dust = Array.from({ length: 26 }, () => ({
+            x: Math.random() * w, y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25
         }));
 
         let tick = 0;
-        function drawBg() {
+        function renderLoop() {
             ctx.clearRect(0, 0, w, h);
             tick += 0.015;
             if (currentAnim === 'grid') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                for (let x = 14; x < w; x += 28) {
-                    for (let y = 14; y < h; y += 28) {
-                        if (Math.sin(x * 0.02 + tick) * Math.cos(y * 0.02 + tick) > 0.2) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.055)';
+                for (let x = 16; x < w; x += 26) {
+                    for (let y = 16; y < h; y += 26) {
+                        if (Math.sin(x * 0.02 + tick) * Math.cos(y * 0.02 + tick) > 0.15) {
                             ctx.fillRect(x, y, 1.5, 1.5);
                         }
                     }
                 }
             } else if (currentAnim === 'dust') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.13)';
-                particles.forEach(d => {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
+                dust.forEach(d => {
                     d.x += d.vx; d.y += d.vy;
                     if (d.x < 0) d.x = w; if (d.x > w) d.x = 0;
                     if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
-                    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillRect(d.x, d.y, 2, 2);
                 });
             }
-            requestAnimationFrame(drawBg);
+            requestAnimationFrame(renderLoop);
         }
-        drawBg();
+        renderLoop();
     </script>
 </body>
 </html>
