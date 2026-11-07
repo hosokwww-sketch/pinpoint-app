@@ -3,53 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PINPOINT // CORE OS</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>PINPOINT // OS v5.0</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Press+Start+2P&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050506;
-            --panel: #0c0c0f;
-            --panel-hi: #131318;
-            --line: #22222a;
-            --line-hi: #383844;
-            --fg: #f4f4f6;
-            --muted: #6e6e7a;
+        /* РАДИКАЛЬНО РАЗНЫЕ ТЕМЫ */
+        :root, body[data-theme="oled"] {
+            --bg: #000000;
+            --card: #0a0a0c;
+            --card-2: #141418;
+            --border: #27272f;
+            --text: #ffffff;
+            --muted: #71717a;
             --accent: #ffffff;
-            --accent-fg: #050506;
-            --ok: #10b981;
+            --accent-text: #000000;
+            --ok: #22c55e;
             --warn: #f59e0b;
             --crit: #ef4444;
-            --font-ui: 'Space Grotesk', sans-serif;
+            --radius: 0px;
+            --shadow: none;
         }
 
-        /* 4 ИНДУСТРИАЛЬНЫЕ ТЕМЫ */
-        body[data-theme="obsidian"] {
-            --bg: #040405; --panel: #0b0b0e; --panel-hi: #121217;
-            --line: #202028; --line-hi: #3a3a48; --fg: #f4f4f6;
-            --muted: #686875; --accent: #ffffff; --accent-fg: #040405; --ok: #22c55e;
-        }
-        body[data-theme="tactical"] {
-            --bg: #060908; --panel: #0c1210; --panel-hi: #121c18;
-            --line: #1c2b26; --line-hi: #2d473e; --fg: #e2f1ec;
-            --muted: #5c7a70; --accent: #10b981; --accent-fg: #04120d; --ok: #10b981;
-        }
-        body[data-theme="amber"] {
-            --bg: #070503; --panel: #100c08; --panel-hi: #1a130d;
-            --line: #2b1f14; --line-hi: #4a3520; --fg: #fef3c7;
-            --muted: #8c6f4d; --accent: #f59e0b; --accent-fg: #0a0600; --ok: #f59e0b;
-        }
-        body[data-theme="frost"] {
-            --bg: #05080c; --panel: #0b1018; --panel-hi: #121a27;
-            --line: #1c283b; --line-hi: #2f4363; --fg: #f0f9ff;
-            --muted: #647894; --accent: #38bdf8; --accent-fg: #04111c; --ok: #38bdf8;
+        body[data-theme="discord"] {
+            --bg: #1e1f22;
+            --card: #2b2d31;
+            --card-2: #313338;
+            --border: #3f4147;
+            --text: #f2f3f5;
+            --muted: #949ba4;
+            --accent: #5865f2;
+            --accent-text: #ffffff;
+            --ok: #23a55a;
+            --warn: #f0b232;
+            --crit: #f23f43;
+            --radius: 10px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
-        body[data-font="space"]   { --font-ui: 'Space Grotesk', sans-serif; }
-        body[data-font="mono"]    { --font-ui: 'JetBrains Mono', monospace; }
-        body[data-font="manrope"] { --font-ui: 'Manrope', sans-serif; }
+        body[data-theme="matrix"] {
+            --bg: #020804;
+            --card: #05140a;
+            --card-2: #092212;
+            --border: #00ff66;
+            --text: #00ff66;
+            --muted: #1b8a46;
+            --accent: #00ff66;
+            --accent-text: #020804;
+            --ok: #00ff66;
+            --warn: #facc15;
+            --crit: #ff3333;
+            --radius: 2px;
+            --shadow: 0 0 10px rgba(0, 255, 102, 0.12);
+        }
+
+        body[data-theme="brutal"] {
+            --bg: #e4e4e7;
+            --card: #f4f4f5;
+            --card-2: #ffffff;
+            --border: #09090b;
+            --text: #09090b;
+            --muted: #52525b;
+            --accent: #ff4500;
+            --accent-text: #ffffff;
+            --ok: #16a34a;
+            --warn: #d97706;
+            --crit: #dc2626;
+            --radius: 0px;
+            --shadow: 4px 4px 0px #09090b;
+        }
+
+        body[data-font="space"] { font-family: 'Space Grotesk', sans-serif; }
+        body[data-font="mono"]  { font-family: 'JetBrains Mono', monospace; }
+        body[data-font="pixel"] { font-family: 'Press Start 2P', monospace; font-size: 10px; }
 
         * {
             box-sizing: border-box;
@@ -61,11 +91,11 @@
 
         body {
             background-color: var(--bg);
-            color: var(--fg);
-            font-family: var(--font-ui);
+            color: var(--text);
             min-height: 100vh;
-            padding: 10px 12px 100px;
+            padding: 12px 12px 104px;
             overflow-x: hidden;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
@@ -77,543 +107,376 @@
             z-index: 0;
         }
 
-        .hud-wrapper {
+        .container {
             position: relative;
             z-index: 10;
             max-width: 440px;
             margin: 0 auto;
         }
 
-        /* ВЕРХНЯЯ СИСТЕМНАЯ ТЕЛЕМЕТРИЯ */
-        .sys-topbar {
+        /* СТАТУС БАР */
+        .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 2px 10px;
-            border-bottom: 1px solid var(--line);
+            padding: 6px 4px 10px;
+            border-bottom: 2px solid var(--border);
             margin-bottom: 12px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             color: var(--muted);
-            letter-spacing: 0.08em;
         }
-        .sys-pill {
-            display: inline-flex;
+        .online-badge {
+            display: flex;
             align-items: center;
             gap: 6px;
-            color: var(--fg);
-            font-weight: 700;
+            color: var(--text);
+            font-weight: 800;
         }
-        .pulse-dot {
-            width: 6px;
-            height: 6px;
+        .dot {
+            width: 8px;
+            height: 8px;
             background: var(--ok);
+            border-radius: 50%;
             box-shadow: 0 0 8px var(--ok);
-            animation: blink 2s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.35; }
         }
 
-        /* ТЕХНИЧЕСКИЙ МОДУЛЬ С УГЛОВЫМИ ЗАСЕЧКАМИ */
-        .hw-box {
-            position: relative;
-            background: var(--panel);
-            border: 1px solid var(--line);
+        /* БАЗОВЫЙ БЛОК */
+        .panel {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             padding: 14px;
             margin-bottom: 12px;
         }
-        .hw-box::before, .hw-box::after {
-            content: '';
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            border-color: var(--accent);
-            pointer-events: none;
-            opacity: 0.65;
-        }
-        .hw-box::before {
-            top: -1px; left: -1px;
-            border-top: 2px solid var(--accent);
-            border-left: 2px solid var(--accent);
-        }
-        .hw-box::after {
-            bottom: -1px; right: -1px;
-            border-bottom: 2px solid var(--accent);
-            border-right: 2px solid var(--accent);
-        }
 
-        /* ПРОФИЛЬ И БАЛАНС (КОМАНДНАЯ ПАНЕЛЬ) */
-        .id-grid {
+        /* ШАПКА ПРОФИЛЯ */
+        .profile-grid {
             display: grid;
             grid-template-columns: 1fr auto;
             gap: 12px;
             align-items: center;
         }
-        .operator-info {
+        .user-row {
             display: flex;
             align-items: center;
-            gap: 11px;
+            gap: 12px;
             min-width: 0;
         }
-        .hw-avatar {
-            width: 46px;
-            height: 46px;
-            background: var(--panel-hi);
-            border: 1px solid var(--line-hi);
+        .avatar-box {
+            width: 48px;
+            height: 48px;
+            background: var(--card-2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 800;
-            font-size: 16px;
+            font-size: 18px;
             color: var(--accent);
             flex-shrink: 0;
         }
-        .op-tag {
+        .tag {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
-            color: var(--muted);
-            letter-spacing: 0.1em;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
         }
-        .op-name {
+        .uname {
             font-size: 15px;
-            font-weight: 700;
-            color: var(--fg);
+            font-weight: 800;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin: 1px 0 2px;
+            margin: 2px 0;
         }
-        .op-uid {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-        }
-
-        .funds-panel {
-            border-left: 1px dashed var(--line-hi);
-            padding-left: 14px;
+        .bal-box {
             text-align: right;
+            border-left: 1.5px dashed var(--border);
+            padding-left: 14px;
         }
-        .funds-val {
+        .bal-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800;
-            color: var(--fg);
+            color: var(--text);
             margin: 2px 0 6px;
         }
 
-        /* ЗАГОЛОВКИ СЕКЦИЙ */
-        .sec-bar {
+        /* КНОПКИ */
+        .btn-main {
+            background: var(--accent);
+            color: var(--accent-text);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        .btn-main:active { transform: scale(0.97); }
+        .btn-main:disabled { opacity: 0.4; pointer-events: none; }
+
+        .btn-sec {
+            background: var(--card-2);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-sec:active { border-color: var(--accent); }
+
+        /* СЕКЦИИ */
+        .sec-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 16px 0 8px;
-            padding: 0 2px;
+            margin: 16px 2px 8px;
         }
-        .sec-title {
+        .sec-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
             color: var(--muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
-        .sec-title::before {
-            content: '//';
-            color: var(--accent);
-        }
-        .hw-tag {
+        .pill {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            font-weight: 700;
-            padding: 2px 6px;
-            background: var(--panel-hi);
-            border: 1px solid var(--line-hi);
-            color: var(--fg);
+            font-weight: 800;
+            padding: 3px 7px;
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
         }
 
-        /* КАРТОЧКА СЛОТА (NODE UNIT) */
-        .node-header {
+        /* СЛОТ ПОДПИСКИ */
+        .slot-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-bottom: 10px;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid var(--border);
             margin-bottom: 12px;
         }
-        .node-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .node-idx {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 800;
-            background: var(--accent);
-            color: var(--accent-fg);
-            padding: 2px 5px;
-        }
-        .node-input {
+        .slot-input {
             background: transparent;
             border: none;
-            border-bottom: 1px dashed var(--line-hi);
-            color: var(--fg);
+            border-bottom: 1.5px dashed var(--border);
+            color: var(--text);
             font-family: inherit;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            width: 145px;
-            padding: 1px 0;
+            width: 150px;
+            padding: 2px 0;
             outline: none;
         }
-        .node-input:focus {
-            border-bottom-color: var(--accent);
-        }
+        .slot-input:focus { border-bottom-color: var(--accent); }
 
-        /* ТЕЛЕМЕТРИЯ ТРАФИКА: РАДАР + 20-СЕГМЕНТНЫЙ LED БАР */
-        .telemetry-box {
+        .telemetry {
             display: grid;
-            grid-template-columns: 74px 1fr;
+            grid-template-columns: 72px 1fr;
             gap: 12px;
-            background: var(--bg);
-            border: 1px solid var(--line);
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-        .radar-wrap {
-            position: relative;
-            width: 70px;
-            height: 70px;
-        }
-        .radar-svg {
-            transform: rotate(-90deg);
-            width: 100%;
-            height: 100%;
-        }
-        .radar-track {
-            fill: none;
-            stroke: var(--panel-hi);
-            stroke-width: 3.5;
-        }
-        .radar-dash {
-            fill: none;
-            stroke: var(--line);
-            stroke-width: 1;
-            stroke-dasharray: 2, 2;
-        }
-        .radar-fill {
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 3.5;
-            stroke-linecap: butt;
-            transition: stroke-dasharray 0.7s ease;
-        }
-        .radar-center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .ring-wrap { position: relative; width: 68px; height: 68px; }
+        .ring-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .ring-bg { fill: none; stroke: var(--border); stroke-width: 4; opacity: 0.35; }
+        .ring-fg { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: butt; }
+        .ring-val {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-        }
-        .radar-pct {
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1;
-        }
-        .radar-lbl {
-            font-size: 7px;
-            color: var(--muted);
-            margin-top: 2px;
-            letter-spacing: 0.08em;
+            font-size: 12px; font-weight: 800;
         }
 
-        .led-bar {
+        .led-strip {
             display: grid;
-            grid-template-columns: repeat(20, 1fr);
-            gap: 2px;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 3px;
             margin: 6px 0 8px;
         }
-        .led-seg {
-            height: 7px;
-            background: var(--panel-hi);
-        }
-        .led-seg.on {
-            background: var(--accent);
-            box-shadow: 0 0 4px var(--accent);
-        }
-        .led-seg.warn { background: var(--warn); box-shadow: 0 0 4px var(--warn); }
-        .led-seg.crit { background: var(--crit); box-shadow: 0 0 4px var(--crit); }
+        .led { height: 8px; background: var(--bg); border: 1px solid var(--border); }
+        .led.on { background: var(--accent); border-color: var(--accent); }
+        .led.warn { background: var(--warn); border-color: var(--warn); }
+        .led.crit { background: var(--crit); border-color: var(--crit); }
 
-        .meta-row {
-            display: flex;
-            justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-            border-top: 1px dashed var(--line);
-            padding-top: 5px;
-        }
-
-        /* СТРОКА КЛЮЧА С МАСКОЙ БЕЗОПАСНОСТИ */
-        .cipher-bar {
+        .key-row {
             display: grid;
             grid-template-columns: 1fr auto auto;
             gap: 6px;
-            background: var(--bg);
-            border: 1px solid var(--line);
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 6px 8px;
             align-items: center;
             margin-bottom: 10px;
         }
-        .cipher-input {
+        .key-field {
             background: transparent;
             border: none;
             outline: none;
-            color: var(--muted);
+            color: var(--text);
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             width: 100%;
             pointer-events: none;
         }
 
-        /* ИНДУСТРИАЛЬНЫЕ КНОПКИ */
-        .hw-btn {
-            background: var(--accent);
-            color: var(--accent-fg);
-            border: 1px solid var(--accent);
-            padding: 9px 12px;
+        /* СЕТКА ВЫБОРА ТЕМ И НАСТРОЕК */
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .opt-card {
+            background: var(--card-2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            padding: 12px 10px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: transform 0.08s ease, opacity 0.15s ease;
-        }
-        .hw-btn:active { transform: scale(0.98); opacity: 0.85; }
-        .hw-btn:disabled { opacity: 0.35; pointer-events: none; }
-
-        .hw-btn-ghost {
-            background: var(--panel-hi);
-            color: var(--fg);
-            border: 1px solid var(--line-hi);
-            padding: 9px 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: border-color 0.15s ease, background 0.15s ease;
-        }
-        .hw-btn-ghost:active {
-            border-color: var(--accent);
-            background: var(--line);
-        }
-
-        /* ПУСТОЙ СЛОТ */
-        .empty-node {
-            border: 1px dashed var(--line-hi);
-            background: rgba(12, 12, 15, 0.5);
-            padding: 20px 14px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        /* СЕТКА ТАРИФОВ (СПЕЦИФИКАЦИИ СЕРВЕРОВ) */
-        .spec-card {
-            position: relative;
-            background: var(--panel);
-            border: 1px solid var(--line);
-            padding: 14px;
-            margin-bottom: 10px;
-        }
-        .spec-card.flagship {
-            border-color: var(--accent);
-        }
-        .spec-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            border-bottom: 1px solid var(--line);
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-        }
-        .spec-matrix {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-        .spec-cell {
-            background: var(--bg);
-            border: 1px solid var(--line);
-            padding: 6px 8px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .spec-cell-lbl { font-size: 8px; color: var(--muted); display: block; }
-        .spec-cell-val { font-size: 11px; font-weight: 700; color: var(--fg); }
-
-        /* НАСТРОЙКИ И СЕЛЕКТОРЫ */
-        .cfg-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .cfg-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .cfg-btn {
-            background: var(--bg);
-            border: 1px solid var(--line);
-            color: var(--muted);
-            padding: 11px 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
             text-transform: uppercase;
         }
-        .cfg-btn.active {
+        .opt-card.active {
             border-color: var(--accent);
-            color: var(--fg);
-            background: var(--panel-hi);
+            background: var(--accent);
+            color: var(--accent-text);
         }
-        .swatch-box { width: 10px; height: 10px; border: 1px solid rgba(255,255,255,0.3); }
+        .swatch { width: 14px; height: 14px; border: 1.5px solid currentColor; }
 
-        .hw-input {
+        .input-box {
             width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--line-hi);
+            background: var(--card-2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
             padding: 10px 12px;
-            color: var(--fg);
+            color: var(--text);
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             outline: none;
         }
-        .hw-input:focus { border-color: var(--accent); }
 
-        /* НИЖНЯЯ ДОК-СТАНЦИЯ */
-        .bottom-dock {
+        /* НИЖНИЙ ДОК */
+        .dock {
             position: fixed;
             bottom: 0; left: 0; right: 0;
-            background: rgba(8, 8, 10, 0.96);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid var(--line-hi);
+            background: var(--card);
+            border-top: 2px solid var(--border);
             z-index: 95;
             padding: 8px 12px 14px;
         }
-        .dock-inner {
+        .dock-grid {
             max-width: 440px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
-        .dock-btn {
-            background: var(--panel);
-            border: 1px solid var(--line);
+        .dock-tab {
+            background: var(--card-2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
             color: var(--muted);
-            padding: 9px 6px;
+            padding: 10px 6px;
             font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 12px;
-            position: relative;
+            text-align: center;
+            text-transform: uppercase;
         }
-        .dock-btn.active {
-            border-color: var(--accent);
-            color: var(--fg);
-            background: var(--panel-hi);
-        }
-        .dock-btn.active::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; bottom: 0;
-            width: 3px;
+        .dock-tab.active {
             background: var(--accent);
+            color: var(--accent-text);
+            border-color: var(--border);
         }
-        .dock-idx { font-size: 9px; opacity: 0.6; }
-        .dock-lbl { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; margin-top: 2px; }
 
         .tab-pane { display: none; }
         .tab-pane.active { display: block; }
 
-        /* ВЫДВИЖНЫЕ ТЕРМИНАЛЬНЫЕ ШТОРКИ (SHEETS) */
-        .sheet-backdrop {
+        /* МОДАЛЬНЫЕ ШТОРКИ */
+        .sheet-bg {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.82);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(4px);
             z-index: 200;
-            display: flex;
+            display: none;
             align-items: flex-end;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
         }
-        .sheet-backdrop.active { opacity: 1; pointer-events: auto; }
-        .sheet-modal {
-            background: var(--panel);
-            border-top: 2px solid var(--accent);
+        .sheet-bg.active { display: flex; }
+        .sheet-box {
+            background: var(--card);
+            border-top: 3px solid var(--accent);
             width: 100%;
             max-width: 440px;
-            padding: 18px 14px 26px;
-            transform: translateY(100%);
-            transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px 14px 28px;
         }
-        .sheet-backdrop.active .sheet-modal { transform: translateY(0); }
 
-        /* ЭКРАН ПЕРВИЧНОГО ЗАПУСКА (BOOTLOADER) */
-        #bootScreen {
+        /* ЭКРАН ПРИВЕТСТВИЯ */
+        #welcomeOverlay {
             position: fixed;
             inset: 0;
-            background: #040405;
+            background: #000000;
             z-index: 300;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.45s ease;
+            transition: opacity 0.4s ease;
         }
-        .boot-title {
-            font-size: 20px;
+        .w-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
             font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
             color: #ffffff;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             opacity: 0;
-            transform: translateY(6px);
-            transition: all 0.6s ease;
+            transform: translateY(8px);
+            transition: all 0.55s ease;
         }
-        .boot-sub {
+        .w-sub {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
-            color: #686875;
+            color: #22c55e;
             margin-top: 8px;
             letter-spacing: 0.16em;
             opacity: 0;
-            transition: opacity 0.6s ease 0.15s;
+            transition: opacity 0.55s ease 0.15s;
         }
-        .boot-title.on, .boot-sub.on { opacity: 1; transform: translateY(0); }
+        .w-title.on, .w-sub.on { opacity: 1; transform: translateY(0); }
 
-        #initConfigScreen {
+        #setupOverlay {
             position: fixed;
             inset: 0;
             background: var(--bg);
@@ -626,317 +489,242 @@
         }
     </style>
 </head>
-<body data-theme="obsidian" data-font="space">
+<body data-theme="oled" data-font="space">
 
     <canvas id="bgCanvas"></canvas>
 
-    <!-- 1. ЭКРАН ЗАГРУЗКИ ПРИ ПЕРВОМ ВХОДЕ -->
-    <div id="bootScreen">
-        <div id="bootTitle" class="boot-title">Добро пожаловать!</div>
-        <div id="bootSub" class="boot-sub">PINPOINT // OS INITIALIZED</div>
+    <!-- 1. ЭКРАН ПРИВЕТСТВИЯ -->
+    <div id="welcomeOverlay">
+        <div id="wTitle" class="w-title">Добро пожаловать!</div>
+        <div id="wSub" class="w-sub">PINPOINT // TERMINAL v5.0</div>
     </div>
 
-    <!-- 2. ПЕРВИЧНЫЙ КОНФИГУРАТОР СИСТЕМЫ -->
-    <div id="initConfigScreen">
+    <!-- 2. ЭКРАН ПЕРВИЧНОГО ВЫБОРА ТЕМЫ -->
+    <div id="setupOverlay">
         <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="sys-topbar">
-                <span>BOOT // STEP 01</span>
-                <span>HARDWARE SETUP</span>
-            </div>
-            <div style="font-size:18px; font-weight:800; text-transform:uppercase; margin-bottom:4px;">Калибровка интерфейса</div>
-            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:18px;">Выберите аппаратную схему, шрифт и режим отрисовки фона.</div>
+            <div class="topbar"><span>STEP 01 // INIT</span><span>UI ENGINE</span></div>
+            <div style="font-size:18px; font-weight:800; text-transform:uppercase; margin-bottom:6px;">Выберите скин терминала</div>
+            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:16px;">Каждая тема полностью меняет архитектуру, цвета и рамки интерфейса.</div>
 
-            <div class="sec-bar"><span class="sec-title">Цветовой профиль</span></div>
-            <div class="cfg-grid-2" style="margin-bottom:14px;">
-                <button onclick="applyTheme('obsidian')" data-t="obsidian" class="cfg-btn"><span>OBSIDIAN</span><span class="swatch-box" style="background:#fff;"></span></button>
-                <button onclick="applyTheme('tactical')" data-t="tactical" class="cfg-btn"><span>TACTICAL</span><span class="swatch-box" style="background:#10b981;"></span></button>
-                <button onclick="applyTheme('amber')" data-t="amber" class="cfg-btn"><span>AMBER CRT</span><span class="swatch-box" style="background:#f59e0b;"></span></button>
-                <button onclick="applyTheme('frost')" data-t="frost" class="cfg-btn"><span>FROST</span><span class="swatch-box" style="background:#38bdf8;"></span></button>
+            <div class="sec-head"><span class="sec-label">1. Визуальная тема</span></div>
+            <div class="grid-2" style="margin-bottom:14px;">
+                <button onclick="setTheme('oled')" data-t="oled" class="opt-card"><span>OLED BLACK</span><span class="swatch" style="background:#000;"></span></button>
+                <button onclick="setTheme('discord')" data-t="discord" class="opt-card"><span>DISCORD</span><span class="swatch" style="background:#5865f2;"></span></button>
+                <button onclick="setTheme('matrix')" data-t="matrix" class="opt-card"><span>MATRIX CRT</span><span class="swatch" style="background:#00ff66;"></span></button>
+                <button onclick="setTheme('brutal')" data-t="brutal" class="opt-card"><span>BRUTAL LIGHT</span><span class="swatch" style="background:#ff4500;"></span></button>
             </div>
 
-            <div class="sec-bar"><span class="sec-title">Гарнитура шрифта</span></div>
-            <div class="cfg-grid-3" style="margin-bottom:14px;">
-                <button onclick="applyFont('space')" data-f="space" class="cfg-btn" style="justify-content:center;">GROTESK</button>
-                <button onclick="applyFont('mono')" data-f="mono" class="cfg-btn" style="justify-content:center;">MONO</button>
-                <button onclick="applyFont('manrope')" data-f="manrope" class="cfg-btn" style="justify-content:center;">MANROPE</button>
+            <div class="sec-head"><span class="sec-label">2. Шрифт</span></div>
+            <div class="grid-3" style="margin-bottom:14px;">
+                <button onclick="setFont('space')" data-f="space" class="opt-card" style="justify-content:center;">CLEAN</button>
+                <button onclick="setFont('mono')" data-f="mono" class="opt-card" style="justify-content:center;">MONO</button>
+                <button onclick="setFont('pixel')" data-f="pixel" class="opt-card" style="justify-content:center;">PIXEL</button>
             </div>
 
-            <div class="sec-bar"><span class="sec-title">Фоновый радар</span></div>
-            <div class="cfg-grid-3">
-                <button onclick="applyAnim('grid')" data-a="grid" class="cfg-btn" style="justify-content:center;">МАТРИЦА</button>
-                <button onclick="applyAnim('dust')" data-a="dust" class="cfg-btn" style="justify-content:center;">ЧАСТИЦЫ</button>
-                <button onclick="applyAnim('none')" data-a="none" class="cfg-btn" style="justify-content:center;">ВЫКЛ</button>
+            <div class="sec-head"><span class="sec-label">3. Анимация фона</span></div>
+            <div class="grid-3">
+                <button onclick="setAnim('grid')" data-a="grid" class="opt-card" style="justify-content:center;">СЕТКА</button>
+                <button onclick="setAnim('dust')" data-a="dust" class="opt-card" style="justify-content:center;">ЧАСТИЦЫ</button>
+                <button onclick="setAnim('none')" data-a="none" class="opt-card" style="justify-content:center;">ВЫКЛ</button>
             </div>
         </div>
 
         <div style="max-width:440px; margin:0 auto; width:100%;">
-            <button onclick="finishBoot()" class="hw-btn" style="width:100%; padding:14px;">
-                [ ПОДТВЕРДИТЬ И ВОЙТИ В ТЕРМИНАЛ ]
+            <button onclick="closeSetup()" class="btn-main" style="width:100%; padding:14px;">
+                [ СОХРАНИТЬ И ЗАПУСТИТЬ → ]
             </button>
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ HUD-ТЕРМИНАЛ -->
-    <div class="hud-wrapper">
-        <!-- Системный статус-бар -->
-        <div class="sys-topbar">
-            <div class="sys-pill"><span class="pulse-dot"></span> SYS.ONLINE // CORE v3.4</div>
-            <div>TLS: VLESS-REALITY</div>
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+    <div class="container">
+        <div class="topbar">
+            <div class="online-badge"><span class="dot"></span> PINPOINT OS // v5.0</div>
+            <div id="syncStatus">SYNC: OK</div>
         </div>
 
-        <!-- Командный блок оператора и баланса -->
-        <div class="hw-box id-grid">
-            <div class="operator-info">
-                <img id="avatarImg" class="hw-avatar" style="display:none;" alt="">
-                <div id="avatarFallback" class="hw-avatar">PP</div>
+        <!-- Профиль и Баланс -->
+        <div class="panel profile-grid">
+            <div class="user-row">
+                <img id="avatarImg" class="avatar-box" style="display:none;" alt="">
+                <div id="avatarFallback" class="avatar-box">PP</div>
                 <div style="min-width:0;">
-                    <div class="op-tag">OPERATOR // VERIFIED</div>
-                    <div id="uName" class="op-name">CLIENT</div>
-                    <div id="uId" class="op-uid">UID: 000000000</div>
+                    <div class="tag">OPERATOR</div>
+                    <div id="uName" class="uname">CLIENT</div>
+                    <div id="uId" class="tag">ID: 000000</div>
                 </div>
             </div>
-            <div class="funds-panel">
-                <div class="op-tag">CREDITS</div>
-                <div id="uBal" class="funds-val">0 ₽</div>
-                <button onclick="openSheet('topupSheet')" class="hw-btn" style="padding:5px 9px; font-size:10px;">+ ПОПОЛНИТЬ</button>
+            <div class="bal-box">
+                <div class="tag">БАЛАНС</div>
+                <div id="uBal" class="bal-val">0 ₽</div>
+                <button onclick="openModal('topupModal')" class="btn-main" style="padding:5px 10px; font-size:10px;">+ ПОПОЛНИТЬ</button>
             </div>
         </div>
 
-        <!-- МОДУЛЬ 01: СЛОТЫ И УПРАВЛЕНИЕ -->
+        <!-- ВКЛАДКА 1: СЛОТЫ -->
         <div id="tab-cabinet" class="tab-pane active">
-            <div class="sec-bar">
-                <span class="sec-title">Активные узлы (Слоты)</span>
-                <span id="slotsBadge" class="hw-tag">0 / 2 NODES</span>
+            <div class="sec-head">
+                <span class="sec-label">// АКТИВНЫЕ ПОДПИСКИ</span>
+                <span id="slotsCount" class="pill">0 / 2 ACTIVE</span>
             </div>
 
-            <div id="nodesContainer"></div>
+            <div id="slotsContainer"></div>
 
-            <!-- Блок ввода промокода -->
-            <div class="sec-bar">
-                <span class="sec-title">Ввод ваучера / промокода</span>
-            </div>
-            <div class="hw-box" style="padding:10px;">
+            <!-- Промокод -->
+            <div class="sec-head"><span class="sec-label">// ПРОМОКОД</span></div>
+            <div class="panel" style="padding:10px;">
                 <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                    <input type="text" id="promoInput" class="hw-input" placeholder="КОД АКТИВАЦИИ (НАПР. PIN2026)" style="text-transform:uppercase;">
-                    <button onclick="activatePromo()" class="hw-btn" style="padding:0 16px;">ВВЕСТИ</button>
+                    <input type="text" id="promoField" class="input-box" placeholder="ВВЕДИТЕ ПРОМОКОД" style="text-transform:uppercase;">
+                    <button onclick="sendPromo()" class="btn-main">ОК</button>
                 </div>
             </div>
 
-            <!-- Партнерский модуль 15% + Поддержка -->
-            <div class="hw-box" style="display:flex; justify-content:space-between; align-items:center;">
+            <!-- Рефералка -->
+            <div class="panel" style="display:flex; justify-content:space-between; align-items:center;">
                 <div>
-                    <div class="op-tag">AFFILIATE PROTOCOL // 15%</div>
-                    <div style="font-size:12px; font-weight:700; margin-top:2px;">Приглашай друзей — 15% на баланс</div>
+                    <div class="tag">РЕФЕРАЛЬНАЯ СЕТЬ // 15%</div>
+                    <div style="font-size:12px; font-weight:800; margin-top:2px;">15% с каждого пополнения друга</div>
                 </div>
-                <button onclick="copyRefLink(this)" class="hw-btn-ghost">[ СКОПИРОВАТЬ ССЫЛКУ ]</button>
+                <button onclick="copyRef(this)" class="btn-sec">ССЫЛКА</button>
             </div>
         </div>
 
-        <!-- МОДУЛЬ 02: СЕРВЕРНЫЕ ТАРИФЫ -->
+        <!-- ВКЛАДКА 2: ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-pane">
-            <div class="sec-bar">
-                <span class="sec-title">Спецификации тарифов</span>
-                <span class="hw-tag">AUTO-ISSUE</span>
+            <div class="sec-head">
+                <span class="sec-label">// ВЫБОР ТАРИФА</span>
+                <span class="pill">INSTANT</span>
             </div>
 
-            <!-- Тест -->
-            <div class="spec-card">
-                <div class="spec-head">
-                    <div>
-                        <div class="op-tag">TRIAL ALLOCATION</div>
-                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🆓 ТЕСТОВЫЙ ДОСТУП</div>
-                    </div>
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div><div class="tag">TRIAL</div><div style="font-size:15px; font-weight:800;">🆓 ТЕСТОВЫЙ (24 ЧАСА)</div></div>
                     <div class="mono" style="font-size:16px; font-weight:800;">0 ₽</div>
                 </div>
-                <div class="spec-matrix">
-                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">24 ЧАСА</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">10 ГБ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
-                </div>
-                <button onclick="buyTariff('test')" class="hw-btn-ghost" style="width:100%;">[ АКТИВИРОВАТЬ ТЕСТОВЫЙ УЗЕЛ ]</button>
+                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 10 ГБ • Лимит: 1 устройство</div>
+                <button onclick="buyPlan('test')" class="btn-sec" style="width:100%;">ПОЛУЧИТЬ ТЕСТОВЫЙ КЛЮЧ</button>
             </div>
 
-            <!-- Старт -->
-            <div class="spec-card">
-                <div class="spec-head">
-                    <div>
-                        <div class="op-tag">TIER 01 // SHORT</div>
-                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🚀 ТАРИФ «СТАРТ»</div>
-                    </div>
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div><div class="tag">TIER 01</div><div style="font-size:15px; font-weight:800;">🚀 СТАРТ (14 ДНЕЙ)</div></div>
                     <div class="mono" style="font-size:16px; font-weight:800;">69 ₽</div>
                 </div>
-                <div class="spec-matrix">
-                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">14 ДНЕЙ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">50 ГБ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
-                </div>
-                <button onclick="buyTariff('start')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 69 ₽</button>
+                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 50 ГБ • Лимит: 1 устройство</div>
+                <button onclick="buyPlan('start')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 69 ₽</button>
             </div>
 
-            <!-- Базовый -->
-            <div class="spec-card">
-                <div class="spec-head">
-                    <div>
-                        <div class="op-tag">TIER 02 // STANDARD</div>
-                        <div style="font-size:15px; font-weight:800; margin-top:2px;">⚡️ ТАРИФ «БАЗОВЫЙ»</div>
-                    </div>
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div><div class="tag">TIER 02</div><div style="font-size:15px; font-weight:800;">⚡️ БАЗОВЫЙ (30 ДНЕЙ)</div></div>
                     <div class="mono" style="font-size:16px; font-weight:800;">129 ₽</div>
                 </div>
-                <div class="spec-matrix">
-                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">30 ДНЕЙ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">129 ГБ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">1 УСТР.</span></div>
-                </div>
-                <button onclick="buyTariff('base')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 129 ₽</button>
+                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 129 ГБ • Лимит: 1 устройство</div>
+                <button onclick="buyPlan('base')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 129 ₽</button>
             </div>
 
-            <!-- Продвинутый -->
-            <div class="spec-card">
-                <div class="spec-head">
-                    <div>
-                        <div class="op-tag">TIER 03 // MULTI-NODE</div>
-                        <div style="font-size:15px; font-weight:800; margin-top:2px;">💎 ТАРИФ «ПРОДВИНУТЫЙ»</div>
-                    </div>
+            <div class="panel">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div><div class="tag">TIER 03</div><div style="font-size:15px; font-weight:800;">💎 ПРОДВИНУТЫЙ (30 ДНЕЙ)</div></div>
                     <div class="mono" style="font-size:16px; font-weight:800;">199 ₽</div>
                 </div>
-                <div class="spec-matrix">
-                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">30 ДНЕЙ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">300 ГБ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">3 УСТР.</span></div>
-                </div>
-                <button onclick="buyTariff('pro')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 199 ₽</button>
+                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 300 ГБ • Лимит: 3 устройства</div>
+                <button onclick="buyPlan('pro')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 199 ₽</button>
             </div>
 
-            <!-- Хит сезона -->
-            <div class="spec-card flagship">
-                <div class="spec-head">
-                    <div>
-                        <div class="op-tag" style="color:var(--accent);">TIER 04 // MAX PERFORMANCE</div>
-                        <div style="font-size:15px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА</div>
-                    </div>
-                    <div class="mono" style="font-size:16px; font-weight:800; color:var(--accent);">499 ₽</div>
+            <div class="panel" style="border-width: 2.5px; border-color: var(--accent);">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div><div class="tag" style="color:var(--accent);">MAX PERFORMANCE</div><div style="font-size:15px; font-weight:800;">🔥 ХИТ СЕЗОНА (90 ДНЕЙ)</div></div>
+                    <div class="mono" style="font-size:16px; font-weight:800;">499 ₽</div>
                 </div>
-                <div class="spec-matrix">
-                    <div class="spec-cell"><span class="spec-cell-lbl">СРОК</span><span class="spec-cell-val">90 ДНЕЙ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">КВОТА</span><span class="spec-cell-val">900 ГБ</span></div>
-                    <div class="spec-cell"><span class="spec-cell-lbl">ЛИМИТ</span><span class="spec-cell-val">3 УСТР.</span></div>
-                </div>
-                <button onclick="buyTariff('hit')" class="hw-btn" style="width:100%;">РАЗВЕРНУТЬ УЗЕЛ // 499 ₽</button>
+                <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">Квота: 900 ГБ • Лимит: 3 устройства</div>
+                <button onclick="buyPlan('hit')" class="btn-main" style="width:100%;">КУПИТЬ ЗА 499 ₽</button>
             </div>
         </div>
 
-        <!-- МОДУЛЬ 03: СИСТЕМНЫЕ НАСТРОЙКИ -->
+        <!-- ВКЛАДКА 3: ТЕМЫ И КАСТОМИЗАЦИЯ -->
         <div id="tab-style" class="tab-pane">
-            <div class="sec-bar">
-                <span class="sec-title">Параметры отображения</span>
-            </div>
+            <div class="sec-head"><span class="sec-label">// СМЕНА ТЕМЫ И ШРИФТА</span></div>
 
-            <div class="hw-box">
-                <div class="op-tag" style="margin-bottom:8px;">ПАЛИТРА ТЕРМИНАЛА</div>
-                <div class="cfg-grid-2">
-                    <button onclick="applyTheme('obsidian')" data-t="obsidian" class="cfg-btn"><span>OBSIDIAN</span><span class="swatch-box" style="background:#fff;"></span></button>
-                    <button onclick="applyTheme('tactical')" data-t="tactical" class="cfg-btn"><span>TACTICAL</span><span class="swatch-box" style="background:#10b981;"></span></button>
-                    <button onclick="applyTheme('amber')" data-t="amber" class="cfg-btn"><span>AMBER CRT</span><span class="swatch-box" style="background:#f59e0b;"></span></button>
-                    <button onclick="applyTheme('frost')" data-t="frost" class="cfg-btn"><span>FROST</span><span class="swatch-box" style="background:#38bdf8;"></span></button>
+            <div class="panel">
+                <div class="tag" style="margin-bottom:8px;">ТЕМА ИНТЕРФЕЙСА (МЕНЯЕТ ВСЁ)</div>
+                <div class="grid-2">
+                    <button onclick="setTheme('oled')" data-t="oled" class="opt-card"><span>OLED BLACK</span><span class="swatch" style="background:#000;"></span></button>
+                    <button onclick="setTheme('discord')" data-t="discord" class="opt-card"><span>DISCORD</span><span class="swatch" style="background:#5865f2;"></span></button>
+                    <button onclick="setTheme('matrix')" data-t="matrix" class="opt-card"><span>MATRIX CRT</span><span class="swatch" style="background:#00ff66;"></span></button>
+                    <button onclick="setTheme('brutal')" data-t="brutal" class="opt-card"><span>BRUTAL LIGHT</span><span class="swatch" style="background:#ff4500;"></span></button>
                 </div>
             </div>
 
-            <div class="hw-box">
-                <div class="op-tag" style="margin-bottom:8px;">ТИПОГРАФИКА</div>
-                <div class="cfg-grid-3">
-                    <button onclick="applyFont('space')" data-f="space" class="cfg-btn" style="justify-content:center;">GROTESK</button>
-                    <button onclick="applyFont('mono')" data-f="mono" class="cfg-btn" style="justify-content:center;">MONO</button>
-                    <button onclick="applyFont('manrope')" data-f="manrope" class="cfg-btn" style="justify-content:center;">MANROPE</button>
+            <div class="panel">
+                <div class="tag" style="margin-bottom:8px;">ШРИФТ СИСТЕМЫ</div>
+                <div class="grid-3">
+                    <button onclick="setFont('space')" data-f="space" class="opt-card" style="justify-content:center;">CLEAN</button>
+                    <button onclick="setFont('mono')" data-f="mono" class="opt-card" style="justify-content:center;">MONO</button>
+                    <button onclick="setFont('pixel')" data-f="pixel" class="opt-card" style="justify-content:center;">PIXEL</button>
                 </div>
             </div>
 
-            <div class="hw-box">
-                <div class="op-tag" style="margin-bottom:8px;">ФОНОВЫЙ РАДАР</div>
-                <div class="cfg-grid-3">
-                    <button onclick="applyAnim('grid')" data-a="grid" class="cfg-btn" style="justify-content:center;">МАТРИЦА</button>
-                    <button onclick="applyAnim('dust')" data-a="dust" class="cfg-btn" style="justify-content:center;">ЧАСТИЦЫ</button>
-                    <button onclick="applyAnim('none')" data-a="none" class="cfg-btn" style="justify-content:center;">ВЫКЛ</button>
+            <div class="panel">
+                <div class="tag" style="margin-bottom:8px;">ФОНОВАЯ АНИМАЦИЯ</div>
+                <div class="grid-3">
+                    <button onclick="setAnim('grid')" data-a="grid" class="opt-card" style="justify-content:center;">СЕТКА</button>
+                    <button onclick="setAnim('dust')" data-a="dust" class="opt-card" style="justify-content:center;">ЧАСТИЦЫ</button>
+                    <button onclick="setAnim('none')" data-a="none" class="opt-card" style="justify-content:center;">ВЫКЛ</button>
                 </div>
             </div>
 
-            <button onclick="replayBoot()" class="hw-btn-ghost" style="width:100%;">
-                [ ↻ ПЕРЕЗАПУСТИТЬ ЭКРАН ИНИЦИАЛИЗАЦИИ ]
+            <button onclick="replayIntro()" class="btn-sec" style="width:100%;">
+                ↻ ПОКАЗАТЬ ЭКРАН ПРИВЕТСТВИЯ ЗАНОВО
             </button>
         </div>
     </div>
 
-    <!-- НИЖНЯЯ ДОК-СТАНЦИЯ -->
-    <div class="bottom-dock">
-        <div class="dock-inner">
-            <button onclick="switchTab('cabinet')" id="nav-cabinet" class="dock-btn active">
-                <span class="dock-idx">MOD // 01</span>
-                <span class="dock-lbl">УЗЛЫ</span>
-            </button>
-            <button onclick="switchTab('tariffs')" id="nav-tariffs" class="dock-btn">
-                <span class="dock-idx">MOD // 02</span>
-                <span class="dock-lbl">ТАРИФЫ</span>
-            </button>
-            <button onclick="switchTab('style')" id="nav-style" class="dock-btn">
-                <span class="dock-idx">MOD // 03</span>
-                <span class="dock-lbl">СИСТЕМА</span>
-            </button>
+    <!-- НИЖНЕЕ МЕНЮ -->
+    <div class="dock">
+        <div class="dock-grid">
+            <button onclick="openTab('cabinet')" id="nav-cabinet" class="dock-tab active">01 // КАБИНЕТ</button>
+            <button onclick="openTab('tariffs')" id="nav-tariffs" class="dock-tab">02 // ТАРИФЫ</button>
+            <button onclick="openTab('style')" id="nav-style" class="dock-tab">03 // ТЕМЫ</button>
         </div>
     </div>
 
-    <!-- ШТОРКА ЭКСТРЕННЫХ БУСТЕРОВ ТРАФИКА -->
-    <div id="boosterSheet" class="sheet-backdrop" onclick="closeSheetBg(event, 'boosterSheet')">
-        <div class="sheet-modal">
+    <!-- МОДАЛКА БУСТЕРОВ -->
+    <div id="boostModal" class="sheet-bg" onclick="if(event.target===this)closeModal('boostModal')">
+        <div class="sheet-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <div>
-                    <div class="op-tag">EMERGENCY QUOTA INJECTION</div>
-                    <div style="font-size:15px; font-weight:800;">⚡️ ДОКУПКА ТРАФИКА</div>
-                </div>
-                <span id="boostNodeTag" class="hw-tag">NODE #01</span>
+                <div style="font-size:15px; font-weight:800;">⚡️ ДОКУПИТЬ ТРАФИК</div>
+                <span id="boostSlotBadge" class="pill">СЛОТ #1</span>
             </div>
-
-            <div class="cfg-grid-3" style="margin-bottom:16px;">
-                <button onclick="selectBoost(15, 39)" id="b_15" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--fg);">+15 ГБ</span>
-                    <span style="font-size:10px; color:var(--muted);">39 ₽</span>
+            <div class="grid-3" style="margin-bottom:14px;">
+                <button onclick="pickBoost(15, 39)" id="b_15" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
+                    <span>+15 ГБ</span><span style="font-size:10px; opacity:0.75;">39 ₽</span>
                 </button>
-                <button onclick="selectBoost(50, 89)" id="b_50" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--fg);">+50 ГБ</span>
-                    <span style="font-size:10px; color:var(--muted);">89 ₽</span>
+                <button onclick="pickBoost(50, 89)" id="b_50" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
+                    <span>+50 ГБ</span><span style="font-size:10px; opacity:0.75;">89 ₽</span>
                 </button>
-                <button onclick="selectBoost(150, 149)" id="b_150" class="cfg-btn boost-opt" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--fg);">+150 ГБ</span>
-                    <span style="font-size:10px; color:var(--muted);">149 ₽</span>
+                <button onclick="pickBoost(150, 149)" id="b_150" class="opt-card boost-item" style="flex-direction:column; gap:4px; justify-content:center;">
+                    <span>+150 ГБ</span><span style="font-size:10px; opacity:0.75;">149 ₽</span>
                 </button>
             </div>
-
-            <button id="boostConfirmBtn" onclick="payBoost()" class="hw-btn" style="width:100%; padding:13px;" disabled>
-                ВЫБЕРИТЕ ОБЪЕМ КВОТЫ
-            </button>
+            <button id="boostPayBtn" onclick="confirmBoost()" class="btn-main" style="width:100%; padding:13px;" disabled>ВЫБЕРИТЕ ПАКЕТ</button>
         </div>
     </div>
 
-    <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
-    <div id="topupSheet" class="sheet-backdrop" onclick="closeSheetBg(event, 'topupSheet')">
-        <div class="sheet-modal">
+    <!-- МОДАЛКА ПОПОЛНЕНИЯ -->
+    <div id="topupModal" class="sheet-bg" onclick="if(event.target===this)closeModal('topupModal')">
+        <div class="sheet-box">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <div>
-                    <div class="op-tag">PAYMENT GATEWAY // PLATEGA</div>
-                    <div style="font-size:15px; font-weight:800;">ПОПОЛНЕНИЕ СЧЕТА</div>
-                </div>
-                <button onclick="closeSheet('topupSheet')" class="hw-btn-ghost" style="padding:4px 8px;">✕</button>
+                <div style="font-size:15px; font-weight:800;">ПОПОЛНЕНИЕ БАЛАНСА</div>
+                <button onclick="closeModal('topupModal')" class="btn-sec" style="padding:4px 8px;">✕</button>
             </div>
-
-            <div class="cfg-grid-3" style="margin-bottom:10px;">
-                <button onclick="document.getElementById('topupInput').value=100" class="cfg-btn" style="justify-content:center;">100 ₽</button>
-                <button onclick="document.getElementById('topupInput').value=250" class="cfg-btn" style="justify-content:center;">250 ₽</button>
-                <button onclick="document.getElementById('topupInput').value=500" class="cfg-btn" style="justify-content:center;">500 ₽</button>
+            <div class="grid-3" style="margin-bottom:10px;">
+                <button onclick="document.getElementById('topupVal').value=100" class="opt-card" style="justify-content:center;">100 ₽</button>
+                <button onclick="document.getElementById('topupVal').value=250" class="opt-card" style="justify-content:center;">250 ₽</button>
+                <button onclick="document.getElementById('topupVal').value=500" class="opt-card" style="justify-content:center;">500 ₽</button>
             </div>
-
-            <input type="number" id="topupInput" class="hw-input" placeholder="СУММА В РУБЛЯХ (ОТ 10 ₽)" style="margin-bottom:14px;">
-
-            <button onclick="submitTopup()" class="hw-btn" style="width:100%; padding:13px;">
-                [ СФОРМИРОВАТЬ СЧЕТ НА ОПЛАТУ → ]
-            </button>
+            <input type="number" id="topupVal" class="input-box" placeholder="СУММА В РУБЛЯХ (ОТ 10 ₽)" style="margin-bottom:12px;">
+            <button onclick="confirmTopup()" class="btn-main" style="width:100%; padding:13px;">ПЕРЕЙТИ К ОПЛАТЕ →</button>
         </div>
     </div>
 
@@ -948,13 +736,19 @@
         const user = tg.initDataUnsafe?.user;
         const p = new URLSearchParams(window.location.search);
 
-        const uid = user?.id || p.get('user_id') || '404';
-        const uname = user?.username ? '@' + user.username : (user?.first_name || 'OPERATOR');
-        const balance = parseInt(p.get('bal') || '0', 10);
-        const avatarUrl = p.get('avatar') || user?.photo_url;
+        // ЖЕЛЕЗОБЕТОННАЯ СИНХРОНИЗАЦИЯ ДАННЫХ (URL + LOCALSTORAGE FALLBACK ДЛЯ BOTFATHER КНОПКИ)
+        if (p.has('bal')) localStorage.setItem('pp_cached_bal', p.get('bal'));
+        if (p.has('subs')) localStorage.setItem('pp_cached_subs', p.get('subs'));
+        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_cached_avatar', p.get('avatar'));
+        if (p.has('user_id')) localStorage.setItem('pp_cached_uid', p.get('user_id'));
+
+        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_cached_uid') || '404';
+        const uname = user?.username ? '@' + user.username : (user?.first_name || 'CLIENT');
+        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_cached_bal') ?? '0', 10);
+        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_cached_avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
-        document.getElementById('uId').innerText = `UID: ${uid}`;
+        document.getElementById('uId').innerText = `ID: ${uid}`;
         document.getElementById('uBal').innerText = `${balance} ₽`;
 
         if (avatarUrl && avatarUrl !== 'none') {
@@ -966,33 +760,30 @@
             document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
         }
 
-        function haptic(t = 'light') {
-            try { tg.HapticFeedback.impactOccurred(t); } catch (e) {}
-        }
-
         let subs = [];
         try {
-            const raw = p.get('subs');
-            if (raw) subs = JSON.parse(decodeURIComponent(raw));
-        } catch (e) {}
-
-        function buildLedBar(percent) {
-            const totalSegs = 20;
-            const activeSegs = Math.round((percent / 100) * totalSegs);
-            let cls = 'on';
-            if (percent <= 15) cls = 'crit';
-            else if (percent <= 30) cls = 'warn';
-
-            let segsHtml = '';
-            for (let s = 0; s < totalSegs; s++) {
-                segsHtml += `<div class="led-seg ${s < activeSegs ? cls : ''}"></div>`;
-            }
-            return segsHtml;
+            const rawSubs = p.get('subs') || localStorage.getItem('pp_cached_subs');
+            if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
+        } catch (e) {
+            subs = [];
         }
 
-        function renderNodes() {
-            const box = document.getElementById('nodesContainer');
-            document.getElementById('slotsBadge').innerText = `${subs.length} / 2 NODES`;
+        function makeLeds(pct) {
+            const total = 16;
+            const active = Math.round((pct / 100) * total);
+            let cls = 'on';
+            if (pct <= 15) cls = 'crit';
+            else if (pct <= 30) cls = 'warn';
+            let res = '';
+            for (let i = 0; i < total; i++) {
+                res += `<div class="led ${i < active ? cls : ''}"></div>`;
+            }
+            return res;
+        }
+
+        function renderSlots() {
+            const box = document.getElementById('slotsContainer');
+            document.getElementById('slotsCount').innerText = `${subs.length} / 2 ACTIVE`;
             let html = '';
 
             for (let i = 0; i < 2; i++) {
@@ -1003,289 +794,230 @@
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
                     const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
-                    let strokeCol = 'var(--accent)';
-                    if (pct <= 15) strokeCol = 'var(--crit)';
-                    else if (pct <= 30) strokeCol = 'var(--warn)';
-
                     const slotId = s.id || (i + 1);
-                    const customName = localStorage.getItem(`pp_node_${slotId}`) || `NODE_0${i + 1}`;
-                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••••' : 'N/A';
+                    const savedTitle = localStorage.getItem(`pp_slot_title_${slotId}`) || `СЛОТ #0${i + 1}`;
+                    const masked = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
 
                     html += `
-                        <div class="hw-box">
-                            <div class="node-header">
-                                <div class="node-title-wrap">
-                                    <span class="node-idx">0${i + 1}</span>
-                                    <input type="text" class="node-input" value="${customName}" maxlength="16" onblur="saveNodeName('${slotId}', this.value)">
+                        <div class="panel">
+                            <div class="slot-top">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <span class="dot"></span>
+                                    <input type="text" class="slot-input" value="${savedTitle}" maxlength="16" onblur="localStorage.setItem('pp_slot_title_${slotId}', this.value)">
                                     <span class="mono" style="font-size:10px; color:var(--muted);">[✎]</span>
                                 </div>
-                                <span class="hw-tag">${s.name}</span>
+                                <span class="pill">${s.name}</span>
                             </div>
 
-                            <div class="telemetry-box">
-                                <div class="radar-wrap">
-                                    <svg class="radar-svg" viewBox="0 0 36 36">
-                                        <circle class="radar-track" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="radar-dash" cx="18" cy="18" r="12.5"></circle>
-                                        <circle class="radar-fill" cx="18" cy="18" r="15.9155" stroke="${strokeCol}" stroke-dasharray="${pct}, 100"></circle>
+                            <div class="telemetry">
+                                <div class="ring-wrap">
+                                    <svg class="ring-svg" viewBox="0 0 36 36">
+                                        <circle class="ring-bg" cx="18" cy="18" r="15.9155"></circle>
+                                        <circle class="ring-fg" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
                                     </svg>
-                                    <div class="radar-center">
-                                        <span class="radar-pct" style="color:${strokeCol};">${pct}%</span>
-                                        <span class="radar-lbl">LEFT</span>
-                                    </div>
+                                    <div class="ring-val">${pct}%</div>
                                 </div>
-
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                        <span class="op-tag">AVAILABLE QUOTA</span>
-                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} <span style="font-size:10px; color:var(--muted);">/ ${totalGb} GB</span></span>
+                                        <span class="tag">ОСТАТОК ТРАФИКА</span>
+                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} / ${totalGb} ГБ</span>
                                     </div>
-                                    <div class="led-bar">${buildLedBar(pct)}</div>
-                                    <div class="meta-row">
-                                        <span>EXP: ${s.until}</span>
-                                        <span>DEV: ${s.dev || 1} MAX</span>
+                                    <div class="led-strip">${makeLeds(pct)}</div>
+                                    <div style="display:flex; justify-content:space-between;" class="tag">
+                                        <span>ДО: ${s.until}</span>
+                                        <span>УСТР: ${s.dev || 1}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="cipher-bar">
-                                <input type="text" id="k_${i}" class="cipher-input" data-raw="${s.key}" data-masked="${maskedKey}" data-shown="0" readonly value="${maskedKey}">
-                                <button onclick="toggleKeyMask('k_${i}', this)" class="hw-btn-ghost" style="padding:5px 8px;">EYE</button>
-                                <button onclick="copyKey('k_${i}', this)" class="hw-btn" style="padding:5px 10px; font-size:10px;">COPY</button>
+                            <div class="key-row">
+                                <input type="text" id="key_${i}" class="key-field" data-raw="${s.key}" data-mask="${masked}" data-open="0" readonly value="${masked}">
+                                <button onclick="toggleMask('key_${i}', this)" class="btn-sec" style="padding:6px 8px;">👁</button>
+                                <button onclick="copyKey('key_${i}', this)" class="btn-main" style="padding:6px 10px;">COPY</button>
                             </div>
 
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                                <button onclick="openBooster(${i + 1})" class="hw-btn-ghost">[ ⚡️ +ТРАФИК ]</button>
-                                <button onclick="switchTab('tariffs')" class="hw-btn-ghost">[ ↻ ПРОДЛИТЬ ]</button>
+                            <div class="grid-2">
+                                <button onclick="openBoostModal(${i + 1})" class="btn-sec">⚡️ +ТРАФИК</button>
+                                <button onclick="openTab('tariffs')" class="btn-sec">↻ ТАРИФЫ</button>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="empty-node">
-                            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:10px;">// СЛОТ УЗЛА #0${i + 1} НЕ ИНИЦИАЛИЗИРОВАН</div>
-                            <button onclick="switchTab('tariffs')" class="hw-btn-ghost" style="margin:0 auto;">
-                                [ + РАЗВЕРНУТЬ НОВЫЙ УЗЕЛ ]
-                            </button>
+                        <div class="panel" style="border-style:dashed; text-align:center; padding:22px 14px;">
+                            <div class="mono" style="font-size:11px; color:var(--muted); margin-bottom:12px;">[ СЛОТ ПОДПИСКИ #0${i + 1} СВОБОДЕН ]</div>
+                            <button onclick="openTab('tariffs')" class="btn-main">+ ПОДКЛЮЧИТЬ ТАРИФ</button>
                         </div>
                     `;
                 }
             }
             box.innerHTML = html;
         }
-        renderNodes();
+        renderSlots();
 
-        function saveNodeName(id, val) {
-            const cl = val.trim() || `NODE_0${id}`;
-            localStorage.setItem(`pp_node_${id}`, cl);
-        }
-
-        function toggleKeyMask(id, btn) {
+        function toggleMask(id, btn) {
             const el = document.getElementById(id);
-            const shown = el.getAttribute('data-shown') === '1';
-            el.value = shown ? el.getAttribute('data-masked') : el.getAttribute('data-raw');
-            el.setAttribute('data-shown', shown ? '0' : '1');
-            btn.innerText = shown ? 'EYE' : 'HIDE';
-            haptic('light');
+            const isOpen = el.getAttribute('data-open') === '1';
+            el.value = isOpen ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
+            el.setAttribute('data-open', isOpen ? '0' : '1');
         }
 
         function copyKey(id, btn) {
             const raw = document.getElementById(id).getAttribute('data-raw');
             navigator.clipboard.writeText(raw);
             const old = btn.innerText;
-            btn.innerText = 'DONE';
+            btn.innerText = 'OK!';
             setTimeout(() => { btn.innerText = old; }, 1200);
-            haptic('medium');
         }
 
-        function copyRefLink(btn) {
-            const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
-            navigator.clipboard.writeText(link);
+        function copyRef(btn) {
+            navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
             const old = btn.innerText;
-            btn.innerText = '[ ССЫЛКА В БУФЕРЕ ]';
-            setTimeout(() => { btn.innerText = old; }, 1400);
-            haptic('light');
+            btn.innerText = 'СКОПИРОВАНО';
+            setTimeout(() => { btn.innerText = old; }, 1300);
         }
 
-        function switchTab(tab) {
+        function openTab(tab) {
             ['cabinet', 'tariffs', 'style'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.toggle('active', t === tab);
                 document.getElementById(`nav-${t}`).classList.toggle('active', t === tab);
             });
-            haptic('light');
         }
 
-        // ШТОРКИ И БУСТЕРЫ
-        let selectedBoostGb = 0;
-        let selectedSlotNum = 1;
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        function openSheet(id) {
-            document.getElementById(id).classList.add('active');
-            haptic('light');
+        let chosenGb = 0;
+        let chosenSlot = 1;
+        function openBoostModal(slotNum) {
+            chosenSlot = slotNum;
+            chosenGb = 0;
+            document.getElementById('boostSlotBadge').innerText = `СЛОТ #0${slotNum}`;
+            const b = document.getElementById('boostPayBtn');
+            b.disabled = true;
+            b.innerText = 'ВЫБЕРИТЕ ПАКЕТ';
+            document.querySelectorAll('.boost-item').forEach(el => el.classList.remove('active'));
+            openModal('boostModal');
         }
-        function closeSheet(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-        function closeSheetBg(e, id) {
-            if (e.target.id === id) closeSheet(id);
-        }
-
-        function openBooster(slotNum) {
-            selectedSlotNum = slotNum;
-            selectedBoostGb = 0;
-            document.getElementById('boostNodeTag').innerText = `NODE #0${slotNum}`;
-            const btn = document.getElementById('boostConfirmBtn');
-            btn.disabled = true;
-            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ КВОТЫ';
-            document.querySelectorAll('.boost-opt').forEach(b => b.classList.remove('active'));
-            openSheet('boosterSheet');
-        }
-
-        function selectBoost(gb, price) {
-            selectedBoostGb = gb;
-            document.querySelectorAll('.boost-opt').forEach(b => b.classList.remove('active'));
+        function pickBoost(gb, price) {
+            chosenGb = gb;
+            document.querySelectorAll('.boost-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`b_${gb}`).classList.add('active');
-            const btn = document.getElementById('boostConfirmBtn');
-            btn.disabled = false;
-            btn.innerText = `[ ОПЛАТИТЬ +${gb} ГБ ЗА ${price} ₽ → ]`;
-            haptic('light');
+            const b = document.getElementById('boostPayBtn');
+            b.disabled = false;
+            b.innerText = `ОПЛАТИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
         }
-
-        function payBoost() {
-            if (!selectedBoostGb) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${selectedBoostGb}_${selectedSlotNum}`);
+        function confirmBoost() {
+            if (!chosenGb) return;
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenGb}_${chosenSlot}`);
             tg.close();
         }
 
-        function submitTopup() {
-            const val = parseInt(document.getElementById('topupInput').value, 10);
-            if (!val || val < 10) {
-                alert('Минимальная сумма пополнения — 10 ₽');
-                return;
-            }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
+        function confirmTopup() {
+            const v = parseInt(document.getElementById('topupVal').value, 10);
+            if (!v || v < 10) { alert('Минимум 10 ₽'); return; }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${v}`);
             tg.close();
         }
 
-        function buyTariff(tId) {
-            if (subs.length >= 2) {
-                alert('Достигнут лимит: 2 из 2 активных узлов!');
-                return;
-            }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${tId}`);
+        function buyPlan(planId) {
+            if (subs.length >= 2) { alert('У вас уже активны 2 из 2 слотов!'); return; }
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
             tg.close();
         }
 
-        function activatePromo() {
-            const code = document.getElementById('promoInput').value.trim();
-            if (!code) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(code)}`);
+        function sendPromo() {
+            const c = document.getElementById('promoField').value.trim();
+            if (!c) return;
+            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(c)}`);
             tg.close();
         }
 
-        // ТЕМЫ И ШРИФТЫ
-        let currentAnim = localStorage.getItem('pp_anim') || 'grid';
-
-        function applyTheme(t) {
+        // ТЕМЫ, ШРИФТЫ, АНИМАЦИИ
+        let curAnim = localStorage.getItem('pp_anim_v5') || 'grid';
+        function setTheme(t) {
             document.body.setAttribute('data-theme', t);
-            localStorage.setItem('pp_theme', t);
+            localStorage.setItem('pp_theme_v5', t);
             document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
         }
-        function applyFont(f) {
+        function setFont(f) {
             document.body.setAttribute('data-font', f);
-            localStorage.setItem('pp_font', f);
+            localStorage.setItem('pp_font_v5', f);
             document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
         }
-        function applyAnim(a) {
-            currentAnim = a;
-            localStorage.setItem('pp_anim', a);
+        function setAnim(a) {
+            curAnim = a;
+            localStorage.setItem('pp_anim_v5', a);
             document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
         }
 
-        applyTheme(localStorage.getItem('pp_theme') || 'obsidian');
-        applyFont(localStorage.getItem('pp_font') || 'space');
-        applyAnim(currentAnim);
+        setTheme(localStorage.getItem('pp_theme_v5') || 'oled');
+        setFont(localStorage.getItem('pp_font_v5') || 'space');
+        setAnim(curAnim);
 
-        // ОНБОРДИНГ ПРИ ПЕРВОМ ВХОДЕ
-        function runBootSequence() {
-            const bScreen = document.getElementById('bootScreen');
-            const bTitle = document.getElementById('bootTitle');
-            const bSub = document.getElementById('bootSub');
-            const cScreen = document.getElementById('initConfigScreen');
+        function startIntro() {
+            const w = document.getElementById('welcomeOverlay');
+            const wt = document.getElementById('wTitle');
+            const ws = document.getElementById('wSub');
+            const s = document.getElementById('setupOverlay');
 
-            bScreen.style.display = 'flex';
-            bScreen.style.opacity = '1';
-
+            w.style.display = 'flex';
+            w.style.opacity = '1';
+            setTimeout(() => { wt.classList.add('on'); ws.classList.add('on'); }, 80);
+            setTimeout(() => { wt.classList.remove('on'); ws.classList.remove('on'); }, 1650);
             setTimeout(() => {
-                bTitle.classList.add('on');
-                bSub.classList.add('on');
-            }, 80);
-
-            setTimeout(() => {
-                bTitle.classList.remove('on');
-                bSub.classList.remove('on');
-            }, 1750);
-
-            setTimeout(() => {
-                cScreen.style.display = 'flex';
-                bScreen.style.opacity = '0';
-                setTimeout(() => { bScreen.style.display = 'none'; }, 450);
-            }, 2300);
+                s.style.display = 'flex';
+                w.style.opacity = '0';
+                setTimeout(() => { w.style.display = 'none'; }, 400);
+            }, 2200);
+        }
+        function closeSetup() {
+            localStorage.setItem('pp_onboarded_v5', '1');
+            document.getElementById('setupOverlay').style.display = 'none';
+        }
+        function replayIntro() {
+            localStorage.removeItem('pp_onboarded_v5');
+            startIntro();
+        }
+        if (!localStorage.getItem('pp_onboarded_v5')) {
+            startIntro();
         }
 
-        function finishBoot() {
-            localStorage.setItem('pp_boot_v4', '1');
-            document.getElementById('initConfigScreen').style.display = 'none';
-            haptic('medium');
-        }
-
-        function replayBoot() {
-            localStorage.removeItem('pp_boot_v4');
-            runBootSequence();
-        }
-
-        if (!localStorage.getItem('pp_boot_v4')) {
-            runBootSequence();
-        }
-
-        // ФОНОВЫЙ ИНДУСТРИАЛЬНЫЙ РАДАР
+        // ФОНОВЫЙ КАНВАС
         const cvs = document.getElementById('bgCanvas');
         const ctx = cvs.getContext('2d');
-        let w, h;
-        function resize() { w = cvs.width = window.innerWidth; h = cvs.height = window.innerHeight; }
+        let cw, ch;
+        function resize() { cw = cvs.width = window.innerWidth; ch = cvs.height = window.innerHeight; }
         window.addEventListener('resize', resize);
         resize();
 
-        const dust = Array.from({ length: 26 }, () => ({
-            x: Math.random() * w, y: Math.random() * h,
-            vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25
+        const pts = Array.from({ length: 25 }, () => ({
+            x: Math.random() * cw, y: Math.random() * ch,
+            vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3
         }));
-
-        let tick = 0;
-        function renderLoop() {
-            ctx.clearRect(0, 0, w, h);
-            tick += 0.015;
-            if (currentAnim === 'grid') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.055)';
-                for (let x = 16; x < w; x += 26) {
-                    for (let y = 16; y < h; y += 26) {
-                        if (Math.sin(x * 0.02 + tick) * Math.cos(y * 0.02 + tick) > 0.15) {
-                            ctx.fillRect(x, y, 1.5, 1.5);
-                        }
+        let tk = 0;
+        function loop() {
+            ctx.clearRect(0, 0, cw, ch);
+            tk += 0.02;
+            const isLight = document.body.getAttribute('data-theme') === 'brutal';
+            ctx.fillStyle = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)';
+            if (curAnim === 'grid') {
+                for (let x = 16; x < cw; x += 26) {
+                    for (let y = 16; y < ch; y += 26) {
+                        if (Math.sin(x * 0.02 + tk) * Math.cos(y * 0.02 + tk) > 0.15) ctx.fillRect(x, y, 2, 2);
                     }
                 }
-            } else if (currentAnim === 'dust') {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
-                dust.forEach(d => {
+            } else if (curAnim === 'dust') {
+                pts.forEach(d => {
                     d.x += d.vx; d.y += d.vy;
-                    if (d.x < 0) d.x = w; if (d.x > w) d.x = 0;
-                    if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
+                    if (d.x < 0) d.x = cw; if (d.x > cw) d.x = 0;
+                    if (d.y < 0) d.y = ch; if (d.y > ch) d.y = 0;
                     ctx.fillRect(d.x, d.y, 2, 2);
                 });
             }
-            requestAnimationFrame(renderLoop);
+            requestAnimationFrame(loop);
         }
-        renderLoop();
+        loop();
     </script>
 </body>
 </html>
