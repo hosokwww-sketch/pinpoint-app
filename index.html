@@ -10,11 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================
-           ДИЗАЙН-СИСТЕМА: SOFT NORDIC MINIMALISM
-           ========================================== */
-        
-        /* 1. ШАЛФЕЙ (Спокойный темный пастельный) */
         :root, body[data-theme="sage"] {
             --bg: #0d1110;
             --bg-grad: radial-gradient(circle at 20% 0%, rgba(168, 213, 186, 0.12), transparent 45%),
@@ -35,7 +30,6 @@
             --shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
         }
 
-        /* 2. АМЕТИСТ (Глубокий черно-фиолетовый минимализм) */
         body[data-theme="mauve"] {
             --bg: #0b0912;
             --bg-grad: radial-gradient(circle at 20% 0%, rgba(203, 180, 232, 0.15), transparent 48%),
@@ -56,7 +50,6 @@
             --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
         }
 
-        /* 3. СЛИВОЧНЫЙ ШЕЛК (Светлая нежная пастель для мамы) */
         body[data-theme="sand"] {
             --bg: #f6f4f0;
             --bg-grad: radial-gradient(circle at 15% 0%, rgba(141, 175, 155, 0.22), transparent 45%),
@@ -77,7 +70,6 @@
             --shadow: 0 10px 28px rgba(35, 45, 40, 0.06);
         }
 
-        /* 4. НОРДИЧЕСКИЙ ЛЕД (Чистый голубой минимализм) */
         body[data-theme="slate"] {
             --bg: #0b0f16;
             --bg-grad: radial-gradient(circle at 20% 0%, rgba(167, 199, 231, 0.14), transparent 45%),
@@ -98,7 +90,6 @@
             --shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
         }
 
-        /* ШРИФТЫ */
         body[data-font="sora"] { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
         body[data-font="geist"] { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
         body[data-font="epilogue"] { font-family: 'Inter', -apple-system, sans-serif; }
@@ -140,7 +131,6 @@
             margin: 0 auto;
         }
 
-        /* БАЗОВАЯ КАРТОЧКА */
         .card, .tariff-slab {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -153,7 +143,6 @@
             transition: border-color 0.25s ease, background-color 0.25s ease;
         }
 
-        /* ВЕРХНИЙ ПРОФИЛЬ И БАЛАНС */
         .profile-band {
             display: flex;
             justify-content: space-between;
@@ -214,7 +203,6 @@
             letter-spacing: -0.02em;
         }
 
-        /* КНОПКИ (ЧИСТЫЕ, ПОНЯТНЫЕ, ТАКТИЛЬНЫЕ) */
         .btn-pastel {
             background: var(--pastel);
             color: var(--pastel-fg);
@@ -231,14 +219,8 @@
             gap: 6px;
             transition: opacity 0.2s ease, transform 0.15s ease;
         }
-        .btn-pastel:active {
-            opacity: 0.88;
-            transform: scale(0.98);
-        }
-        .btn-pastel:disabled {
-            opacity: 0.4;
-            pointer-events: none;
-        }
+        .btn-pastel:active { opacity: 0.88; transform: scale(0.98); }
+        .btn-pastel:disabled { opacity: 0.4; pointer-events: none; }
 
         .btn-subtle {
             background: var(--surface-sub);
@@ -256,12 +238,8 @@
             gap: 6px;
             transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
         }
-        .btn-subtle:active {
-            border-color: var(--pastel);
-            transform: scale(0.98);
-        }
+        .btn-subtle:active { border-color: var(--pastel); transform: scale(0.98); }
 
-        /* ЗАГОЛОВКИ СЕКЦИЙ */
         .section-row {
             display: flex;
             justify-content: space-between;
@@ -283,7 +261,6 @@
             color: var(--pastel);
         }
 
-        /* КАРТОЧКА ПОДКЛЮЧЕНИЯ (СЛОТ) */
         .slot-unit-header {
             display: flex;
             justify-content: space-between;
@@ -315,7 +292,6 @@
         }
         .slot-name-field:focus { border-bottom-color: var(--pastel); }
 
-        /* ВИЗУАЛИЗАЦИЯ ТРАФИКА (ПРОСТАЯ И ПОНЯТНАЯ) */
         .traffic-harness {
             display: grid;
             grid-template-columns: 74px 1fr;
@@ -327,71 +303,21 @@
             margin-bottom: 14px;
             align-items: center;
         }
-        .gauge-svg-wrap {
-            position: relative;
-            width: 72px;
-            height: 72px;
-        }
-        .gauge-svg {
-            transform: rotate(-90deg);
-            width: 100%;
-            height: 100%;
-        }
-        .gauge-track {
-            fill: none;
-            stroke: var(--border);
-            stroke-width: 4.5;
-        }
-        .gauge-flow {
-            fill: none;
-            stroke: var(--pastel);
-            stroke-width: 4.5;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.6s ease;
-        }
-        .gauge-center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .gauge-pct {
-            font-size: 14px;
-            font-weight: 800;
-        }
+        .gauge-svg-wrap { position: relative; width: 72px; height: 72px; }
+        .gauge-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .gauge-track { fill: none; stroke: var(--border); stroke-width: 4.5; }
+        .gauge-flow { fill: none; stroke: var(--pastel); stroke-width: 4.5; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; }
+        .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .gauge-pct { font-size: 14px; font-weight: 800; }
 
-        .pill-meter {
-            display: grid;
-            grid-template-columns: repeat(14, 1fr);
-            gap: 3px;
-            margin: 8px 0 10px;
-        }
-        .pill-cell {
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border);
-        }
+        .pill-meter { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; margin: 8px 0 10px; }
+        .pill-cell { height: 6px; border-radius: 3px; background: var(--border); }
         .pill-cell.filled { background: var(--pastel); }
         .pill-cell.warn { background: var(--state-warn); }
         .pill-cell.crit { background: var(--state-crit); }
 
-        .meta-stamp {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
+        .meta-stamp { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); font-weight: 500; }
 
-        /* БЛОК КЛЮЧА И БЫСТРОГО ПОДКЛЮЧЕНИЯ */
-        .connect-action-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
         .key-capsule {
             display: grid;
             grid-template-columns: 1fr auto auto;
@@ -414,7 +340,6 @@
             pointer-events: none;
         }
 
-        /* ПРОГРЕСС-БАР РЕФЕРАЛКИ (5% -> 25%) */
         .ref-progress-track {
             width: 100%;
             height: 8px;
@@ -424,32 +349,12 @@
             overflow: hidden;
             margin: 10px 0 8px;
         }
-        .ref-progress-bar {
-            height: 100%;
-            background: var(--pastel);
-            border-radius: 99px;
-            transition: width 0.5s ease;
-        }
+        .ref-progress-bar { height: 100%; background: var(--pastel); border-radius: 99px; transition: width 0.5s ease; }
 
-        /* КАРТОЧКИ ТАРИФОВ */
-        .tariff-slab {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .tariff-slab.featured {
-            border-color: var(--pastel);
-            box-shadow: 0 8px 30px var(--border-glow);
-        }
-        .old-price {
-            text-decoration: line-through;
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 500;
-            margin-right: 6px;
-        }
+        .tariff-slab { display: flex; flex-direction: column; gap: 10px; }
+        .tariff-slab.featured { border-color: var(--pastel); box-shadow: 0 8px 30px var(--border-glow); }
+        .old-price { text-decoration: line-through; color: var(--text-muted); font-size: 12px; font-weight: 500; margin-right: 6px; }
 
-        /* СЕТКИ И ВЫБОР ОПЦИЙ */
         .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .picker-cell {
@@ -467,17 +372,8 @@
             justify-content: space-between;
             transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
         }
-        .picker-cell.active {
-            border-color: var(--pastel);
-            background: var(--pastel-soft);
-            color: var(--pastel);
-        }
-        .tone-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+        .picker-cell.active { border-color: var(--pastel); background: var(--pastel-soft); color: var(--pastel); }
+        .tone-dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
 
         .ambient-field {
             width: 100%;
@@ -493,7 +389,6 @@
         }
         .ambient-field:focus { border-color: var(--pastel); }
 
-        /* ПЛАВАЮЩАЯ НИЖНЯЯ НАВИГАЦИЯ */
         .bottom-shelf {
             position: fixed;
             bottom: 14px;
@@ -526,12 +421,8 @@
             text-align: center;
             transition: background-color 0.22s ease, color 0.22s ease;
         }
-        .shelf-tab.active {
-            background: var(--pastel);
-            color: var(--pastel-fg);
-        }
+        .shelf-tab.active { background: var(--pastel); color: var(--pastel-fg); }
 
-        /* ПЛАВНЫЕ ВКЛАДКИ (ЧИСТЫЙ FADE БЕЗ СКАЧКОВ И ДЕРГАНИЙ) */
         .tab-content {
             display: block;
             visibility: hidden;
@@ -548,11 +439,8 @@
             pointer-events: auto;
             transition: opacity 0.26s ease, visibility 0s linear 0s;
         }
-        .tab-content.show {
-            opacity: 1;
-        }
+        .tab-content.show { opacity: 1; }
 
-        /* МОДАЛЬНЫЕ ОКНА (ШТОРКИ) */
         .curtain-wrap {
             position: fixed;
             inset: 0;
@@ -588,12 +476,8 @@
             opacity: 0.95;
             transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease;
         }
-        .curtain-wrap.active .curtain-panel {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        .curtain-wrap.active .curtain-panel { transform: translateY(0); opacity: 1; }
 
-        /* QR КОД БОКС */
         .qr-box {
             display: none;
             flex-direction: column;
@@ -607,7 +491,41 @@
         }
         .qr-box.active { display: flex; }
 
-        /* ВСТУПИТЕЛЬНАЯ ЗАСТАВКА */
+        #inAppPush {
+            position: fixed;
+            top: -100px;
+            left: 16px;
+            right: 16px;
+            max-width: 420px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--pastel);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 18px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 500;
+            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        #inAppPush.show { top: 16px; opacity: 1; }
+
+        .tx-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
         #fadeIntro {
             position: fixed;
             inset: 0;
@@ -656,16 +574,23 @@
 </head>
 <body data-theme="sage" data-font="sora">
 
-    <!-- ФОНОВЫЕ ЧАСТИЦЫ -->
     <canvas id="fxCanvas"></canvas>
 
-    <!-- 1. ПРИВЕТСТВИЕ -->
+    <div id="inAppPush">
+        <div style="width:36px; height:36px; border-radius:50%; background:var(--pastel-soft); color:var(--pastel); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
+            ✓
+        </div>
+        <div style="flex:1; min-width:0;">
+            <div id="pushTitle" style="font-size:13px; font-weight:800; color:var(--text-main);">Баланс пополнен!</div>
+            <div id="pushBody" style="font-size:11px; color:var(--text-muted); margin-top:2px;">Зачислено +100 ₽ на ваш счет</div>
+        </div>
+    </div>
+
     <div id="fadeIntro">
         <div id="introTitle" class="fade-greeting">PinPoint VPN</div>
         <div id="introSub" class="fade-caption">ПРОСТОЙ И БЫСТРЫЙ ИНТЕРНЕТ</div>
     </div>
 
-    <!-- 2. ПЕРВИЧНАЯ НАСТРОЙКА -->
     <div id="firstRunConfig">
         <div style="max-width:440px; margin:0 auto; width:100%;">
             <div class="subhead" style="margin-bottom:4px;">ДОБРО ПОЖАЛОВАТЬ</div>
@@ -701,7 +626,7 @@
             <div class="grid-trio">
                 <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
                 <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
-                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ЧИСТЫЙ</button>
+                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ФОНА</button>
             </div>
         </div>
 
@@ -712,10 +637,8 @@
         </div>
     </div>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
     <div class="view-layer">
 
-        <!-- ШАПКА ПРОФИЛЯ И БАЛАНСА -->
         <div class="card profile-band">
             <div class="operator-meta">
                 <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
@@ -735,17 +658,14 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 1: МОЙ VPN (ГЛАВНАЯ) -->
         <div id="tab-cabinet" class="tab-content active show">
             <div class="section-row">
                 <span class="section-label">МОИ ПОДКЛЮЧЕНИЯ</span>
                 <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
             </div>
 
-            <!-- СЛОТЫ ПОДПИСОК -->
             <div id="slotsCluster"></div>
 
-            <!-- ПАРТНЕРСКАЯ ПРОГРАММА (5% -> 25%) -->
             <div class="section-row">
                 <span class="section-label">БОНУСНАЯ ПРОГРАММА</span>
                 <span id="refBadgePct" class="pill-badge">СТАВКА: 5%</span>
@@ -765,7 +685,7 @@
                 </div>
 
                 <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-bottom:14px;">
-                    <span>Активных друзей: <b id="refFriendsCount" style="color:var(--text-main);">0</b> / 20</span>
+                    <span>Оплативших друзей: <b id="refFriendsCount" style="color:var(--text-main);">0</b> / 20</span>
                     <span>Заработано: <b id="refEarnedSum" style="color:var(--pastel);">0 ₽</b></span>
                 </div>
 
@@ -779,7 +699,6 @@
                 </div>
             </div>
 
-            <!-- ПРОМОКОД -->
             <div class="section-row"><span class="section-label">ЕСТЬ ПРОМОКОД?</span></div>
             <div class="card" style="padding:12px;">
                 <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
@@ -789,17 +708,15 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 2: ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-content">
             <div class="section-row">
-                <span class="section-label">ВЫБЕРИТЕ ТАРИФ</span>
-                <span class="pill-badge">ФИН • ГЕР • НИД • ПОЛ</span>
+                <span class="section-label">КАТАЛОГ ТАРИФОВ</span>
             </div>
 
             <div class="tariff-slab">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div class="subhead">ПОПРОБОВАТЬ БЕСПЛАТНО</div>
+                        <div class="subhead">ТЕСТОВЫЙ ПЕРИОД</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">🆓 Тест на 24 часа</div>
                     </div>
                     <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">0 ₽</div>
@@ -827,12 +744,12 @@
             <div class="tariff-slab">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div class="subhead">НА 1 МЕСЯЦ (ОПТИМАЛЬНО)</div>
+                        <div class="subhead">НА 1 МЕСЯЦ</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">⚡️ Тариф «Базовый»</div>
                     </div>
                     <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">129 ₽</div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">129 ГБ трафика • 1 устройство • Без ограничений скорости</div>
+                <div style="font-size:12px; color:var(--text-muted);">129 ГБ трафика • 1 устройство • Без ограничений</div>
                 <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">
                     ПОДКЛЮЧИТЬ ЗА 129 ₽
                 </button>
@@ -841,7 +758,7 @@
             <div class="tariff-slab">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div class="subhead">ДЛЯ СЕБЯ И БЛИЗКИХ (30 ДНЕЙ)</div>
+                        <div class="subhead">ДО 3 УСТРОЙСТВ (30 ДНЕЙ)</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">💎 Тариф «Продвинутый»</div>
                     </div>
                     <div>
@@ -849,7 +766,7 @@
                         <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">199 ₽</span>
                     </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">300 ГБ трафика • До 3 устройств одновременно</div>
+                <div style="font-size:12px; color:var(--text-muted);">300 ГБ трафика • 3 устройства одновременно</div>
                 <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">
                     ПОДКЛЮЧИТЬ ЗА 199 ₽
                 </button>
@@ -858,7 +775,7 @@
             <div class="tariff-slab featured">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div class="subhead" style="color:var(--pastel);">ВЫГОДА 25% • НА 3 МЕСЯЦА</div>
+                        <div class="subhead" style="color:var(--pastel);">ВЫГОДА 25% • 90 ДНЕЙ</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА (90 дней)</div>
                     </div>
                     <div>
@@ -866,19 +783,18 @@
                         <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">499 ₽</span>
                     </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">900 ГБ трафика • До 3 устройств (телефон, ПК, планшет)</div>
+                <div style="font-size:12px; color:var(--text-muted);">900 ГБ трафика • 3 любых устройства (телефон, ПК, ТВ)</div>
                 <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">
                     ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 499 ₽
                 </button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 3: ОФОРМЛЕНИЕ -->
         <div id="tab-style" class="tab-content">
-            <div class="section-row"><span class="section-label">ВНЕШНИЙ ВИД ПРИЛОЖЕНИЯ</span></div>
+            <div class="section-row"><span class="section-label">НАСТРОЙКИ ВИДА</span></div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:10px;">ЦВЕТОВАЯ ТЕМА</div>
+                <div class="subhead" style="margin-bottom:10px;">ЦВЕТ ИНТЕРФЕЙСА</div>
                 <div class="grid-duo">
                     <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
                         <span>🌿 Шалфей</span><span class="tone-dot" style="background:#a8d5ba;"></span>
@@ -905,7 +821,7 @@
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:10px;">ЖИВОЙ ФОН</div>
+                <div class="subhead" style="margin-bottom:10px;">АНИМАЦИЯ ФОНА</div>
                 <div class="grid-trio">
                     <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
                     <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
@@ -919,14 +835,12 @@
         </div>
     </div>
 
-    <!-- НИЖНЕЕ МЕНЮ (ПОНЯТНОЕ С ПЕРВОГО ВЗГЛЯДА) -->
     <div class="bottom-shelf">
         <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">🛡 Мой VPN</button>
         <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">💎 Тарифы</button>
         <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">🎨 Вид</button>
     </div>
 
-    <!-- ШТОРКА БЫСТРОГО ПОДКЛЮЧЕНИЯ В 1 КЛИК + QR -->
     <div id="connectSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('connectSheet')">
         <div class="curtain-panel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
@@ -938,35 +852,29 @@
             </div>
 
             <div class="grid-duo" style="margin-bottom:14px;">
-                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell" style="justify-content:center;">🍏 iPhone / iPad / Mac</button>
+                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell" style="justify-content:center;">🍏 iPhone / Mac</button>
                 <button id="plat_android" onclick="renderAppList('android')" class="picker-cell" style="justify-content:center;">🤖 Android / Windows</button>
             </div>
 
             <div id="appsContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
 
-            <!-- QR КОД ДЛЯ ПОДКЛЮЧЕНИЯ С ДРУГОГО УСТРОЙСТВА -->
             <div id="qrBox" class="qr-box">
                 <img id="qrImage" src="" alt="QR Code" style="width:170px; height:170px; border-radius:8px;">
-                <div style="color:#111; font-size:11px; font-weight:700; margin-top:8px;">Отсканируйте камерой в VPN-приложении</div>
+                <div style="color:#111; font-size:11px; font-weight:700; margin-top:8px;">Отсканируйте камерой в VPN-клиенте</div>
             </div>
 
             <div class="grid-duo">
-                <button onclick="toggleQrCode()" class="btn-subtle" style="padding:12px;">
-                    📷 QR-КОД
-                </button>
-                <button onclick="copyCurrentKeyDirectly()" class="btn-subtle" style="padding:12px;">
-                    📋 СКОПИРОВАТЬ КЛЮЧ
-                </button>
+                <button onclick="toggleQrCode()" class="btn-subtle" style="padding:12px;">📷 QR-КОД</button>
+                <button onclick="copyCurrentKeyDirectly()" class="btn-subtle" style="padding:12px;">📋 СКОПИРОВАТЬ</button>
             </div>
         </div>
     </div>
 
-    <!-- ШТОРКА ДОЗАПРАВКИ ТРАФИКА -->
     <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
         <div class="curtain-panel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЕ ГИГАБАЙТЫ</div>
+                    <div class="subhead">ДОБАВИТЬ ГИГАБАЙТЫ</div>
                     <div style="font-size:18px; font-weight:800;">Пакет трафика</div>
                 </div>
                 <span id="boostSlotBadge" class="pill-badge">СЛОТ #1</span>
@@ -993,28 +901,42 @@
         </div>
     </div>
 
-    <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
     <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
         <div class="curtain-panel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">БЫСТРОЕ ПОПОЛНЕНИЕ</div>
-                    <div style="font-size:18px; font-weight:800;">Пополнить баланс</div>
+                    <div class="subhead">КОШЕЛЕК</div>
+                    <div style="font-size:18px; font-weight:800;">Пополнение счета</div>
                 </div>
                 <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:6px 10px;">✕</button>
             </div>
 
-            <div class="grid-trio" style="margin-bottom:12px;">
-                <button onclick="document.getElementById('topupInputVal').value=129" class="picker-cell" style="justify-content:center;">129 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell" style="justify-content:center;">199 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell" style="justify-content:center;">499 ₽</button>
+            <div class="grid-duo" style="margin-bottom:14px;">
+                <button id="subtab_pay" onclick="toggleWalletSubtab('pay')" class="picker-cell active" style="justify-content:center;">💳 Пополнить</button>
+                <button id="subtab_history" onclick="toggleWalletSubtab('history')" class="picker-cell" style="justify-content:center;">🧾 История оплат</button>
             </div>
 
-            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
+            <div id="walletPayBlock">
+                <div class="grid-trio" style="margin-bottom:12px;">
+                    <button onclick="document.getElementById('topupInputVal').value=129" class="picker-cell" style="justify-content:center;">129 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell" style="justify-content:center;">199 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell" style="justify-content:center;">499 ₽</button>
+                </div>
 
-            <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:15px;">
-                ПЕРЕЙТИ К ОПЛАТЕ →
-            </button>
+                <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
+
+                <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:15px;">
+                    СФОРМИРОВАТЬ СЧЕТ →
+                </button>
+            </div>
+
+            <div id="walletHistoryBlock" style="display:none;">
+                <div id="txListContainer" style="max-height: 220px; overflow-y: auto;">
+                    <div style="text-align:center; padding:16px; color:var(--text-muted); font-size:12px;">
+                        Загрузка истории операций...
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1035,16 +957,15 @@
 
         const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
-        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
+        let currentBalance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
         const refCount = parseInt(p.get('ref_cnt') ?? localStorage.getItem('pp_c_ref_cnt') ?? '0', 10);
         const refEarned = parseInt(p.get('ref_earn') ?? localStorage.getItem('pp_c_ref_earn') ?? '0', 10);
         const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
         document.getElementById('uId').innerText = `ID: ${uid}`;
-        document.getElementById('uBal').innerText = `${balance} ₽`;
+        document.getElementById('uBal').innerText = `${currentBalance} ₽`;
 
-        // Расчет прогрессивной рефералки (5% база + 1% за каждого оплатившего друга, макс 25%)
         const currentRefPct = Math.min(25, 5 + refCount);
         const refProgressWidth = Math.min(100, Math.max(8, (refCount / 20) * 100));
         document.getElementById('refBadgePct').innerText = `ВАШ БОНУС: ${currentRefPct}%`;
@@ -1068,6 +989,17 @@
 
         function haptic(style = 'light') {
             try { tg.HapticFeedback.impactOccurred(style); } catch (e) {}
+        }
+
+        function triggerInAppPush(title, message) {
+            const push = document.getElementById('inAppPush');
+            document.getElementById('pushTitle').innerText = title;
+            document.getElementById('pushBody').innerText = message;
+            push.classList.add('show');
+            try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {}
+            setTimeout(() => {
+                push.classList.remove('show');
+            }, 4500);
         }
 
         let subs = [];
@@ -1143,7 +1075,6 @@
                                 </div>
                             </div>
 
-                            <!-- ГЛАВНАЯ КНОПКА ДЛЯ ПАПЫ И МАМЫ: ПОДКЛЮЧИТЬ В 1 КЛИК -->
                             <button onclick="openConnectModal('${s.key}')" class="btn-pastel" style="width:100%; padding:13px; margin-bottom:10px; font-size:13px;">
                                 ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
                             </button>
@@ -1164,7 +1095,7 @@
                     html += `
                         <div class="card" style="border-style:dashed; text-align:center; padding:26px 16px;">
                             <div style="font-size:14px; font-weight:700; margin-bottom:4px;">Свободный слот #${i + 1}</div>
-                            <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Подключите телефон, компьютер или телевизор</div>
+                            <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Подключите телефон, компьютер или планшет</div>
                             <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ТАРИФ</button>
                         </div>
                     `;
@@ -1174,28 +1105,24 @@
         }
         renderSlots();
 
-        /* ==========================================
-           УМНОЕ ПОДКЛЮЧЕНИЕ В 1 КЛИК + QR-КОД
-           ========================================== */
         let activeKeyForConnect = '';
-
         const VPN_APPS = {
             ios: [
                 {
                     name: "Hiddify",
-                    desc: "Нажмите «Установить» -> затем «Войти»",
+                    desc: "Рекомендуется для iOS / macOS",
                     deepLink: (url) => `hiddify://install-sub?url=${encodeURIComponent(url)}`,
                     storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
                 },
                 {
                     name: "V2rayTun",
-                    desc: "Простой и надежный клиент для iPhone",
+                    desc: "Простой клиент для iPhone",
                     deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
                     storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
                 },
                 {
                     name: "Happ Proxy",
-                    desc: "Быстрое подключение • App Store",
+                    desc: "App Store",
                     deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
                     storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
                 }
@@ -1209,13 +1136,13 @@
                 },
                 {
                     name: "V2rayTun",
-                    desc: "Удобное подключение одной кнопкой",
+                    desc: "Google Play",
                     deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
                     storeUrl: "https://play.google.com/store/apps/details?id=com.v2raytun.android"
                 },
                 {
                     name: "Happ",
-                    desc: "Минималистичный клиент • Google Play",
+                    desc: "Минималистичный клиент",
                     deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
                     storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
                 }
@@ -1234,8 +1161,7 @@
         function openConnectModal(key) {
             activeKeyForConnect = key;
             document.getElementById('qrBox').classList.remove('active');
-            const platform = detectDevicePlatform();
-            renderAppList(platform);
+            renderAppList(detectDevicePlatform());
             openCurtain('connectSheet');
             haptic('light');
         }
@@ -1254,12 +1180,8 @@
                         <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${app.desc}</div>
                     </div>
                     <div style="display:flex; gap:6px; flex-shrink:0;">
-                        <button onclick="tg.openLink('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">
-                            СКАЧАТЬ
-                        </button>
-                        <button onclick="launchVpnApp('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">
-                            ПОДКЛЮЧИТЬ
-                        </button>
+                        <button onclick="tg.openLink('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">СКАЧАТЬ</button>
+                        <button onclick="launchVpnApp('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
                     </div>
                 </div>
             `).join('');
@@ -1287,7 +1209,7 @@
             navigator.clipboard.writeText(activeKeyForConnect);
             haptic('medium');
             closeCurtain('connectSheet');
-            try { tg.showAlert('✅ Ключ скопирован! Вставьте его в приложение.'); } catch(e) {}
+            try { tg.showAlert('✅ Ключ скопирован в буфер обмена!'); } catch(e) {}
         }
 
         function toggleKeyReveal(id, btn) {
@@ -1299,10 +1221,9 @@
         }
 
         function copyKeyValue(id, btn) {
-            const raw = document.getElementById(id).getAttribute('data-raw');
-            navigator.clipboard.writeText(raw);
+            navigator.clipboard.writeText(document.getElementById(id).getAttribute('data-raw'));
             const old = btn.innerText;
-            btn.innerText = '✓ СКОПИРОВАНО';
+            btn.innerText = '✓ OK';
             setTimeout(() => { btn.innerText = old; }, 1300);
             haptic('medium');
         }
@@ -1317,20 +1238,17 @@
 
         function shareRefLink() {
             const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
-            const text = `Держи быстрый и стабильный VPN без рекламы и ограничений! 24 часа теста бесплатно:`;
+            const text = `Быстрый и надежный VPN без ограничений, держи 24 часа бесплатного теста:`;
             tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);
         }
 
-        /* ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК */
         function switchTab(tab) {
             ['cabinet', 'tariffs', 'style'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 const btn = document.getElementById(`nav-${t}`);
                 if (t === tab) {
                     el.classList.add('active');
-                    requestAnimationFrame(() => {
-                        el.classList.add('show');
-                    });
+                    requestAnimationFrame(() => el.classList.add('show'));
                     btn.classList.add('active');
                 } else {
                     el.classList.remove('show');
@@ -1376,13 +1294,13 @@
 
         function dispatchTopup() {
             const val = parseInt(document.getElementById('topupInputVal').value, 10);
-            if (!val || val < 10) { alert('Минимальная сумма пополнения — 10 ₽'); return; }
+            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
             tg.close();
         }
 
         function requestTariff(planId) {
-            if (subs.length >= 2) { alert('У вас уже подключены оба доступных слота!'); return; }
+            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
             tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
             tg.close();
         }
@@ -1394,19 +1312,60 @@
             tg.close();
         }
 
-        /* ==========================================
-           ТЕМЫ, ШРИФТЫ И ЖИВЫЕ ПАРТИКЛЫ (ИСПРАВЛЕНО)
-           ========================================== */
+        function toggleWalletSubtab(tab) {
+            document.getElementById('subtab_pay').classList.toggle('active', tab === 'pay');
+            document.getElementById('subtab_history').classList.toggle('active', tab === 'history');
+            document.getElementById('walletPayBlock').style.display = tab === 'pay' ? 'block' : 'none';
+            document.getElementById('walletHistoryBlock').style.display = tab === 'history' ? 'block' : 'none';
+            if (tab === 'history') {
+                loadHistoryTransactions();
+            }
+            haptic('light');
+        }
+
+        async function loadHistoryTransactions() {
+            const container = document.getElementById('txListContainer');
+            try {
+                const resp = await fetch(`/api/user/transactions?user_id=${uid}`);
+                const data = await resp.json();
+                if (data.ok && data.txs.length > 0) {
+                    container.innerHTML = data.txs.map(tx => `
+                        <div class="tx-item">
+                            <div>
+                                <div style="font-weight:700;">Пополнение баланса</div>
+                                <div style="font-size:10px; color:var(--text-muted);">${tx.date}</div>
+                            </div>
+                            <div class="mono" style="font-weight:800; color:var(--pastel);">+${tx.amount} ₽</div>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">У вас пока нет пополнений</div>`;
+                }
+            } catch(e) {
+                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История доступна после первого пополнения</div>`;
+            }
+        }
+
+        async function checkLiveBalance() {
+            try {
+                const resp = await fetch(`/api/user/balance?user_id=${uid}`);
+                const data = await resp.json();
+                if (data.ok && data.balance > currentBalance) {
+                    const diff = data.balance - currentBalance;
+                    currentBalance = data.balance;
+                    document.getElementById('uBal').innerText = `${currentBalance} ₽`;
+                    localStorage.setItem('pp_c_bal', currentBalance);
+                    triggerInAppPush("Баланс пополнен! 🎉", `На ваш счет зачислено +${diff} ₽`);
+                }
+            } catch(e) {}
+        }
+        setInterval(checkLiveBalance, 4000);
+
         let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
         let currentParticleRgb = '168, 213, 186';
 
         function updateParticleColorFromTheme(t) {
-            const map = {
-                sage: '168, 213, 186',
-                mauve: '203, 180, 232',
-                sand: '92, 133, 110',
-                slate: '167, 199, 231'
-            };
+            const map = { sage: '168, 213, 186', mauve: '203, 180, 232', sand: '92, 133, 110', slate: '167, 199, 231' };
             currentParticleRgb = map[t] || '168, 213, 186';
         }
 
@@ -1434,7 +1393,6 @@
         setFontChoice(localStorage.getItem('pp_font_v7') || 'sora');
         setBackdropFx(currentFx);
 
-        // ОНБОРДИНГ
         function executeIntro() {
             const intro = document.getElementById('fadeIntro');
             const tit = document.getElementById('introTitle');
@@ -1472,7 +1430,6 @@
             executeIntro();
         }
 
-        // ЖИВОЙ ЦИКЛ ПАРТИКЛОВ И СИЯНИЯ НА CANVAS
         const canvas = document.getElementById('fxCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -1498,7 +1455,7 @@
 
         function animateCanvas(now = 0) {
             requestAnimationFrame(animateCanvas);
-            if (now - lastFxFrame < 33) return; // Стабильные ~30 FPS без нагрева телефона
+            if (now - lastFxFrame < 33) return;
             lastFxFrame = now;
 
             ctx.clearRect(0, 0, width, height);
