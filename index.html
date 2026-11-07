@@ -4,1242 +4,625 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>PinPoint Network</title>
+    <title>PinPoint Bento OS</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700;800&family=Geist+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* БАЗОВЫЕ ПЕРЕМЕННЫЕ */
-        :root,
-        body[data-theme="sage"],
-        body[data-theme="mauve"],
-        body[data-theme="sand"],
-        body[data-theme="slate"] {
-            color-scheme: light;
-            --bg: #fbf8f5;
-            --surface: #fffdfb;
-            --surface-sub: #f5f0ed;
-            --border: #eae1df;
-            --border-glow: rgba(183, 151, 173, 0.16);
-            --text-main: #39333a;
-            --text-muted: #938792;
-            --pastel: #a987a8;
-            --pastel-soft: #f1e8f1;
-            --pastel-fg: #fffdfb;
-            --state-ok: #80ad94;
-            --state-warn: #d7a56f;
-            --state-crit: #cc858e;
-            --radius-box: 22px;
-            --radius-btn: 15px;
+        /* BENTO PASTEL THEMES */
+        :root, body[data-theme="matcha"] {
+            --bg: #f2f5f2;
+            --surface: #ffffff;
+            --accent: #9cb5a1;
+            --accent-soft: #e2ede4;
+            --text-dark: #232b26;
+            --text-muted: #8a9c90;
+            --shadow: 0 12px 32px rgba(156, 181, 161, 0.12);
         }
-
-        body[data-theme="sage"] {
-            --pastel: #81a994;
-            --pastel-soft: #eaf2ec;
+        body[data-theme="lavender"] {
+            --bg: #f4f2f7;
+            --surface: #ffffff;
+            --accent: #b4a5c9;
+            --accent-soft: #ece8f2;
+            --text-dark: #2a2530;
+            --text-muted: #958ba3;
+            --shadow: 0 12px 32px rgba(180, 165, 201, 0.12);
         }
-        body[data-theme="mauve"] {
-            --pastel: #a987a8;
-            --pastel-soft: #f1e8f1;
-        }
-        body[data-theme="sand"] {
-            --pastel: #bd9873;
-            --pastel-soft: #f5eee5;
+        body[data-theme="oat"] {
+            --bg: #f7f6f2;
+            --surface: #ffffff;
+            --accent: #d1bfae;
+            --accent-soft: #f2eee8;
+            --text-dark: #332d27;
+            --text-muted: #a6998d;
+            --shadow: 0 12px 32px rgba(209, 191, 174, 0.12);
         }
         body[data-theme="slate"] {
-            --pastel: #829cb4;
-            --pastel-soft: #eaf0f5;
+            --bg: #f0f2f5;
+            --surface: #ffffff;
+            --accent: #94a8bc;
+            --accent-soft: #e4e9ef;
+            --text-dark: #20272e;
+            --text-muted: #8292a3;
+            --shadow: 0 12px 32px rgba(148, 168, 188, 0.12);
         }
 
-        /* ШРИФТЫ */
-        body[data-font="sora"] { font-family: 'Sora', sans-serif; }
-        body[data-font="geist"] { font-family: 'Geist Mono', monospace; font-size: 13px; }
-        body[data-font="epilogue"] { font-family: 'Epilogue', sans-serif; }
+        body[data-font="outfit"] { --f-ui: 'Outfit', sans-serif; --f-head: 'Outfit', sans-serif; }
+        body[data-font="syne"] { --f-ui: 'Outfit', sans-serif; --f-head: 'Syne', sans-serif; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
 
         body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            font-family: var(--f-ui);
             min-height: 100vh;
-            padding: 18px 15px 112px;
-            background:
-                radial-gradient(ellipse at 0% 0%, rgba(241, 226, 231, 0.58), transparent 42%),
-                radial-gradient(ellipse at 100% 18%, rgba(229, 235, 226, 0.48), transparent 36%),
-                var(--bg);
-            color: var(--text-main);
+            padding: 16px 16px 120px;
+            transition: background-color 0.4s ease;
             overflow-x: hidden;
-            transition: background-color .3s ease, color .3s ease;
         }
 
-        .mono { font-family: 'Geist Mono', monospace; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
-        #fxCanvas {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.9;
-        }
-
-        .view-layer {
-            position: relative;
-            z-index: 10;
+        .app-container {
             max-width: 480px;
             margin: 0 auto;
+            position: relative;
         }
 
-        /* ВЕРХНЯЯ СТРОКА */
-        .status-header {
+        /* HEADER */
+        .top-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 4px 15px;
-            margin-bottom: 18px;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 10px;
-            letter-spacing: .055em;
+            margin-bottom: 20px;
+            padding: 0 4px;
         }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-weight: 600;
-            color: var(--text-main);
+        .header-title {
+            font-family: var(--f-head);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
-        .soft-beacon {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--state-ok);
-            box-shadow: 0 0 0 4px rgba(128, 173, 148, .13);
-        }
-
-        /* КАРТОЧКИ */
-        .card,
-        .tariff-slab {
-            padding: 18px;
-            margin-bottom: 14px;
-            background: rgba(255, 253, 251, .92);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-box);
-            box-shadow: 0 7px 22px rgba(87, 66, 76, .045);
-            transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-        }
-        .card:has(.profile-band) {
-            box-shadow: 0 8px 28px rgba(87, 66, 76, .055);
-        }
-
-        /* ПРОФИЛЬ */
-        .profile-band {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 12px;
-            align-items: center;
-        }
-        .operator-meta {
+        .user-pill {
+            background: var(--surface);
+            padding: 6px 12px 6px 6px;
+            border-radius: 99px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            min-width: 0;
+            gap: 8px;
+            box-shadow: var(--shadow);
         }
-        .operator-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 17px;
-            background: var(--pastel-soft);
-            border: 1px solid transparent;
-            object-fit: cover;
+        .user-avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 16px;
-            color: var(--pastel);
-            flex-shrink: 0;
+            font-size: 12px;
+            object-fit: cover;
         }
-        .subhead {
-            font-size: 10px;
+
+        /* BENTO GRID */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .bento-item {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .bento-item:active { transform: scale(0.98); }
+        .bento-full { grid-column: span 2; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ТИПОГРАФИКА BENTO */
+        .b-label {
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: .085em;
+            letter-spacing: 0.1em;
             color: var(--text-muted);
-            font-weight: 600;
+            margin-bottom: 8px;
         }
-        .op-title {
-            color: var(--text-main);
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 2px 0;
+        .b-value {
+            font-family: var(--f-head);
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--text-dark);
         }
-        .balance-cluster {
-            text-align: right;
-            border-left: 1px solid var(--border);
-            padding-left: 14px;
-        }
-        .balance-num {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 2px 0 6px;
+        .b-sub {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 4px;
         }
 
         /* КНОПКИ */
-        .btn-pastel,
-        .btn-subtle,
-        .picker-cell,
-        .shelf-tab {
+        .btn-soft {
+            background: var(--accent-soft);
+            color: var(--text-dark);
+            border: none;
+            padding: 12px 16px;
+            border-radius: 16px;
             font-family: inherit;
-            transition: transform .16s ease, background-color .18s ease,
-                        color .18s ease, border-color .18s ease, box-shadow .18s ease;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn-pastel {
-            background: var(--pastel);
+        .btn-soft:active { transform: scale(0.95); background: var(--accent); color: #fff; }
+
+        .btn-solid {
+            background: var(--text-dark);
             color: #fff;
             border: none;
-            border-radius: var(--radius-btn);
-            padding: 10px 14px;
-            font-size: 12px;
+            padding: 16px;
+            border-radius: 20px;
+            font-family: inherit;
             font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 12px color-mix(in srgb, var(--pastel) 20%, transparent);
+            transition: 0.2s;
+            width: 100%;
         }
-        .btn-pastel:active,
-        .btn-subtle:active,
-        .picker-cell:active {
-            transform: scale(.97);
+        .btn-solid:active { transform: scale(0.96); opacity: 0.85; }
+
+        /* ИНДИКАТОР ТРАФИКА (ДЛЯ СЛОТОВ) */
+        .ring-box {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 12px;
         }
-        .btn-pastel:disabled {
-            opacity: 0.35;
-            box-shadow: none;
-            pointer-events: none;
-        }
-        .btn-subtle {
-            background: var(--surface);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-btn);
-            padding: 10px 12px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-subtle:hover,
-        .btn-subtle:focus-visible {
-            border-color: var(--pastel);
-            color: var(--pastel);
+        .ring-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .ring-bg { fill: none; stroke: var(--accent-soft); stroke-width: 6; }
+        .ring-fg { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+        .ring-text {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--f-head); font-weight: 800; font-size: 15px;
         }
 
-        .section-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 22px 3px 11px;
-        }
-        .section-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .085em;
-            color: var(--text-muted);
-        }
-        .pill-badge {
-            padding: 5px 10px;
-            background: var(--pastel-soft);
-            border: 1px solid transparent;
-            border-radius: 999px;
-            color: var(--pastel);
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        /* КАНАЛ СВЯЗИ */
-        .slot-unit-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 14px;
-        }
-        .slot-name-field {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #ded3d8;
-            color: var(--text-main);
+        /* ВВОД КЛЮЧА И ПОЛЯ */
+        .input-pill {
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 12px 16px;
+            width: 100%;
             font-family: inherit;
             font-size: 14px;
-            font-weight: 700;
-            width: 160px;
-            padding: 2px 0;
-            outline: none;
-        }
-        .slot-name-field:focus {
-            border-color: var(--pastel);
-        }
-
-        /* ТЕЛЕМЕТРИЯ */
-        .traffic-harness {
-            display: grid;
-            grid-template-columns: 72px 1fr;
-            gap: 14px;
-            background: #faf6f4;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 13px;
-            margin-bottom: 12px;
-            align-items: center;
-        }
-        .gauge-svg-wrap {
-            position: relative;
-            width: 70px;
-            height: 70px;
-        }
-        .gauge-svg {
-            transform: rotate(-90deg);
-            width: 100%;
-            height: 100%;
-        }
-        .gauge-track {
-            fill: none;
-            stroke: #e9e1df;
-            stroke-width: 4.5;
-        }
-        .gauge-flow {
-            fill: none;
-            stroke: var(--pastel);
-            stroke-width: 4.5;
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.9s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s;
-        }
-        .gauge-center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .gauge-pct {
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        .pill-meter {
-            display: grid;
-            grid-template-columns: repeat(14, 1fr);
-            gap: 3px;
-            margin: 7px 0 9px;
-        }
-        .pill-cell {
-            height: 6px;
-            border-radius: 2px;
-            background: #eae4e3;
-            transition: background 0.3s;
-        }
-        .pill-cell.filled { background: var(--pastel); }
-        .pill-cell.warn { background: var(--state-warn); }
-        .pill-cell.crit { background: var(--state-crit); }
-
-        .meta-stamp {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .key-capsule {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 6px;
-            background: #faf6f4;
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 7px 9px;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .key-text {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-muted);
-            font-family: 'Geist Mono', monospace;
-            font-size: 11px;
-            width: 100%;
-            pointer-events: none;
-        }
-
-        .tariff-slab {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .tariff-slab.featured {
-            border-color: color-mix(in srgb, var(--pastel) 58%, white);
-            box-shadow: 0 9px 28px var(--border-glow);
-        }
-
-        /* НАСТРОЙКИ */
-        .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .picker-cell {
-            background: #faf6f4;
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            color: var(--text-main);
-            padding: 12px 10px;
-            min-height: 44px;
-            font-size: 12px;
             font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .picker-cell:hover {
-            border-color: color-mix(in srgb, var(--pastel) 60%, white);
-        }
-        .picker-cell.active {
-            background: var(--pastel-soft);
-            border-color: var(--pastel);
-            color: var(--pastel);
-        }
-        .tone-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            box-shadow: 0 0 8px currentColor;
-        }
-
-        .ambient-field {
-            width: 100%;
-            min-height: 44px;
-            background: #faf6f4;
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 11px 12px;
-            color: var(--text-main);
-            font-size: 13px;
+            color: var(--text-dark);
             outline: none;
+            transition: 0.2s;
         }
-        .ambient-field::placeholder { color: #aa9fa7; }
-        .ambient-field:focus {
-            border-color: var(--pastel);
-        }
+        .input-pill:focus { border-color: var(--accent); background: #fff; }
+        .input-pill::placeholder { color: var(--text-muted); font-weight: 500; }
 
-        /* НАВИГАЦИЯ ВНИЗУ */
-        .bottom-shelf {
+        /* ТАБЫ (FLOATING PILL NAV) */
+        .floating-nav {
             position: fixed;
+            bottom: 24px;
             left: 50%;
-            right: auto;
-            bottom: max(12px, env(safe-area-inset-bottom));
-            width: min(480px, calc(100% - 28px));
             transform: translateX(-50%);
-            padding: 7px;
-            background: rgba(255, 253, 251, .91);
-            border: 1px solid rgba(234, 225, 223, .95);
-            border-radius: 22px;
-            box-shadow: 0 12px 32px rgba(76, 58, 67, .12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            z-index: 90;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 6px;
+            border-radius: 99px;
+            display: flex;
+            gap: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            z-index: 100;
         }
-        .shelf-tab {
-            min-height: 42px;
+        .nav-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 9px 5px;
-            border-radius: 15px;
-            font-size: 10px;
-            letter-spacing: .015em;
+            padding: 12px 20px;
+            border-radius: 99px;
+            font-family: inherit;
             font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            text-align: center;
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .shelf-tab.active {
-            background: var(--pastel-soft);
-            color: var(--pastel);
+        .nav-btn.active {
+            background: var(--text-dark);
+            color: #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
 
-        /* АНИМАЦИЯ ПЕРЕКЛЮЧЕНИЯ ВКЛАДОК */
-        .tab-content {
+        /* ВЬЮШКИ */
+        .tab-view {
             display: none;
-            opacity: 0;
-            transform: translateY(8px) scale(0.99);
-            transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-        .tab-content.active { display: block; }
-        .tab-content.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
+        .tab-view.active { display: block; }
+
+        @keyframes slideFade {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        /* ШТОРКИ */
-        .curtain-wrap {
-            position: fixed;
-            inset: 0;
-            background: rgba(60, 48, 58, .28);
-            backdrop-filter: blur(7px);
-            -webkit-backdrop-filter: blur(7px);
+        /* ТАРИФЫ BENTO */
+        .tariff-bento {
+            background: var(--surface);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: center;
+        }
+        .t-name { font-family: var(--f-head); font-size: 20px; font-weight: 800; }
+        .t-price { font-family: var(--f-head); font-size: 24px; font-weight: 800; color: var(--accent); }
+        .t-specs { font-size: 13px; font-weight: 500; color: var(--text-muted); margin-top: 4px; }
+
+        /* ВЫБОР ОПЦИЙ (ТЕМЫ) */
+        .theme-btn {
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+        .theme-btn.active {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+        }
+        .color-dot {
+            width: 16px; height: 16px; border-radius: 50%;
+        }
+
+        /* ШТОРКИ (BOTTOM SHEET) */
+        .sheet-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
             z-index: 200;
             display: none;
             align-items: flex-end;
-            justify-content: center;
         }
-        .curtain-wrap.active { display: flex; }
-        .curtain-panel {
-            width: min(100%, 480px);
-            padding: 23px 18px max(28px, env(safe-area-inset-bottom));
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-bottom: 0;
-            border-radius: 25px 25px 0 0;
-            box-shadow: 0 -12px 36px rgba(76, 58, 67, .12);
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .sheet-overlay.active { display: flex; }
+        .sheet-body {
+            background: var(--bg);
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 32px 32px 0 0;
+            padding: 32px 24px 40px;
+            animation: sheetUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-        @keyframes slideUp {
+        @keyframes sheetUp {
             from { transform: translateY(100%); }
             to { transform: translateY(0); }
         }
-
-        /* ПРИВЕТСТВИЕ */
-        #fadeIntro {
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 50% 35%, #f3e8ed, transparent 58%),
-                #fbf8f5;
-            z-index: 300;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease;
-        }
-        .fade-greeting {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: .04em;
-            color: #51444f;
-            opacity: 0;
-            transform: scale(0.96);
-            filter: blur(8px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .fade-caption {
-            font-size: 11px;
-            color: #a18b9a;
-            margin-top: 10px;
-            letter-spacing: .08em;
-            opacity: 0;
-            filter: blur(4px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-        }
-        .fade-greeting.show, .fade-caption.show {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-        }
-
-        #firstRunConfig {
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 100% 0%, rgba(241, 226, 231, .56), transparent 40%),
-                var(--bg);
-            z-index: 260;
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 24px 16px;
-            overflow-y: auto;
-        }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #d8cbd1; border-radius: 99px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-            }
-        }
-
-        @media (max-width: 360px) {
-            body { padding-right: 11px; padding-left: 11px; }
-            .card, .tariff-slab { padding: 14px; }
-            .bottom-shelf { width: calc(100% - 22px); }
-            .shelf-tab { font-size: 9px; }
-        }
     </style>
 </head>
-<body data-theme="sage" data-font="sora">
+<body data-theme="matcha" data-font="outfit">
 
-    <canvas id="fxCanvas"></canvas>
-
-    <!-- 1. ПРИВЕТСТВИЕ -->
-    <div id="fadeIntro">
-        <div id="introTitle" class="fade-greeting">Добро пожаловать</div>
-        <div id="introSub" class="fade-caption">ПРИВАТНАЯ СЕТЬ PINPOINT</div>
-    </div>
-
-    <!-- 2. ПЕРВИЧНАЯ НАСТРОЙКА -->
-    <div id="firstRunConfig">
-        <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="subhead" style="margin-bottom:4px;">ИНИЦИАЛИЗАЦИЯ // 01</div>
-            <div style="font-size:20px; font-weight:700; letter-spacing:-0.02em; margin-bottom:6px;">Эстетика интерфейса</div>
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.4;">Мягкие пастельные оттенки, созданные для спокойной работы без усталости глаз.</div>
-
-            <div class="section-row"><span class="section-label">Цветовая палитра</span></div>
-            <div class="grid-duo" style="margin-bottom:14px;">
-                <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                    <span>МЯГКИЙ ШАЛФЕЙ</span><span class="tone-dot" style="background:#81a994; color:#81a994;"></span>
-                </button>
-                <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                    <span>ПЫЛЬНЫЙ РОЗАН</span><span class="tone-dot" style="background:#a987a8; color:#a987a8;"></span>
-                </button>
-                <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                    <span>ТЕПЛЫЙ КАШЕМИР</span><span class="tone-dot" style="background:#bd9873; color:#bd9873;"></span>
-                </button>
-                <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                    <span>СЕРЫЙ СЛАНЕЦ</span><span class="tone-dot" style="background:#829cb4; color:#829cb4;"></span>
-                </button>
-            </div>
-
-            <div class="section-row"><span class="section-label">Типографика</span></div>
-            <div class="grid-trio" style="margin-bottom:14px;">
-                <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">GEIST</button>
-                <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
-            </div>
-
-            <div class="section-row"><span class="section-label">Атмосфера фона</span></div>
-            <div class="grid-trio">
-                <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ШЕЛК</button>
-                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">ТУМАН</button>
-                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ТИШИНА</button>
-            </div>
-        </div>
-
-        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:20px;">
-            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:14px; font-size:13px;">
-                ПРИМЕНИТЬ И ВОЙТИ
-            </button>
-        </div>
-    </div>
-
-    <!-- ГЛАВНЫЙ ЭКРАН -->
-    <div class="view-layer">
-        <div class="status-header">
-            <div class="status-badge"><span class="soft-beacon"></span> КАНАЛ ЗАЩИЩЕН // ONLINE</div>
-            <div id="liveClock" class="mono">ACTIVE</div>
-        </div>
-
-        <!-- КАРТОЧКА ПРОФИЛЯ -->
-        <div class="card profile-band">
-            <div class="operator-meta">
-                <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
-                <div id="avatarFallback" class="operator-avatar">P</div>
-                <div style="min-width:0;">
-                    <div class="subhead">ПРОФИЛЬ КЛИЕНТА</div>
-                    <div id="uName" class="op-title">Клиент</div>
-                    <div id="uId" class="mono" style="font-size:11px; color:var(--text-muted);">ID: 000000</div>
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="top-header">
+            <div class="header-title">PinPoint.</div>
+            <div class="user-pill">
+                <img id="uAvatar" class="user-avatar" style="display:none;" alt="">
+                <div id="uFallback" class="user-avatar">P</div>
+                <div style="padding-right:6px;">
+                    <div id="uName" style="font-size:12px; font-weight:700; line-height:1;">Client</div>
                 </div>
             </div>
-            <div class="balance-cluster">
-                <div class="subhead">БАЛАНС</div>
-                <div id="uBal" class="balance-num">0 ₽</div>
-                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:5px 10px; font-size:11px;">+ ПОПОЛНИТЬ</button>
+        </header>
+
+        <!-- ВЬЮ 1: ДАШБОРД (КАБИНЕТ) -->
+        <div id="view-dash" class="tab-view active">
+            <div class="bento-grid">
+                
+                <!-- БАЛАНС -->
+                <div class="bento-item bento-full" style="animation-delay: 0.05s;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div class="b-label">ВАШ БАЛАНС</div>
+                            <div class="b-value" id="valBal">0 ₽</div>
+                        </div>
+                        <button onclick="openSheet('sheetTopup')" class="btn-soft">Пополнить</button>
+                    </div>
+                </div>
+
+                <!-- СЛОТЫ БУДУТ ГЕНЕРИРОВАТЬСЯ ТУТ -->
+                <div id="slotsGrid" class="bento-grid bento-full"></div>
+
+                <!-- ПРОМОКОД -->
+                <div class="bento-item bento-full" style="animation-delay: 0.2s;">
+                    <div class="b-label">АКТИВАЦИЯ ВАУЧЕРА</div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="promoInput" class="input-pill" placeholder="Введите код...">
+                        <button onclick="applyPromo()" class="btn-soft" style="background:var(--text-dark); color:#fff;">ОК</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- 01 // ОБЗОР -->
-        <div id="tab-cabinet" class="tab-content active show">
-            <div class="section-row">
-                <span class="section-label">КАНАЛЫ СВЯЗИ</span>
-                <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
-            </div>
-
-            <div id="slotsCluster"></div>
-
-            <!-- ВАУЧЕР ДОСТУПА -->
-            <div class="section-row"><span class="section-label">ВАУЧЕР ДОСТУПА</span></div>
-            <div class="card" style="padding:10px;">
-                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="ВВЕДИТЕ ВАУЧЕР (PIN2026)" style="text-transform:uppercase;">
-                    <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
-                </div>
-            </div>
-
-            <!-- ПАРТНЕРСКИЙ ДОХОД -->
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+        <!-- ВЬЮ 2: ТАРИФЫ -->
+        <div id="view-plans" class="tab-view">
+            <div class="b-label" style="margin-bottom:16px;">ВЫБОР ПОДПИСКИ</div>
+            
+            <div class="tariff-bento">
                 <div>
-                    <div class="subhead">ПАРТНЕРСКИЙ ДОХОД // 15%</div>
-                    <div style="font-size:13px; font-weight:700; margin-top:2px;">Пожизненный процент с друзей</div>
+                    <div class="t-name">Тестовый</div>
+                    <div class="t-specs">10 ГБ • 24 Часа</div>
                 </div>
-                <button onclick="copyRefLink(this)" class="btn-subtle">ССЫЛКА</button>
-            </div>
-        </div>
-
-        <!-- 02 // ПОДПИСКИ -->
-        <div id="tab-tariffs" class="tab-content">
-            <div class="section-row">
-                <span class="section-label">КАТАЛОГ ПОДПИСОК</span>
-                <span class="pill-badge">МОМЕНТАЛЬНЫЙ ВЫПУСК</span>
-            </div>
-
-            <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ОЗНАКОМЛЕНИЕ</div><div style="font-size:16px; font-weight:700;">🆓 24 Часа</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">0 ₽</div>
-                </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 10 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">АКТИВИРОВАТЬ</button>
-            </div>
-
-            <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ПЕРИОД: 14 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">🚀 Тариф «Старт»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">69 ₽</div>
-                </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 50 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ // 69 ₽</button>
-            </div>
-
-            <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">ПЕРИОД: 30 ДНЕЙ</div><div style="font-size:16px; font-weight:700;">⚡️ Тариф «Базовый»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">129 ₽</div>
-                </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 129 ГБ • Лимит: 1 устройство</div>
-                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ // 129 ₽</button>
-            </div>
-
-            <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead">МУЛЬТИ-ПОДКЛЮЧЕНИЕ</div><div style="font-size:16px; font-weight:700;">💎 Тариф «Продвинутый»</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">199 ₽</div>
-                </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 300 ГБ • Лимит: 3 устройства</div>
-                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ // 199 ₽</button>
-            </div>
-
-            <div class="tariff-slab featured">
-                <div style="display:flex; justify-content:space-between;">
-                    <div><div class="subhead" style="color:var(--pastel);">МАКСИМАЛЬНАЯ ВЫГОДА</div><div style="font-size:16px; font-weight:700;">🔥 ХИТ СЕЗОНА (90 ДНЕЙ)</div></div>
-                    <div class="mono" style="font-size:17px; font-weight:700; color:var(--pastel);">499 ₽</div>
-                </div>
-                <div style="font-size:12px; color:var(--text-muted);">Квота: 900 ГБ • Лимит: 3 устройства</div>
-                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">ОФОРМИТЬ // 499 ₽</button>
-            </div>
-        </div>
-
-        <!-- 03 // ЭСТЕТИКА -->
-        <div id="tab-style" class="tab-content">
-            <div class="section-row"><span class="section-label">ПАРАМЕТРЫ ЭСТЕТИКИ</span></div>
-
-            <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ОТТЕНОК ИНТЕРФЕЙСА</div>
-                <div class="grid-duo">
-                    <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                        <span>МЯГКИЙ ШАЛФЕЙ</span><span class="tone-dot" style="background:#81a994; color:#81a994;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                        <span>ПЫЛЬНЫЙ РОЗАН</span><span class="tone-dot" style="background:#a987a8; color:#a987a8;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                        <span>ТЕПЛЫЙ КАШЕМИР</span><span class="tone-dot" style="background:#bd9873; color:#bd9873;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                        <span>СЕРЫЙ СЛАНЕЦ</span><span class="tone-dot" style="background:#829cb4; color:#829cb4;"></span>
-                    </button>
+                <div style="text-align:right;">
+                    <div class="t-price">0 ₽</div>
+                    <button onclick="buyPlan('test')" class="btn-soft" style="margin-top:8px;">Получить</button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ТИПОГРАФИКА</div>
-                <div class="grid-trio">
-                    <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center; font-family:'Sora';">SORA</button>
-                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center; font-family:'Geist Mono';">GEIST</button>
-                    <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center; font-family:'Epilogue';">EPILOGUE</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="subhead" style="margin-bottom:8px;">ФОНОВАЯ АТМОСФЕРА</div>
-                <div class="grid-trio">
-                    <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ШЕЛК</button>
-                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">ТУМАН</button>
-                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">ТИШИНА</button>
-                </div>
-            </div>
-
-            <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
-                ↻ ПОВТОРИТЬ ЭКРАН ПРИВЕТСТВИЯ
-            </button>
-        </div>
-    </div>
-
-    <!-- ДОК-ПАНЕЛЬ НАВИГАЦИИ -->
-    <div class="bottom-shelf">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">01 // ОБЗОР</button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">02 // ПОДПИСКИ</button>
-        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">03 // ЭСТЕТИКА</button>
-    </div>
-
-    <!-- ШТОРКА ДОЗАПРАВКИ ТРАФИКА -->
-    <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
-        <div class="curtain-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <div class="tariff-bento">
                 <div>
-                    <div class="subhead">ЭКСТРЕННАЯ ДОЗАПРАВКА</div>
-                    <div style="font-size:16px; font-weight:700;">Пакет трафика</div>
+                    <div class="t-name">Старт</div>
+                    <div class="t-specs">50 ГБ • 14 Дней</div>
                 </div>
-                <span id="boostSlotBadge" class="pill-badge">КАНАЛ #1</span>
+                <div style="text-align:right;">
+                    <div class="t-price">69 ₽</div>
+                    <button onclick="buyPlan('start')" class="btn-soft" style="margin-top:8px;">Оформить</button>
+                </div>
             </div>
 
-            <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+15 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">39 ₽</span>
-                </button>
-                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+50 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">89 ₽</span>
-                </button>
-                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:12px 6px;">
-                    <span style="font-size:13px; color:var(--text-main);">+150 ГБ</span>
-                    <span style="font-size:11px; color:var(--text-muted);">149 ₽</span>
-                </button>
+            <div class="tariff-bento">
+                <div>
+                    <div class="t-name">Базовый</div>
+                    <div class="t-specs">129 ГБ • 30 Дней</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="t-price">129 ₽</div>
+                    <button onclick="buyPlan('base')" class="btn-soft" style="background:var(--text-dark); color:#fff; margin-top:8px;">Оформить</button>
+                </div>
             </div>
 
-            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:14px;" disabled>
-                ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА
-            </button>
+            <div class="tariff-bento">
+                <div>
+                    <div class="t-name">Продвинутый</div>
+                    <div class="t-specs">300 ГБ • 3 устройства</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="t-price">199 ₽</div>
+                    <button onclick="buyPlan('pro')" class="btn-soft" style="margin-top:8px;">Оформить</button>
+                </div>
+            </div>
+
+            <div class="tariff-bento" style="background: var(--text-dark); color: #fff;">
+                <div>
+                    <div class="t-name" style="color:#fff;">ХИТ СЕЗОНА 🔥</div>
+                    <div class="t-specs" style="color:rgba(255,255,255,0.7);">900 ГБ • 90 Дней</div>
+                </div>
+                <div style="text-align:right;">
+                    <div class="t-price" style="color:var(--accent);">499 ₽</div>
+                    <button onclick="buyPlan('hit')" class="btn-soft" style="margin-top:8px;">Оформить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВЬЮ 3: ЭСТЕТИКА (НАСТРОЙКИ) -->
+        <div id="view-style" class="tab-view">
+            <div class="b-label" style="margin-bottom:12px;">ПАЛИТРА ИНТЕРФЕЙСА</div>
+            <div class="bento-grid" style="margin-bottom:24px;">
+                <div onclick="setTheme('matcha')" data-t="matcha" class="theme-btn">Матча <div class="color-dot" style="background:#9cb5a1;"></div></div>
+                <div onclick="setTheme('lavender')" data-t="lavender" class="theme-btn">Лаванда <div class="color-dot" style="background:#b4a5c9;"></div></div>
+                <div onclick="setTheme('oat')" data-t="oat" class="theme-btn">Овсяное <div class="color-dot" style="background:#d1bfae;"></div></div>
+                <div onclick="setTheme('slate')" data-t="slate" class="theme-btn">Сланец <div class="color-dot" style="background:#94a8bc;"></div></div>
+            </div>
+
+            <div class="b-label" style="margin-bottom:12px;">ТИПОГРАФИКА</div>
+            <div class="bento-grid">
+                <div onclick="setFont('outfit')" data-f="outfit" class="theme-btn bento-full" style="font-family:'Outfit';">OUTFIT (СОВРЕМЕННЫЙ)</div>
+                <div onclick="setFont('syne')" data-f="syne" class="theme-btn bento-full" style="font-family:'Syne';">SYNE (АРХИТЕКТУРНЫЙ)</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FLOATING PILL NAVIGATION -->
+    <nav class="floating-nav">
+        <button onclick="switchView('dash')" id="nav-dash" class="nav-btn active">Дашборд</button>
+        <button onclick="switchView('plans')" id="nav-plans" class="nav-btn">Подписки</button>
+        <button onclick="switchView('style')" id="nav-style" class="nav-btn">Стиль</button>
+    </nav>
+
+    <!-- ШТОРКА ДОКУПКИ ТРАФИКА -->
+    <div id="sheetBoost" class="sheet-overlay" onclick="closeSheet(event, 'sheetBoost')">
+        <div class="sheet-body">
+            <div class="b-label">ЭКСТРЕННЫЙ БУСТЕР</div>
+            <div class="header-title" style="margin-bottom: 24px;">Докупить трафик</div>
+            
+            <div class="bento-grid" style="margin-bottom:24px;">
+                <div onclick="pickBoost(15, 39)" id="b_15" class="theme-btn" style="flex-direction:column; gap:4px; padding:20px;">
+                    <span style="font-size:18px;">+15 ГБ</span><span style="color:var(--text-muted);">39 ₽</span>
+                </div>
+                <div onclick="pickBoost(50, 89)" id="b_50" class="theme-btn" style="flex-direction:column; gap:4px; padding:20px;">
+                    <span style="font-size:18px;">+50 ГБ</span><span style="color:var(--text-muted);">89 ₽</span>
+                </div>
+                <div onclick="pickBoost(150, 149)" id="b_150" class="theme-btn bento-full" style="flex-direction:row; padding:20px 24px;">
+                    <span style="font-size:18px;">+150 ГБ</span><span style="color:var(--text-muted);">149 ₽</span>
+                </div>
+            </div>
+
+            <button id="btnBoostPay" onclick="payBoost()" class="btn-solid" disabled>ВЫБЕРИТЕ ПАКЕТ</button>
         </div>
     </div>
 
-    <!-- ШТОРКА ПОПОЛНЕНИЯ БАЛАНСА -->
-    <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
-        <div class="curtain-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <div>
-                    <div class="subhead">ПОПОЛНЕНИЕ СЧЕТА</div>
-                    <div style="font-size:16px; font-weight:700;">Шлюз Platega</div>
-                </div>
-                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:4px 8px;">✕</button>
+    <!-- ШТОРКА ПОПОЛНЕНИЯ -->
+    <div id="sheetTopup" class="sheet-overlay" onclick="closeSheet(event, 'sheetTopup')">
+        <div class="sheet-body">
+            <div class="b-label">ПЛАТЕЖНЫЙ ШЛЮЗ PLATEGA</div>
+            <div class="header-title" style="margin-bottom: 24px;">Пополнить баланс</div>
+
+            <div class="bento-grid" style="margin-bottom:12px;">
+                <div onclick="document.getElementById('inpTopup').value=100" class="theme-btn" style="justify-content:center;">100 ₽</div>
+                <div onclick="document.getElementById('inpTopup').value=300" class="theme-btn" style="justify-content:center;">300 ₽</div>
+                <div onclick="document.getElementById('inpTopup').value=500" class="theme-btn bento-full" style="justify-content:center;">500 ₽</div>
             </div>
 
-            <div class="grid-trio" style="margin-bottom:12px;">
-                <button onclick="document.getElementById('topupInputVal').value=100" class="picker-cell" style="justify-content:center;">100 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=250" class="picker-cell" style="justify-content:center;">250 ₽</button>
-                <button onclick="document.getElementById('topupInputVal').value=500" class="picker-cell" style="justify-content:center;">500 ₽</button>
-            </div>
-
-            <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
-
-            <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:14px;">
-                СФОРМИРОВАТЬ СЧЕТ →
-            </button>
+            <input type="number" id="inpTopup" class="input-pill" placeholder="Сумма в рублях (от 10 ₽)" style="margin-bottom: 24px; padding:16px;">
+            <button onclick="payTopup()" class="btn-solid">ОПЛАТИТЬ</button>
         </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+        tg.expand(); tg.ready();
 
-        const user = tg.initDataUnsafe?.user;
         const p = new URLSearchParams(window.location.search);
-
-        if (p.has('bal')) localStorage.setItem('pp_c_bal', p.get('bal'));
-        if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
-        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_c_avatar', p.get('avatar'));
-        if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
-
-        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
-        const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
-        const balance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
-        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
-
+        
+        const uname = tg.initDataUnsafe?.user?.first_name || 'Client';
+        const bal = parseInt(p.get('bal') || '0', 10);
+        
         document.getElementById('uName').innerText = uname;
-        document.getElementById('uId').innerText = `ID: ${uid}`;
-        document.getElementById('uBal').innerText = `${balance} ₽`;
-
-        if (avatarUrl && avatarUrl !== 'none') {
-            const img = document.getElementById('avatarImg');
-            img.src = decodeURIComponent(avatarUrl);
-            img.style.display = 'block';
-            document.getElementById('avatarFallback').style.display = 'none';
-        } else {
-            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
-        }
-
-        function haptic(style = 'light') {
-            try { tg.HapticFeedback.impactOccurred(style); } catch (e) {}
-        }
+        document.getElementById('uFallback').innerText = uname.charAt(0).toUpperCase();
+        document.getElementById('valBal').innerText = `${bal} ₽`;
 
         let subs = [];
-        try {
-            const rawSubs = p.get('subs') || localStorage.getItem('pp_c_subs');
-            if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
-        } catch (e) {
-            subs = [];
-        }
+        try { const r = p.get('subs'); if(r) subs = JSON.parse(decodeURIComponent(r)); } catch(e){}
 
-        function renderMeter(pct) {
-            const count = 14;
-            const filled = Math.round((pct / 100) * count);
-            let cls = 'filled';
-            if (pct <= 15) cls = 'crit';
-            else if (pct <= 30) cls = 'warn';
+        function haptic() { try { tg.HapticFeedback.impactOccurred('light'); } catch(e){} }
 
-            let out = '';
-            for (let i = 0; i < count; i++) {
-                out += `<div class="pill-cell ${i < filled ? cls : ''}"></div>`;
-            }
-            return out;
-        }
-
+        // РЕНДЕР BENTO-СЛОТОВ
         function renderSlots() {
-            const cluster = document.getElementById('slotsCluster');
-            document.getElementById('slotsCount').innerText = `${subs.length} / 2 АКТИВНО`;
+            const box = document.getElementById('slotsGrid');
             let html = '';
 
             for (let i = 0; i < 2; i++) {
                 const s = subs[i];
+                const animDelay = 0.1 + (i * 0.05);
+
                 if (s) {
-                    const totalGb = parseFloat(s.gb || 100);
-                    const usedGb = parseFloat(s.used_gb || 0);
-                    const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
-                    const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
-
-                    const slotId = s.id || (i + 1);
-                    const savedName = localStorage.getItem(`pp_name_${slotId}`) || `КАНАЛ #0${i + 1}`;
-                    const maskedKey = s.key ? s.key.slice(0, 14) + '••••••••••••••••' : 'N/A';
-
+                    const total = parseFloat(s.gb || 100);
+                    const left = Math.max(0, total - parseFloat(s.used_gb || 0)).toFixed(1);
+                    const pct = Math.max(0, Math.min(100, Math.round((left/total)*100)));
+                    
                     html += `
-                        <div class="card">
-                            <div class="slot-unit-header">
-                                <div style="display:flex; align-items:center; gap:8px;">
-                                    <span class="soft-beacon"></span>
-                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="18" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
-                                    <span style="font-size:11px; color:var(--text-muted);">✎</span>
-                                </div>
-                                <span class="pill-badge">${s.name}</span>
+                        <div class="bento-item" style="animation-delay: ${animDelay}s;">
+                            <div class="b-label">${s.name}</div>
+                            
+                            <div class="ring-box">
+                                <svg class="ring-svg" viewBox="0 0 36 36">
+                                    <circle class="ring-bg" cx="18" cy="18" r="15.9155"></circle>
+                                    <circle class="ring-fg" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
+                                </svg>
+                                <div class="ring-text">${pct}%</div>
+                            </div>
+                            
+                            <div style="text-align:center; margin-bottom:16px;">
+                                <div style="font-weight:700; font-size:14px;">${left} ГБ</div>
+                                <div style="font-size:11px; color:var(--text-muted);">Остаток трафика</div>
                             </div>
 
-                            <div class="traffic-harness">
-                                <div class="gauge-svg-wrap">
-                                    <svg class="gauge-svg" viewBox="0 0 36 36">
-                                        <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
-                                    </svg>
-                                    <div class="gauge-center">
-                                        <span class="gauge-pct">${pct}%</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                        <span class="subhead">ТЕЛЕМЕТРИЯ ТРАФИКА</span>
-                                        <span class="mono" style="font-size:14px; font-weight:700;">${leftGb} <span style="font-size:10px; color:var(--text-muted);">/ ${totalGb} ГБ</span></span>
-                                    </div>
-                                    <div class="pill-meter">${renderMeter(pct)}</div>
-                                    <div class="meta-stamp">
-                                        <span>ДО: ${s.until}</span>
-                                        <span>УСТР: ${s.dev || 1}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="key-capsule">
-                                <input type="text" id="k_${i}" class="key-text" data-raw="${s.key}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
-                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:5px 8px; font-size:11px;">👁</button>
-                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-pastel" style="padding:6px 10px; font-size:11px;">COPY</button>
-                            </div>
-
-                            <div class="grid-duo">
-                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">⚡️ +ТРАФИК</button>
-                                <button onclick="switchTab('tariffs')" class="btn-subtle">↻ ТАРИФЫ</button>
+                            <input type="text" id="k_${i}" class="input-pill mono" style="font-size:10px; padding:10px; text-align:center; margin-bottom:8px;" readonly value="${s.key ? s.key.slice(0,12)+'...' : ''}" data-raw="${s.key}">
+                            
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <button onclick="copyKey('k_${i}', this)" class="btn-soft" style="padding:10px; font-size:11px;">Копия</button>
+                                <button onclick="openBoost(${i+1})" class="btn-soft" style="padding:10px; font-size:11px; background:var(--text-dark); color:#fff;">+ГБ</button>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="card" style="border-style:dashed; text-align:center; padding:22px 14px;">
-                            <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">// СВОБОДНЫЙ СЛОТ #0${i + 1}</div>
-                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ПОДПИСКУ</button>
+                        <div class="bento-item" style="animation-delay: ${animDelay}s; border: 2px dashed var(--accent-soft); background:transparent; box-shadow:none; justify-content:center; align-items:center; text-align:center;">
+                            <div class="b-label" style="margin:0 0 12px;">СЛОТ СВОБОДЕН</div>
+                            <button onclick="switchView('plans')" class="btn-soft">+ Подключить</button>
                         </div>
                     `;
                 }
             }
-            cluster.innerHTML = html;
+            box.innerHTML = html;
         }
         renderSlots();
 
-        function toggleKeyReveal(id, btn) {
-            const el = document.getElementById(id);
-            const open = el.getAttribute('data-open') === '1';
-            el.value = open ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
-            el.setAttribute('data-open', open ? '0' : '1');
-            haptic('light');
-        }
-
-        function copyKeyValue(id, btn) {
+        function copyKey(id, btn) {
             const raw = document.getElementById(id).getAttribute('data-raw');
             navigator.clipboard.writeText(raw);
-            const old = btn.innerText;
-            btn.innerText = 'OK';
-            setTimeout(() => { btn.innerText = old; }, 1200);
-            haptic('medium');
+            btn.innerText = 'ОК'; setTimeout(()=>btn.innerText='Копия', 1000); haptic();
         }
 
-        function copyRefLink(btn) {
-            navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
-            const old = btn.innerText;
-            btn.innerText = 'СКОПИРОВАНО';
-            setTimeout(() => { btn.innerText = old; }, 1300);
-            haptic('light');
-        }
-
-        /* ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК */
-        function switchTab(tab) {
-            ['cabinet', 'tariffs', 'style'].forEach(t => {
-                const el = document.getElementById(`tab-${t}`);
-                const btn = document.getElementById(`nav-${t}`);
-                if (t === tab) {
-                    el.classList.add('active');
-                    requestAnimationFrame(() => {
-                        el.classList.add('show');
-                    });
-                    btn.classList.add('active');
-                } else {
-                    el.classList.remove('show');
-                    el.classList.remove('active');
-                    btn.classList.remove('active');
-                }
+        // НАВИГАЦИЯ
+        function switchView(view) {
+            ['dash', 'plans', 'style'].forEach(v => {
+                document.getElementById(`view-${v}`).classList.toggle('active', v === view);
+                document.getElementById(`nav-${v}`).classList.toggle('active', v === view);
             });
-            haptic('light');
+            haptic();
         }
 
-        function openCurtain(id) { document.getElementById(id).classList.add('active'); haptic('light'); }
-        function closeCurtain(id) { document.getElementById(id).classList.remove('active'); }
-
-        let chosenBoostGb = 0;
-        let chosenSlotNum = 1;
-
-        function triggerBooster(num) {
-            chosenSlotNum = num;
-            chosenBoostGb = 0;
-            document.getElementById('boostSlotBadge').innerText = `КАНАЛ #0${num}`;
-            const btn = document.getElementById('boostPayBtn');
-            btn.disabled = true;
-            btn.innerText = 'ВЫБЕРИТЕ ОБЪЕМ ПАКЕТА';
-            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
-            openCurtain('boosterSheet');
+        // ШТОРКИ
+        let selBoostGb = 0; let selSlot = 1;
+        function openSheet(id) { document.getElementById(id).classList.add('active'); haptic(); }
+        function closeSheet(e, id) { if(e.target.id===id) document.getElementById(id).classList.remove('active'); }
+        
+        function openBoost(slot) {
+            selSlot = slot; selBoostGb = 0;
+            const btn = document.getElementById('btnBoostPay');
+            btn.disabled = true; btn.innerText = 'ВЫБЕРИТЕ ПАКЕТ';
+            document.querySelectorAll('.theme-btn').forEach(el=>el.classList.remove('active'));
+            openSheet('sheetBoost');
         }
-
-        function chooseBoost(gb, price) {
-            chosenBoostGb = gb;
-            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
+        function pickBoost(gb, price) {
+            selBoostGb = gb;
+            document.querySelectorAll('#sheetBoost .theme-btn').forEach(el=>el.classList.remove('active'));
             document.getElementById(`b_${gb}`).classList.add('active');
-            const btn = document.getElementById('boostPayBtn');
-            btn.disabled = false;
-            btn.innerText = `ДОКУПИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
-            haptic('light');
+            const btn = document.getElementById('btnBoostPay');
+            btn.disabled = false; btn.innerText = `ОПЛАТИТЬ ${price} ₽`; haptic();
         }
+        function payBoost() { if(selBoostGb) { tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${selBoostGb}_${selSlot}`); tg.close(); } }
+        function payTopup() { const v=parseInt(document.getElementById('inpTopup').value); if(v>=10){ tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${v}`); tg.close(); } }
+        function buyPlan(id) { tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${id}`); tg.close(); }
+        function applyPromo() { const v = document.getElementById('promoInput').value.trim(); if(v) { tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${v}`); tg.close(); } }
 
-        function dispatchBoost() {
-            if (!chosenBoostGb) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenBoostGb}_${chosenSlotNum}`);
-            tg.close();
+        // ТЕМЫ И ШРИФТЫ
+        function setTheme(t) {
+            document.body.setAttribute('data-theme', t); localStorage.setItem('ppb_theme', t);
+            document.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('active', b.getAttribute('data-t')===t)); haptic();
         }
-
-        function dispatchTopup() {
-            const val = parseInt(document.getElementById('topupInputVal').value, 10);
-            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
-            tg.close();
+        function setFont(f) {
+            document.body.setAttribute('data-font', f); localStorage.setItem('ppb_font', f);
+            document.querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('active', b.getAttribute('data-f')===f)); haptic();
         }
-
-        function requestTariff(planId) {
-            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
-            tg.close();
-        }
-
-        function applyPromoCode() {
-            const val = document.getElementById('promoInput').value.trim();
-            if (!val) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(val)}`);
-            tg.close();
-        }
-
-        // ТЕМЫ, ШРИФТЫ, АНИМАЦИИ
-        let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
-
-        function setPastelTheme(t) {
-            document.body.setAttribute('data-theme', t);
-            localStorage.setItem('pp_theme_v7', t);
-            document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
-            haptic('light');
-        }
-        function setFontChoice(f) {
-            document.body.setAttribute('data-font', f);
-            localStorage.setItem('pp_font_v7', f);
-            document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
-            haptic('light');
-        }
-        function setBackdropFx(a) {
-            currentFx = a;
-            localStorage.setItem('pp_fx_v7', a);
-            document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
-            haptic('light');
-        }
-
-        setPastelTheme(localStorage.getItem('pp_theme_v7') || 'sage');
-        setFontChoice(localStorage.getItem('pp_font_v7') || 'sora');
-        setBackdropFx(currentFx);
-
-        // ОНБОРДИНГ
-        function executeIntro() {
-            const intro = document.getElementById('fadeIntro');
-            const tit = document.getElementById('introTitle');
-            const sub = document.getElementById('introSub');
-            const cfg = document.getElementById('firstRunConfig');
-
-            intro.style.display = 'flex';
-            intro.style.opacity = '1';
-
-            setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 120);
-            setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
-            setTimeout(() => {
-                cfg.style.display = 'flex';
-                intro.style.opacity = '0';
-                setTimeout(() => { intro.style.display = 'none'; }, 550);
-            }, 2450);
-        }
-
-        function completeFirstRun() {
-            localStorage.setItem('pp_onboarded_v7', '1');
-            document.getElementById('firstRunConfig').style.display = 'none';
-            haptic('medium');
-        }
-
-        function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v7');
-            executeIntro();
-        }
-
-        if (!localStorage.getItem('pp_onboarded_v7')) {
-            executeIntro();
-        }
-
-        // КОНТРАСТНЫЙ ХОЛСТ ДЛЯ СВЕТЛОЙ ТЕМЫ
-        const canvas = document.getElementById('fxCanvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const silkParticles = Array.from({ length: 28 }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.22,
-            vy: (Math.random() - 0.5) * 0.22,
-            r: Math.random() * 1.6 + 0.6,
-            sinSeed: Math.random() * Math.PI * 2
-        }));
-
-        let fxTick = 0;
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            fxTick += 0.01;
-
-            if (currentFx === 'silk') {
-                ctx.fillStyle = 'rgba(75, 65, 72, 0.22)';
-                silkParticles.forEach((p, idx) => {
-                    p.sinSeed += 0.015;
-                    p.x += p.vx + Math.sin(p.sinSeed) * 0.15;
-                    p.y += p.vy + Math.cos(p.sinSeed) * 0.15;
-
-                    if (p.x < 0) p.x = width;
-                    if (p.x > width) p.x = 0;
-                    if (p.y < 0) p.y = height;
-                    if (p.y > height) p.y = 0;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    for (let j = idx + 1; j < silkParticles.length; j++) {
-                        const p2 = silkParticles[j];
-                        const dx = p.x - p2.x;
-                        const dy = p.y - p2.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 65) {
-                            ctx.strokeStyle = `rgba(169, 135, 168, ${0.15 * (1 - dist / 65)})`;
-                            ctx.lineWidth = 0.75;
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.stroke();
-                        }
-                    }
-                });
-            } else if (currentFx === 'haze') {
-                const g1 = ctx.createRadialGradient(
-                    width * 0.35 + Math.sin(fxTick) * 70,
-                    height * 0.3 + Math.cos(fxTick * 0.8) * 50,
-                    15,
-                    width * 0.35, height * 0.3, 260
-                );
-                g1.addColorStop(0, 'rgba(183, 151, 173, 0.12)');
-                g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = g1;
-                ctx.fillRect(0, 0, width, height);
-
-                const g2 = ctx.createRadialGradient(
-                    width * 0.7 + Math.cos(fxTick * 0.9) * 60,
-                    height * 0.7 + Math.sin(fxTick) * 60,
-                    20,
-                    width * 0.7, height * 0.7, 280
-                );
-                g2.addColorStop(0, 'rgba(129, 169, 148, 0.10)');
-                g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = g2;
-                ctx.fillRect(0, 0, width, height);
-            }
-
-            requestAnimationFrame(animateCanvas);
-        }
-        animateCanvas();
+        setTheme(localStorage.getItem('ppb_theme') || 'matcha');
+        setFont(localStorage.getItem('ppb_font') || 'outfit');
     </script>
 </body>
 </html>
