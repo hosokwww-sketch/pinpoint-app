@@ -592,7 +592,6 @@
         }
         #firstRunConfig.show { opacity: 1; }
 
-        /* ЭКРАН ВНЕШНЕГО РЕДИРЕКТА (ОБХОД ERR_UNKNOWN_URL_SCHEME) */
         #bridgeRedirectScreen {
             position: fixed;
             inset: 0;
@@ -611,7 +610,6 @@
 
     <canvas id="fxCanvas"></canvas>
 
-    <!-- ЭКРАН-МОСТ ДЛЯ ЗАПУСКА HAPP / V2RAYTUN / HIDDIFY БЕЗ ОШИБКИ ERR_UNKNOWN_URL_SCHEME -->
     <div id="bridgeRedirectScreen">
         <div class="card" style="max-width: 380px; width: 100%; padding: 26px 20px;">
             <div style="font-size: 36px; margin-bottom: 10px;">🚀</div>
@@ -788,11 +786,11 @@
                         <div class="subhead">НА 2 НЕДЕЛИ</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">🚀 Тариф «Старт»</div>
                     </div>
-                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">69 ₽</div>
+                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">79 ₽</div>
                 </div>
                 <div style="font-size:12px; color:var(--text-muted);">50 ГБ трафика • 1 устройство • Высокая скорость</div>
                 <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ ЗА 69 ₽
+                    ПОДКЛЮЧИТЬ ЗА 79 ₽
                 </button>
             </div>
 
@@ -802,11 +800,11 @@
                         <div class="subhead">НА 1 МЕСЯЦ</div>
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">⚡️ Тариф «Базовый»</div>
                     </div>
-                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">129 ₽</div>
+                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">149 ₽</div>
                 </div>
                 <div style="font-size:12px; color:var(--text-muted);">129 ГБ трафика • 1 устройство • Без ограничений</div>
                 <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ ЗА 129 ₽
+                    ПОДКЛЮЧИТЬ ЗА 149 ₽
                 </button>
             </div>
 
@@ -817,13 +815,13 @@
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">💎 Тариф «Продвинутый»</div>
                     </div>
                     <div>
-                        <span class="old-price">249 ₽</span>
-                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">199 ₽</span>
+                        <span class="old-price">270 ₽</span>
+                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">219 ₽</span>
                     </div>
                 </div>
                 <div style="font-size:12px; color:var(--text-muted);">300 ГБ трафика • 3 устройства одновременно</div>
                 <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ ЗА 199 ₽
+                    ПОДКЛЮЧИТЬ ЗА 219 ₽
                 </button>
             </div>
 
@@ -834,13 +832,13 @@
                         <div style="font-size:17px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА (90 дней)</div>
                     </div>
                     <div>
-                        <span class="old-price">650 ₽</span>
-                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">499 ₽</span>
+                        <span class="old-price">720 ₽</span>
+                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">549 ₽</span>
                     </div>
                 </div>
                 <div style="font-size:12px; color:var(--text-muted);">900 ГБ трафика • 3 любых устройства (телефон, ПК, ТВ)</div>
                 <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 499 ₽
+                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 549 ₽
                 </button>
             </div>
         </div>
@@ -939,17 +937,17 @@
             </div>
 
             <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15, 39)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(15, 45)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
                     <span style="font-size:14px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">39 ₽</span>
+                    <span style="font-size:12px; color:var(--text-muted);">45 ₽</span>
                 </button>
-                <button onclick="chooseBoost(50, 89)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(50, 99)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
                     <span style="font-size:14px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">89 ₽</span>
+                    <span style="font-size:12px; color:var(--text-muted);">99 ₽</span>
                 </button>
-                <button onclick="chooseBoost(150, 149)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(150, 165)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
                     <span style="font-size:14px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">149 ₽</span>
+                    <span style="font-size:12px; color:var(--text-muted);">165 ₽</span>
                 </button>
             </div>
 
@@ -976,9 +974,9 @@
 
             <div id="walletPayBlock">
                 <div class="grid-trio" style="margin-bottom:12px;">
-                    <button onclick="document.getElementById('topupInputVal').value=129" class="picker-cell" style="justify-content:center;">129 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell" style="justify-content:center;">199 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell" style="justify-content:center;">499 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell" style="justify-content:center;">149 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=219" class="picker-cell" style="justify-content:center;">219 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=549" class="picker-cell" style="justify-content:center;">549 ₽</button>
                 </div>
 
                 <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
@@ -1005,7 +1003,6 @@
 
         const p = new URLSearchParams(window.location.search);
 
-        // Очистка URL подписки от любого %3A%2F%2F кодирования
         function cleanSubUrl(raw) {
             if (!raw) return '';
             let res = String(raw).trim();
@@ -1019,7 +1016,6 @@
             return res;
         }
 
-        // ЕСЛИ ОТКРЫТ ВНЕШНИЙ МОСТ (?r=...) ДЛЯ ЗАПУСКА КЛИЕНТА БЕЗ ОШИБКИ ERR_UNKNOWN_URL_SCHEME
         if (p.has('r')) {
             const targetDeepLink = p.get('r');
             const appName = p.get('app') || 'VPN';
@@ -1204,7 +1200,6 @@
 
         let activeKeyForConnect = '';
 
-        // ЧИСТЫЕ ССЫЛКИ БЕЗ encodeURIComponent (ИСПРАВЛЯЕТ https%3A%2F%2F В HAPP И V2RAYTUN)
         const VPN_APPS = {
             ios: [
                 {
@@ -1302,7 +1297,6 @@
             try { navigator.clipboard.writeText(cleanUrl); } catch (e) {}
             haptic('medium');
 
-            // Формируем HTTPS-ссылку на мост, чтобы открыть через tg.openLink в системном браузере без ERR_UNKNOWN_URL_SCHEME
             const baseUrl = window.location.origin + window.location.pathname;
             const bridgeUrl = `${baseUrl}?r=${encodeURIComponent(rawDeepLink)}&app=${encodeURIComponent(app.name)}&store=${encodeURIComponent(app.storeUrl)}&sub=${encodeURIComponent(cleanUrl)}`;
 
