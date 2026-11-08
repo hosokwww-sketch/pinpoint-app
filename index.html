@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>PinPoint VPN</title>
+    <title>PinPoint Network</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,6 +88,25 @@
             --state-warn: #ebb888;
             --state-crit: #e68a94;
             --shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body[data-theme="obsidian"] {
+            --bg: #050505;
+            --bg-grad: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%);
+            --surface: rgba(14, 14, 16, 0.85);
+            --surface-sub: rgba(22, 22, 26, 0.75);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #888891;
+            --pastel: #ffffff;
+            --pastel-soft: rgba(255, 255, 255, 0.12);
+            --pastel-fg: #000000;
+            --particle-color: 255, 255, 255;
+            --state-ok: #22c55e;
+            --state-warn: #f59e0b;
+            --state-crit: #ef4444;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
         }
 
         body[data-font="sora"] { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
@@ -613,6 +632,9 @@
                 <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
                     <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                 </button>
+                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell bento-full" style="justify-content:center; background:#050505; color:#fff; border-color:#222;">
+                    <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
+                </button>
             </div>
 
             <div class="section-row"><span class="section-label">Стиль текста</span></div>
@@ -808,6 +830,9 @@
                     <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
                         <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                     </button>
+                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell bento-full" style="justify-content:center; background:#050505; color:#fff; border-color:#222;">
+                        <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
+                    </button>
                 </div>
             </div>
 
@@ -973,7 +998,7 @@
         document.getElementById('refEarnedSum').innerText = `${refEarned} ₽`;
         document.getElementById('refProgressBar').style.width = `${refProgressWidth}%`;
         if (currentRefPct < 25) {
-            document.getElementById('refSubtitle').innerText = `Пригласите еще 1 друга, чтобы получать ${currentRefPct + 1}% с пополнений`;
+            document.getElementById('refSubtitle').innerText = `+1% к доходу за каждого оплатившего друга (до 25%)`;
         } else {
             document.getElementById('refSubtitle').innerText = `Максимальный уровень 25% достигнут!`;
         }
@@ -1181,15 +1206,23 @@
                     </div>
                     <div style="display:flex; gap:6px; flex-shrink:0;">
                         <button onclick="tg.openLink('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">СКАЧАТЬ</button>
-                        <button onclick="launchVpnApp('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
+                        <button onclick="launchVpnAppSafe('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function launchVpnApp(deepLink) {
+        function launchVpnAppSafe(deepLink) {
             navigator.clipboard.writeText(activeKeyForConnect);
             haptic('medium');
+            
+            // Безопасный запуск без ошибки ERR_UNKNOWN_URL_SCHEME в Telegram WebView
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = deepLink;
+            document.body.appendChild(iframe);
+            setTimeout(() => { document.body.removeChild(iframe); }, 1500);
+
             try {
                 if (window.Telegram?.WebApp?.openExtLink) {
                     window.Telegram.WebApp.openExtLink(deepLink);
@@ -1197,7 +1230,7 @@
                     window.location.href = deepLink;
                 }
             } catch (e) {
-                window.location.href = deepLink;
+                // Фоллбек
             }
         }
 
@@ -1354,26 +1387,11 @@
             }
         }
 
-        async function checkLiveBalance() {
-            try {
-                const resp = await fetch(`/api/user/balance?user_id=${uid}`);
-                const data = await resp.json();
-                if (data.ok && data.balance > currentBalance) {
-                    const diff = data.balance - currentBalance;
-                    currentBalance = data.balance;
-                    document.getElementById('uBal').innerText = `${currentBalance} ₽`;
-                    localStorage.setItem('pp_c_bal', currentBalance);
-                    triggerInAppPush("Баланс пополнен! 🎉", `На ваш счет зачислено +${diff} ₽`);
-                }
-            } catch(e) {}
-        }
-        setInterval(checkLiveBalance, 4000);
-
         let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
         let currentParticleRgb = '168, 213, 186';
 
         function updateParticleColorFromTheme(t) {
-            const map = { sage: '168, 213, 186', mauve: '203, 180, 232', sand: '92, 133, 110', slate: '167, 199, 231' };
+            const map = { sage: '168, 213, 186', mauve: '203, 180, 232', sand: '92, 133, 110', slate: '167, 199, 231', obsidian: '255, 255, 255' };
             currentParticleRgb = map[t] || '168, 213, 186';
         }
 
