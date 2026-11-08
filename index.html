@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>PinPoint Network</title>
+    <title>PinPoint VPN</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,12 +93,12 @@
         body[data-theme="obsidian"] {
             --bg: #050505;
             --bg-grad: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%);
-            --surface: rgba(14, 14, 16, 0.85);
-            --surface-sub: rgba(22, 22, 26, 0.75);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(255, 255, 255, 0.15);
+            --surface: rgba(14, 14, 16, 0.88);
+            --surface-sub: rgba(24, 24, 28, 0.78);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-glow: rgba(255, 255, 255, 0.18);
             --text-main: #ffffff;
-            --text-muted: #888891;
+            --text-muted: #8e8e96;
             --pastel: #ffffff;
             --pastel-soft: rgba(255, 255, 255, 0.12);
             --pastel-fg: #000000;
@@ -106,7 +106,7 @@
             --state-ok: #22c55e;
             --state-warn: #f59e0b;
             --state-crit: #ef4444;
-            --shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
         }
 
         body[data-font="sora"] { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
@@ -236,6 +236,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            text-decoration: none;
             transition: opacity 0.2s ease, transform 0.15s ease;
         }
         .btn-pastel:active { opacity: 0.88; transform: scale(0.98); }
@@ -255,6 +256,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            text-decoration: none;
             transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
         }
         .btn-subtle:active { border-color: var(--pastel); transform: scale(0.98); }
@@ -589,11 +591,42 @@
             transition: opacity 0.35s ease;
         }
         #firstRunConfig.show { opacity: 1; }
+
+        /* ЭКРАН ВНЕШНЕГО РЕДИРЕКТА (ОБХОД ERR_UNKNOWN_URL_SCHEME) */
+        #bridgeRedirectScreen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
     </style>
 </head>
 <body data-theme="sage" data-font="sora">
 
     <canvas id="fxCanvas"></canvas>
+
+    <!-- ЭКРАН-МОСТ ДЛЯ ЗАПУСКА HAPP / V2RAYTUN / HIDDIFY БЕЗ ОШИБКИ ERR_UNKNOWN_URL_SCHEME -->
+    <div id="bridgeRedirectScreen">
+        <div class="card" style="max-width: 380px; width: 100%; padding: 26px 20px;">
+            <div style="font-size: 36px; margin-bottom: 10px;">🚀</div>
+            <div id="bridgeTitle" style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Запуск приложения...</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.45;">
+                Если приложение не открылось автоматически, нажмите кнопку ниже (ключ также скопирован в буфер обмена):
+            </div>
+            <a id="bridgeLaunchBtn" href="#" class="btn-pastel" style="width: 100%; padding: 14px; margin-bottom: 10px;">
+                ⚡️ ОТКРЫТЬ И ДОБАВИТЬ ПОДПИСКУ
+            </a>
+            <a id="bridgeStoreBtn" href="#" target="_blank" class="btn-subtle" style="width: 100%; padding: 12px;">
+                📥 Скачать приложение
+            </a>
+        </div>
+    </div>
 
     <div id="inAppPush">
         <div style="width:36px; height:36px; border-radius:50%; background:var(--pastel-soft); color:var(--pastel); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
@@ -632,7 +665,7 @@
                 <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
                     <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                 </button>
-                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell bento-full" style="justify-content:center; background:#050505; color:#fff; border-color:#222;">
+                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#222;">
                     <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
                 </button>
             </div>
@@ -659,7 +692,7 @@
         </div>
     </div>
 
-    <div class="view-layer">
+    <div class="view-layer" id="mainAppView">
 
         <div class="card profile-band">
             <div class="operator-meta">
@@ -830,7 +863,7 @@
                     <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
                         <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
                     </button>
-                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell bento-full" style="justify-content:center; background:#050505; color:#fff; border-color:#222;">
+                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#222;">
                         <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
                     </button>
                 </div>
@@ -860,7 +893,7 @@
         </div>
     </div>
 
-    <div class="bottom-shelf">
+    <div class="bottom-shelf" id="bottomNavShelf">
         <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">🛡 Мой VPN</button>
         <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">💎 Тарифы</button>
         <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">🎨 Вид</button>
@@ -970,8 +1003,46 @@
         tg.expand();
         tg.ready();
 
-        const user = tg.initDataUnsafe?.user;
         const p = new URLSearchParams(window.location.search);
+
+        // Очистка URL подписки от любого %3A%2F%2F кодирования
+        function cleanSubUrl(raw) {
+            if (!raw) return '';
+            let res = String(raw).trim();
+            try {
+                while (res.includes('%3A') || res.includes('%2F') || res.includes('%3a') || res.includes('%2f')) {
+                    const dec = decodeURIComponent(res);
+                    if (dec === res) break;
+                    res = dec;
+                }
+            } catch (e) {}
+            return res;
+        }
+
+        // ЕСЛИ ОТКРЫТ ВНЕШНИЙ МОСТ (?r=...) ДЛЯ ЗАПУСКА КЛИЕНТА БЕЗ ОШИБКИ ERR_UNKNOWN_URL_SCHEME
+        if (p.has('r')) {
+            const targetDeepLink = p.get('r');
+            const appName = p.get('app') || 'VPN';
+            const storeUrl = p.get('store') || '#';
+            const rawSub = p.get('sub') || '';
+
+            document.getElementById('mainAppView').style.display = 'none';
+            document.getElementById('bottomNavShelf').style.display = 'none';
+            const bridge = document.getElementById('bridgeRedirectScreen');
+            bridge.style.display = 'flex';
+            document.getElementById('bridgeTitle').innerText = `Открываем ${appName}...`;
+            document.getElementById('bridgeLaunchBtn').href = targetDeepLink;
+            document.getElementById('bridgeStoreBtn').href = storeUrl;
+
+            if (rawSub) {
+                try { navigator.clipboard.writeText(cleanSubUrl(rawSub)); } catch (e) {}
+            }
+            setTimeout(() => {
+                window.location.href = targetDeepLink;
+            }, 150);
+        }
+
+        const user = tg.initDataUnsafe?.user;
 
         if (p.has('bal')) localStorage.setItem('pp_c_bal', p.get('bal'));
         if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
@@ -998,7 +1069,7 @@
         document.getElementById('refEarnedSum').innerText = `${refEarned} ₽`;
         document.getElementById('refProgressBar').style.width = `${refProgressWidth}%`;
         if (currentRefPct < 25) {
-            document.getElementById('refSubtitle').innerText = `+1% к доходу за каждого оплатившего друга (до 25%)`;
+            document.getElementById('refSubtitle').innerText = `Пригласите еще 1 друга, чтобы получать ${currentRefPct + 1}% с пополнений`;
         } else {
             document.getElementById('refSubtitle').innerText = `Максимальный уровень 25% достигнут!`;
         }
@@ -1057,6 +1128,7 @@
             for (let i = 0; i < 2; i++) {
                 const s = subs[i];
                 if (s) {
+                    const cleanKey = cleanSubUrl(s.key);
                     const totalGb = parseFloat(s.gb || 100);
                     const usedGb = parseFloat(s.used_gb || 0);
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
@@ -1064,7 +1136,7 @@
 
                     const slotId = s.id || (i + 1);
                     const savedName = localStorage.getItem(`pp_name_${slotId}`) || `Мое подключение #${i + 1}`;
-                    const maskedKey = s.key ? s.key.slice(0, 16) + '••••••••••••' : 'N/A';
+                    const maskedKey = cleanKey ? cleanKey.slice(0, 16) + '••••••••••••' : 'N/A';
 
                     html += `
                         <div class="card">
@@ -1100,12 +1172,12 @@
                                 </div>
                             </div>
 
-                            <button onclick="openConnectModal('${s.key}')" class="btn-pastel" style="width:100%; padding:13px; margin-bottom:10px; font-size:13px;">
+                            <button onclick="openConnectModal('${cleanKey}')" class="btn-pastel" style="width:100%; padding:13px; margin-bottom:10px; font-size:13px;">
                                 ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
                             </button>
 
                             <div class="key-capsule">
-                                <input type="text" id="k_${i}" class="key-text" data-raw="${s.key}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
+                                <input type="text" id="k_${i}" class="key-text" data-raw="${cleanKey}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
                                 <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:6px 10px; font-size:11px;">👁</button>
                                 <button onclick="copyKeyValue('k_${i}', this)" class="btn-subtle" style="padding:6px 12px; font-size:11px;">КОПИРОВАТЬ</button>
                             </div>
@@ -1131,45 +1203,47 @@
         renderSlots();
 
         let activeKeyForConnect = '';
+
+        // ЧИСТЫЕ ССЫЛКИ БЕЗ encodeURIComponent (ИСПРАВЛЯЕТ https%3A%2F%2F В HAPP И V2RAYTUN)
         const VPN_APPS = {
             ios: [
                 {
-                    name: "Hiddify",
-                    desc: "Рекомендуется для iOS / macOS",
-                    deepLink: (url) => `hiddify://install-sub?url=${encodeURIComponent(url)}`,
-                    storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
+                    name: "Happ Proxy",
+                    desc: "Рекомендуется для iPhone / Mac",
+                    deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
+                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
                 },
                 {
                     name: "V2rayTun",
-                    desc: "Простой клиент для iPhone",
-                    deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
+                    desc: "Удобный клиент для iOS",
+                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
                     storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
                 },
                 {
-                    name: "Happ Proxy",
-                    desc: "App Store",
-                    deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
-                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
+                    name: "Hiddify",
+                    desc: "App Store (iOS / macOS)",
+                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
+                    storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
                 }
             ],
             android: [
                 {
-                    name: "Hiddify",
-                    desc: "Лучший выбор для Android и Windows",
-                    deepLink: (url) => `hiddify://install-sub?url=${encodeURIComponent(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
+                    name: "Happ",
+                    desc: "Быстрый клиент для Android и ПК",
+                    deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
                 },
                 {
                     name: "V2rayTun",
-                    desc: "Google Play",
-                    deepLink: (url) => `v2raytun://install-config?url=${encodeURIComponent(url)}`,
+                    desc: "Google Play / Windows",
+                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
                     storeUrl: "https://play.google.com/store/apps/details?id=com.v2raytun.android"
                 },
                 {
-                    name: "Happ",
-                    desc: "Минималистичный клиент",
-                    deepLink: (url) => `happ://add/${encodeURIComponent(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
+                    name: "Hiddify",
+                    desc: "Для Android и Windows",
+                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
                 }
             ]
         };
@@ -1184,7 +1258,7 @@
         }
 
         function openConnectModal(key) {
-            activeKeyForConnect = key;
+            activeKeyForConnect = cleanSubUrl(key);
             document.getElementById('qrBox').classList.remove('active');
             renderAppList(detectDevicePlatform());
             openCurtain('connectSheet');
@@ -1198,39 +1272,44 @@
             const container = document.getElementById('appsContainer');
             const apps = VPN_APPS[platform] || VPN_APPS.android;
 
-            container.innerHTML = apps.map(app => `
+            container.innerHTML = apps.map((app, idx) => `
                 <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:16px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
                     <div style="min-width:0;">
                         <div style="font-size:14px; font-weight:800;">${app.name}</div>
                         <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${app.desc}</div>
                     </div>
                     <div style="display:flex; gap:6px; flex-shrink:0;">
-                        <button onclick="tg.openLink('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">СКАЧАТЬ</button>
-                        <button onclick="launchVpnAppSafe('${app.deepLink(activeKeyForConnect)}')" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
+                        <button onclick="openExternalStore('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">СКАЧАТЬ</button>
+                        <button onclick="connectViaApp('${platform}', ${idx})" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function launchVpnAppSafe(deepLink) {
-            navigator.clipboard.writeText(activeKeyForConnect);
-            haptic('medium');
-            
-            // Безопасный запуск без ошибки ERR_UNKNOWN_URL_SCHEME в Telegram WebView
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = deepLink;
-            document.body.appendChild(iframe);
-            setTimeout(() => { document.body.removeChild(iframe); }, 1500);
+        function openExternalStore(url) {
+            if (window.Telegram?.WebApp?.openLink) {
+                window.Telegram.WebApp.openLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
 
-            try {
-                if (window.Telegram?.WebApp?.openExtLink) {
-                    window.Telegram.WebApp.openExtLink(deepLink);
-                } else {
-                    window.location.href = deepLink;
-                }
-            } catch (e) {
-                // Фоллбек
+        function connectViaApp(platform, idx) {
+            const app = (VPN_APPS[platform] || VPN_APPS.android)[idx];
+            const cleanUrl = cleanSubUrl(activeKeyForConnect);
+            const rawDeepLink = app.deepLink(cleanUrl);
+
+            try { navigator.clipboard.writeText(cleanUrl); } catch (e) {}
+            haptic('medium');
+
+            // Формируем HTTPS-ссылку на мост, чтобы открыть через tg.openLink в системном браузере без ERR_UNKNOWN_URL_SCHEME
+            const baseUrl = window.location.origin + window.location.pathname;
+            const bridgeUrl = `${baseUrl}?r=${encodeURIComponent(rawDeepLink)}&app=${encodeURIComponent(app.name)}&store=${encodeURIComponent(app.storeUrl)}&sub=${encodeURIComponent(cleanUrl)}`;
+
+            if (window.Telegram?.WebApp?.openLink) {
+                window.Telegram.WebApp.openLink(bridgeUrl);
+            } else {
+                window.open(bridgeUrl, '_blank');
             }
         }
 
@@ -1240,17 +1319,17 @@
             if (box.classList.contains('active')) {
                 box.classList.remove('active');
             } else {
-                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(activeKeyForConnect)}`;
+                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cleanSubUrl(activeKeyForConnect))}`;
                 box.classList.add('active');
             }
             haptic('light');
         }
 
         function copyCurrentKeyDirectly() {
-            navigator.clipboard.writeText(activeKeyForConnect);
+            navigator.clipboard.writeText(cleanSubUrl(activeKeyForConnect));
             haptic('medium');
             closeCurtain('connectSheet');
-            try { tg.showAlert('✅ Ключ скопирован в буфер обмена!'); } catch(e) {}
+            try { tg.showAlert('✅ Чистая ссылка подписки скопирована в буфер обмена!'); } catch(e) {}
         }
 
         function toggleKeyReveal(id, btn) {
@@ -1262,7 +1341,7 @@
         }
 
         function copyKeyValue(id, btn) {
-            navigator.clipboard.writeText(document.getElementById(id).getAttribute('data-raw'));
+            navigator.clipboard.writeText(cleanSubUrl(document.getElementById(id).getAttribute('data-raw')));
             const old = btn.innerText;
             btn.innerText = '✓ OK';
             setTimeout(() => { btn.innerText = old; }, 1300);
@@ -1279,7 +1358,7 @@
 
         function shareRefLink() {
             const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
-            const text = `Быстрый и надежный VPN без ограничений, держи 24 часа бесплатного теста:`;
+            const text = `Быстрый и надежный VPN, держи 24 часа бесплатного теста:`;
             tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);
         }
 
@@ -1420,6 +1499,7 @@
         setBackdropFx(currentFx);
 
         function executeIntro() {
+            if (p.has('r')) return;
             const intro = document.getElementById('fadeIntro');
             const tit = document.getElementById('introTitle');
             const sub = document.getElementById('introSub');
@@ -1452,7 +1532,7 @@
             executeIntro();
         }
 
-        if (!localStorage.getItem('pp_onboarded_v7')) {
+        if (!localStorage.getItem('pp_onboarded_v7') && !p.has('r')) {
             executeIntro();
         }
 
