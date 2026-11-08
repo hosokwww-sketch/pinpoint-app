@@ -615,7 +615,7 @@
             <div style="font-size: 36px; margin-bottom: 10px;">🚀</div>
             <div id="bridgeTitle" style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Запуск приложения...</div>
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.45;">
-                Если приложение не открылось автоматически, нажмите кнопку ниже (ключ также скопирован в буфер обмена):
+                Если приложение не открылось автоматически, нажмите кнопку ниже:
             </div>
             <a id="bridgeLaunchBtn" href="#" class="btn-pastel" style="width: 100%; padding: 14px; margin-bottom: 10px;">
                 ⚡️ ОТКРЫТЬ И ДОБАВИТЬ ПОДПИСКУ
@@ -885,6 +885,17 @@
                 </div>
             </div>
 
+            <!-- ПЕРЕКЛЮЧАТЕЛЬ УВЕДОМЛЕНИЙ БОТА В MINI APP -->
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-size:14px; font-weight:800;">Уведомления в Telegram</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Сообщения об оплатах и статусе</div>
+                </div>
+                <button id="btnNotifToggle" onclick="toggleBotNotifications()" class="btn-subtle" style="padding:8px 14px; font-size:12px;">
+                    ВКЛЮЧЕНЫ
+                </button>
+            </div>
+
             <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
                 ↻ ПОКАЗАТЬ ЭКРАН ПРИВЕТСТВИЯ
             </button>
@@ -1046,17 +1057,42 @@
         if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
         if (p.has('ref_cnt')) localStorage.setItem('pp_c_ref_cnt', p.get('ref_cnt'));
         if (p.has('ref_earn')) localStorage.setItem('pp_c_ref_earn', p.get('ref_earn'));
+        if (p.has('notif')) localStorage.setItem('pp_c_notif', p.get('notif'));
 
         const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
         let currentBalance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
         const refCount = parseInt(p.get('ref_cnt') ?? localStorage.getItem('pp_c_ref_cnt') ?? '0', 10);
         const refEarned = parseInt(p.get('ref_earn') ?? localStorage.getItem('pp_c_ref_earn') ?? '0', 10);
+        let botNotifications = parseInt(p.get('notif') ?? localStorage.getItem('pp_c_notif') ?? '1', 10);
         const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
         document.getElementById('uId').innerText = `ID: ${uid}`;
         document.getElementById('uBal').innerText = `${currentBalance} ₽`;
+
+        function updateNotifBtnUI() {
+            const btn = document.getElementById('btnNotifToggle');
+            if (btn) {
+                btn.innerText = botNotifications === 1 ? 'ВКЛЮЧЕНЫ' : 'ВЫКЛЮЧЕНЫ';
+                btn.style.color = botNotifications === 1 ? 'var(--state-ok)' : 'var(--text-muted)';
+            }
+        }
+        updateNotifBtnUI();
+
+        async function toggleBotNotifications() {
+            botNotifications = botNotifications === 1 ? 0 : 1;
+            localStorage.setItem('pp_c_notif', botNotifications);
+            updateNotifBtnUI();
+            haptic('medium');
+            try {
+                await fetch('/api/user/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: uid, notifications: botNotifications })
+                });
+            } catch(e) {}
+        }
 
         const currentRefPct = Math.min(25, 5 + refCount);
         const refProgressWidth = Math.min(100, Math.max(8, (refCount / 20) * 100));
