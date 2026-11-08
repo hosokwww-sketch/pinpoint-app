@@ -1190,7 +1190,15 @@
         function launchVpnApp(deepLink) {
             navigator.clipboard.writeText(activeKeyForConnect);
             haptic('medium');
-            window.location.href = deepLink;
+            try {
+                if (window.Telegram?.WebApp?.openExtLink) {
+                    window.Telegram.WebApp.openExtLink(deepLink);
+                } else {
+                    window.location.href = deepLink;
+                }
+            } catch (e) {
+                window.location.href = deepLink;
+            }
         }
 
         function toggleQrCode() {
