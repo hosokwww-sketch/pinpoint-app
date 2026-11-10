@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="no-referrer">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <title>PinPoint VPN</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -10,606 +11,709 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root, body[data-theme="sage"] {
-            --bg: #0d1110;
-            --bg-grad: radial-gradient(circle at 20% 0%, rgba(168, 213, 186, 0.12), transparent 45%),
-                       radial-gradient(circle at 85% 90%, rgba(168, 213, 186, 0.06), transparent 40%);
-            --surface: rgba(22, 29, 27, 0.78);
-            --surface-sub: rgba(31, 41, 38, 0.65);
-            --border: rgba(168, 213, 186, 0.14);
-            --border-glow: rgba(168, 213, 186, 0.22);
-            --text-main: #f2f7f4;
-            --text-muted: #8ea398;
-            --pastel: #a8d5ba;
-            --pastel-soft: rgba(168, 213, 186, 0.14);
-            --pastel-fg: #0b1710;
-            --particle-color: 168, 213, 186;
-            --state-ok: #8ce0a8;
-            --state-warn: #f3c68f;
-            --state-crit: #eb8c92;
-            --shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
-        }
-
-        body[data-theme="mauve"] {
-            --bg: #0b0912;
-            --bg-grad: radial-gradient(circle at 20% 0%, rgba(203, 180, 232, 0.15), transparent 48%),
-                       radial-gradient(circle at 85% 90%, rgba(160, 130, 215, 0.08), transparent 42%);
-            --surface: rgba(20, 17, 30, 0.8);
-            --surface-sub: rgba(30, 25, 44, 0.68);
-            --border: rgba(203, 180, 232, 0.15);
-            --border-glow: rgba(203, 180, 232, 0.25);
-            --text-main: #f6f3fc;
-            --text-muted: #9a90ad;
-            --pastel: #cbb4e8;
-            --pastel-soft: rgba(203, 180, 232, 0.15);
-            --pastel-fg: #120c1c;
-            --particle-color: 203, 180, 232;
-            --state-ok: #9ee0c2;
-            --state-warn: #f2c396;
-            --state-crit: #eb8f9c;
-            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-        }
-
-        body[data-theme="sand"] {
-            --bg: #f6f4f0;
-            --bg-grad: radial-gradient(circle at 15% 0%, rgba(141, 175, 155, 0.22), transparent 45%),
-                       radial-gradient(circle at 90% 85%, rgba(212, 163, 145, 0.16), transparent 40%);
-            --surface: rgba(255, 255, 255, 0.88);
-            --surface-sub: rgba(242, 238, 231, 0.85);
-            --border: rgba(40, 50, 45, 0.09);
-            --border-glow: rgba(92, 133, 110, 0.2);
-            --text-main: #1d2420;
-            --text-muted: #6c7a72;
-            --pastel: #5c856e;
-            --pastel-soft: rgba(92, 133, 110, 0.12);
-            --pastel-fg: #ffffff;
-            --particle-color: 92, 133, 110;
-            --state-ok: #4ca36d;
-            --state-warn: #d98e3b;
-            --state-crit: #cc545c;
-            --shadow: 0 10px 28px rgba(35, 45, 40, 0.06);
-        }
-
-        body[data-theme="slate"] {
-            --bg: #0b0f16;
-            --bg-grad: radial-gradient(circle at 20% 0%, rgba(167, 199, 231, 0.14), transparent 45%),
-                       radial-gradient(circle at 85% 90%, rgba(167, 199, 231, 0.06), transparent 40%);
-            --surface: rgba(18, 25, 36, 0.78);
-            --surface-sub: rgba(26, 36, 51, 0.65);
-            --border: rgba(167, 199, 231, 0.14);
-            --border-glow: rgba(167, 199, 231, 0.22);
-            --text-main: #f0f5fa;
-            --text-muted: #8a9eb5;
-            --pastel: #a7c7e7;
-            --pastel-soft: rgba(167, 199, 231, 0.14);
-            --pastel-fg: #0b1420;
-            --particle-color: 167, 199, 231;
-            --state-ok: #8ad6c6;
-            --state-warn: #ebb888;
-            --state-crit: #e68a94;
-            --shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        body[data-theme="obsidian"] {
-            --bg: #050505;
-            --bg-grad: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%);
-            --surface: rgba(14, 14, 16, 0.88);
-            --surface-sub: rgba(24, 24, 28, 0.78);
-            --border: rgba(255, 255, 255, 0.1);
-            --border-glow: rgba(255, 255, 255, 0.18);
+        :root, body[data-theme="obsidian"] {
+            color-scheme: dark;
+            --bg: #000000;
+            --bg-grad: radial-gradient(circle at 50% -15%, rgba(124, 92, 255, .15), transparent 52%), radial-gradient(circle at 85% 25%, rgba(56, 189, 248, .08), transparent 45%);
+            --surface: rgba(11, 12, 16, .96);
+            --surface-sub: rgba(18, 20, 26, .94);
+            --surface-elevated: rgba(26, 29, 38, .96);
+            --border: rgba(255, 255, 255, .09);
+            --border-glow: rgba(139, 92, 246, .35);
             --text-main: #ffffff;
-            --text-muted: #8e8e96;
-            --pastel: #ffffff;
-            --pastel-soft: rgba(255, 255, 255, 0.12);
-            --pastel-fg: #000000;
-            --particle-color: 255, 255, 255;
-            --state-ok: #22c55e;
-            --state-warn: #f59e0b;
-            --state-crit: #ef4444;
-            --shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+            --text-muted: #8e95a5;
+            --pastel: #a78bfa;
+            --pastel-soft: rgba(167, 139, 250, .13);
+            --pastel-fg: #080514;
+            --particle-color: 167, 139, 250;
+            --state-ok: #4ade80;
+            --state-warn: #fbbf24;
+            --state-crit: #f87171;
+            --shadow: 0 22px 55px rgba(0, 0, 0, .65);
+            --radius: 24px;
+        }
+        body[data-theme="sage"] {
+            color-scheme: dark;
+            --bg: #070b10;
+            --bg-grad: radial-gradient(circle at 15% -10%, rgba(101, 231, 181, .16), transparent 45%), radial-gradient(circle at 90% 25%, rgba(56, 139, 255, .10), transparent 45%);
+            --surface: rgba(15, 22, 32, .88);
+            --surface-sub: rgba(22, 31, 44, .82);
+            --surface-elevated: rgba(29, 41, 58, .88);
+            --border: rgba(185, 208, 235, .10);
+            --border-glow: rgba(101, 231, 181, .28);
+            --text-main: #f3f7fa;
+            --text-muted: #8493a6;
+            --pastel: #65e7b5;
+            --pastel-soft: rgba(101, 231, 181, .12);
+            --pastel-fg: #05160e;
+            --particle-color: 101, 231, 181;
+            --state-ok: #65e7b5;
+        }
+        body[data-theme="mauve"] {
+            color-scheme: dark;
+            --bg: #090612;
+            --bg-grad: radial-gradient(circle at 20% -10%, rgba(197, 162, 255, .18), transparent 48%), radial-gradient(circle at 90% 30%, rgba(124, 92, 255, .10), transparent 45%);
+            --surface: rgba(20, 15, 32, .90);
+            --surface-sub: rgba(30, 23, 46, .84);
+            --surface-elevated: rgba(40, 31, 60, .90);
+            --border: rgba(212, 190, 255, .12);
+            --border-glow: rgba(197, 162, 255, .32);
+            --text-main: #f7f2ff;
+            --text-muted: #9c90b0;
+            --pastel: #c5a2ff;
+            --pastel-soft: rgba(197, 162, 255, .13);
+            --pastel-fg: #160c28;
+            --particle-color: 197, 162, 255;
+            --state-ok: #8de3c2;
+        }
+        body[data-theme="slate"] {
+            color-scheme: dark;
+            --bg: #060b14;
+            --bg-grad: radial-gradient(circle at 20% -10%, rgba(96, 165, 250, .18), transparent 48%), radial-gradient(circle at 85% 30%, rgba(59, 130, 246, .10), transparent 45%);
+            --surface: rgba(14, 23, 38, .90);
+            --surface-sub: rgba(22, 34, 53, .84);
+            --surface-elevated: rgba(30, 45, 68, .90);
+            --border: rgba(167, 199, 231, .12);
+            --border-glow: rgba(96, 165, 250, .30);
+            --text-main: #f0f6fd;
+            --text-muted: #8b9eb3;
+            --pastel: #60a5fa;
+            --pastel-soft: rgba(96, 165, 250, .13);
+            --pastel-fg: #051224;
+            --particle-color: 96, 165, 250;
+            --state-ok: #7ee2c0;
+        }
+        body[data-theme="sand"] {
+            color-scheme: light;
+            --bg: #f2f4f1;
+            --bg-grad: radial-gradient(circle at 20% -10%, rgba(21, 156, 112, .12), transparent 48%);
+            --surface: rgba(255, 255, 255, .94);
+            --surface-sub: rgba(240, 244, 240, .92);
+            --surface-elevated: rgba(232, 238, 233, .95);
+            --border: rgba(24, 43, 36, .09);
+            --border-glow: rgba(21, 156, 112, .25);
+            --text-main: #14221c;
+            --text-muted: #6d7e75;
+            --pastel: #159c70;
+            --pastel-soft: rgba(21, 156, 112, .10);
+            --pastel-fg: #ffffff;
+            --particle-color: 21, 156, 112;
+            --state-ok: #159c70;
+            --state-warn: #c47d17;
+            --state-crit: #cf4455;
+            --shadow: 0 16px 40px rgba(27, 45, 36, .08);
         }
 
-        body[data-font="sora"] { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
-        body[data-font="geist"] { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
-        body[data-font="epilogue"] { font-family: 'Inter', -apple-system, sans-serif; }
+        body[data-font="sora"] { font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif; }
+        body[data-font="geist"] { font-family: 'JetBrains Mono', monospace; }
+        body[data-font="epilogue"] { font-family: Inter, -apple-system, sans-serif; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html { min-height: 100%; background: var(--bg); scroll-behavior: smooth; }
         body {
+            min-height: 100vh;
+            padding: 16px 16px 124px;
+            overflow-x: hidden;
+            color: var(--text-main);
             background-color: var(--bg);
             background-image: var(--bg-grad);
             background-attachment: fixed;
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 16px 16px 115px;
-            overflow-x: hidden;
-            transition: background-color 0.35s ease, color 0.35s ease;
+            font-size: 14px;
+            line-height: 1.45;
+            letter-spacing: -0.012em;
+            transition: background .3s, color .3s;
         }
+        button, input { font: inherit; color: inherit; }
+        button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--pastel); outline-offset: 2px; }
+        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.03em; }
+        #fxCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: .55; }
+        .view-layer { position: relative; z-index: 2; width: min(100%, 480px); margin: 0 auto; }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
-
-        #fxCanvas {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.75;
-            transition: opacity 0.4s ease;
-        }
-
-        .view-layer {
-            position: relative;
-            z-index: 10;
-            max-width: 440px;
-            margin: 0 auto;
-        }
-
-        .card, .tariff-slab {
-            background: var(--surface);
+        /* --- ШАПКА --- */
+        .app-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 10px 12px;
             border: 1px solid var(--border);
             border-radius: 22px;
-            padding: 18px;
-            margin-bottom: 14px;
-            box-shadow: var(--shadow);
+            background: var(--surface);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: border-color 0.25s ease, background-color 0.25s ease;
+            box-shadow: var(--shadow);
         }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            min-width: 0;
+        }
+        .brand-symbol {
+            width: 38px;
+            height: 38px;
+            border-radius: 13px;
+            background: var(--pastel-soft);
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pastel);
+            flex-shrink: 0;
+        }
+        .brand-symbol svg { width: 20px; height: 20px; fill: currentColor; }
+        .brand-title { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand-name { font-size: 16px; font-weight: 800; letter-spacing: -0.03em; }
+        .brand-period { color: var(--pastel); }
+        .brand-tag { font-size: 9px; font-weight: 800; letter-spacing: .12em; color: var(--text-muted); margin-top: 2px; }
 
-        .profile-band {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 18px;
-        }
-        .operator-meta {
+        .topbar-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .user-capsule {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            padding: 4px 10px 4px 5px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--surface-sub);
             min-width: 0;
         }
         .operator-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: var(--pastel-soft);
-            border: 1px solid var(--border);
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 18px;
-            color: var(--pastel);
-            flex-shrink: 0;
-        }
-        .subhead {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-        .op-title {
-            font-size: 16px;
-            font-weight: 800;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 2px 0;
-            letter-spacing: -0.02em;
-        }
-        .balance-cluster {
-            text-align: right;
-            background: var(--surface-sub);
-            padding: 10px 14px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-        .balance-num {
-            font-size: 19px;
-            font-weight: 800;
-            color: var(--text-main);
-            margin: 1px 0 6px;
-            letter-spacing: -0.02em;
-        }
-
-        .btn-pastel {
-            background: var(--pastel);
-            color: var(--pastel-fg);
-            border: none;
-            border-radius: 14px;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-decoration: none;
-            transition: opacity 0.2s ease, transform 0.15s ease;
-        }
-        .btn-pastel:active { opacity: 0.88; transform: scale(0.98); }
-        .btn-pastel:disabled { opacity: 0.4; pointer-events: none; }
-
-        .btn-subtle {
-            background: var(--surface-sub);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 11px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-decoration: none;
-            transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
-        }
-        .btn-subtle:active { border-color: var(--pastel); transform: scale(0.98); }
-
-        .section-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 4px 10px;
-        }
-        .section-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.02em;
-        }
-        .pill-badge {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 99px;
             background: var(--pastel-soft);
             color: var(--pastel);
+            font-size: 13px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .user-meta { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+        .op-title {
+            max-width: 96px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .profile-id { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+        .icon-button {
+            width: 38px;
+            height: 38px;
+            border-radius: 13px;
+            border: 1px solid var(--border);
+            background: var(--surface-sub);
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .18s;
+            flex-shrink: 0;
+        }
+        .icon-button svg { width: 18px; height: 18px; }
+        .icon-button:hover { border-color: var(--pastel); color: var(--pastel); }
+
+        /* --- БЛОК БАЛАНСА --- */
+        .vault-hero {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 18px;
+            padding: 22px 20px 18px;
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 92% 14%, var(--pastel-soft), transparent 52%),
+                linear-gradient(155deg, var(--surface), var(--surface-sub));
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+        }
+        .vault-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .vault-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--pastel-soft);
+            border: 1px solid var(--border-glow);
+            color: var(--pastel);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .vault-label-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--state-ok);
+            box-shadow: 0 0 8px var(--state-ok);
+        }
+        .balance-num {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 1.05;
+            color: var(--text-main);
+        }
+        .vault-subtext { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+        .vault-orbit {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: var(--surface-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--pastel);
+            flex-shrink: 0;
+        }
+        .vault-orbit svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 1.8; }
+        .vault-actions { display: grid; grid-template-columns: 1.35fr 1fr; gap: 9px; }
+
+        /* --- КНОПКИ --- */
+        .btn-pastel, .btn-subtle {
+            min-height: 44px;
+            padding: 11px 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform .16s, background .18s, border-color .18s, opacity .18s;
+        }
+        .btn-pastel {
+            border: 1px solid transparent;
+            background: var(--pastel);
+            color: var(--pastel-fg);
+            box-shadow: 0 8px 24px color-mix(in srgb, var(--pastel) 24%, transparent);
+        }
+        .btn-subtle {
+            border: 1px solid var(--border);
+            background: var(--surface-sub);
+            color: var(--text-main);
+        }
+        .btn-pastel:hover, .btn-subtle:hover { transform: translateY(-1px); border-color: var(--pastel); }
+        .btn-pastel:active, .btn-subtle:active { transform: scale(.98); }
+        button:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
+
+        .subhead { color: var(--text-muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+        .section-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 22px 2px 10px; }
+        .section-label { color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+        .pill-badge {
+            padding: 5px 10px;
+            border: 1px solid var(--border-glow);
+            border-radius: 999px;
+            background: var(--pastel-soft);
+            color: var(--pastel);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .04em;
         }
 
-        .slot-unit-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border);
+        .card {
+            position: relative;
+            overflow: hidden;
             margin-bottom: 14px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
+
+        /* --- СЛОТЫ ПОДКЛЮЧЕНИЙ --- */
+        .slot-card {
+            padding: 0;
+            border-radius: 26px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .slot-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 18px;
+            background: var(--surface-sub);
+            border-bottom: 1px solid var(--border);
+        }
+        .slot-title-wrap { display: flex; align-items: center; gap: 9px; min-width: 0; flex: 1; }
         .soft-beacon {
             width: 9px;
             height: 9px;
+            flex: none;
             border-radius: 50%;
             background: var(--state-ok);
-            box-shadow: 0 0 10px var(--state-ok);
-            flex-shrink: 0;
+            box-shadow: 0 0 12px var(--state-ok);
         }
         .slot-name-field {
+            width: 100%;
+            max-width: 175px;
+            padding: 2px 6px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            outline: 0;
             background: transparent;
-            border: none;
-            border-bottom: 1px dashed var(--border);
             color: var(--text-main);
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 700;
-            width: 155px;
-            padding: 2px 0;
-            outline: none;
-            transition: border-color 0.2s ease;
+            font-size: 14px;
+            font-weight: 800;
+            transition: border-color .15s, background .15s;
         }
-        .slot-name-field:focus { border-bottom-color: var(--pastel); }
+        .slot-name-field:focus { border-color: var(--pastel); background: var(--surface); }
+        .slot-body { padding: 16px 18px 18px; }
 
-        .traffic-harness {
+        .traffic-bento {
             display: grid;
             grid-template-columns: 74px 1fr;
-            gap: 14px;
-            background: var(--surface-sub);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 14px;
-            margin-bottom: 14px;
             align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface-sub);
         }
-        .gauge-svg-wrap { position: relative; width: 72px; height: 72px; }
-        .gauge-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
-        .gauge-track { fill: none; stroke: var(--border); stroke-width: 4.5; }
-        .gauge-flow { fill: none; stroke: var(--pastel); stroke-width: 4.5; stroke-linecap: round; transition: stroke-dasharray 0.6s ease; }
+        .gauge-svg-wrap { position: relative; width: 70px; height: 70px; margin: 0 auto; }
+        .gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .gauge-track, .gauge-flow { fill: none; stroke-width: 4.2; }
+        .gauge-track { stroke: var(--border); }
+        .gauge-flow { stroke: var(--pastel); stroke-linecap: round; transition: stroke-dasharray .4s ease; }
         .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .gauge-pct { font-size: 14px; font-weight: 800; }
 
-        .pill-meter { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; margin: 8px 0 10px; }
-        .pill-cell { height: 6px; border-radius: 3px; background: var(--border); }
+        .pill-meter { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; margin: 9px 0; }
+        .pill-cell { height: 6px; border-radius: 6px; background: var(--border); }
         .pill-cell.filled { background: var(--pastel); }
         .pill-cell.warn { background: var(--state-warn); }
         .pill-cell.crit { background: var(--state-crit); }
 
-        .meta-stamp { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); font-weight: 500; }
-
-        .key-capsule {
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 6px;
-            background: var(--surface-sub);
+        .slot-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+        .spec-chip {
+            padding: 7px 10px;
+            border-radius: 11px;
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 8px 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .key-text {
-            background: transparent;
-            border: none;
-            outline: none;
+            font-size: 10px;
             color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            width: 100%;
-            pointer-events: none;
-        }
-
-        .ref-progress-track {
-            width: 100%;
-            height: 8px;
-            background: var(--surface-sub);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            overflow: hidden;
-            margin: 10px 0 8px;
-        }
-        .ref-progress-bar { height: 100%; background: var(--pastel); border-radius: 99px; transition: width 0.5s ease; }
-
-        .tariff-slab { display: flex; flex-direction: column; gap: 10px; }
-        .tariff-slab.featured { border-color: var(--pastel); box-shadow: 0 8px 30px var(--border-glow); }
-        .old-price { text-decoration: line-through; color: var(--text-muted); font-size: 12px; font-weight: 500; margin-right: 6px; }
-
-        .grid-duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .grid-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .picker-cell {
-            background: var(--surface-sub);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            color: var(--text-muted);
-            padding: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
         }
-        .picker-cell.active { border-color: var(--pastel); background: var(--pastel-soft); color: var(--pastel); }
-        .tone-dot { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); }
+        .spec-chip b { color: var(--text-main); font-weight: 700; }
+
+        .key-capsule {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            align-items: center;
+            gap: 6px;
+            margin: 10px 0 12px;
+            padding: 6px 6px 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--surface-sub);
+        }
+        .key-text {
+            width: 100%;
+            overflow: hidden;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--text-muted);
+            font: 11px 'JetBrains Mono', monospace;
+            pointer-events: none;
+        }
+
+        .empty-slot-card {
+            border: 1px dashed var(--border-glow);
+            border-radius: 24px;
+            background: linear-gradient(145deg, var(--surface), var(--surface-sub));
+            padding: 20px 18px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        /* --- РЕФЕРАЛКА И ПРОМО --- */
+        .ref-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+        .ref-stat-box { padding: 11px 12px; border-radius: 15px; background: var(--surface-sub); border: 1px solid var(--border); }
+        .ref-progress-track { height: 8px; margin: 10px 0 14px; border-radius: 99px; background: var(--surface-sub); overflow: hidden; border: 1px solid var(--border); }
+        .ref-progress-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--pastel), color-mix(in srgb, var(--pastel) 60%, #38bdf8)); transition: width .35s; }
 
         .ambient-field {
             width: 100%;
-            background: var(--surface-sub);
+            min-height: 44px;
+            padding: 11px 14px;
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 12px 14px;
+            outline: 0;
+            background: var(--surface-sub);
             color: var(--text-main);
             font-size: 13px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.25s ease;
         }
+        .ambient-field::placeholder { color: var(--text-muted); }
         .ambient-field:focus { border-color: var(--pastel); }
 
+        /* --- ТАРИФЫ --- */
+        .page-banner {
+            padding: 20px;
+            border-radius: 26px;
+            border: 1px solid var(--border);
+            background: linear-gradient(145deg, var(--surface), var(--surface-sub));
+            margin-bottom: 16px;
+        }
+        .page-banner h1 { font-size: 23px; font-weight: 800; letter-spacing: -0.03em; margin: 4px 0 6px; }
+        .page-banner p { font-size: 12px; color: var(--text-muted); }
+
+        .tariff-slab {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 14px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+        .tariff-slab.featured {
+            border-color: var(--pastel);
+            background: radial-gradient(circle at 100% 0%, var(--pastel-soft), transparent 55%), var(--surface);
+        }
+        .tariff-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .tariff-price-block { text-align: right; flex-shrink: 0; }
+        .tariff-price { font-size: 22px; font-weight: 800; color: var(--pastel); line-height: 1.1; }
+        .old-price { display: block; color: var(--text-muted); font-size: 11px; text-decoration: line-through; }
+        .tariff-specs-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+        .t-spec {
+            padding: 8px 10px;
+            border-radius: 13px;
+            background: var(--surface-sub);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .t-spec span { display: block; font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+        .t-spec b { font-size: 12px; font-weight: 800; color: var(--text-main); margin-top: 2px; display: block; }
+
+        /* --- НАСТРОЙКИ --- */
+        .grid-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+        .grid-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .picker-cell {
+            min-width: 0;
+            min-height: 46px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--surface-sub);
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            cursor: pointer;
+            transition: .18s;
+        }
+        .picker-cell.active, .picker-cell:hover {
+            border-color: var(--pastel);
+            background: var(--pastel-soft);
+            color: var(--pastel);
+        }
+        .tone-dot { width: 16px; height: 16px; border: 1px solid var(--border); border-radius: 50%; flex-shrink: 0; }
+        .settings-group-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+
+        /* --- НИЖНИЙ ДОК --- */
         .bottom-shelf {
             position: fixed;
-            bottom: 14px;
-            left: 16px;
-            right: 16px;
-            max-width: 440px;
-            margin: 0 auto;
-            background: var(--surface);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            z-index: 90;
+            bottom: max(12px, env(safe-area-inset-bottom));
+            left: 50%;
+            width: min(calc(100% - 28px), 440px);
             padding: 6px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            z-index: 90;
-            box-shadow: var(--shadow);
+            transform: translateX(-50%);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: color-mix(in srgb, var(--surface) 92%, transparent);
+            box-shadow: 0 14px 44px rgba(0, 0, 0, .55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
         .shelf-tab {
+            min-height: 48px;
+            padding: 6px 8px;
+            border: 0;
+            border-radius: 16px;
             background: transparent;
-            border: none;
             color: var(--text-muted);
-            padding: 11px 6px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: inherit;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
             cursor: pointer;
-            text-align: center;
-            transition: background-color 0.22s ease, color 0.22s ease;
+            transition: .18s;
         }
-        .shelf-tab.active { background: var(--pastel); color: var(--pastel-fg); }
+        .shelf-tab svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .shelf-tab.active {
+            background: var(--pastel);
+            color: var(--pastel-fg);
+            box-shadow: 0 6px 18px color-mix(in srgb, var(--pastel) 25%, transparent);
+        }
 
-        .tab-content {
-            display: block;
-            visibility: hidden;
-            height: 0;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.26s ease, visibility 0s linear 0.26s;
-        }
-        .tab-content.active {
-            visibility: visible;
-            height: auto;
-            overflow: visible;
-            pointer-events: auto;
-            transition: opacity 0.26s ease, visibility 0s linear 0s;
-        }
+        .tab-content { display: block; visibility: hidden; height: 0; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .22s; }
+        .tab-content.active { height: auto; visibility: visible; overflow: visible; pointer-events: auto; }
         .tab-content.show { opacity: 1; }
 
+        /* --- ШТОРКИ --- */
         .curtain-wrap {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             z-index: 200;
             display: flex;
             align-items: flex-end;
             justify-content: center;
+            padding: 12px;
+            background: rgba(2, 5, 10, .76);
+            backdrop-filter: blur(10px);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.28s ease, visibility 0.28s linear;
+            transition: opacity .2s, visibility .2s;
         }
-        .curtain-wrap.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-            transition: opacity 0.28s ease, visibility 0s linear 0s;
-        }
+        .curtain-wrap.active { opacity: 1; visibility: visible; pointer-events: auto; }
         .curtain-panel {
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            border-top-left-radius: 26px;
-            border-top-right-radius: 26px;
             width: 100%;
-            max-width: 440px;
-            padding: 22px 18px 30px;
+            max-width: 480px;
             max-height: 88vh;
-            overflow-y: auto;
-            transform: translateY(18px);
-            opacity: 0.95;
-            transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease;
+            overflow: auto;
+            padding: 18px 18px max(24px, env(safe-area-inset-bottom));
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+            transform: translateY(16px);
+            transition: transform .24s;
         }
-        .curtain-wrap.active .curtain-panel { transform: translateY(0); opacity: 1; }
+        .curtain-wrap.active .curtain-panel { transform: translateY(0); }
+        .sheet-handle { width: 42px; height: 4px; border-radius: 99px; background: var(--border); margin: 0 auto 14px; }
 
-        .qr-box {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #ffffff;
-            padding: 16px;
-            border-radius: 18px;
-            margin: 12px auto;
-            width: fit-content;
-        }
+        .qr-box { width: fit-content; margin: 12px auto; padding: 14px; display: none; flex-direction: column; align-items: center; border-radius: 18px; background: #fff; }
         .qr-box.active { display: flex; }
 
         #inAppPush {
             position: fixed;
-            top: -100px;
-            left: 16px;
-            right: 16px;
-            max-width: 420px;
-            margin: 0 auto;
-            background: var(--surface);
-            border: 1px solid var(--pastel);
-            box-shadow: 0 16px 36px rgba(0,0,0,0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 18px;
+            z-index: 500;
+            top: -110px;
+            left: 14px;
+            right: 14px;
+            width: min(calc(100% - 28px), 440px);
+            margin: auto;
             padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 12px;
-            z-index: 500;
-            transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            border: 1px solid var(--pastel);
+            border-radius: 18px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
             opacity: 0;
+            transition: top .35s, opacity .3s;
+            backdrop-filter: blur(18px);
         }
-        #inAppPush.show { top: 16px; opacity: 1; }
+        #inAppPush.show { top: 14px; opacity: 1; }
 
         .tx-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
-            background: var(--surface-sub);
-            border: 1px solid var(--border);
-            border-radius: 14px;
+            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 8px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--surface-sub);
             font-size: 12px;
         }
 
-        #fadeIntro {
+        #fadeIntro, #firstRunConfig, #bridgeRedirectScreen {
             position: fixed;
             inset: 0;
-            background: var(--bg);
             z-index: 300;
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        .fade-greeting {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-main);
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-        .fade-caption {
-            font-size: 12px;
-            color: var(--pastel);
-            margin-top: 8px;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.6s ease 0.15s;
-        }
-        .fade-greeting.show, .fade-caption.show { opacity: 1; }
-
-        #firstRunConfig {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 260;
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 26px 18px;
-            overflow-y: auto;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-        #firstRunConfig.show { opacity: 1; }
-
-        #bridgeRedirectScreen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 24px;
-            text-align: center;
+            background: var(--bg);
+        }
+        #fadeIntro { flex-direction: column; text-align: center; }
+        .fade-greeting { color: var(--text-main); font-size: 32px; font-weight: 800; letter-spacing: -0.04em; opacity: 0; transform: translateY(8px); transition: opacity .45s, transform .45s; }
+        .fade-caption { margin-top: 10px; color: var(--pastel); font-size: 13px; font-weight: 700; letter-spacing: .08em; opacity: 0; transform: translateY(8px); transition: opacity .45s .1s, transform .45s .1s; }
+        .fade-greeting.show, .fade-caption.show { opacity: 1; transform: translateY(0); }
+        #firstRunConfig { z-index: 260; flex-direction: column; justify-content: space-between; align-items: stretch; overflow: auto; opacity: 0; transition: opacity .3s; }
+        #firstRunConfig.show { opacity: 1; }
+        #bridgeRedirectScreen { z-index: 1000; flex-direction: column; text-align: center; }
+
+        ::selection { background: var(--pastel); color: var(--pastel-fg); }
+
+        @media (max-width: 380px) {
+            body { padding: 12px 12px 114px; }
+            .balance-num { font-size: 32px; }
+            .vault-actions { grid-template-columns: 1fr; }
+            .op-title { max-width: 72px; }
+            .traffic-bento { grid-template-columns: 62px 1fr; gap: 10px; padding: 11px; }
+            .gauge-svg-wrap { width: 58px; height: 58px; }
+            .key-capsule { grid-template-columns: minmax(0, 1fr) auto; }
+            .key-capsule .btn-subtle:last-child { grid-column: 1 / -1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+            #fxCanvas { display: none; }
         }
     </style>
 </head>
-<body data-theme="sage" data-font="sora">
+<body data-theme="obsidian" data-font="sora">
 
     <canvas id="fxCanvas"></canvas>
 
+    <!-- ЭКРАН ПЕРЕНАПРАВЛЕНИЯ В КЛИЕНТ -->
     <div id="bridgeRedirectScreen">
         <div class="card" style="max-width: 380px; width: 100%; padding: 26px 20px;">
             <div style="font-size: 36px; margin-bottom: 10px;">🚀</div>
@@ -620,56 +724,59 @@
             <a id="bridgeLaunchBtn" href="#" class="btn-pastel" style="width: 100%; padding: 14px; margin-bottom: 10px;">
                 ⚡️ ОТКРЫТЬ И ДОБАВИТЬ ПОДПИСКУ
             </a>
-            <a id="bridgeStoreBtn" href="#" target="_blank" class="btn-subtle" style="width: 100%; padding: 12px;">
+            <a id="bridgeStoreBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-subtle" style="width: 100%; padding: 12px;">
                 📥 Скачать приложение
             </a>
         </div>
     </div>
 
+    <!-- УВЕДОМЛЕНИЯ ВНУТРИ ПРИЛОЖЕНИЯ -->
     <div id="inAppPush">
-        <div style="width:36px; height:36px; border-radius:50%; background:var(--pastel-soft); color:var(--pastel); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
+        <div style="width:36px; height:36px; border-radius:12px; background:var(--pastel-soft); color:var(--pastel); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
             ✓
         </div>
         <div style="flex:1; min-width:0;">
-            <div id="pushTitle" style="font-size:13px; font-weight:800; color:var(--text-main);">Баланс пополнен!</div>
-            <div id="pushBody" style="font-size:11px; color:var(--text-muted); margin-top:2px;">Зачислено +100 ₽ на ваш счет</div>
+            <div id="pushTitle" style="font-size:13px; font-weight:800; color:var(--text-main);">Уведомление</div>
+            <div id="pushBody" style="font-size:11px; color:var(--text-muted); margin-top:2px;">Статус обновлен</div>
         </div>
     </div>
 
+    <!-- ИНТРО ПРИ ПЕРВОМ ЗАПУСКЕ -->
     <div id="fadeIntro">
         <div id="introTitle" class="fade-greeting">PinPoint VPN</div>
-        <div id="introSub" class="fade-caption">ПРОСТОЙ И БЫСТРЫЙ ИНТЕРНЕТ</div>
+        <div id="introSub" class="fade-caption">Доступ в свободный интернет</div>
     </div>
 
+    <!-- ПЕРВЫЙ ЗАПУСК (ВЫБОР ТЕМЫ) -->
     <div id="firstRunConfig">
         <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="subhead" style="margin-bottom:4px;">ДОБРО ПОЖАЛОВАТЬ</div>
-            <div style="font-size:22px; font-weight:800; margin-bottom:6px;">Выберите оформление</div>
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.45;">
-                Спокойные пастельные тона или строгий минимализм — настройте приложение под себя.
+            <div class="subhead" style="margin-bottom:4px;">PINPOINT VPN</div>
+            <div style="font-size:24px; font-weight:800; margin-bottom:6px; letter-spacing:-0.03em;">Выберите оформление</div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px; line-height:1.45;">
+                По умолчанию активна глубокая темная тема OLED. Вы можете изменить палитру в любой момент.
             </div>
 
             <div class="section-row"><span class="section-label">Цветовая палитра</span></div>
-            <div class="grid-duo" style="margin-bottom:16px;">
+            <div class="grid-duo" style="margin-bottom:14px;">
+                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#2a2a35;">
+                    <span>⬛️ OLED ЧЕРНАЯ ТЕМА (ПО УМОЛЧАНИЮ)</span>
+                </button>
                 <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                    <span>🌿 Шалфей</span><span class="tone-dot" style="background:#a8d5ba;"></span>
+                    <span>🌿 Шалфей</span><span class="tone-dot" style="background:#65e7b5;"></span>
                 </button>
                 <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                    <span>🔮 Аметист</span><span class="tone-dot" style="background:#cbb4e8;"></span>
-                </button>
-                <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                    <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f6f4f0; border-color:#5c856e;"></span>
+                    <span>🔮 Аметист</span><span class="tone-dot" style="background:#c5a2ff;"></span>
                 </button>
                 <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                    <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
+                    <span>❄️ Нордик</span><span class="tone-dot" style="background:#60a5fa;"></span>
                 </button>
-                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#222;">
-                    <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
+                <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
+                    <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f2f4f1; border-color:#159c70;"></span>
                 </button>
             </div>
 
             <div class="section-row"><span class="section-label">Стиль текста</span></div>
-            <div class="grid-trio" style="margin-bottom:16px;">
+            <div class="grid-trio" style="margin-bottom:14px;">
                 <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
                 <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
                 <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
@@ -684,34 +791,76 @@
         </div>
 
         <div style="max-width:440px; margin:0 auto; width:100%; margin-top:24px;">
-            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:15px; font-size:14px;">
-                ГОТОВО, НАЧАТЬ РАБОТУ →
+            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:15px; font-size:13px;">
+                ПРОДОЛЖИТЬ В КАБИНЕТ →
             </button>
         </div>
     </div>
 
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
     <div class="view-layer" id="mainAppView">
 
-        <div class="card profile-band">
-            <div class="operator-meta">
-                <img id="avatarImg" class="operator-avatar" style="display:none;" alt="">
-                <div id="avatarFallback" class="operator-avatar">P</div>
-                <div style="min-width:0;">
-                    <div class="subhead">ВАШ ПРОФИЛЬ</div>
-                    <div id="uName" class="op-title">Клиент</div>
-                    <div id="uId" class="mono" style="font-size:11px; color:var(--text-muted);">ID: 000000</div>
+        <!-- ШАПКА -->
+        <header class="app-topbar">
+            <a class="brand" href="#" onclick="switchTab('cabinet');return false" aria-label="PinPoint VPN">
+                <span class="brand-symbol" aria-hidden="true">
+                    <svg viewBox="0 0 32 32"><path d="M16 3 28 10v12L16 29 4 22V10Z"/><path d="m10 19 6-11 6 11-6-3Z" fill="var(--bg)"/></svg>
+                </span>
+                <span class="brand-title">
+                    <span class="brand-name">PinPoint<span class="brand-period">.</span></span>
+                    <span class="brand-tag">ДОСТУП В СВОБОДНЫЙ ИНТЕРНЕТ</span>
+                </span>
+            </a>
+
+            <div class="topbar-right">
+                <div class="user-capsule">
+                    <img id="avatarImg" class="operator-avatar" style="display:none;" alt="Аватар">
+                    <div id="avatarFallback" class="operator-avatar">P</div>
+                    <div class="user-meta">
+                        <div id="uName" class="op-title">Клиент</div>
+                        <div id="uId" class="profile-id mono">ID: —</div>
+                    </div>
                 </div>
-            </div>
-            <div class="balance-cluster">
-                <div class="subhead">БАЛАНС</div>
-                <div id="uBal" class="balance-num">0 ₽</div>
-                <button onclick="openCurtain('topupSheet')" class="btn-pastel" style="padding:6px 12px; font-size:11px; border-radius:10px;">
-                    + ПОПОЛНИТЬ
+                <button class="icon-button" onclick="switchTab('style')" aria-label="Настройки">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.5"/><circle cx="15" cy="17" r="2.5"/>
+                    </svg>
                 </button>
             </div>
-        </div>
+        </header>
 
+        <!-- ВКЛАДКА 1: ГЛАВНЫЙ ЭКРАН -->
         <div id="tab-cabinet" class="tab-content active show">
+
+            <!-- КРУПНЫЙ БЛОК БАЛАНСА -->
+            <section class="vault-hero" aria-label="Баланс аккаунта">
+                <div class="vault-top">
+                    <div>
+                        <div class="vault-label">
+                            <span class="vault-label-dot"></span>
+                            КОШЕЛЕК PINPOINT
+                        </div>
+                        <div id="uBal" class="balance-num mono">0 ₽</div>
+                        <div class="vault-subtext">Мгновенное пополнение через СБП и банковские карты</div>
+                    </div>
+                    <div class="vault-orbit" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3L20 7V12C20 16.97 16.58 21.37 12 22.5C7.42 21.37 4 16.97 4 12V7L12 3Z"/>
+                            <path d="M9 12.2L11.2 14.4L15.5 10"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="vault-actions">
+                    <button onclick="openCurtain('topupSheet');toggleWalletSubtab('pay')" class="btn-pastel">
+                        <span>＋</span> ПОПОЛНИТЬ СЧЕТ
+                    </button>
+                    <button onclick="openCurtain('topupSheet');toggleWalletSubtab('history')" class="btn-subtle">
+                        🧾 ИСТОРИЯ ОПЛАТ
+                    </button>
+                </div>
+            </section>
+
+            <!-- СЛОТЫ ПОДКЛЮЧЕНИЙ -->
             <div class="section-row">
                 <span class="section-label">МОИ ПОДКЛЮЧЕНИЯ</span>
                 <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
@@ -719,165 +868,211 @@
 
             <div id="slotsCluster"></div>
 
+            <!-- ПАРТНЕРСКАЯ ПРОГРАММА И ПРОМОКОД -->
             <div class="section-row">
-                <span class="section-label">БОНУСНАЯ ПРОГРАММА</span>
+                <span class="section-label">ПАРТНЕРСКАЯ ПРОГРАММА</span>
                 <span id="refBadgePct" class="pill-badge">СТАВКА: 5%</span>
             </div>
+
             <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                    <div>
-                        <div style="font-size:15px; font-weight:800;">Приглашайте друзей</div>
-                        <div id="refSubtitle" style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-                            +1% к доходу за каждого оплатившего друга (до 25%)
-                        </div>
+                <div>
+                    <div style="font-size:16px; font-weight:800; letter-spacing:-0.02em;">Приглашайте друзей</div>
+                    <div id="refSubtitle" style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+                        +1% к вознаграждению за каждого оплатившего друга (до 25%)
+                    </div>
+                </div>
+
+                <div class="ref-stats-grid">
+                    <div class="ref-stat-box">
+                        <div class="subhead">ДРУЗЕЙ</div>
+                        <div style="font-size:16px; font-weight:800; margin-top:3px;"><span id="refFriendsCount">0</span> <span style="font-size:12px; color:var(--text-muted); font-weight:600;">/ 20</span></div>
+                    </div>
+                    <div class="ref-stat-box">
+                        <div class="subhead">ЗАРАБОТАНО</div>
+                        <div id="refEarnedSum" class="mono" style="font-size:16px; font-weight:800; color:var(--pastel); margin-top:3px;">0 ₽</div>
                     </div>
                 </div>
 
                 <div class="ref-progress-track">
-                    <div id="refProgressBar" class="ref-progress-bar" style="width: 20%;"></div>
-                </div>
-
-                <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); margin-bottom:14px;">
-                    <span>Оплативших друзей: <b id="refFriendsCount" style="color:var(--text-main);">0</b> / 20</span>
-                    <span>Заработано: <b id="refEarnedSum" style="color:var(--pastel);">0 ₽</b></span>
+                    <div id="refProgressBar" class="ref-progress-bar" style="width: 8%;"></div>
                 </div>
 
                 <div class="grid-duo">
-                    <button onclick="shareRefLink()" class="btn-pastel" style="padding:11px;">
+                    <button onclick="shareRefLink()" class="btn-pastel">
                         💌 ОТПРАВИТЬ ДРУГУ
                     </button>
-                    <button onclick="copyRefLink(this)" class="btn-subtle" style="padding:11px;">
+                    <button onclick="copyRefLink(this)" class="btn-subtle">
                         📋 СКОПИРОВАТЬ
                     </button>
                 </div>
-            </div>
 
-            <div class="section-row"><span class="section-label">ЕСТЬ ПРОМОКОД?</span></div>
-            <div class="card" style="padding:12px;">
-                <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                    <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите код (например: PIN2026)" style="text-transform:uppercase;">
-                    <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
+                <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+                    <div class="subhead" style="margin-bottom:8px;">АКТИВАЦИЯ ПРОМОКОДА</div>
+                    <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
+                        <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите промокод (PIN2026)" style="text-transform:uppercase;">
+                        <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- ВКЛАДКА 2: ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-content">
-            <div class="section-row">
-                <span class="section-label">КАТАЛОГ ТАРИФОВ</span>
+            <div class="page-banner">
+                <div class="subhead" style="color:var(--pastel);">ТАРИФНЫЕ ПЛАНЫ</div>
+                <h1>Доступные цены</h1>
+                <p>Честные лимиты трафика, высокая скорость и до 2 независимых подписок на одном аккаунте.</p>
             </div>
 
+            <!-- ТЕСТ -->
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="tariff-top">
                     <div>
-                        <div class="subhead">ТЕСТОВЫЙ ПЕРИОД</div>
-                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🆓 Тест на 24 часа</div>
+                        <div class="subhead">ДЛЯ ПРОВЕРКИ</div>
+                        <div style="font-size:18px; font-weight:800; margin-top:3px;">🆓 Тест на 24 часа</div>
                     </div>
-                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">0 ₽</div>
+                    <div class="tariff-price-block">
+                        <div class="tariff-price mono">0 ₽</div>
+                    </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">10 ГБ трафика • 1 устройство • Все локации</div>
-                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%; margin-top:4px;">
+                <div class="tariff-specs-row">
+                    <div class="t-spec"><span>СРОК</span><b>24 часа</b></div>
+                    <div class="t-spec"><span>ТРАФИК</span><b>10 ГБ</b></div>
+                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
+                </div>
+                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%;">
                     ВКЛЮЧИТЬ БЕСПЛАТНЫЙ ТЕСТ
                 </button>
             </div>
 
+            <!-- СТАРТ (79 ₽) -->
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="tariff-top">
                     <div>
                         <div class="subhead">НА 2 НЕДЕЛИ</div>
-                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🚀 Тариф «Старт»</div>
+                        <div style="font-size:18px; font-weight:800; margin-top:3px;">🚀 Тариф «Старт»</div>
                     </div>
-                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">79 ₽</div>
+                    <div class="tariff-price-block">
+                        <div class="tariff-price mono">79 ₽</div>
+                    </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">50 ГБ трафика • 1 устройство • Высокая скорость</div>
-                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                <div class="tariff-specs-row">
+                    <div class="t-spec"><span>СРОК</span><b>14 дней</b></div>
+                    <div class="t-spec"><span>ТРАФИК</span><b>50 ГБ</b></div>
+                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
+                </div>
+                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%;">
                     ПОДКЛЮЧИТЬ ЗА 79 ₽
                 </button>
             </div>
 
+            <!-- БАЗОВЫЙ (149 ₽ / 150 ГБ) -->
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="tariff-top">
                     <div>
-                        <div class="subhead">НА 1 МЕСЯЦ</div>
-                        <div style="font-size:17px; font-weight:800; margin-top:2px;">⚡️ Тариф «Базовый»</div>
+                        <div class="subhead">ОПТИМАЛЬНЫЙ НА МЕСЯЦ</div>
+                        <div style="font-size:18px; font-weight:800; margin-top:3px;">⚡️ Тариф «Базовый»</div>
                     </div>
-                    <div class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">149 ₽</div>
+                    <div class="tariff-price-block">
+                        <div class="tariff-price mono">149 ₽</div>
+                    </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">129 ГБ трафика • 1 устройство • Без ограничений</div>
-                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%; margin-top:4px;">
+                <div class="tariff-specs-row">
+                    <div class="t-spec"><span>СРОК</span><b>30 дней</b></div>
+                    <div class="t-spec"><span>ТРАФИК</span><b>150 ГБ</b></div>
+                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
+                </div>
+                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%;">
                     ПОДКЛЮЧИТЬ ЗА 149 ₽
                 </button>
             </div>
 
+            <!-- ПРОДВИНУТЫЙ (199 ₽ / 300 ГБ / 3 УСТР) -->
             <div class="tariff-slab">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="tariff-top">
                     <div>
-                        <div class="subhead">ДО 3 УСТРОЙСТВ (30 ДНЕЙ)</div>
-                        <div style="font-size:17px; font-weight:800; margin-top:2px;">💎 Тариф «Продвинутый»</div>
+                        <div class="subhead">ДЛЯ ТЕЛЕФОНА, ПК И ПЛАНШЕТА</div>
+                        <div style="font-size:18px; font-weight:800; margin-top:3px;">💎 Тариф «Продвинутый»</div>
                     </div>
-                    <div>
-                        <span class="old-price">270 ₽</span>
-                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">219 ₽</span>
+                    <div class="tariff-price-block">
+                        <span class="old-price mono">250 ₽</span>
+                        <div class="tariff-price mono">199 ₽</div>
                     </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">300 ГБ трафика • 3 устройства одновременно</div>
-                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ ЗА 219 ₽
+                <div class="tariff-specs-row">
+                    <div class="t-spec"><span>СРОК</span><b>30 дней</b></div>
+                    <div class="t-spec"><span>ТРАФИК</span><b>300 ГБ</b></div>
+                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>3 устр.</b></div>
+                </div>
+                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%;">
+                    ПОДКЛЮЧИТЬ ЗА 199 ₽
                 </button>
             </div>
 
+            <!-- ХИТ СЕЗОНА (499 ₽ / 90 ДНЕЙ) -->
             <div class="tariff-slab featured">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div class="tariff-top">
                     <div>
-                        <div class="subhead" style="color:var(--pastel);">ВЫГОДА 25% • 90 ДНЕЙ</div>
-                        <div style="font-size:17px; font-weight:800; margin-top:2px;">🔥 ХИТ СЕЗОНА (90 дней)</div>
+                        <span class="pill-badge" style="display:inline-block; margin-bottom:6px;">ВЫГОДА • ~166 ₽ В МЕСЯЦ</span>
+                        <div style="font-size:19px; font-weight:800;">🔥 ХИТ СЕЗОНА</div>
                     </div>
-                    <div>
-                        <span class="old-price">720 ₽</span>
-                        <span class="mono" style="font-size:18px; font-weight:800; color:var(--pastel);">549 ₽</span>
+                    <div class="tariff-price-block">
+                        <span class="old-price mono">650 ₽</span>
+                        <div class="tariff-price mono">499 ₽</div>
                     </div>
                 </div>
-                <div style="font-size:12px; color:var(--text-muted);">900 ГБ трафика • 3 любых устройства (телефон, ПК, ТВ)</div>
-                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; margin-top:4px;">
-                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 549 ₽
+                <div class="tariff-specs-row">
+                    <div class="t-spec"><span>СРОК</span><b>90 дней</b></div>
+                    <div class="t-spec"><span>ТРАФИК</span><b>900 ГБ</b></div>
+                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>3 устр.</b></div>
+                </div>
+                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; padding:14px;">
+                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 499 ₽
                 </button>
             </div>
         </div>
 
+        <!-- ВКЛАДКА 3: НАСТРОЙКИ И ВИД -->
         <div id="tab-style" class="tab-content">
-            <div class="section-row"><span class="section-label">НАСТРОЙКИ ВИДА</span></div>
+            <div class="page-banner">
+                <div class="subhead" style="color:var(--pastel);">КАСТОМИЗАЦИЯ</div>
+                <h1>Настройки и вид</h1>
+                <p>Персонализируйте тему, шрифты и уведомления от Telegram-бота.</p>
+            </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:10px;">ЦВЕТ ИНТЕРФЕЙСА</div>
+                <div class="settings-group-title">
+                    <span class="subhead">ЦВЕТОВАЯ ТЕМА</span>
+                    <span style="font-size:11px; color:var(--text-muted);">5 палитр</span>
+                </div>
                 <div class="grid-duo">
+                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#2a2a35;">
+                        <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
+                    </button>
                     <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                        <span>🌿 Шалфей</span><span class="tone-dot" style="background:#a8d5ba;"></span>
+                        <span>🌿 Шалфей</span><span class="tone-dot" style="background:#65e7b5;"></span>
                     </button>
                     <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                        <span>🔮 Аметист</span><span class="tone-dot" style="background:#cbb4e8;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                        <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f6f4f0; border-color:#5c856e;"></span>
+                        <span>🔮 Аметист</span><span class="tone-dot" style="background:#c5a2ff;"></span>
                     </button>
                     <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                        <span>❄️ Нордик</span><span class="tone-dot" style="background:#a7c7e7;"></span>
+                        <span>❄️ Нордик</span><span class="tone-dot" style="background:#60a5fa;"></span>
                     </button>
-                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#222;">
-                        <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
+                    <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
+                        <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f2f4f1; border-color:#159c70;"></span>
                     </button>
                 </div>
             </div>
 
             <div class="card">
-                <div class="subhead" style="margin-bottom:10px;">ШРИФТ</div>
-                <div class="grid-trio">
+                <div class="settings-group-title">
+                    <span class="subhead">ШРИФТ И ЭФФЕКТЫ ФОНА</span>
+                </div>
+                <div class="grid-trio" style="margin-bottom:12px;">
                     <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
                     <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
                     <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="subhead" style="margin-bottom:10px;">АНИМАЦИЯ ФОНА</div>
                 <div class="grid-trio">
                     <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
                     <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
@@ -885,37 +1080,48 @@
                 </div>
             </div>
 
-            <!-- ПЕРЕКЛЮЧАТЕЛЬ УВЕДОМЛЕНИЙ БОТА В MINI APP -->
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
                 <div>
                     <div style="font-size:14px; font-weight:800;">Уведомления в Telegram</div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Сообщения об оплатах и статусе</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Сообщения об оплатах и остатке трафика</div>
                 </div>
-                <button id="btnNotifToggle" onclick="toggleBotNotifications()" class="btn-subtle" style="padding:8px 14px; font-size:12px;">
+                <button id="btnNotifToggle" onclick="toggleBotNotifications()" class="btn-subtle" style="padding:9px 14px; font-size:12px; flex-shrink:0;">
                     ВКЛЮЧЕНЫ
                 </button>
             </div>
 
-            <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:6px;">
-                ↻ ПОКАЗАТЬ ЭКРАН ПРИВЕТСТВИЯ
+            <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:4px;">
+                ↻ ПОКАЗАТЬ ЗАСТАВКУ ПРИВЕТСТВИЯ
             </button>
         </div>
     </div>
 
-    <div class="bottom-shelf" id="bottomNavShelf">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">🛡 Мой VPN</button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">💎 Тарифы</button>
-        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">🎨 Вид</button>
-    </div>
+    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+    <nav class="bottom-shelf" id="bottomNavShelf" aria-label="Навигация">
+        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">
+            <svg viewBox="0 0 24 24"><path d="M12 3L20 7V12C20 16.97 16.58 21.37 12 22.5C7.42 21.37 4 16.97 4 12V7L12 3Z"/></svg>
+            <span>Кабинет</span>
+        </button>
+        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <span>Тарифы</span>
+        </button>
+        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Оформление</span>
+        </button>
+    </nav>
 
+    <!-- ШТОРКА: ПОДКЛЮЧЕНИЕ -->
     <div id="connectSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('connectSheet')">
         <div class="curtain-panel">
+            <div class="sheet-handle"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
                     <div class="subhead">НАСТРОЙКА В 1 КЛИК</div>
-                    <div style="font-size:18px; font-weight:800;">Подключение устройства</div>
+                    <div style="font-size:18px; font-weight:800;">Выберите приложение</div>
                 </div>
-                <button onclick="closeCurtain('connectSheet')" class="btn-subtle" style="padding:6px 10px;">✕</button>
+                <button onclick="closeCurtain('connectSheet')" class="btn-subtle" style="padding:6px 12px; min-height:36px;">✕</button>
             </div>
 
             <div class="grid-duo" style="margin-bottom:14px;">
@@ -925,40 +1131,36 @@
 
             <div id="appsContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
 
-            <div id="qrBox" class="qr-box">
-                <img id="qrImage" src="" alt="QR Code" style="width:170px; height:170px; border-radius:8px;">
-                <div style="color:#111; font-size:11px; font-weight:700; margin-top:8px;">Отсканируйте камерой в VPN-клиенте</div>
-            </div>
-
             <div class="grid-duo">
-                <button onclick="toggleQrCode()" class="btn-subtle" style="padding:12px;">📷 QR-КОД</button>
-                <button onclick="copyCurrentKeyDirectly()" class="btn-subtle" style="padding:12px;">📋 СКОПИРОВАТЬ</button>
+                <button onclick="copyCurrentKeyDirectly()" class="btn-pastel" style="grid-column: span 2;">📋 СКОПИРОВАТЬ КЛЮЧ В БУФЕР ОБМЕНА</button>
             </div>
         </div>
     </div>
 
+    <!-- ШТОРКА: БУСТЕРЫ ТРАФИКА -->
     <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
         <div class="curtain-panel">
+            <div class="sheet-handle"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">ДОБАВИТЬ ГИГАБАЙТЫ</div>
-                    <div style="font-size:18px; font-weight:800;">Пакет трафика</div>
+                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЙ ПАКЕТ</div>
+                    <div style="font-size:18px; font-weight:800;">Добавить гигабайты</div>
                 </div>
                 <span id="boostSlotBadge" class="pill-badge">СЛОТ #1</span>
             </div>
 
             <div class="grid-trio" style="margin-bottom:16px;">
                 <button onclick="chooseBoost(15, 45)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
-                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">45 ₽</span>
+                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
+                    <span class="mono" style="font-size:12px; color:var(--text-muted);">45 ₽</span>
                 </button>
                 <button onclick="chooseBoost(50, 99)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
-                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">99 ₽</span>
+                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
+                    <span class="mono" style="font-size:12px; color:var(--text-muted);">99 ₽</span>
                 </button>
                 <button onclick="chooseBoost(150, 165)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
-                    <span style="font-size:14px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
-                    <span style="font-size:12px; color:var(--text-muted);">165 ₽</span>
+                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
+                    <span class="mono" style="font-size:12px; color:var(--text-muted);">165 ₽</span>
                 </button>
             </div>
 
@@ -968,14 +1170,16 @@
         </div>
     </div>
 
+    <!-- ШТОРКА: КОШЕЛЕК -->
     <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
         <div class="curtain-panel">
+            <div class="sheet-handle"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
                 <div>
-                    <div class="subhead">КОШЕЛЕК</div>
-                    <div style="font-size:18px; font-weight:800;">Пополнение счета</div>
+                    <div class="subhead">КОШЕЛЕК PINPOINT</div>
+                    <div style="font-size:18px; font-weight:800;">Пополнение баланса</div>
                 </div>
-                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:6px 10px;">✕</button>
+                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:6px 12px; min-height:36px;">✕</button>
             </div>
 
             <div class="grid-duo" style="margin-bottom:14px;">
@@ -985,9 +1189,9 @@
 
             <div id="walletPayBlock">
                 <div class="grid-trio" style="margin-bottom:12px;">
-                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell" style="justify-content:center;">149 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=219" class="picker-cell" style="justify-content:center;">219 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=549" class="picker-cell" style="justify-content:center;">549 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell mono" style="justify-content:center;">149 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell mono" style="justify-content:center;">199 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell mono" style="justify-content:center;">499 ₽</button>
                 </div>
 
                 <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
@@ -998,7 +1202,7 @@
             </div>
 
             <div id="walletHistoryBlock" style="display:none;">
-                <div id="txListContainer" style="max-height: 220px; overflow-y: auto;">
+                <div id="txListContainer" style="max-height: 240px; overflow-y: auto;">
                     <div style="text-align:center; padding:16px; color:var(--text-muted); font-size:12px;">
                         Загрузка истории операций...
                     </div>
@@ -1008,17 +1212,30 @@
     </div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+        const tg = window.Telegram?.WebApp || { expand(){}, ready(){}, close(){} };
+        try { tg.expand(); tg.ready(); } catch (e) {}
 
         const p = new URLSearchParams(window.location.search);
+        const bridgeParams = new URLSearchParams(window.location.hash.slice(1));
+        if (bridgeParams.has('r')) {
+            ['r', 'app', 'store', 'sub'].forEach(k => p.set(k, bridgeParams.get(k) || ''));
+        }
+
+        const rawApiBase = p.get('api') || window.location.origin;
+        const isSafeOrigin = /^https:\/\//i.test(rawApiBase) || /^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(rawApiBase);
+        const apiBase = isSafeOrigin ? rawApiBase : window.location.origin;
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
 
         function cleanSubUrl(raw) {
             if (!raw) return '';
             let res = String(raw).trim();
             try {
-                while (res.includes('%3A') || res.includes('%2F') || res.includes('%3a') || res.includes('%2f')) {
+                while (!/^https:\/\//i.test(res) && /%3a|%2f/i.test(res)) {
                     const dec = decodeURIComponent(res);
                     if (dec === res) break;
                     res = dec;
@@ -1027,49 +1244,123 @@
             return res;
         }
 
-        if (p.has('r')) {
-            const targetDeepLink = p.get('r');
-            const appName = p.get('app') || 'VPN';
-            const storeUrl = p.get('store') || '#';
-            const rawSub = p.get('sub') || '';
-
-            document.getElementById('mainAppView').style.display = 'none';
-            document.getElementById('bottomNavShelf').style.display = 'none';
-            const bridge = document.getElementById('bridgeRedirectScreen');
-            bridge.style.display = 'flex';
-            document.getElementById('bridgeTitle').innerText = `Открываем ${appName}...`;
-            document.getElementById('bridgeLaunchBtn').href = targetDeepLink;
-            document.getElementById('bridgeStoreBtn').href = storeUrl;
-
-            if (rawSub) {
-                try { navigator.clipboard.writeText(cleanSubUrl(rawSub)); } catch (e) {}
+        async function copyTextSafe(text) {
+            const clean = String(text || '');
+            if (!clean) return false;
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(clean);
+                    return true;
+                }
+            } catch (e) {}
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = clean;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                return ok;
+            } catch (e) {
+                return false;
             }
-            setTimeout(() => {
-                window.location.href = targetDeepLink;
-            }, 150);
         }
 
+        function haptic(style = 'light') {
+            try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
+        }
+
+        let pushTimer = null;
+        function triggerInAppPush(title, message) {
+            const push = document.getElementById('inAppPush');
+            document.getElementById('pushTitle').innerText = title;
+            document.getElementById('pushBody').innerText = message;
+            push.classList.add('show');
+            try { tg.HapticFeedback?.notificationOccurred('success'); } catch (e) {}
+            if (pushTimer) clearTimeout(pushTimer);
+            pushTimer = setTimeout(() => { push.classList.remove('show'); }, 4200);
+        }
+
+        async function api(path, options = {}) {
+            if (!tg.initData) {
+                throw new Error('Откройте приложение через кнопку в Telegram-боте.');
+            }
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 15000);
+            try {
+                const response = await fetch(new URL(path, apiBase), {
+                    ...options,
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Telegram-Init-Data': tg.initData
+                    }
+                });
+                const data = await response.json();
+                if (!response.ok || !data.ok) {
+                    throw new Error(data.error || 'Ошибка соединения с сервером');
+                }
+                return data;
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        // --- BRIDGE REDIRECT MODE ---
+        let isBridgeMode = false;
+        if (p.has('r')) {
+            const targetDeepLink = p.get('r') || '';
+            const appName = p.get('app') || 'VPN';
+            const storeUrl = p.get('store') || 'https://apps.apple.com';
+            const rawSub = p.get('sub') || '';
+
+            const validDeepLink = /^(happ:\/\/add\/|v2raytun:\/\/import\/|hiddify:\/\/import\/|incy:\/\/import\/)https:\/\//i.test(targetDeepLink);
+            const validStore = /^https:\/\/(apps\.apple\.com|play\.google\.com)\//i.test(storeUrl);
+
+            if (validDeepLink) {
+                isBridgeMode = true;
+                document.getElementById('mainAppView').style.display = 'none';
+                document.getElementById('bottomNavShelf').style.display = 'none';
+                const bridge = document.getElementById('bridgeRedirectScreen');
+                bridge.style.display = 'flex';
+                document.getElementById('bridgeTitle').innerText = `Открываем ${appName}...`;
+                document.getElementById('bridgeLaunchBtn').href = targetDeepLink;
+                document.getElementById('bridgeStoreBtn').href = validStore ? storeUrl : '#';
+
+                if (rawSub) copyTextSafe(cleanSubUrl(rawSub));
+                setTimeout(() => { window.location.href = targetDeepLink; }, 150);
+            }
+        }
+
+        let botUsername = 'PinPointVPN_bot';
         const user = tg.initDataUnsafe?.user;
+        ['bal', 'subs', 'avatar', 'uid', 'ref_cnt', 'ref_earn', 'notif'].forEach(k => localStorage.removeItem('pp_c_' + k));
 
-        if (p.has('bal')) localStorage.setItem('pp_c_bal', p.get('bal'));
-        if (p.has('subs')) localStorage.setItem('pp_c_subs', p.get('subs'));
-        if (p.has('avatar') && p.get('avatar') !== 'none') localStorage.setItem('pp_c_avatar', p.get('avatar'));
-        if (p.has('user_id')) localStorage.setItem('pp_c_uid', p.get('user_id'));
-        if (p.has('ref_cnt')) localStorage.setItem('pp_c_ref_cnt', p.get('ref_cnt'));
-        if (p.has('ref_earn')) localStorage.setItem('pp_c_ref_earn', p.get('ref_earn'));
-        if (p.has('notif')) localStorage.setItem('pp_c_notif', p.get('notif'));
-
-        const uid = user?.id || p.get('user_id') || localStorage.getItem('pp_c_uid') || '404';
+        const uid = user?.id || '';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
-        let currentBalance = parseInt(p.get('bal') ?? localStorage.getItem('pp_c_bal') ?? '0', 10);
-        const refCount = parseInt(p.get('ref_cnt') ?? localStorage.getItem('pp_c_ref_cnt') ?? '0', 10);
-        const refEarned = parseInt(p.get('ref_earn') ?? localStorage.getItem('pp_c_ref_earn') ?? '0', 10);
-        let botNotifications = parseInt(p.get('notif') ?? localStorage.getItem('pp_c_notif') ?? '1', 10);
-        const avatarUrl = p.get('avatar') || localStorage.getItem('pp_c_avatar') || user?.photo_url;
+        let currentBalance = 0;
+        let botNotifications = 1;
+        const avatarUrl = user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
-        document.getElementById('uId').innerText = `ID: ${uid}`;
+        document.getElementById('uId').innerText = `ID: ${uid || '—'}`;
         document.getElementById('uBal').innerText = `${currentBalance} ₽`;
+
+        if (avatarUrl && avatarUrl !== 'none' && /^https:\/\//i.test(avatarUrl)) {
+            const img = document.getElementById('avatarImg');
+            img.src = avatarUrl;
+            img.onerror = () => {
+                img.style.display = 'none';
+                document.getElementById('avatarFallback').style.display = 'flex';
+            };
+            img.style.display = 'block';
+            document.getElementById('avatarFallback').style.display = 'none';
+        } else {
+            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase() || 'P';
+        }
 
         function updateNotifBtnUI() {
             const btn = document.getElementById('btnNotifToggle');
@@ -1081,61 +1372,54 @@
         updateNotifBtnUI();
 
         async function toggleBotNotifications() {
-            botNotifications = botNotifications === 1 ? 0 : 1;
-            localStorage.setItem('pp_c_notif', botNotifications);
-            updateNotifBtnUI();
-            haptic('medium');
+            const btn = document.getElementById('btnNotifToggle');
+            btn.disabled = true;
             try {
-                await fetch('/api/user/settings', {
+                const data = await api('/api/user/settings', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: uid, notifications: botNotifications })
+                    body: JSON.stringify({ notifications: botNotifications !== 1 })
                 });
-            } catch(e) {}
-        }
-
-        const currentRefPct = Math.min(25, 5 + refCount);
-        const refProgressWidth = Math.min(100, Math.max(8, (refCount / 20) * 100));
-        document.getElementById('refBadgePct').innerText = `ВАШ БОНУС: ${currentRefPct}%`;
-        document.getElementById('refFriendsCount').innerText = refCount;
-        document.getElementById('refEarnedSum').innerText = `${refEarned} ₽`;
-        document.getElementById('refProgressBar').style.width = `${refProgressWidth}%`;
-        if (currentRefPct < 25) {
-            document.getElementById('refSubtitle').innerText = `Пригласите еще 1 друга, чтобы получать ${currentRefPct + 1}% с пополнений`;
-        } else {
-            document.getElementById('refSubtitle').innerText = `Максимальный уровень 25% достигнут!`;
-        }
-
-        if (avatarUrl && avatarUrl !== 'none') {
-            const img = document.getElementById('avatarImg');
-            img.src = decodeURIComponent(avatarUrl);
-            img.style.display = 'block';
-            document.getElementById('avatarFallback').style.display = 'none';
-        } else {
-            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase();
-        }
-
-        function haptic(style = 'light') {
-            try { tg.HapticFeedback.impactOccurred(style); } catch (e) {}
-        }
-
-        function triggerInAppPush(title, message) {
-            const push = document.getElementById('inAppPush');
-            document.getElementById('pushTitle').innerText = title;
-            document.getElementById('pushBody').innerText = message;
-            push.classList.add('show');
-            try { tg.HapticFeedback.notificationOccurred('success'); } catch(e) {}
-            setTimeout(() => {
-                push.classList.remove('show');
-            }, 4500);
+                botNotifications = Number(data.notifications);
+                updateNotifBtnUI();
+                triggerInAppPush('Настройки сохранены', botNotifications === 1 ? 'Уведомления в боте включены' : 'Уведомления в боте отключены');
+            } catch (e) {
+                triggerInAppPush('Ошибка', e.message);
+            } finally {
+                btn.disabled = false;
+            }
         }
 
         let subs = [];
-        try {
-            const rawSubs = p.get('subs') || localStorage.getItem('pp_c_subs');
-            if (rawSubs) subs = JSON.parse(decodeURIComponent(rawSubs));
-        } catch (e) {
-            subs = [];
+        let profileLoaded = false;
+
+        async function refreshProfile() {
+            if (isBridgeMode) return;
+            try {
+                const data = await api('/api/user/profile');
+                currentBalance = Number(data.balance || 0);
+                subs = Array.isArray(data.subs) ? data.subs : [];
+                if (data.bot_username) botUsername = data.bot_username;
+                botNotifications = Number(data.notifications);
+
+                document.getElementById('uBal').textContent = `${currentBalance} ₽`;
+                const refCnt = Number(data.ref_cnt || 0);
+                const refEarn = Number(data.ref_earn || 0);
+                const pct = Math.min(25, 5 + refCnt);
+
+                document.getElementById('refBadgePct').textContent = `СТАВКА: ${pct}%`;
+                document.getElementById('refFriendsCount').textContent = refCnt;
+                document.getElementById('refEarnedSum').textContent = `${refEarn} ₽`;
+                document.getElementById('refProgressBar').style.width = `${Math.min(100, Math.max(8, refCnt * 5))}%`;
+                document.getElementById('refSubtitle').textContent = pct < 25
+                    ? `Пригласите еще 1 друга, чтобы получать ${pct + 1}% с пополнений`
+                    : 'Максимальная партнерская ставка 25% достигнута!';
+
+                updateNotifBtnUI();
+                renderSlots();
+                profileLoaded = true;
+            } catch (e) {
+                triggerInAppPush('Синхронизация', e.message);
+            }
         }
 
         function renderMeter(pct) {
@@ -1160,72 +1444,78 @@
             for (let i = 0; i < 2; i++) {
                 const s = subs[i];
                 if (s) {
-                    const cleanKey = cleanSubUrl(s.key);
-                    const totalGb = parseFloat(s.gb || 100);
-                    const usedGb = parseFloat(s.used_gb || 0);
+                    const rawClean = cleanSubUrl(s.key);
+                    const cleanKey = escapeHtml(rawClean);
+                    const totalGb = Math.max(1, parseFloat(s.gb || 100));
+                    const usedGb = Math.max(0, parseFloat(s.used_gb || 0));
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
                     const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
 
-                    const slotId = s.id || (i + 1);
-                    const savedName = localStorage.getItem(`pp_name_${slotId}`) || `Мое подключение #${i + 1}`;
-                    const maskedKey = cleanKey ? cleanKey.slice(0, 16) + '••••••••••••' : 'N/A';
+                    const slotId = Number(s.id) || (i + 1);
+                    const savedName = escapeHtml(localStorage.getItem(`pp_name_${slotId}`) || `Подключение #${i + 1}`);
+                    const maskedKey = cleanKey ? cleanKey.slice(0, 18) + '••••••••••••' : 'N/A';
 
                     html += `
-                        <div class="card">
-                            <div class="slot-unit-header">
-                                <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="slot-card">
+                            <div class="slot-top">
+                                <div class="slot-title-wrap">
                                     <span class="soft-beacon"></span>
-                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="20" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
-                                    <span style="font-size:12px; color:var(--text-muted);">✎</span>
+                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="22" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
+                                    <span style="font-size:11px; color:var(--text-muted);">✎</span>
                                 </div>
-                                <span class="pill-badge">${s.name}</span>
+                                <span class="pill-badge">${escapeHtml(s.name)}</span>
                             </div>
 
-                            <div class="traffic-harness">
-                                <div class="gauge-svg-wrap">
-                                    <svg class="gauge-svg" viewBox="0 0 36 36">
-                                        <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
-                                        <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
-                                    </svg>
-                                    <div class="gauge-center">
-                                        <span class="gauge-pct">${pct}%</span>
+                            <div class="slot-body">
+                                <div class="traffic-bento">
+                                    <div class="gauge-svg-wrap">
+                                        <svg class="gauge-svg" viewBox="0 0 36 36">
+                                            <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
+                                            <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
+                                        </svg>
+                                        <div class="gauge-center">
+                                            <span class="gauge-pct mono">${pct}%</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                                            <span class="subhead">ОСТАТОК ТРАФИКА</span>
+                                            <span class="mono" style="font-size:15px; font-weight:800;">${leftGb} <span style="font-size:11px; color:var(--text-muted); font-weight:500;">/ ${totalGb} ГБ</span></span>
+                                        </div>
+                                        <div class="pill-meter">${renderMeter(pct)}</div>
+                                        <div class="slot-specs">
+                                            <div class="spec-chip"><span>До</span><b class="mono">${escapeHtml(s.until)}</b></div>
+                                            <div class="spec-chip"><span>Лимит</span><b>${Number(s.dev) || 1} устр.</b></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                        <span class="subhead">ОСТАТОК ТРАФИКА</span>
-                                        <span class="mono" style="font-size:14px; font-weight:800;">${leftGb} <span style="font-size:11px; color:var(--text-muted); font-weight:500;">из ${totalGb} ГБ</span></span>
-                                    </div>
-                                    <div class="pill-meter">${renderMeter(pct)}</div>
-                                    <div class="meta-stamp">
-                                        <span>Активен до: ${s.until}</span>
-                                        <span>Устройств: ${s.dev || 1}</span>
-                                    </div>
+
+                                <button onclick="openConnectModal(${i})" class="btn-pastel" style="width:100%; padding:13px; font-size:13px;">
+                                    ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
+                                </button>
+
+                                <div class="key-capsule">
+                                    <input type="text" id="k_${i}" class="key-text" data-raw="${cleanKey}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
+                                    <button onclick="toggleKeyReveal('k_${i}')" class="btn-subtle" style="padding:7px 10px; min-height:34px; font-size:11px;">👁</button>
+                                    <button onclick="copyKeyValue('k_${i}', this)" class="btn-subtle" style="padding:7px 12px; min-height:34px; font-size:11px;">КОПИРОВАТЬ</button>
                                 </div>
-                            </div>
 
-                            <button onclick="openConnectModal('${cleanKey}')" class="btn-pastel" style="width:100%; padding:13px; margin-bottom:10px; font-size:13px;">
-                                ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
-                            </button>
-
-                            <div class="key-capsule">
-                                <input type="text" id="k_${i}" class="key-text" data-raw="${cleanKey}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
-                                <button onclick="toggleKeyReveal('k_${i}', this)" class="btn-subtle" style="padding:6px 10px; font-size:11px;">👁</button>
-                                <button onclick="copyKeyValue('k_${i}', this)" class="btn-subtle" style="padding:6px 12px; font-size:11px;">КОПИРОВАТЬ</button>
-                            </div>
-
-                            <div class="grid-duo">
-                                <button onclick="triggerBooster(${i + 1})" class="btn-subtle">➕ Добавить ГБ</button>
-                                <button onclick="switchTab('tariffs')" class="btn-subtle">🔄 Сменить тариф</button>
+                                <div class="grid-duo">
+                                    <button onclick="triggerBooster(${i + 1})" class="btn-subtle">➕ Добавить ГБ</button>
+                                    <button onclick="switchTab('tariffs')" class="btn-subtle">🔄 Новый слот / Тариф</button>
+                                </div>
                             </div>
                         </div>
                     `;
                 } else {
                     html += `
-                        <div class="card" style="border-style:dashed; text-align:center; padding:26px 16px;">
-                            <div style="font-size:14px; font-weight:700; margin-bottom:4px;">Свободный слот #${i + 1}</div>
-                            <div style="font-size:12px; color:var(--text-muted); margin-bottom:14px;">Подключите телефон, компьютер или планшет</div>
-                            <button onclick="switchTab('tariffs')" class="btn-pastel">+ ВЫБРАТЬ ТАРИФ</button>
+                        <div class="empty-slot-card">
+                            <div>
+                                <div class="subhead">СВОБОДНЫЙ СЛОТ #${i + 1}</div>
+                                <div style="font-size:15px; font-weight:800; margin:3px 0 4px;">Подключите устройство</div>
+                                <div style="font-size:12px; color:var(--text-muted);">Смартфон, компьютер, ноутбук или ТВ</div>
+                            </div>
+                            <button onclick="switchTab('tariffs')" class="btn-pastel" style="flex-shrink:0;">+ ТАРИФЫ</button>
                         </div>
                     `;
                 }
@@ -1239,29 +1529,47 @@
         const VPN_APPS = {
             ios: [
                 {
-                    name: "Happ Proxy",
-                    desc: "Рекомендуется для iPhone / Mac",
+                    name: "Happ",
+                    desc: "Рекомендуется для iPhone, iPad и Mac",
                     deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
                     storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
                 },
                 {
-                    name: "V2rayTun",
-                    desc: "Удобный клиент для iOS",
-                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
-                },
-                {
                     name: "Hiddify",
-                    desc: "App Store (iOS / macOS)",
+                    desc: "Удобный клиент для iOS и macOS",
                     deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
                     storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
+                },
+                {
+                    name: "Incy",
+                    desc: "Быстрый клиент для экосистемы Apple",
+                    deepLink: (url) => `incy://import/${cleanSubUrl(url)}`,
+                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
+                },
+                {
+                    name: "V2rayTun",
+                    desc: "Стабильный клиент из App Store",
+                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
+                    storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
                 }
             ],
             android: [
                 {
                     name: "Happ",
-                    desc: "Быстрый клиент для Android и ПК",
+                    desc: "Быстрый клиент для Android и Windows",
                     deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
+                },
+                {
+                    name: "Hiddify",
+                    desc: "Универсальный клиент для Android и ПК",
+                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
+                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
+                },
+                {
+                    name: "Incy",
+                    desc: "Легкий клиент с автоимпортом",
+                    deepLink: (url) => `incy://import/${cleanSubUrl(url)}`,
                     storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
                 },
                 {
@@ -1269,12 +1577,6 @@
                     desc: "Google Play / Windows",
                     deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
                     storeUrl: "https://play.google.com/store/apps/details?id=com.v2raytun.android"
-                },
-                {
-                    name: "Hiddify",
-                    desc: "Для Android и Windows",
-                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
                 }
             ]
         };
@@ -1288,9 +1590,10 @@
             return 'android';
         }
 
-        function openConnectModal(key) {
-            activeKeyForConnect = cleanSubUrl(key);
-            document.getElementById('qrBox').classList.remove('active');
+        function openConnectModal(slotIdx) {
+            const slotObj = subs[slotIdx];
+            if (!slotObj || !slotObj.key) return;
+            activeKeyForConnect = cleanSubUrl(slotObj.key);
             renderAppList(detectDevicePlatform());
             openCurtain('connectSheet');
             haptic('light');
@@ -1306,12 +1609,12 @@
             container.innerHTML = apps.map((app, idx) => `
                 <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:16px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
                     <div style="min-width:0;">
-                        <div style="font-size:14px; font-weight:800;">${app.name}</div>
-                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${app.desc}</div>
+                        <div style="font-size:14px; font-weight:800;">${escapeHtml(app.name)}</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${escapeHtml(app.desc)}</div>
                     </div>
                     <div style="display:flex; gap:6px; flex-shrink:0;">
-                        <button onclick="openExternalStore('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; font-size:11px;">СКАЧАТЬ</button>
-                        <button onclick="connectViaApp('${platform}', ${idx})" class="btn-pastel" style="padding:8px 12px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
+                        <button onclick="openExternalStore('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; min-height:36px; font-size:11px;">СКАЧАТЬ</button>
+                        <button onclick="connectViaApp('${platform}', ${idx})" class="btn-pastel" style="padding:8px 12px; min-height:36px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
                     </div>
                 </div>
             `).join('');
@@ -1321,65 +1624,60 @@
             if (window.Telegram?.WebApp?.openLink) {
                 window.Telegram.WebApp.openLink(url);
             } else {
-                window.open(url, '_blank');
+                window.open(url, '_blank', 'noopener');
             }
         }
 
         function connectViaApp(platform, idx) {
             const app = (VPN_APPS[platform] || VPN_APPS.android)[idx];
+            if (!app || !activeKeyForConnect) return;
             const cleanUrl = cleanSubUrl(activeKeyForConnect);
             const rawDeepLink = app.deepLink(cleanUrl);
 
-            try { navigator.clipboard.writeText(cleanUrl); } catch (e) {}
+            copyTextSafe(cleanUrl);
             haptic('medium');
 
             const baseUrl = window.location.origin + window.location.pathname;
-            const bridgeUrl = `${baseUrl}?r=${encodeURIComponent(rawDeepLink)}&app=${encodeURIComponent(app.name)}&store=${encodeURIComponent(app.storeUrl)}&sub=${encodeURIComponent(cleanUrl)}`;
+            const fragment = new URLSearchParams({ r: rawDeepLink, app: app.name, store: app.storeUrl, sub: cleanUrl });
+            const bridgeUrl = `${baseUrl}#${fragment}`;
 
             if (window.Telegram?.WebApp?.openLink) {
                 window.Telegram.WebApp.openLink(bridgeUrl);
             } else {
-                window.open(bridgeUrl, '_blank');
+                window.open(bridgeUrl, '_blank', 'noopener');
             }
         }
 
-        function toggleQrCode() {
-            const box = document.getElementById('qrBox');
-            const img = document.getElementById('qrImage');
-            if (box.classList.contains('active')) {
-                box.classList.remove('active');
-            } else {
-                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(cleanSubUrl(activeKeyForConnect))}`;
-                box.classList.add('active');
-            }
-            haptic('light');
-        }
-
-        function copyCurrentKeyDirectly() {
-            navigator.clipboard.writeText(cleanSubUrl(activeKeyForConnect));
+        async function copyCurrentKeyDirectly() {
+            const ok = await copyTextSafe(cleanSubUrl(activeKeyForConnect));
             haptic('medium');
             closeCurtain('connectSheet');
-            try { tg.showAlert('✅ Чистая ссылка подписки скопирована в буфер обмена!'); } catch(e) {}
+            if (ok) {
+                triggerInAppPush('Ключ скопирован', 'Вставьте ссылку в приложение Happ, Hiddify, Incy или V2rayTun');
+            }
         }
 
-        function toggleKeyReveal(id, btn) {
+        function toggleKeyReveal(id) {
             const el = document.getElementById(id);
+            if (!el) return;
             const open = el.getAttribute('data-open') === '1';
             el.value = open ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
             el.setAttribute('data-open', open ? '0' : '1');
             haptic('light');
         }
 
-        function copyKeyValue(id, btn) {
-            navigator.clipboard.writeText(cleanSubUrl(document.getElementById(id).getAttribute('data-raw')));
+        async function copyKeyValue(id, btn) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            await copyTextSafe(cleanSubUrl(el.getAttribute('data-raw')));
             const old = btn.innerText;
             btn.innerText = '✓ OK';
             setTimeout(() => { btn.innerText = old; }, 1300);
             haptic('medium');
         }
 
-        function copyRefLink(btn) {
-            navigator.clipboard.writeText(`https://t.me/PinPointVPN_bot?start=${uid}`);
+        async function copyRefLink(btn) {
+            await copyTextSafe(`https://t.me/${botUsername}?start=${uid}`);
             const old = btn.innerText;
             btn.innerText = '✓ СКОПИРОВАНО';
             setTimeout(() => { btn.innerText = old; }, 1300);
@@ -1387,9 +1685,14 @@
         }
 
         function shareRefLink() {
-            const link = `https://t.me/PinPointVPN_bot?start=${uid}`;
-            const text = `Быстрый и надежный VPN, держи 24 часа бесплатного теста:`;
-            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);
+            const link = `https://t.me/${botUsername}?start=${uid}`;
+            const text = `PinPoint VPN — быстрый и стабильный интернет. Держи 24 часа бесплатного теста:`;
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
+            if (tg.openTelegramLink) {
+                tg.openTelegramLink(shareUrl);
+            } else {
+                window.open(shareUrl, '_blank');
+            }
         }
 
         function switchTab(tab) {
@@ -1409,8 +1712,8 @@
             haptic('light');
         }
 
-        function openCurtain(id) { document.getElementById(id).classList.add('active'); haptic('light'); }
-        function closeCurtain(id) { document.getElementById(id).classList.remove('active'); }
+        function openCurtain(id) { document.getElementById(id)?.classList.add('active'); haptic('light'); }
+        function closeCurtain(id) { document.getElementById(id)?.classList.remove('active'); }
 
         let chosenBoostGb = 0;
         let chosenSlotNum = 1;
@@ -1429,7 +1732,7 @@
         function chooseBoost(gb, price) {
             chosenBoostGb = gb;
             document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
-            document.getElementById(`b_${gb}`).classList.add('active');
+            document.getElementById(`b_${gb}`)?.classList.add('active');
             const btn = document.getElementById('boostPayBtn');
             btn.disabled = false;
             btn.innerText = `ДОБАВИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
@@ -1438,28 +1741,45 @@
 
         function dispatchBoost() {
             if (!chosenBoostGb) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=boost_${chosenBoostGb}_${chosenSlotNum}`);
-            tg.close();
+            const url = `https://t.me/${botUsername}?start=boost_${chosenBoostGb}_${chosenSlotNum}`;
+            if (tg.openTelegramLink) tg.openTelegramLink(url);
+            try { tg.close(); } catch (e) {}
         }
 
         function dispatchTopup() {
-            const val = parseInt(document.getElementById('topupInputVal').value, 10);
-            if (!val || val < 10) { alert('Минимальная сумма — 10 ₽'); return; }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=topup_${val}`);
-            tg.close();
+            const val = Number(document.getElementById('topupInputVal').value);
+            if (!Number.isInteger(val) || val < 10 || val > 100000) {
+                triggerInAppPush('Проверьте сумму', 'Введите целую сумму от 10 до 100 000 ₽');
+                return;
+            }
+            const url = `https://t.me/${botUsername}?start=topup_${val}`;
+            if (tg.openTelegramLink) tg.openTelegramLink(url);
+            try { tg.close(); } catch (e) {}
         }
 
         function requestTariff(planId) {
-            if (subs.length >= 2) { alert('У вас уже заняты оба доступных слота!'); return; }
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=buy_${planId}`);
-            tg.close();
+            if (!profileLoaded) {
+                triggerInAppPush('Подождите', 'Идет синхронизация профиля...');
+                return;
+            }
+            if (subs.length >= 2) {
+                triggerInAppPush('Лимит слотов', 'У вас уже активны 2 подписки из 2 доступных.');
+                return;
+            }
+            const url = `https://t.me/${botUsername}?start=buy_${planId}`;
+            if (tg.openTelegramLink) tg.openTelegramLink(url);
+            try { tg.close(); } catch (e) {}
         }
 
         function applyPromoCode() {
-            const val = document.getElementById('promoInput').value.trim();
-            if (!val) return;
-            tg.openTelegramLink(`https://t.me/PinPointVPN_bot?start=promo_${encodeURIComponent(val)}`);
-            tg.close();
+            const val = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (!/^[A-Z0-9_-]{1,32}$/.test(val)) {
+                triggerInAppPush('Неверный формат', 'Введите корректный промокод (латиница и цифры)');
+                return;
+            }
+            const url = `https://t.me/${botUsername}?start=promo_${encodeURIComponent(val)}`;
+            if (tg.openTelegramLink) tg.openTelegramLink(url);
+            try { tg.close(); } catch (e) {}
         }
 
         function toggleWalletSubtab(tab) {
@@ -1467,69 +1787,72 @@
             document.getElementById('subtab_history').classList.toggle('active', tab === 'history');
             document.getElementById('walletPayBlock').style.display = tab === 'pay' ? 'block' : 'none';
             document.getElementById('walletHistoryBlock').style.display = tab === 'history' ? 'block' : 'none';
-            if (tab === 'history') {
-                loadHistoryTransactions();
-            }
+            if (tab === 'history') loadHistoryTransactions();
             haptic('light');
         }
 
         async function loadHistoryTransactions() {
             const container = document.getElementById('txListContainer');
             try {
-                const resp = await fetch(`/api/user/transactions?user_id=${uid}`);
-                const data = await resp.json();
-                if (data.ok && data.txs.length > 0) {
+                const data = await api('/api/user/transactions');
+                if (data.ok && Array.isArray(data.txs) && data.txs.length > 0) {
                     container.innerHTML = data.txs.map(tx => `
                         <div class="tx-item">
                             <div>
                                 <div style="font-weight:700;">Пополнение баланса</div>
-                                <div style="font-size:10px; color:var(--text-muted);">${tx.date}</div>
+                                <div style="font-size:10px; color:var(--text-muted);">${escapeHtml(tx.date)}</div>
                             </div>
-                            <div class="mono" style="font-weight:800; color:var(--pastel);">+${tx.amount} ₽</div>
+                            <div class="mono" style="font-weight:800; color:var(--pastel);">+${Number(tx.amount)} ₽</div>
                         </div>
                     `).join('');
                 } else {
                     container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">У вас пока нет пополнений</div>`;
                 }
-            } catch(e) {
-                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История доступна после первого пополнения</div>`;
+            } catch (e) {
+                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История операций появится после первого пополнения</div>`;
             }
         }
 
-        let currentFx = localStorage.getItem('pp_fx_v7') || 'silk';
-        let currentParticleRgb = '168, 213, 186';
+        let currentFx = localStorage.getItem('pp_fx_v8') || 'silk';
+        let currentParticleRgb = '167, 139, 250';
 
         function updateParticleColorFromTheme(t) {
-            const map = { sage: '168, 213, 186', mauve: '203, 180, 232', sand: '92, 133, 110', slate: '167, 199, 231', obsidian: '255, 255, 255' };
-            currentParticleRgb = map[t] || '168, 213, 186';
+            const map = {
+                obsidian: '167, 139, 250',
+                sage: '101, 231, 181',
+                mauve: '197, 162, 255',
+                slate: '96, 165, 250',
+                sand: '21, 156, 112'
+            };
+            currentParticleRgb = map[t] || '167, 139, 250';
         }
 
         function setPastelTheme(t) {
             document.body.setAttribute('data-theme', t);
-            localStorage.setItem('pp_theme_v7', t);
+            localStorage.setItem('pp_theme_v8', t);
             updateParticleColorFromTheme(t);
             document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
             haptic('light');
         }
         function setFontChoice(f) {
             document.body.setAttribute('data-font', f);
-            localStorage.setItem('pp_font_v7', f);
+            localStorage.setItem('pp_font_v8', f);
             document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
             haptic('light');
         }
         function setBackdropFx(a) {
             currentFx = a;
-            localStorage.setItem('pp_fx_v7', a);
+            localStorage.setItem('pp_fx_v8', a);
             document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
             haptic('light');
         }
 
-        setPastelTheme(localStorage.getItem('pp_theme_v7') || 'sage');
-        setFontChoice(localStorage.getItem('pp_font_v7') || 'sora');
+        setPastelTheme(localStorage.getItem('pp_theme_v8') || 'obsidian');
+        setFontChoice(localStorage.getItem('pp_font_v8') || 'sora');
         setBackdropFx(currentFx);
 
         function executeIntro() {
-            if (p.has('r')) return;
+            if (isBridgeMode) return;
             const intro = document.getElementById('fadeIntro');
             const tit = document.getElementById('introTitle');
             const sub = document.getElementById('introSub');
@@ -1538,37 +1861,38 @@
             intro.style.display = 'flex';
             requestAnimationFrame(() => {
                 intro.style.opacity = '1';
-                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 100);
-                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1700);
+                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 80);
+                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
                 setTimeout(() => {
                     cfg.style.display = 'flex';
                     requestAnimationFrame(() => { cfg.classList.add('show'); });
                     intro.style.opacity = '0';
-                    setTimeout(() => { intro.style.display = 'none'; }, 500);
-                }, 2200);
+                    setTimeout(() => { intro.style.display = 'none'; }, 450);
+                }, 2300);
             });
         }
 
         function completeFirstRun() {
-            localStorage.setItem('pp_onboarded_v7', '1');
+            localStorage.setItem('pp_onboarded_v8', '1');
             const cfg = document.getElementById('firstRunConfig');
             cfg.classList.remove('show');
-            setTimeout(() => { cfg.style.display = 'none'; }, 350);
+            setTimeout(() => { cfg.style.display = 'none'; }, 320);
             haptic('medium');
         }
 
         function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v7');
+            localStorage.removeItem('pp_onboarded_v8');
             executeIntro();
         }
 
-        if (!localStorage.getItem('pp_onboarded_v7') && !p.has('r')) {
+        if (!localStorage.getItem('pp_onboarded_v8') && !isBridgeMode) {
             executeIntro();
         }
 
         const canvas = document.getElementById('fxCanvas');
         const ctx = canvas.getContext('2d');
-        let width, height;
+        let width = window.innerWidth;
+        let height = window.innerHeight;
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
@@ -1591,7 +1915,7 @@
 
         function animateCanvas(now = 0) {
             requestAnimationFrame(animateCanvas);
-            if (now - lastFxFrame < 33) return;
+            if (!ctx || document.hidden || now - lastFxFrame < 33) return;
             lastFxFrame = now;
 
             ctx.clearRect(0, 0, width, height);
@@ -1655,6 +1979,13 @@
             }
         }
         requestAnimationFrame(animateCanvas);
+        refreshProfile();
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshProfile(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.curtain-wrap.active').forEach(el => closeCurtain(el.id));
+            }
+        });
     </script>
 </body>
 </html>
