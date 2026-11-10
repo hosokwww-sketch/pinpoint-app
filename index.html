@@ -11,125 +11,87 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root, body[data-theme="obsidian"] {
+        :root {
             color-scheme: dark;
             --bg: #000000;
-            --bg-grad: radial-gradient(circle at 50% -15%, rgba(124, 92, 255, .15), transparent 52%), radial-gradient(circle at 85% 25%, rgba(56, 189, 248, .08), transparent 45%);
-            --surface: rgba(11, 12, 16, .96);
-            --surface-sub: rgba(18, 20, 26, .94);
-            --surface-elevated: rgba(26, 29, 38, .96);
-            --border: rgba(255, 255, 255, .09);
-            --border-glow: rgba(139, 92, 246, .35);
+            --surface: rgba(12, 13, 17, 0.88);
+            --surface-sub: rgba(19, 21, 27, 0.88);
+            --surface-elevated: rgba(26, 29, 37, 0.92);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.18);
             --text-main: #ffffff;
-            --text-muted: #8e95a5;
-            --pastel: #a78bfa;
-            --pastel-soft: rgba(167, 139, 250, .13);
-            --pastel-fg: #080514;
-            --particle-color: 167, 139, 250;
-            --state-ok: #4ade80;
+            --text-muted: #8a919e;
+            --accent: #ffffff;
+            --accent-fg: #000000;
+            --accent-soft: rgba(255, 255, 255, 0.08);
+            --state-ok: #34d399;
             --state-warn: #fbbf24;
             --state-crit: #f87171;
-            --shadow: 0 22px 55px rgba(0, 0, 0, .65);
-            --radius: 24px;
-        }
-        body[data-theme="sage"] {
-            color-scheme: dark;
-            --bg: #070b10;
-            --bg-grad: radial-gradient(circle at 15% -10%, rgba(101, 231, 181, .16), transparent 45%), radial-gradient(circle at 90% 25%, rgba(56, 139, 255, .10), transparent 45%);
-            --surface: rgba(15, 22, 32, .88);
-            --surface-sub: rgba(22, 31, 44, .82);
-            --surface-elevated: rgba(29, 41, 58, .88);
-            --border: rgba(185, 208, 235, .10);
-            --border-glow: rgba(101, 231, 181, .28);
-            --text-main: #f3f7fa;
-            --text-muted: #8493a6;
-            --pastel: #65e7b5;
-            --pastel-soft: rgba(101, 231, 181, .12);
-            --pastel-fg: #05160e;
-            --particle-color: 101, 231, 181;
-            --state-ok: #65e7b5;
-        }
-        body[data-theme="mauve"] {
-            color-scheme: dark;
-            --bg: #090612;
-            --bg-grad: radial-gradient(circle at 20% -10%, rgba(197, 162, 255, .18), transparent 48%), radial-gradient(circle at 90% 30%, rgba(124, 92, 255, .10), transparent 45%);
-            --surface: rgba(20, 15, 32, .90);
-            --surface-sub: rgba(30, 23, 46, .84);
-            --surface-elevated: rgba(40, 31, 60, .90);
-            --border: rgba(212, 190, 255, .12);
-            --border-glow: rgba(197, 162, 255, .32);
-            --text-main: #f7f2ff;
-            --text-muted: #9c90b0;
-            --pastel: #c5a2ff;
-            --pastel-soft: rgba(197, 162, 255, .13);
-            --pastel-fg: #160c28;
-            --particle-color: 197, 162, 255;
-            --state-ok: #8de3c2;
-        }
-        body[data-theme="slate"] {
-            color-scheme: dark;
-            --bg: #060b14;
-            --bg-grad: radial-gradient(circle at 20% -10%, rgba(96, 165, 250, .18), transparent 48%), radial-gradient(circle at 85% 30%, rgba(59, 130, 246, .10), transparent 45%);
-            --surface: rgba(14, 23, 38, .90);
-            --surface-sub: rgba(22, 34, 53, .84);
-            --surface-elevated: rgba(30, 45, 68, .90);
-            --border: rgba(167, 199, 231, .12);
-            --border-glow: rgba(96, 165, 250, .30);
-            --text-main: #f0f6fd;
-            --text-muted: #8b9eb3;
-            --pastel: #60a5fa;
-            --pastel-soft: rgba(96, 165, 250, .13);
-            --pastel-fg: #051224;
-            --particle-color: 96, 165, 250;
-            --state-ok: #7ee2c0;
-        }
-        body[data-theme="sand"] {
-            color-scheme: light;
-            --bg: #f2f4f1;
-            --bg-grad: radial-gradient(circle at 20% -10%, rgba(21, 156, 112, .12), transparent 48%);
-            --surface: rgba(255, 255, 255, .94);
-            --surface-sub: rgba(240, 244, 240, .92);
-            --surface-elevated: rgba(232, 238, 233, .95);
-            --border: rgba(24, 43, 36, .09);
-            --border-glow: rgba(21, 156, 112, .25);
-            --text-main: #14221c;
-            --text-muted: #6d7e75;
-            --pastel: #159c70;
-            --pastel-soft: rgba(21, 156, 112, .10);
-            --pastel-fg: #ffffff;
-            --particle-color: 21, 156, 112;
-            --state-ok: #159c70;
-            --state-warn: #c47d17;
-            --state-crit: #cf4455;
-            --shadow: 0 16px 40px rgba(27, 45, 36, .08);
+            --radius: 22px;
         }
 
-        body[data-font="sora"] { font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif; }
-        body[data-font="geist"] { font-family: 'JetBrains Mono', monospace; }
-        body[data-font="epilogue"] { font-family: Inter, -apple-system, sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        html { min-height: 100%; background: var(--bg); scroll-behavior: smooth; }
+        html {
+            min-height: 100%;
+            background: #000000;
+            scroll-behavior: smooth;
+        }
+
         body {
             min-height: 100vh;
-            padding: 16px 16px 124px;
+            padding: 16px 16px 120px;
             overflow-x: hidden;
             color: var(--text-main);
-            background-color: var(--bg);
-            background-image: var(--bg-grad);
-            background-attachment: fixed;
+            background-color: #000000;
+            font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif;
             font-size: 14px;
             line-height: 1.45;
             letter-spacing: -0.012em;
-            transition: background .3s, color .3s;
         }
-        button, input { font: inherit; color: inherit; }
-        button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--pastel); outline-offset: 2px; }
-        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.03em; }
-        #fxCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; opacity: .55; }
-        .view-layer { position: relative; z-index: 2; width: min(100%, 480px); margin: 0 auto; }
 
-        /* --- ШАПКА --- */
+        button, input {
+            font: inherit;
+            color: inherit;
+        }
+
+        button:focus-visible, a:focus-visible, input:focus-visible {
+            outline: 2px solid var(--border-strong);
+            outline-offset: 2px;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.03em;
+        }
+
+        /* Плавающий мягкий свет на фоне */
+        #ambientLightCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.85;
+            filter: blur(48px);
+            -webkit-filter: blur(48px);
+            transform: translateZ(0);
+        }
+
+        .view-layer {
+            position: relative;
+            z-index: 2;
+            width: min(100%, 480px);
+            margin: 0 auto;
+        }
+
+        /* --- ВЕРХНЯЯ ШАПКА --- */
         .app-topbar {
             display: flex;
             align-items: center;
@@ -138,12 +100,12 @@
             margin-bottom: 14px;
             padding: 10px 12px;
             border: 1px solid var(--border);
-            border-radius: 22px;
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow);
+            border-radius: 20px;
+            background-color: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
+
         .brand {
             display: inline-flex;
             align-items: center;
@@ -152,50 +114,86 @@
             color: var(--text-main);
             min-width: 0;
         }
+
         .brand-symbol {
             width: 38px;
             height: 38px;
-            border-radius: 13px;
-            background: var(--pastel-soft);
-            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            background-color: var(--surface-sub);
+            border: 1px solid var(--border-strong);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--pastel);
+            color: var(--text-main);
             flex-shrink: 0;
         }
-        .brand-symbol svg { width: 20px; height: 20px; fill: currentColor; }
-        .brand-title { display: flex; flex-direction: column; line-height: 1.1; }
-        .brand-name { font-size: 16px; font-weight: 800; letter-spacing: -0.03em; }
-        .brand-period { color: var(--pastel); }
-        .brand-tag { font-size: 9px; font-weight: 800; letter-spacing: .12em; color: var(--text-muted); margin-top: 2px; }
 
-        .topbar-right { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .brand-symbol svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .brand-title {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
         .user-capsule {
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 4px 10px 4px 5px;
-            border-radius: 14px;
+            border-radius: 13px;
             border: 1px solid var(--border);
-            background: var(--surface-sub);
+            background-color: var(--surface-sub);
             min-width: 0;
         }
+
         .operator-avatar {
             width: 30px;
             height: 30px;
-            border-radius: 10px;
+            border-radius: 9px;
             object-fit: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--pastel-soft);
-            color: var(--pastel);
+            background-color: var(--surface-elevated);
+            color: var(--text-main);
             font-size: 13px;
             font-weight: 800;
             flex-shrink: 0;
         }
-        .user-meta { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; }
+
+        .user-meta {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            line-height: 1.15;
+        }
+
         .op-title {
             max-width: 96px;
             overflow: hidden;
@@ -204,23 +202,37 @@
             font-size: 12px;
             font-weight: 800;
         }
-        .profile-id { font-size: 9px; color: var(--text-muted); font-weight: 600; }
+
+        .profile-id {
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
         .icon-button {
             width: 38px;
             height: 38px;
-            border-radius: 13px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            background: var(--surface-sub);
+            background-color: var(--surface-sub);
             color: var(--text-main);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: .18s;
+            transition: border-color 0.18s, background-color 0.18s;
             flex-shrink: 0;
         }
-        .icon-button svg { width: 18px; height: 18px; }
-        .icon-button:hover { border-color: var(--pastel); color: var(--pastel); }
+
+        .icon-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .icon-button:hover {
+            border-color: var(--border-strong);
+            background-color: var(--surface-elevated);
+        }
 
         /* --- БЛОК БАЛАНСА --- */
         .vault-hero {
@@ -228,15 +240,13 @@
             overflow: hidden;
             margin-bottom: 18px;
             padding: 22px 20px 18px;
-            border: 1px solid var(--border-glow);
-            border-radius: 28px;
-            background:
-                radial-gradient(circle at 92% 14%, var(--pastel-soft), transparent 52%),
-                linear-gradient(155deg, var(--surface), var(--surface-sub));
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid var(--border-strong);
+            border-radius: 26px;
+            background-color: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
+
         .vault-top {
             display: flex;
             align-items: flex-start;
@@ -244,28 +254,30 @@
             gap: 12px;
             margin-bottom: 18px;
         }
+
         .vault-label {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             padding: 4px 10px;
             border-radius: 999px;
-            background: var(--pastel-soft);
-            border: 1px solid var(--border-glow);
-            color: var(--pastel);
+            background-color: var(--surface-sub);
+            border: 1px solid var(--border);
+            color: var(--text-main);
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: .1em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             margin-bottom: 8px;
         }
+
         .vault-label-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--state-ok);
-            box-shadow: 0 0 8px var(--state-ok);
+            background-color: var(--state-ok);
         }
+
         .balance-num {
             font-size: 38px;
             font-weight: 800;
@@ -273,23 +285,40 @@
             line-height: 1.05;
             color: var(--text-main);
         }
-        .vault-subtext { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+        .vault-subtext {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
         .vault-orbit {
-            width: 56px;
-            height: 56px;
-            border-radius: 18px;
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            background: var(--surface-elevated);
+            background-color: var(--surface-sub);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--pastel);
+            color: var(--text-main);
             flex-shrink: 0;
         }
-        .vault-orbit svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 1.8; }
-        .vault-actions { display: grid; grid-template-columns: 1.35fr 1fr; gap: 9px; }
 
-        /* --- КНОПКИ --- */
+        .vault-orbit svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+        }
+
+        .vault-actions {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 9px;
+        }
+
+        /* --- КНОПКИ (СТРОГИЕ, БЕЗ ГРАДИЕНТА) --- */
         .btn-pastel, .btn-subtle {
             min-height: 44px;
             padding: 11px 15px;
@@ -297,41 +326,74 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            border-radius: 15px;
+            border-radius: 14px;
             text-align: center;
             text-decoration: none;
             font-size: 12px;
             font-weight: 800;
             cursor: pointer;
-            transition: transform .16s, background .18s, border-color .18s, opacity .18s;
+            transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
         }
+
         .btn-pastel {
-            border: 1px solid transparent;
-            background: var(--pastel);
-            color: var(--pastel-fg);
-            box-shadow: 0 8px 24px color-mix(in srgb, var(--pastel) 24%, transparent);
+            border: 1px solid var(--accent);
+            background-color: var(--accent);
+            color: var(--accent-fg);
         }
+
         .btn-subtle {
             border: 1px solid var(--border);
-            background: var(--surface-sub);
+            background-color: var(--surface-sub);
             color: var(--text-main);
         }
-        .btn-pastel:hover, .btn-subtle:hover { transform: translateY(-1px); border-color: var(--pastel); }
-        .btn-pastel:active, .btn-subtle:active { transform: scale(.98); }
-        button:disabled { opacity: .45; cursor: not-allowed; transform: none !important; }
 
-        .subhead { color: var(--text-muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-        .section-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 22px 2px 10px; }
-        .section-label { color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-        .pill-badge {
-            padding: 5px 10px;
-            border: 1px solid var(--border-glow);
-            border-radius: 999px;
-            background: var(--pastel-soft);
-            color: var(--pastel);
+        .btn-pastel:hover, .btn-subtle:hover {
+            border-color: var(--border-strong);
+        }
+
+        .btn-pastel:active, .btn-subtle:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .subhead {
+            color: var(--text-muted);
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: .04em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .section-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 22px 2px 10px;
+        }
+
+        .section-label {
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .pill-badge {
+            padding: 5px 10px;
+            border: 1px solid var(--border-strong);
+            border-radius: 999px;
+            background-color: var(--surface-sub);
+            color: var(--text-main);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
         }
 
         .card {
@@ -341,40 +403,49 @@
             padding: 18px;
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            background: var(--surface);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background-color: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         /* --- СЛОТЫ ПОДКЛЮЧЕНИЙ --- */
         .slot-card {
             padding: 0;
-            border-radius: 26px;
+            border-radius: 24px;
             border: 1px solid var(--border);
-            background: var(--surface);
+            background-color: var(--surface);
             margin-bottom: 14px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
+
         .slot-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
             padding: 14px 18px;
-            background: var(--surface-sub);
+            background-color: var(--surface-sub);
             border-bottom: 1px solid var(--border);
         }
-        .slot-title-wrap { display: flex; align-items: center; gap: 9px; min-width: 0; flex: 1; }
+
+        .slot-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+            flex: 1;
+        }
+
         .soft-beacon {
-            width: 9px;
-            height: 9px;
+            width: 8px;
+            height: 8px;
             flex: none;
             border-radius: 50%;
-            background: var(--state-ok);
-            box-shadow: 0 0 12px var(--state-ok);
+            background-color: var(--state-ok);
         }
+
         .slot-name-field {
             width: 100%;
             max-width: 175px;
@@ -382,14 +453,20 @@
             border: 1px solid transparent;
             border-radius: 8px;
             outline: 0;
-            background: transparent;
+            background-color: transparent;
             color: var(--text-main);
             font-size: 14px;
             font-weight: 800;
-            transition: border-color .15s, background .15s;
         }
-        .slot-name-field:focus { border-color: var(--pastel); background: var(--surface); }
-        .slot-body { padding: 16px 18px 18px; }
+
+        .slot-name-field:focus {
+            border-color: var(--border-strong);
+            background-color: var(--surface);
+        }
+
+        .slot-body {
+            padding: 16px 18px 18px;
+        }
 
         .traffic-bento {
             display: grid;
@@ -399,28 +476,88 @@
             margin-bottom: 14px;
             padding: 14px;
             border: 1px solid var(--border);
-            border-radius: 20px;
-            background: var(--surface-sub);
+            border-radius: 18px;
+            background-color: var(--surface-sub);
         }
-        .gauge-svg-wrap { position: relative; width: 70px; height: 70px; margin: 0 auto; }
-        .gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .gauge-track, .gauge-flow { fill: none; stroke-width: 4.2; }
-        .gauge-track { stroke: var(--border); }
-        .gauge-flow { stroke: var(--pastel); stroke-linecap: round; transition: stroke-dasharray .4s ease; }
-        .gauge-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .gauge-pct { font-size: 14px; font-weight: 800; }
 
-        .pill-meter { display: grid; grid-template-columns: repeat(14, 1fr); gap: 3px; margin: 9px 0; }
-        .pill-cell { height: 6px; border-radius: 6px; background: var(--border); }
-        .pill-cell.filled { background: var(--pastel); }
-        .pill-cell.warn { background: var(--state-warn); }
-        .pill-cell.crit { background: var(--state-crit); }
+        .gauge-svg-wrap {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto;
+        }
 
-        .slot-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+        .gauge-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-track, .gauge-flow {
+            fill: none;
+            stroke-width: 4.2;
+        }
+
+        .gauge-track {
+            stroke: var(--border);
+        }
+
+        .gauge-flow {
+            stroke: var(--text-main);
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.4s ease;
+        }
+
+        .gauge-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gauge-pct {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .pill-meter {
+            display: grid;
+            grid-template-columns: repeat(14, 1fr);
+            gap: 3px;
+            margin: 9px 0;
+        }
+
+        .pill-cell {
+            height: 6px;
+            border-radius: 6px;
+            background-color: var(--border);
+        }
+
+        .pill-cell.filled {
+            background-color: var(--text-main);
+        }
+
+        .pill-cell.warn {
+            background-color: var(--state-warn);
+        }
+
+        .pill-cell.crit {
+            background-color: var(--state-crit);
+        }
+
+        .slot-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
         .spec-chip {
             padding: 7px 10px;
-            border-radius: 11px;
-            background: var(--surface);
+            border-radius: 10px;
+            background-color: var(--surface);
             border: 1px solid var(--border);
             font-size: 10px;
             color: var(--text-muted);
@@ -428,7 +565,11 @@
             align-items: center;
             justify-content: space-between;
         }
-        .spec-chip b { color: var(--text-main); font-weight: 700; }
+
+        .spec-chip b {
+            color: var(--text-main);
+            font-weight: 700;
+        }
 
         .key-capsule {
             display: grid;
@@ -438,9 +579,10 @@
             margin: 10px 0 12px;
             padding: 6px 6px 6px 12px;
             border: 1px solid var(--border);
-            border-radius: 15px;
-            background: var(--surface-sub);
+            border-radius: 14px;
+            background-color: var(--surface-sub);
         }
+
         .key-text {
             width: 100%;
             overflow: hidden;
@@ -453,47 +595,92 @@
         }
 
         .empty-slot-card {
-            border: 1px dashed var(--border-glow);
-            border-radius: 24px;
-            background: linear-gradient(145deg, var(--surface), var(--surface-sub));
+            border: 1px dashed var(--border-strong);
+            border-radius: 22px;
+            background-color: var(--surface);
             padding: 20px 18px;
             margin-bottom: 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 14px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         /* --- РЕФЕРАЛКА И ПРОМО --- */
-        .ref-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
-        .ref-stat-box { padding: 11px 12px; border-radius: 15px; background: var(--surface-sub); border: 1px solid var(--border); }
-        .ref-progress-track { height: 8px; margin: 10px 0 14px; border-radius: 99px; background: var(--surface-sub); overflow: hidden; border: 1px solid var(--border); }
-        .ref-progress-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--pastel), color-mix(in srgb, var(--pastel) 60%, #38bdf8)); transition: width .35s; }
+        .ref-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .ref-stat-box {
+            padding: 11px 12px;
+            border-radius: 14px;
+            background-color: var(--surface-sub);
+            border: 1px solid var(--border);
+        }
+
+        .ref-progress-track {
+            height: 8px;
+            margin: 10px 0 14px;
+            border-radius: 99px;
+            background-color: var(--surface-sub);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .ref-progress-bar {
+            height: 100%;
+            border-radius: 99px;
+            background-color: var(--text-main);
+            transition: width 0.35s;
+        }
 
         .ambient-field {
             width: 100%;
             min-height: 44px;
             padding: 11px 14px;
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 13px;
             outline: 0;
-            background: var(--surface-sub);
+            background-color: var(--surface-sub);
             color: var(--text-main);
             font-size: 13px;
         }
-        .ambient-field::placeholder { color: var(--text-muted); }
-        .ambient-field:focus { border-color: var(--pastel); }
+
+        .ambient-field::placeholder {
+            color: var(--text-muted);
+        }
+
+        .ambient-field:focus {
+            border-color: var(--border-strong);
+        }
 
         /* --- ТАРИФЫ --- */
         .page-banner {
             padding: 20px;
-            border-radius: 26px;
+            border-radius: 24px;
             border: 1px solid var(--border);
-            background: linear-gradient(145deg, var(--surface), var(--surface-sub));
+            background-color: var(--surface);
             margin-bottom: 16px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
-        .page-banner h1 { font-size: 23px; font-weight: 800; letter-spacing: -0.03em; margin: 4px 0 6px; }
-        .page-banner p { font-size: 12px; color: var(--text-muted); }
+
+        .page-banner h1 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin: 4px 0 6px;
+        }
+
+        .page-banner p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
 
         .tariff-slab {
             position: relative;
@@ -501,61 +688,119 @@
             margin-bottom: 14px;
             padding: 18px;
             border: 1px solid var(--border);
-            border-radius: 24px;
-            background: var(--surface);
-            box-shadow: var(--shadow);
+            border-radius: 22px;
+            background-color: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: flex;
             flex-direction: column;
             gap: 13px;
         }
+
         .tariff-slab.featured {
-            border-color: var(--pastel);
-            background: radial-gradient(circle at 100% 0%, var(--pastel-soft), transparent 55%), var(--surface);
+            border-color: var(--border-strong);
+            background-color: var(--surface-sub);
         }
-        .tariff-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-        .tariff-price-block { text-align: right; flex-shrink: 0; }
-        .tariff-price { font-size: 22px; font-weight: 800; color: var(--pastel); line-height: 1.1; }
-        .old-price { display: block; color: var(--text-muted); font-size: 11px; text-decoration: line-through; }
-        .tariff-specs-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+
+        .tariff-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .tariff-price-block {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .tariff-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .old-price {
+            display: block;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-decoration: line-through;
+        }
+
+        .tariff-specs-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+        }
+
         .t-spec {
             padding: 8px 10px;
-            border-radius: 13px;
-            background: var(--surface-sub);
+            border-radius: 12px;
+            background-color: var(--surface-sub);
             border: 1px solid var(--border);
             text-align: center;
         }
-        .t-spec span { display: block; font-size: 9px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-        .t-spec b { font-size: 12px; font-weight: 800; color: var(--text-main); margin-top: 2px; display: block; }
 
-        /* --- НАСТРОЙКИ --- */
-        .grid-duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-        .grid-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .tariff-slab.featured .t-spec {
+            background-color: var(--surface);
+        }
+
+        .t-spec span {
+            display: block;
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .t-spec b {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* --- СЕТКИ И ЯЧЕЙКИ --- */
+        .grid-duo {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+        }
+
+        .grid-trio {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
         .picker-cell {
             min-width: 0;
-            min-height: 46px;
+            min-height: 44px;
             padding: 10px 12px;
             border: 1px solid var(--border);
-            border-radius: 15px;
-            background: var(--surface-sub);
+            border-radius: 14px;
+            background-color: var(--surface-sub);
             color: var(--text-muted);
             font-size: 12px;
             font-weight: 800;
             display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
             cursor: pointer;
-            transition: .18s;
+            transition: border-color 0.15s, background-color 0.15s, color 0.15s;
         }
-        .picker-cell.active, .picker-cell:hover {
-            border-color: var(--pastel);
-            background: var(--pastel-soft);
-            color: var(--pastel);
-        }
-        .tone-dot { width: 16px; height: 16px; border: 1px solid var(--border); border-radius: 50%; flex-shrink: 0; }
-        .settings-group-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 
-        /* --- НИЖНИЙ ДОК --- */
+        .picker-cell.active, .picker-cell:hover {
+            border-color: var(--border-strong);
+            background-color: var(--accent-soft);
+            color: var(--text-main);
+        }
+
+        /* --- НИЖНЯЯ НАВИГАЦИЯ --- */
         .bottom-shelf {
             position: fixed;
             z-index: 90;
@@ -568,18 +813,18 @@
             gap: 6px;
             transform: translateX(-50%);
             border: 1px solid var(--border);
-            border-radius: 22px;
-            background: color-mix(in srgb, var(--surface) 92%, transparent);
-            box-shadow: 0 14px 44px rgba(0, 0, 0, .55);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            border-radius: 20px;
+            background-color: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
+
         .shelf-tab {
             min-height: 48px;
             padding: 6px 8px;
-            border: 0;
-            border-radius: 16px;
-            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 14px;
+            background-color: transparent;
             color: var(--text-muted);
             font-size: 11px;
             font-weight: 800;
@@ -589,18 +834,42 @@
             justify-content: center;
             gap: 3px;
             cursor: pointer;
-            transition: .18s;
-        }
-        .shelf-tab svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; }
-        .shelf-tab.active {
-            background: var(--pastel);
-            color: var(--pastel-fg);
-            box-shadow: 0 6px 18px color-mix(in srgb, var(--pastel) 25%, transparent);
+            transition: background-color 0.15s, color 0.15s;
         }
 
-        .tab-content { display: block; visibility: hidden; height: 0; overflow: hidden; opacity: 0; pointer-events: none; transition: opacity .22s; }
-        .tab-content.active { height: auto; visibility: visible; overflow: visible; pointer-events: auto; }
-        .tab-content.show { opacity: 1; }
+        .shelf-tab svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .shelf-tab.active {
+            background-color: var(--accent);
+            color: var(--accent-fg);
+        }
+
+        .tab-content {
+            display: block;
+            visibility: hidden;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .tab-content.active {
+            height: auto;
+            visibility: visible;
+            overflow: visible;
+            pointer-events: auto;
+        }
+
+        .tab-content.show {
+            opacity: 1;
+        }
 
         /* --- ШТОРКИ --- */
         .curtain-wrap {
@@ -611,32 +880,44 @@
             align-items: flex-end;
             justify-content: center;
             padding: 12px;
-            background: rgba(2, 5, 10, .76);
-            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(8px);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity .2s, visibility .2s;
+            transition: opacity 0.2s, visibility 0.2s;
         }
-        .curtain-wrap.active { opacity: 1; visibility: visible; pointer-events: auto; }
+
+        .curtain-wrap.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
         .curtain-panel {
             width: 100%;
             max-width: 480px;
             max-height: 88vh;
             overflow: auto;
             padding: 18px 18px max(24px, env(safe-area-inset-bottom));
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            background: var(--bg);
-            box-shadow: var(--shadow);
+            border: 1px solid var(--border-strong);
+            border-radius: 26px;
+            background-color: #08090c;
             transform: translateY(16px);
-            transition: transform .24s;
+            transition: transform 0.22s ease;
         }
-        .curtain-wrap.active .curtain-panel { transform: translateY(0); }
-        .sheet-handle { width: 42px; height: 4px; border-radius: 99px; background: var(--border); margin: 0 auto 14px; }
 
-        .qr-box { width: fit-content; margin: 12px auto; padding: 14px; display: none; flex-direction: column; align-items: center; border-radius: 18px; background: #fff; }
-        .qr-box.active { display: flex; }
+        .curtain-wrap.active .curtain-panel {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 42px;
+            height: 4px;
+            border-radius: 99px;
+            background-color: var(--border-strong);
+            margin: 0 auto 14px;
+        }
 
         #inAppPush {
             position: fixed;
@@ -650,15 +931,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            border: 1px solid var(--pastel);
-            border-radius: 18px;
-            background: var(--surface);
-            box-shadow: var(--shadow);
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            background-color: #0b0c10;
             opacity: 0;
-            transition: top .35s, opacity .3s;
-            backdrop-filter: blur(18px);
+            transition: top 0.3s ease, opacity 0.25s ease;
         }
-        #inAppPush.show { top: 14px; opacity: 1; }
+
+        #inAppPush.show {
+            top: 14px;
+            opacity: 1;
+        }
 
         .tx-item {
             display: flex;
@@ -668,12 +951,12 @@
             margin-bottom: 8px;
             padding: 12px 14px;
             border: 1px solid var(--border);
-            border-radius: 15px;
-            background: var(--surface-sub);
+            border-radius: 14px;
+            background-color: var(--surface-sub);
             font-size: 12px;
         }
 
-        #fadeIntro, #firstRunConfig, #bridgeRedirectScreen {
+        #fadeIntro, #bridgeRedirectScreen {
             position: fixed;
             inset: 0;
             z-index: 300;
@@ -681,17 +964,40 @@
             align-items: center;
             justify-content: center;
             padding: 24px;
-            background: var(--bg);
+            background-color: #000000;
+            flex-direction: column;
+            text-align: center;
         }
-        #fadeIntro { flex-direction: column; text-align: center; }
-        .fade-greeting { color: var(--text-main); font-size: 32px; font-weight: 800; letter-spacing: -0.04em; opacity: 0; transform: translateY(8px); transition: opacity .45s, transform .45s; }
-        .fade-caption { margin-top: 10px; color: var(--pastel); font-size: 13px; font-weight: 700; letter-spacing: .08em; opacity: 0; transform: translateY(8px); transition: opacity .45s .1s, transform .45s .1s; }
-        .fade-greeting.show, .fade-caption.show { opacity: 1; transform: translateY(0); }
-        #firstRunConfig { z-index: 260; flex-direction: column; justify-content: space-between; align-items: stretch; overflow: auto; opacity: 0; transition: opacity .3s; }
-        #firstRunConfig.show { opacity: 1; }
-        #bridgeRedirectScreen { z-index: 1000; flex-direction: column; text-align: center; }
 
-        ::selection { background: var(--pastel); color: var(--pastel-fg); }
+        .fade-greeting {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s, transform 0.45s;
+        }
+
+        .fade-caption {
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s 0.1s, transform 0.45s 0.1s;
+        }
+
+        .fade-greeting.show, .fade-caption.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #bridgeRedirectScreen {
+            z-index: 1000;
+        }
 
         @media (max-width: 380px) {
             body { padding: 12px 12px 114px; }
@@ -703,15 +1009,11 @@
             .key-capsule { grid-template-columns: minmax(0, 1fr) auto; }
             .key-capsule .btn-subtle:last-child { grid-column: 1 / -1; }
         }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
-            #fxCanvas { display: none; }
-        }
     </style>
 </head>
-<body data-theme="obsidian" data-font="sora">
+<body>
 
-    <canvas id="fxCanvas"></canvas>
+    <canvas id="ambientLightCanvas"></canvas>
 
     <!-- ЭКРАН ПЕРЕНАПРАВЛЕНИЯ В КЛИЕНТ -->
     <div id="bridgeRedirectScreen">
@@ -730,9 +1032,9 @@
         </div>
     </div>
 
-    <!-- УВЕДОМЛЕНИЯ ВНУТРИ ПРИЛОЖЕНИЯ -->
+    <!-- ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ -->
     <div id="inAppPush">
-        <div style="width:36px; height:36px; border-radius:12px; background:var(--pastel-soft); color:var(--pastel); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
+        <div style="width:34px; height:34px; border-radius:10px; background:var(--surface-sub); border:1px solid var(--border-strong); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;">
             ✓
         </div>
         <div style="flex:1; min-width:0;">
@@ -741,60 +1043,10 @@
         </div>
     </div>
 
-    <!-- ИНТРО ПРИ ПЕРВОМ ЗАПУСКЕ -->
+    <!-- ЗАСТАВКА ПРИ ПЕРВОМ ЗАПУСКЕ -->
     <div id="fadeIntro">
         <div id="introTitle" class="fade-greeting">PinPoint VPN</div>
         <div id="introSub" class="fade-caption">Доступ в свободный интернет</div>
-    </div>
-
-    <!-- ПЕРВЫЙ ЗАПУСК (ВЫБОР ТЕМЫ) -->
-    <div id="firstRunConfig">
-        <div style="max-width:440px; margin:0 auto; width:100%;">
-            <div class="subhead" style="margin-bottom:4px;">PINPOINT VPN</div>
-            <div style="font-size:24px; font-weight:800; margin-bottom:6px; letter-spacing:-0.03em;">Выберите оформление</div>
-            <div style="font-size:13px; color:var(--text-muted); margin-bottom:18px; line-height:1.45;">
-                По умолчанию активна глубокая темная тема OLED. Вы можете изменить палитру в любой момент.
-            </div>
-
-            <div class="section-row"><span class="section-label">Цветовая палитра</span></div>
-            <div class="grid-duo" style="margin-bottom:14px;">
-                <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#2a2a35;">
-                    <span>⬛️ OLED ЧЕРНАЯ ТЕМА (ПО УМОЛЧАНИЮ)</span>
-                </button>
-                <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                    <span>🌿 Шалфей</span><span class="tone-dot" style="background:#65e7b5;"></span>
-                </button>
-                <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                    <span>🔮 Аметист</span><span class="tone-dot" style="background:#c5a2ff;"></span>
-                </button>
-                <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                    <span>❄️ Нордик</span><span class="tone-dot" style="background:#60a5fa;"></span>
-                </button>
-                <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                    <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f2f4f1; border-color:#159c70;"></span>
-                </button>
-            </div>
-
-            <div class="section-row"><span class="section-label">Стиль текста</span></div>
-            <div class="grid-trio" style="margin-bottom:14px;">
-                <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
-                <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
-                <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
-            </div>
-
-            <div class="section-row"><span class="section-label">Анимация фона</span></div>
-            <div class="grid-trio">
-                <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
-                <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
-                <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ФОНА</button>
-            </div>
-        </div>
-
-        <div style="max-width:440px; margin:0 auto; width:100%; margin-top:24px;">
-            <button onclick="completeFirstRun()" class="btn-pastel" style="width:100%; padding:15px; font-size:13px;">
-                ПРОДОЛЖИТЬ В КАБИНЕТ →
-            </button>
-        </div>
     </div>
 
     <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
@@ -804,10 +1056,10 @@
         <header class="app-topbar">
             <a class="brand" href="#" onclick="switchTab('cabinet');return false" aria-label="PinPoint VPN">
                 <span class="brand-symbol" aria-hidden="true">
-                    <svg viewBox="0 0 32 32"><path d="M16 3 28 10v12L16 29 4 22V10Z"/><path d="m10 19 6-11 6 11-6-3Z" fill="var(--bg)"/></svg>
+                    <svg viewBox="0 0 32 32"><path d="M16 3 28 10v12L16 29 4 22V10Z"/><path d="m10 19 6-11 6 11-6-3Z" fill="#000"/></svg>
                 </span>
                 <span class="brand-title">
-                    <span class="brand-name">PinPoint<span class="brand-period">.</span></span>
+                    <span class="brand-name">PinPoint.</span>
                     <span class="brand-tag">ДОСТУП В СВОБОДНЫЙ ИНТЕРНЕТ</span>
                 </span>
             </a>
@@ -829,10 +1081,9 @@
             </div>
         </header>
 
-        <!-- ВКЛАДКА 1: ГЛАВНЫЙ ЭКРАН -->
+        <!-- ВКЛАДКА 1: КАБИНЕТ -->
         <div id="tab-cabinet" class="tab-content active show">
 
-            <!-- КРУПНЫЙ БЛОК БАЛАНСА -->
             <section class="vault-hero" aria-label="Баланс аккаунта">
                 <div class="vault-top">
                     <div>
@@ -860,7 +1111,6 @@
                 </div>
             </section>
 
-            <!-- СЛОТЫ ПОДКЛЮЧЕНИЙ -->
             <div class="section-row">
                 <span class="section-label">МОИ ПОДКЛЮЧЕНИЯ</span>
                 <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
@@ -868,7 +1118,6 @@
 
             <div id="slotsCluster"></div>
 
-            <!-- ПАРТНЕРСКАЯ ПРОГРАММА И ПРОМОКОД -->
             <div class="section-row">
                 <span class="section-label">ПАРТНЕРСКАЯ ПРОГРАММА</span>
                 <span id="refBadgePct" class="pill-badge">СТАВКА: 5%</span>
@@ -889,7 +1138,7 @@
                     </div>
                     <div class="ref-stat-box">
                         <div class="subhead">ЗАРАБОТАНО</div>
-                        <div id="refEarnedSum" class="mono" style="font-size:16px; font-weight:800; color:var(--pastel); margin-top:3px;">0 ₽</div>
+                        <div id="refEarnedSum" class="mono" style="font-size:16px; font-weight:800; color:var(--text-main); margin-top:3px;">0 ₽</div>
                     </div>
                 </div>
 
@@ -919,7 +1168,7 @@
         <!-- ВКЛАДКА 2: ТАРИФЫ -->
         <div id="tab-tariffs" class="tab-content">
             <div class="page-banner">
-                <div class="subhead" style="color:var(--pastel);">ТАРИФНЫЕ ПЛАНЫ</div>
+                <div class="subhead">ТАРИФНЫЕ ПЛАНЫ</div>
                 <h1>Доступные цены</h1>
                 <p>Честные лимиты трафика, высокая скорость и до 2 независимых подписок на одном аккаунте.</p>
             </div>
@@ -945,7 +1194,7 @@
                 </button>
             </div>
 
-            <!-- СТАРТ (79 ₽) -->
+            <!-- СТАРТ -->
             <div class="tariff-slab">
                 <div class="tariff-top">
                     <div>
@@ -966,7 +1215,7 @@
                 </button>
             </div>
 
-            <!-- БАЗОВЫЙ (149 ₽ / 150 ГБ) -->
+            <!-- БАЗОВЫЙ -->
             <div class="tariff-slab">
                 <div class="tariff-top">
                     <div>
@@ -987,7 +1236,7 @@
                 </button>
             </div>
 
-            <!-- ПРОДВИНУТЫЙ (199 ₽ / 300 ГБ / 3 УСТР) -->
+            <!-- ПРОДВИНУТЫЙ -->
             <div class="tariff-slab">
                 <div class="tariff-top">
                     <div>
@@ -1009,7 +1258,7 @@
                 </button>
             </div>
 
-            <!-- ХИТ СЕЗОНА (499 ₽ / 90 ДНЕЙ) -->
+            <!-- ХИТ СЕЗОНА -->
             <div class="tariff-slab featured">
                 <div class="tariff-top">
                     <div>
@@ -1032,52 +1281,12 @@
             </div>
         </div>
 
-        <!-- ВКЛАДКА 3: НАСТРОЙКИ И ВИД -->
+        <!-- ВКЛАДКА 3: НАСТРОЙКИ -->
         <div id="tab-style" class="tab-content">
             <div class="page-banner">
-                <div class="subhead" style="color:var(--pastel);">КАСТОМИЗАЦИЯ</div>
-                <h1>Настройки и вид</h1>
-                <p>Персонализируйте тему, шрифты и уведомления от Telegram-бота.</p>
-            </div>
-
-            <div class="card">
-                <div class="settings-group-title">
-                    <span class="subhead">ЦВЕТОВАЯ ТЕМА</span>
-                    <span style="font-size:11px; color:var(--text-muted);">5 палитр</span>
-                </div>
-                <div class="grid-duo">
-                    <button onclick="setPastelTheme('obsidian')" data-t="obsidian" class="picker-cell" style="grid-column: span 2; justify-content:center; background:#050505; color:#fff; border-color:#2a2a35;">
-                        <span>⬛️ OLED ЧЕРНАЯ ТЕМА</span>
-                    </button>
-                    <button onclick="setPastelTheme('sage')" data-t="sage" class="picker-cell">
-                        <span>🌿 Шалфей</span><span class="tone-dot" style="background:#65e7b5;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('mauve')" data-t="mauve" class="picker-cell">
-                        <span>🔮 Аметист</span><span class="tone-dot" style="background:#c5a2ff;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('slate')" data-t="slate" class="picker-cell">
-                        <span>❄️ Нордик</span><span class="tone-dot" style="background:#60a5fa;"></span>
-                    </button>
-                    <button onclick="setPastelTheme('sand')" data-t="sand" class="picker-cell">
-                        <span>☀️ Светлый шелк</span><span class="tone-dot" style="background:#f2f4f1; border-color:#159c70;"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="settings-group-title">
-                    <span class="subhead">ШРИФТ И ЭФФЕКТЫ ФОНА</span>
-                </div>
-                <div class="grid-trio" style="margin-bottom:12px;">
-                    <button onclick="setFontChoice('sora')" data-f="sora" class="picker-cell" style="justify-content:center;">МЯГКИЙ</button>
-                    <button onclick="setFontChoice('epilogue')" data-f="epilogue" class="picker-cell" style="justify-content:center;">КЛАССИКА</button>
-                    <button onclick="setFontChoice('geist')" data-f="geist" class="picker-cell" style="justify-content:center;">МОНО</button>
-                </div>
-                <div class="grid-trio">
-                    <button onclick="setBackdropFx('silk')" data-a="silk" class="picker-cell" style="justify-content:center;">ЧАСТИЦЫ</button>
-                    <button onclick="setBackdropFx('haze')" data-a="haze" class="picker-cell" style="justify-content:center;">СИЯНИЕ</button>
-                    <button onclick="setBackdropFx('none')" data-a="none" class="picker-cell" style="justify-content:center;">БЕЗ ФОНА</button>
-                </div>
+                <div class="subhead">ПАРАМЕТРЫ</div>
+                <h1>Настройки</h1>
+                <p>Управление фоновым освещением и уведомлениями от Telegram-бота.</p>
             </div>
 
             <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
@@ -1087,6 +1296,16 @@
                 </div>
                 <button id="btnNotifToggle" onclick="toggleBotNotifications()" class="btn-subtle" style="padding:9px 14px; font-size:12px; flex-shrink:0;">
                     ВКЛЮЧЕНЫ
+                </button>
+            </div>
+
+            <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div>
+                    <div style="font-size:14px; font-weight:800;">Плавающий свет на фоне</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Мягкое перемещение света в темноте</div>
+                </div>
+                <button id="btnLightToggle" onclick="toggleAmbientLight()" class="btn-subtle" style="padding:9px 14px; font-size:12px; flex-shrink:0;">
+                    ВКЛЮЧЕН
                 </button>
             </div>
 
@@ -1108,7 +1327,7 @@
         </button>
         <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>Оформление</span>
+            <span>Настройки</span>
         </button>
     </nav>
 
@@ -1125,8 +1344,8 @@
             </div>
 
             <div class="grid-duo" style="margin-bottom:14px;">
-                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell" style="justify-content:center;">🍏 iPhone / Mac</button>
-                <button id="plat_android" onclick="renderAppList('android')" class="picker-cell" style="justify-content:center;">🤖 Android / Windows</button>
+                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell">🍏 iPhone / Mac</button>
+                <button id="plat_android" onclick="renderAppList('android')" class="picker-cell">🤖 Android / Windows</button>
             </div>
 
             <div id="appsContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
@@ -1150,15 +1369,15 @@
             </div>
 
             <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15, 45)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(15, 45)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
                     <span style="font-size:15px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
                     <span class="mono" style="font-size:12px; color:var(--text-muted);">45 ₽</span>
                 </button>
-                <button onclick="chooseBoost(50, 99)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(50, 99)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
                     <span style="font-size:15px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
                     <span class="mono" style="font-size:12px; color:var(--text-muted);">99 ₽</span>
                 </button>
-                <button onclick="chooseBoost(150, 165)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; justify-content:center; padding:14px 6px;">
+                <button onclick="chooseBoost(150, 165)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
                     <span style="font-size:15px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
                     <span class="mono" style="font-size:12px; color:var(--text-muted);">165 ₽</span>
                 </button>
@@ -1183,15 +1402,15 @@
             </div>
 
             <div class="grid-duo" style="margin-bottom:14px;">
-                <button id="subtab_pay" onclick="toggleWalletSubtab('pay')" class="picker-cell active" style="justify-content:center;">💳 Пополнить</button>
-                <button id="subtab_history" onclick="toggleWalletSubtab('history')" class="picker-cell" style="justify-content:center;">🧾 История оплат</button>
+                <button id="subtab_pay" onclick="toggleWalletSubtab('pay')" class="picker-cell active">💳 Пополнить</button>
+                <button id="subtab_history" onclick="toggleWalletSubtab('history')" class="picker-cell">🧾 История оплат</button>
             </div>
 
             <div id="walletPayBlock">
                 <div class="grid-trio" style="margin-bottom:12px;">
-                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell mono" style="justify-content:center;">149 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell mono" style="justify-content:center;">199 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell mono" style="justify-content:center;">499 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell mono">149 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell mono">199 ₽</button>
+                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell mono">499 ₽</button>
                 </div>
 
                 <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
@@ -1607,7 +1826,7 @@
             const apps = VPN_APPS[platform] || VPN_APPS.android;
 
             container.innerHTML = apps.map((app, idx) => `
-                <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:16px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:15px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
                     <div style="min-width:0;">
                         <div style="font-size:14px; font-weight:800;">${escapeHtml(app.name)}</div>
                         <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${escapeHtml(app.desc)}</div>
@@ -1802,7 +2021,7 @@
                                 <div style="font-weight:700;">Пополнение баланса</div>
                                 <div style="font-size:10px; color:var(--text-muted);">${escapeHtml(tx.date)}</div>
                             </div>
-                            <div class="mono" style="font-weight:800; color:var(--pastel);">+${Number(tx.amount)} ₽</div>
+                            <div class="mono" style="font-weight:800; color:var(--text-main);">+${Number(tx.amount)} ₽</div>
                         </div>
                     `).join('');
                 } else {
@@ -1813,172 +2032,99 @@
             }
         }
 
-        let currentFx = localStorage.getItem('pp_fx_v8') || 'silk';
-        let currentParticleRgb = '167, 139, 250';
-
-        function updateParticleColorFromTheme(t) {
-            const map = {
-                obsidian: '167, 139, 250',
-                sage: '101, 231, 181',
-                mauve: '197, 162, 255',
-                slate: '96, 165, 250',
-                sand: '21, 156, 112'
-            };
-            currentParticleRgb = map[t] || '167, 139, 250';
-        }
-
-        function setPastelTheme(t) {
-            document.body.setAttribute('data-theme', t);
-            localStorage.setItem('pp_theme_v8', t);
-            updateParticleColorFromTheme(t);
-            document.querySelectorAll('[data-t]').forEach(b => b.classList.toggle('active', b.getAttribute('data-t') === t));
-            haptic('light');
-        }
-        function setFontChoice(f) {
-            document.body.setAttribute('data-font', f);
-            localStorage.setItem('pp_font_v8', f);
-            document.querySelectorAll('[data-f]').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
-            haptic('light');
-        }
-        function setBackdropFx(a) {
-            currentFx = a;
-            localStorage.setItem('pp_fx_v8', a);
-            document.querySelectorAll('[data-a]').forEach(b => b.classList.toggle('active', b.getAttribute('data-a') === a));
-            haptic('light');
-        }
-
-        setPastelTheme(localStorage.getItem('pp_theme_v8') || 'obsidian');
-        setFontChoice(localStorage.getItem('pp_font_v8') || 'sora');
-        setBackdropFx(currentFx);
-
+        // ==========================================
+        // ЗАСТАВКА ПРИ ПЕРВОМ ЗАПУСКЕ
+        // ==========================================
         function executeIntro() {
             if (isBridgeMode) return;
             const intro = document.getElementById('fadeIntro');
             const tit = document.getElementById('introTitle');
             const sub = document.getElementById('introSub');
-            const cfg = document.getElementById('firstRunConfig');
 
             intro.style.display = 'flex';
-            requestAnimationFrame(() => {
-                intro.style.opacity = '1';
-                setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 80);
-                setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
-                setTimeout(() => {
-                    cfg.style.display = 'flex';
-                    requestAnimationFrame(() => { cfg.classList.add('show'); });
-                    intro.style.opacity = '0';
-                    setTimeout(() => { intro.style.display = 'none'; }, 450);
-                }, 2300);
-            });
-        }
-
-        function completeFirstRun() {
-            localStorage.setItem('pp_onboarded_v8', '1');
-            const cfg = document.getElementById('firstRunConfig');
-            cfg.classList.remove('show');
-            setTimeout(() => { cfg.style.display = 'none'; }, 320);
-            haptic('medium');
+            intro.style.opacity = '1';
+            setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 80);
+            setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
+            setTimeout(() => {
+                localStorage.setItem('pp_onboarded_v10', '1');
+                intro.style.transition = 'opacity 0.4s ease';
+                intro.style.opacity = '0';
+                setTimeout(() => { intro.style.display = 'none'; }, 420);
+            }, 2250);
         }
 
         function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v8');
+            localStorage.removeItem('pp_onboarded_v10');
             executeIntro();
         }
 
-        if (!localStorage.getItem('pp_onboarded_v8') && !isBridgeMode) {
+        if (!localStorage.getItem('pp_onboarded_v10') && !isBridgeMode) {
             executeIntro();
         }
 
-        const canvas = document.getElementById('fxCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = window.innerWidth;
-        let height = window.innerHeight;
+        // ==========================================
+        // ОПТИМИЗИРОВАННЫЙ ПЛАВАЮЩИЙ СВЕТ НА ФОНЕ
+        // ==========================================
+        const canvas = document.getElementById('ambientLightCanvas');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        const RENDER_SCALE = 0.25; // Низкое внутреннее разрешение + CSS blur дают идеальную мягкость без нагрузки на GPU
+        let cWidth = 100;
+        let cHeight = 100;
+        let ambientEnabled = localStorage.getItem('pp_light_v10') !== '0';
+
+        function updateLightBtnUI() {
+            const btn = document.getElementById('btnLightToggle');
+            if (btn) {
+                btn.innerText = ambientEnabled ? 'ВКЛЮЧЕН' : 'ВЫКЛЮЧЕН';
+                btn.style.color = ambientEnabled ? 'var(--state-ok)' : 'var(--text-muted)';
+            }
+            canvas.style.display = ambientEnabled ? 'block' : 'none';
+        }
+        updateLightBtnUI();
+
+        function toggleAmbientLight() {
+            ambientEnabled = !ambientEnabled;
+            localStorage.setItem('pp_light_v10', ambientEnabled ? '1' : '0');
+            updateLightBtnUI();
+            haptic('light');
+        }
 
         function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            cWidth = canvas.width = Math.max(60, Math.floor(window.innerWidth * RENDER_SCALE));
+            cHeight = canvas.height = Math.max(60, Math.floor(window.innerHeight * RENDER_SCALE));
         }
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas, { passive: true });
         resizeCanvas();
 
-        const silkParticles = Array.from({ length: 28 }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            vx: (Math.random() - 0.5) * 0.35,
-            vy: (Math.random() - 0.5) * 0.35,
-            r: Math.random() * 1.8 + 1.0,
-            sinSeed: Math.random() * Math.PI * 2
-        }));
+        const lightOrbs = [
+            { xRatio: 0.28, yRatio: 0.22, rRatio: 0.22, speedX: 0.00032, speedY: 0.00024, phase: 0.0, alpha: 0.09 },
+            { xRatio: 0.74, yRatio: 0.56, rRatio: 0.26, speedX: 0.00021, speedY: 0.00031, phase: 2.1, alpha: 0.07 },
+            { xRatio: 0.42, yRatio: 0.84, rRatio: 0.20, speedX: 0.00027, speedY: 0.00019, phase: 4.3, alpha: 0.08 }
+        ];
 
-        let fxTick = 0;
-        let lastFxFrame = 0;
+        let lastRender = 0;
+        function animateAmbientLight(now = 0) {
+            requestAnimationFrame(animateAmbientLight);
+            if (!ambientEnabled || document.hidden || now - lastRender < 33) return;
+            lastRender = now;
 
-        function animateCanvas(now = 0) {
-            requestAnimationFrame(animateCanvas);
-            if (!ctx || document.hidden || now - lastFxFrame < 33) return;
-            lastFxFrame = now;
+            ctx.clearRect(0, 0, cWidth, cHeight);
+            const minDim = Math.min(cWidth, cHeight);
 
-            ctx.clearRect(0, 0, width, height);
-            if (currentFx === 'none') return;
+            for (let i = 0; i < lightOrbs.length; i++) {
+                const orb = lightOrbs[i];
+                const x = (orb.xRatio + Math.sin(now * orb.speedX + orb.phase) * 0.24) * cWidth;
+                const y = (orb.yRatio + Math.cos(now * orb.speedY + orb.phase) * 0.20) * cHeight;
+                const r = minDim * orb.rRatio;
 
-            fxTick += 0.015;
-
-            if (currentFx === 'silk') {
-                ctx.fillStyle = `rgba(${currentParticleRgb}, 0.55)`;
-                silkParticles.forEach((pt, idx) => {
-                    pt.sinSeed += 0.02;
-                    pt.x += pt.vx + Math.sin(pt.sinSeed) * 0.2;
-                    pt.y += pt.vy + Math.cos(pt.sinSeed) * 0.2;
-
-                    if (pt.x < 0) pt.x = width;
-                    if (pt.x > width) pt.x = 0;
-                    if (pt.y < 0) pt.y = height;
-                    if (pt.y > height) pt.y = 0;
-
-                    ctx.beginPath();
-                    ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    for (let j = idx + 1; j < silkParticles.length; j++) {
-                        const p2 = silkParticles[j];
-                        const dx = pt.x - p2.x;
-                        const dy = pt.y - p2.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 85) {
-                            ctx.strokeStyle = `rgba(${currentParticleRgb}, ${0.18 * (1 - dist / 85)})`;
-                            ctx.lineWidth = 0.8;
-                            ctx.beginPath();
-                            ctx.moveTo(pt.x, pt.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.stroke();
-                        }
-                    }
-                });
-            } else if (currentFx === 'haze') {
-                const g1 = ctx.createRadialGradient(
-                    width * 0.3 + Math.sin(fxTick) * 60,
-                    height * 0.28 + Math.cos(fxTick * 0.8) * 50,
-                    10,
-                    width * 0.3, height * 0.28, 260
-                );
-                g1.addColorStop(0, `rgba(${currentParticleRgb}, 0.16)`);
-                g1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = g1;
-                ctx.fillRect(0, 0, width, height);
-
-                const g2 = ctx.createRadialGradient(
-                    width * 0.72 + Math.cos(fxTick * 0.9) * 60,
-                    height * 0.72 + Math.sin(fxTick) * 60,
-                    15,
-                    width * 0.72, height * 0.72, 280
-                );
-                g2.addColorStop(0, `rgba(${currentParticleRgb}, 0.12)`);
-                g2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-                ctx.fillStyle = g2;
-                ctx.fillRect(0, 0, width, height);
+                ctx.fillStyle = `rgba(255, 255, 255, ${orb.alpha})`;
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
-        requestAnimationFrame(animateCanvas);
+
+        requestAnimationFrame(animateAmbientLight);
         refreshProfile();
         document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshProfile(); });
         document.addEventListener('keydown', e => {
