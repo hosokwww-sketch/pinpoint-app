@@ -70,7 +70,6 @@
             letter-spacing: -0.03em;
         }
 
-        /* Плавающий мягкий свет на фоне */
         #ambientLightCanvas {
             position: fixed;
             inset: 0;
@@ -91,7 +90,6 @@
             margin: 0 auto;
         }
 
-        /* --- ВЕРХНЯЯ ШАПКА --- */
         .app-topbar {
             display: flex;
             align-items: center;
@@ -234,7 +232,6 @@
             background-color: var(--surface-elevated);
         }
 
-        /* --- БЛОК БАЛАНСА --- */
         .vault-hero {
             position: relative;
             overflow: hidden;
@@ -318,7 +315,6 @@
             gap: 9px;
         }
 
-        /* --- КНОПКИ (СТРОГИЕ, БЕЗ ГРАДИЕНТА) --- */
         .btn-pastel, .btn-subtle {
             min-height: 44px;
             padding: 11px 15px;
@@ -408,7 +404,6 @@
             -webkit-backdrop-filter: blur(16px);
         }
 
-        /* --- СЛОТЫ ПОДКЛЮЧЕНИЙ --- */
         .slot-card {
             padding: 0;
             border-radius: 24px;
@@ -608,7 +603,6 @@
             -webkit-backdrop-filter: blur(16px);
         }
 
-        /* --- РЕФЕРАЛКА И ПРОМО --- */
         .ref-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -659,7 +653,6 @@
             border-color: var(--border-strong);
         }
 
-        /* --- ТАРИФЫ --- */
         .page-banner {
             padding: 20px;
             border-radius: 24px;
@@ -763,7 +756,6 @@
             display: block;
         }
 
-        /* --- СЕТКИ И ЯЧЕЙКИ --- */
         .grid-duo {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -800,7 +792,6 @@
             color: var(--text-main);
         }
 
-        /* --- НИЖНЯЯ НАВИГАЦИЯ --- */
         .bottom-shelf {
             position: fixed;
             z-index: 90;
@@ -871,7 +862,6 @@
             opacity: 1;
         }
 
-        /* --- ШТОРКИ --- */
         .curtain-wrap {
             position: fixed;
             inset: 0;
@@ -1503,12 +1493,25 @@
             pushTimer = setTimeout(() => { push.classList.remove('show'); }, 4200);
         }
 
+        function openBotDeepLink(startParam) {
+            const url = `https://t.me/${botUsername}?start=${encodeURIComponent(startParam)}`;
+            haptic('medium');
+            try {
+                if (tg.openTelegramLink) {
+                    tg.openTelegramLink(url);
+                    setTimeout(() => { try { tg.close(); } catch (e) {} }, 120);
+                    return;
+                }
+            } catch (e) {}
+            window.location.href = url;
+        }
+
         async function api(path, options = {}) {
             if (!tg.initData) {
                 throw new Error('Откройте приложение через кнопку в Telegram-боте.');
             }
             const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 15000);
+            const timer = setTimeout(() => controller.abort(), 10000);
             try {
                 const response = await fetch(new URL(path, apiBase), {
                     ...options,
@@ -1556,12 +1559,11 @@
 
         let botUsername = 'PinPointVPN_bot';
         const user = tg.initDataUnsafe?.user;
-        ['bal', 'subs', 'avatar', 'uid', 'ref_cnt', 'ref_earn', 'notif'].forEach(k => localStorage.removeItem('pp_c_' + k));
-
         const uid = user?.id || '';
         const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
         let currentBalance = 0;
         let botNotifications = 1;
+        let subs = [];
         const avatarUrl = user?.photo_url;
 
         document.getElementById('uName').innerText = uname;
@@ -1588,7 +1590,44 @@
                 btn.style.color = botNotifications === 1 ? 'var(--state-ok)' : 'var(--text-muted)';
             }
         }
-        updateNotifBtnUI();
+
+        function applyProfilePayload(data) {
+            if (!data) return;
+            currentBalance = Number(data.balance || 0);
+            subs = Array.isArray(data.subs) ? data.subs : [];
+            if (data.bot_username) botUsername = data.bot_username;
+            botNotifications = data.notifications === false ? 0 : 1;
+
+            document.getElementById('uBal').textContent = `${currentBalance} ₽`;
+            if (data.user_id && !uid) {
+                document.getElementById('uId').innerText = `ID: ${data.user_id}`;
+            }
+            const refCnt = Number(data.ref_cnt || 0);
+            const refEarn = Number(data.ref_earn || 0);
+            const pct = Math.min(25, 5 + refCnt);
+
+            document.getElementById('refBadgePct').textContent = `СТАВКА: ${pct}%`;
+            document.getElementById('refFriendsCount').textContent = refCnt;
+            document.getElementById('refEarnedSum').textContent = `${refEarn} ₽`;
+            document.getElementById('refProgressBar').style.width = `${Math.min(100, Math.max(8, refCnt * 5))}%`;
+            document.getElementById('refSubtitle').textContent = pct < 25
+                ? `Пригласите еще 1 друга, чтобы получать ${pct + 1}% с пополнений`
+                : 'Максимальная партнерская ставка 25% достигнута!';
+
+            updateNotifBtnUI();
+            renderSlots();
+        }
+
+        // Чтение мгновенного снапшота профиля из URL (работает даже на GitHub Pages без прямого API)
+        if (p.has('snap')) {
+            try {
+                const rawSnap = p.get('snap').replace(/-/g, '+').replace(/_/g, '/');
+                const pad = rawSnap.length % 4 ? '='.repeat(4 - (rawSnap.length % 4)) : '';
+                const bytes = Uint8Array.from(atob(rawSnap + pad), c => c.charCodeAt(0));
+                const snapData = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+                applyProfilePayload(snapData);
+            } catch (e) {}
+        }
 
         async function toggleBotNotifications() {
             const btn = document.getElementById('btnNotifToggle');
@@ -1602,42 +1641,21 @@
                 updateNotifBtnUI();
                 triggerInAppPush('Настройки сохранены', botNotifications === 1 ? 'Уведомления в боте включены' : 'Уведомления в боте отключены');
             } catch (e) {
-                triggerInAppPush('Ошибка', e.message);
+                botNotifications = botNotifications === 1 ? 0 : 1;
+                updateNotifBtnUI();
+                triggerInAppPush('Настройки обновлены', botNotifications === 1 ? 'Уведомления включены' : 'Уведомления отключены');
             } finally {
                 btn.disabled = false;
             }
         }
 
-        let subs = [];
-        let profileLoaded = false;
-
         async function refreshProfile() {
             if (isBridgeMode) return;
             try {
                 const data = await api('/api/user/profile');
-                currentBalance = Number(data.balance || 0);
-                subs = Array.isArray(data.subs) ? data.subs : [];
-                if (data.bot_username) botUsername = data.bot_username;
-                botNotifications = Number(data.notifications);
-
-                document.getElementById('uBal').textContent = `${currentBalance} ₽`;
-                const refCnt = Number(data.ref_cnt || 0);
-                const refEarn = Number(data.ref_earn || 0);
-                const pct = Math.min(25, 5 + refCnt);
-
-                document.getElementById('refBadgePct').textContent = `СТАВКА: ${pct}%`;
-                document.getElementById('refFriendsCount').textContent = refCnt;
-                document.getElementById('refEarnedSum').textContent = `${refEarn} ₽`;
-                document.getElementById('refProgressBar').style.width = `${Math.min(100, Math.max(8, refCnt * 5))}%`;
-                document.getElementById('refSubtitle').textContent = pct < 25
-                    ? `Пригласите еще 1 друга, чтобы получать ${pct + 1}% с пополнений`
-                    : 'Максимальная партнерская ставка 25% достигнута!';
-
-                updateNotifBtnUI();
-                renderSlots();
-                profileLoaded = true;
+                applyProfilePayload(data);
             } catch (e) {
-                triggerInAppPush('Синхронизация', e.message);
+                // Если HTML открыт на GitHub Pages без API_PUBLIC_URL, данные уже загружены из параметра snap
             }
         }
 
@@ -1665,7 +1683,7 @@
                 if (s) {
                     const rawClean = cleanSubUrl(s.key);
                     const cleanKey = escapeHtml(rawClean);
-                    const totalGb = Math.max(1, parseFloat(s.gb || 100));
+                    const totalGb = Math.max(1, parseFloat(s.gb || 150));
                     const usedGb = Math.max(0, parseFloat(s.used_gb || 0));
                     const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
                     const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
@@ -1960,9 +1978,7 @@
 
         function dispatchBoost() {
             if (!chosenBoostGb) return;
-            const url = `https://t.me/${botUsername}?start=boost_${chosenBoostGb}_${chosenSlotNum}`;
-            if (tg.openTelegramLink) tg.openTelegramLink(url);
-            try { tg.close(); } catch (e) {}
+            openBotDeepLink(`boost_${chosenBoostGb}_${chosenSlotNum}`);
         }
 
         function dispatchTopup() {
@@ -1971,23 +1987,15 @@
                 triggerInAppPush('Проверьте сумму', 'Введите целую сумму от 10 до 100 000 ₽');
                 return;
             }
-            const url = `https://t.me/${botUsername}?start=topup_${val}`;
-            if (tg.openTelegramLink) tg.openTelegramLink(url);
-            try { tg.close(); } catch (e) {}
+            openBotDeepLink(`topup_${val}`);
         }
 
         function requestTariff(planId) {
-            if (!profileLoaded) {
-                triggerInAppPush('Подождите', 'Идет синхронизация профиля...');
-                return;
-            }
             if (subs.length >= 2) {
                 triggerInAppPush('Лимит слотов', 'У вас уже активны 2 подписки из 2 доступных.');
                 return;
             }
-            const url = `https://t.me/${botUsername}?start=buy_${planId}`;
-            if (tg.openTelegramLink) tg.openTelegramLink(url);
-            try { tg.close(); } catch (e) {}
+            openBotDeepLink(`buy_${planId}`);
         }
 
         function applyPromoCode() {
@@ -1996,9 +2004,7 @@
                 triggerInAppPush('Неверный формат', 'Введите корректный промокод (латиница и цифры)');
                 return;
             }
-            const url = `https://t.me/${botUsername}?start=promo_${encodeURIComponent(val)}`;
-            if (tg.openTelegramLink) tg.openTelegramLink(url);
-            try { tg.close(); } catch (e) {}
+            openBotDeepLink(`promo_${val}`);
         }
 
         function toggleWalletSubtab(tab) {
@@ -2028,7 +2034,7 @@
                     container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">У вас пока нет пополнений</div>`;
                 }
             } catch (e) {
-                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История операций появится после первого пополнения</div>`;
+                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История операций отображается в чате бота</div>`;
             }
         }
 
@@ -2046,7 +2052,7 @@
             setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 80);
             setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
             setTimeout(() => {
-                localStorage.setItem('pp_onboarded_v10', '1');
+                localStorage.setItem('pp_onboarded_v11', '1');
                 intro.style.transition = 'opacity 0.4s ease';
                 intro.style.opacity = '0';
                 setTimeout(() => { intro.style.display = 'none'; }, 420);
@@ -2054,11 +2060,11 @@
         }
 
         function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v10');
+            localStorage.removeItem('pp_onboarded_v11');
             executeIntro();
         }
 
-        if (!localStorage.getItem('pp_onboarded_v10') && !isBridgeMode) {
+        if (!localStorage.getItem('pp_onboarded_v11') && !isBridgeMode) {
             executeIntro();
         }
 
@@ -2067,10 +2073,10 @@
         // ==========================================
         const canvas = document.getElementById('ambientLightCanvas');
         const ctx = canvas.getContext('2d', { alpha: true });
-        const RENDER_SCALE = 0.25; // Низкое внутреннее разрешение + CSS blur дают идеальную мягкость без нагрузки на GPU
+        const RENDER_SCALE = 0.25;
         let cWidth = 100;
         let cHeight = 100;
-        let ambientEnabled = localStorage.getItem('pp_light_v10') !== '0';
+        let ambientEnabled = localStorage.getItem('pp_light_v11') !== '0';
 
         function updateLightBtnUI() {
             const btn = document.getElementById('btnLightToggle');
@@ -2084,7 +2090,7 @@
 
         function toggleAmbientLight() {
             ambientEnabled = !ambientEnabled;
-            localStorage.setItem('pp_light_v10', ambientEnabled ? '1' : '0');
+            localStorage.setItem('pp_light_v11', ambientEnabled ? '1' : '0');
             updateLightBtnUI();
             haptic('light');
         }
