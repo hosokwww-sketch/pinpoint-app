@@ -12,11 +12,14 @@
     :root,
     [data-theme="oled"] {
       --bg: #000000;
-      --welcome-backdrop: rgba(0, 0, 0, 0.62);
+      --welcome-backdrop: rgba(0, 0, 0, 0.64);
       --glass-bg: rgba(8, 8, 10, 0.78);
       --glass-bg-elevated: rgba(18, 18, 22, 0.86);
-      --glass-nav: rgba(10, 10, 12, 0.84);
-      --glass-modal: rgba(10, 10, 13, 0.94);
+      --glass-nav: rgba(10, 10, 12, 0.86);
+      --glass-modal: rgba(10, 10, 13, 0.95);
+      --slot-bg: rgba(12, 12, 16, 0.84);
+      --slot-border: rgba(255, 255, 255, 0.22);
+      --slot-accent: #ffffff;
       --glass-specular-top: rgba(255, 255, 255, 0.24);
       --glass-specular-side: rgba(255, 255, 255, 0.10);
       --glass-rim-bottom: rgba(255, 255, 255, 0.04);
@@ -45,11 +48,14 @@
 
     [data-theme="violet"] {
       --bg: #08060d;
-      --welcome-backdrop: rgba(8, 6, 13, 0.64);
+      --welcome-backdrop: rgba(8, 6, 13, 0.66);
       --glass-bg: rgba(18, 14, 28, 0.68);
       --glass-bg-elevated: rgba(28, 22, 44, 0.76);
-      --glass-nav: rgba(16, 12, 26, 0.82);
-      --glass-modal: rgba(15, 11, 24, 0.94);
+      --glass-nav: rgba(16, 12, 26, 0.84);
+      --glass-modal: rgba(15, 11, 24, 0.95);
+      --slot-bg: rgba(34, 20, 58, 0.72);
+      --slot-border: rgba(168, 85, 247, 0.44);
+      --slot-accent: #c084fc;
       --glass-specular-top: rgba(233, 213, 255, 0.25);
       --glass-specular-side: rgba(216, 180, 254, 0.11);
       --glass-rim-bottom: rgba(255, 255, 255, 0.04);
@@ -78,11 +84,14 @@
 
     [data-theme="forest"] {
       --bg: #070b0a;
-      --welcome-backdrop: rgba(7, 11, 10, 0.64);
+      --welcome-backdrop: rgba(7, 11, 10, 0.66);
       --glass-bg: rgba(13, 21, 19, 0.66);
       --glass-bg-elevated: rgba(21, 33, 30, 0.74);
-      --glass-nav: rgba(12, 19, 17, 0.80);
-      --glass-modal: rgba(11, 18, 16, 0.93);
+      --glass-nav: rgba(12, 19, 17, 0.82);
+      --glass-modal: rgba(11, 18, 16, 0.94);
+      --slot-bg: rgba(16, 38, 34, 0.72);
+      --slot-border: rgba(94, 234, 212, 0.40);
+      --slot-accent: #5eead4;
       --glass-specular-top: rgba(204, 251, 241, 0.25);
       --glass-specular-side: rgba(153, 246, 228, 0.11);
       --glass-rim-bottom: rgba(255, 255, 255, 0.04);
@@ -111,11 +120,14 @@
 
     [data-theme="daylight"] {
       --bg: #f2f3f5;
-      --welcome-backdrop: rgba(242, 243, 245, 0.70);
+      --welcome-backdrop: rgba(242, 243, 245, 0.72);
       --glass-bg: rgba(255, 255, 255, 0.70);
       --glass-bg-elevated: rgba(255, 255, 255, 0.88);
-      --glass-nav: rgba(255, 255, 255, 0.82);
-      --glass-modal: rgba(250, 250, 252, 0.95);
+      --glass-nav: rgba(255, 255, 255, 0.84);
+      --glass-modal: rgba(250, 250, 252, 0.96);
+      --slot-bg: rgba(255, 255, 255, 0.86);
+      --slot-border: rgba(17, 17, 19, 0.16);
+      --slot-accent: #111113;
       --glass-specular-top: rgba(255, 255, 255, 1);
       --glass-specular-side: rgba(255, 255, 255, 0.82);
       --glass-rim-bottom: rgba(0, 0, 0, 0.06);
@@ -139,6 +151,42 @@
       --purple-border: rgba(124, 58, 237, 0.28);
       --ring-track: rgba(0, 0, 0, 0.08);
       --switch-off: rgba(0, 0, 0, 0.13);
+      --switch-knob-on: #ffffff;
+    }
+
+    [data-theme="newyear"] {
+      --bg: #070911;
+      --welcome-backdrop: rgba(7, 9, 17, 0.66);
+      --glass-bg: rgba(15, 20, 34, 0.66);
+      --glass-bg-elevated: rgba(24, 31, 50, 0.76);
+      --glass-nav: rgba(14, 18, 32, 0.84);
+      --glass-modal: rgba(13, 17, 30, 0.95);
+      --slot-bg: rgba(42, 16, 28, 0.68);
+      --slot-border: rgba(244, 63, 94, 0.45);
+      --slot-accent: #fb7185;
+      --glass-specular-top: rgba(255, 228, 235, 0.28);
+      --glass-specular-side: rgba(253, 164, 175, 0.12);
+      --glass-rim-bottom: rgba(255, 255, 255, 0.05);
+      --glass-glare: rgba(254, 205, 211, 0.18);
+      --glass-shadow: 0 16px 38px -12px rgba(3, 5, 12, 0.88);
+      --border: rgba(254, 205, 211, 0.12);
+      --border-strong: rgba(254, 205, 211, 0.22);
+      --text: #fff8fa;
+      --text-muted: #9ea6bd;
+      --text-dim: #5d657d;
+      --accent: #f43f5e;
+      --accent-contrast: #ffffff;
+      --accent-bg: rgba(244, 63, 94, 0.17);
+      --accent-border: rgba(244, 63, 94, 0.40);
+      --status-ok: #fb7185;
+      --blue: #7dd3fc;
+      --blue-bg: rgba(125, 211, 252, 0.14);
+      --purple: #c084fc;
+      --purple-light: #e9d5ff;
+      --purple-bg: rgba(192, 132, 252, 0.16);
+      --purple-border: rgba(192, 132, 252, 0.38);
+      --ring-track: rgba(254, 205, 211, 0.13);
+      --switch-off: rgba(254, 205, 211, 0.16);
       --switch-knob-on: #ffffff;
     }
 
@@ -181,6 +229,26 @@
 
     #ambientLightCanvas.hidden {
       opacity: 0;
+    }
+
+    /* Снежинки для новогодней темы (позади стеклянных карточек) */
+    #snowCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #snowCanvas.active {
+      opacity: 0.92;
+    }
+
+    #snowCanvas.hidden {
+      opacity: 0 !important;
     }
 
     /* ==========================================
@@ -254,7 +322,7 @@
       pointer-events: none;
     }
 
-    /* Шапка */
+    /* Шапка с аватаркой пользователя */
     .top-bar {
       display: flex;
       align-items: center;
@@ -268,15 +336,15 @@
     .brand-box {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       min-width: 0;
     }
 
-    .brand-icon {
-      width: 40px;
-      height: 40px;
+    .user-avatar-box {
+      width: 42px;
+      height: 42px;
       padding: 0;
-      border-radius: 13px;
+      border-radius: 50%;
       background: var(--glass-bg-elevated);
       border: 1px solid var(--border-strong);
       box-shadow:
@@ -291,21 +359,33 @@
       position: relative;
     }
 
-    .brand-avatar-img {
+    .user-avatar-img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: inherit;
+      border-radius: 50%;
       display: none;
     }
 
-    .brand-title {
+    .user-avatar-initial {
       font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.2px;
+      user-select: none;
+    }
+
+    .brand-title {
+      font-size: 15.5px;
       font-weight: 700;
       letter-spacing: -0.2px;
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 185px;
     }
 
     .brand-sub {
@@ -329,6 +409,7 @@
       padding: 6px 8px 6px 13px;
       cursor: pointer;
       transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease;
+      flex-shrink: 0;
     }
 
     .balance-pill:active {
@@ -411,7 +492,12 @@
       margin-bottom: 12px;
     }
 
-    /* Слот подписки */
+    /* Слот подписки в цвет выбранной темы */
+    .slot-card {
+      background: var(--slot-bg);
+      border-color: var(--slot-border);
+    }
+
     .sub-card-top {
       display: flex;
       align-items: center;
@@ -435,14 +521,14 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--status-ok);
-      box-shadow: 0 0 8px var(--status-ok);
+      background: var(--slot-accent);
+      box-shadow: 0 0 8px var(--slot-accent);
     }
 
     .sub-slot-tag {
       font-size: 11px;
       font-weight: 700;
-      color: var(--status-ok);
+      color: var(--slot-accent);
       text-transform: uppercase;
       letter-spacing: 0.45px;
     }
@@ -534,6 +620,11 @@
       transform: scale(0.96);
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .btn-primary {
       background: var(--accent);
       color: var(--accent-contrast);
@@ -598,6 +689,10 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+    }
+
+    .empty-btns.single {
+      grid-template-columns: 1fr;
     }
 
     /* Промокод */
@@ -797,6 +892,25 @@
       margin-top: 4px;
     }
 
+    .review-pending-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-lg);
+      background: var(--purple-bg);
+      border: 1px solid var(--purple-border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .review-pending-banner.show {
+      display: flex;
+    }
+
     .review-card-head {
       display: flex;
       align-items: center;
@@ -856,7 +970,7 @@
       word-break: break-word;
     }
 
-    /* Выбор тем */
+    /* Выбор тем (5 тем, новогодняя на всю ширину) */
     .theme-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -877,6 +991,10 @@
       text-align: left;
       color: var(--text);
       transition: transform 0.16s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .theme-option.wide {
+      grid-column: span 2;
     }
 
     .theme-option:active {
@@ -1051,7 +1169,7 @@
     }
 
     /* ==========================================
-       3. ЭКРАН ПРИВЕТСТВИЯ (ПОЛНОРАЗМЕРНАЯ АВАТАРКА + ЧИСТЫЙ ТЕКСТ)
+       3. ЭКРАН ПРИВЕТСТВИЯ (ПОЛНОРАЗМЕРНАЯ АВАТАРКА БОТА + ЧИСТЫЙ ТЕКСТ)
        ========================================== */
     .welcome-overlay {
       position: fixed;
@@ -1429,6 +1547,7 @@
 </head>
 <body>
   <canvas id="ambientLightCanvas"></canvas>
+  <canvas id="snowCanvas"></canvas>
   <div id="toast" class="toast"></div>
 
   <!-- Экран приветствия -->
@@ -1501,17 +1620,15 @@
   </div>
 
   <div class="app-shell">
-    <!-- Верхняя шапка -->
+    <!-- Верхняя шапка с аватаркой пользователя -->
     <header class="top-bar liquid-glass">
       <div class="brand-box">
-        <div class="brand-icon">
-          <img id="botAvatarImg" class="brand-avatar-img" alt="PinPoint VPN" />
-          <svg id="botAvatarFallback" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
+        <div class="user-avatar-box">
+          <img id="userAvatarImg" class="user-avatar-img" alt="Профиль" />
+          <span id="userAvatarFallback" class="user-avatar-initial">P</span>
         </div>
-        <div>
-          <div class="brand-title">PinPoint VPN</div>
+        <div style="min-width: 0;">
+          <div class="brand-title" id="userDisplayName">PinPoint VPN</div>
           <div class="brand-sub" id="userBadge">ID: —</div>
         </div>
       </div>
@@ -1577,25 +1694,27 @@
     <section id="tab-tariffs" class="tab-pane">
       <div id="tariffsDiscountBanner"></div>
 
-      <div class="section-head">
-        <span class="section-title">Пробный доступ</span>
-      </div>
-      <div class="card liquid-glass">
-        <div class="tariff-top">
-          <div>
-            <div class="tariff-title">🆓 Тест на 24 часа</div>
-            <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Для проверки скорости и стабильности</div>
-          </div>
-          <div class="tariff-price-box">
-            <span class="price-now" style="color: var(--status-ok);">0 ₽</span>
-          </div>
+      <div id="trialTariffSection">
+        <div class="section-head">
+          <span class="section-title">Пробный доступ</span>
         </div>
-        <div class="tariff-specs">
-          <span class="spec-chip">⏱ 24 часа</span>
-          <span class="spec-chip">📦 10 ГБ</span>
-          <span class="spec-chip">📱 1 устройство</span>
+        <div class="card liquid-glass">
+          <div class="tariff-top">
+            <div>
+              <div class="tariff-title">🆓 Тест на 24 часа</div>
+              <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Для проверки скорости и стабильности</div>
+            </div>
+            <div class="tariff-price-box">
+              <span class="price-now" style="color: var(--status-ok);">0 ₽</span>
+            </div>
+          </div>
+          <div class="tariff-specs">
+            <span class="spec-chip">⏱ 24 часа</span>
+            <span class="spec-chip">📦 10 ГБ</span>
+            <span class="spec-chip">📱 1 устройство</span>
+          </div>
+          <button class="btn btn-secondary btn-full" onclick="openBotAction('buy_test')">Активировать бесплатный тест</button>
         </div>
-        <button class="btn btn-secondary btn-full" onclick="openBotAction('buy_test')">Активировать бесплатный тест</button>
       </div>
 
       <div class="section-head">
@@ -1609,6 +1728,11 @@
     <section id="tab-reviews" class="tab-pane">
       <div class="section-head">
         <span class="section-title">Отзывы клиентов</span>
+      </div>
+
+      <div id="reviewPendingBanner" class="review-pending-banner">
+        <span>⏳</span>
+        <span>Ваш отзыв отправлен на проверку модератору и появится здесь сразу после одобрения.</span>
       </div>
 
       <div class="card liquid-glass">
@@ -1635,7 +1759,7 @@
 
       <div class="card liquid-glass">
         <div class="setting-title">Тема оформления</div>
-        <div class="setting-desc">Выберите фон и оттенок жидкого стекла</div>
+        <div class="setting-desc">Выберите фон, цвет слотов и оттенок жидкого стекла</div>
         <div class="theme-grid" id="themeGrid">
           <button type="button" class="theme-option active" data-theme-id="oled" onclick="selectTheme('oled')">
             <div class="theme-swatch" style="background: #000000;">
@@ -1676,6 +1800,16 @@
               <div class="theme-sub">Матовое стекло</div>
             </div>
           </button>
+
+          <button type="button" class="theme-option wide" data-theme-id="newyear" onclick="selectTheme('newyear')">
+            <div class="theme-swatch" style="background: #1e0b16;">
+              <span class="theme-swatch-dot" style="background: #f43f5e;"></span>
+            </div>
+            <div class="theme-meta">
+              <div class="theme-name">❄️ Новогодняя</div>
+              <div class="theme-sub">Зимний рубин и падающий снег</div>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -1697,8 +1831,8 @@
 
         <div class="setting-row">
           <div>
-            <div class="setting-title">✨ Плавный свет на фоне</div>
-            <div class="setting-desc">Мягкое движение света под стеклом</div>
+            <div class="setting-title">✨ Плавный свет и снег на фоне</div>
+            <div class="setting-desc">Мягкое движение света и снежинок под стеклом</div>
           </div>
           <label class="switch">
             <input type="checkbox" id="ambientToggle" checked onchange="toggleAmbientLight(this.checked)" />
@@ -1874,27 +2008,33 @@
     const THEMES = {
       oled: {
         bg: '#000000',
-        statusOk: '#30d158',
+        ringColor: '#ffffff',
         lowTraffic: '#a855f7',
         orbs: ['rgba(255, 255, 255, 0.13)', 'rgba(180, 180, 195, 0.09)', 'rgba(255, 255, 255, 0.08)']
       },
       violet: {
         bg: '#08060d',
-        statusOk: '#30d158',
-        lowTraffic: '#c084fc',
+        ringColor: '#a855f7',
+        lowTraffic: '#e879f9',
         orbs: ['rgba(168, 85, 247, 0.28)', 'rgba(124, 58, 237, 0.20)', 'rgba(192, 132, 252, 0.18)']
       },
       forest: {
         bg: '#070b0a',
-        statusOk: '#4ade80',
+        ringColor: '#5eead4',
         lowTraffic: '#a855f7',
         orbs: ['rgba(94, 234, 212, 0.22)', 'rgba(45, 212, 191, 0.15)', 'rgba(16, 185, 129, 0.16)']
       },
       daylight: {
         bg: '#f2f3f5',
-        statusOk: '#16a34a',
+        ringColor: '#111113',
         lowTraffic: '#7c3aed',
         orbs: ['rgba(148, 163, 184, 0.26)', 'rgba(203, 213, 225, 0.30)', 'rgba(161, 161, 170, 0.20)']
+      },
+      newyear: {
+        bg: '#070911',
+        ringColor: '#fb7185',
+        lowTraffic: '#c084fc',
+        orbs: ['rgba(244, 63, 94, 0.24)', 'rgba(125, 211, 252, 0.18)', 'rgba(225, 29, 72, 0.16)']
       }
     };
 
@@ -1909,15 +2049,17 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const API_URL = (urlParams.get('api') || '').replace(/\/+$/, '');
+    const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
 
     let appState = {
-      user_id: tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 0,
+      user_id: tgUser && tgUser.id ? tgUser.id : 0,
       balance: 0,
       discount_pct: 0,
       discount_tariff: 'all',
       ref_cnt: 0,
       ref_pct: 5,
       ref_earn: 0,
+      used_test: false,
       notifications: true,
       bot_username: 'PinPointVPN_bot',
       subs: [],
@@ -1928,7 +2070,7 @@
     let selectedBoosterSlot = 1;
     let selectedReviewRating = 5;
 
-    function bindBotAvatar(imgId, fallbackId, sources) {
+    function bindImageChain(imgId, fallbackId, sources) {
       const img = document.getElementById(imgId);
       const fallback = document.getElementById(fallbackId);
       if (!img || !fallback) return;
@@ -1937,7 +2079,7 @@
       function tryNext() {
         if (idx >= sources.length) {
           img.style.display = 'none';
-          fallback.style.display = 'block';
+          fallback.style.display = 'flex';
           return;
         }
         const src = sources[idx++];
@@ -1957,17 +2099,39 @@
       tryNext();
     }
 
-    function updateBotAvatar() {
+    function updateAvatars() {
+      // 1. Аватарка пользователя в верхней шапке
+      const displayName = tgUser
+        ? ([tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || (tgUser.username ? `@${tgUser.username}` : 'PinPoint VPN'))
+        : 'PinPoint VPN';
+      const nameEl = document.getElementById('userDisplayName');
+      if (nameEl) nameEl.textContent = displayName;
+
+      const initialEl = document.getElementById('userAvatarFallback');
+      if (initialEl) {
+        const cleanChar = displayName.replace(/^@+/, '').trim().charAt(0).toUpperCase();
+        initialEl.textContent = cleanChar || 'P';
+      }
+
+      const userSources = [];
+      if (tgUser && tgUser.photo_url) {
+        userSources.push(tgUser.photo_url);
+      }
+      if (API_URL && tg && tg.initData) {
+        userSources.push(`${API_URL}/api/user/avatar?init_data=${encodeURIComponent(tg.initData)}`);
+      }
+      bindImageChain('userAvatarImg', 'userAvatarFallback', userSources);
+
+      // 2. Полноразмерная аватарка бота на экране приветствия
       const botUname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@+/, '');
-      const sources = [];
+      const botSources = [];
       if (API_URL) {
-        sources.push(`${API_URL}/bot-avatar.jpg`);
+        botSources.push(`${API_URL}/bot-avatar.jpg`);
       }
       if (botUname) {
-        sources.push(`https://t.me/i/userpic/320/${encodeURIComponent(botUname)}.jpg`);
+        botSources.push(`https://t.me/i/userpic/320/${encodeURIComponent(botUname)}.jpg`);
       }
-      bindBotAvatar('botAvatarImg', 'botAvatarFallback', sources);
-      bindBotAvatar('welcomeBotAvatar', 'welcomeBotFallback', sources);
+      bindImageChain('welcomeBotAvatar', 'welcomeBotFallback', botSources);
     }
 
     function selectTheme(themeId, silent = false) {
@@ -1992,9 +2156,14 @@
         window._updateOrbColors(cfg.orbs);
       }
 
+      const snowCanvas = document.getElementById('snowCanvas');
+      if (snowCanvas) {
+        snowCanvas.classList.toggle('active', themeId === 'newyear');
+      }
+
       renderSubscriptions();
       if (!silent) {
-        showToast('Тема обновлена');
+        showToast(themeId === 'newyear' ? '❄️ Новогодняя тема включена' : 'Тема обновлена');
       }
     }
 
@@ -2063,7 +2232,12 @@
       document.getElementById('refEarnVal').textContent = `${appState.ref_earn || 0} ₽`;
       document.getElementById('notifToggle').checked = Boolean(appState.notifications);
 
-      updateBotAvatar();
+      const trialSec = document.getElementById('trialTariffSection');
+      if (trialSec) {
+        trialSec.style.display = appState.used_test ? 'none' : 'block';
+      }
+
+      updateAvatars();
       renderDiscountBoxes();
       renderSubscriptions();
       renderTariffs();
@@ -2091,10 +2265,11 @@
       document.getElementById('slotsCounter').textContent = `${subs.length} / 2 слота`;
       const container = document.getElementById('subsContainer');
       const themeCfg = THEMES[currentThemeId] || THEMES.oled;
-      const okColor = themeCfg.statusOk;
+      const normalRing = themeCfg.ringColor;
       const lowColor = themeCfg.lowTraffic || '#a855f7';
 
       if (subs.length === 0) {
+        const hideTrialBtn = Boolean(appState.used_test);
         container.innerHTML = `
           <div class="card liquid-glass empty-card">
             <div class="empty-icon">
@@ -2103,10 +2278,14 @@
               </svg>
             </div>
             <div class="empty-title">Нет активных подключений</div>
-            <div class="empty-desc">Выберите тарифный план или активируйте бесплатный тестовый доступ на 24 часа.</div>
-            <div class="empty-btns">
+            <div class="empty-desc">
+              ${hideTrialBtn
+                ? 'Выберите подходящий тарифный план для мгновенного подключения.'
+                : 'Выберите тарифный план или активируйте бесплатный тестовый доступ на 24 часа.'}
+            </div>
+            <div class="empty-btns ${hideTrialBtn ? 'single' : ''}">
               <button class="btn btn-primary" onclick="switchTab('tariffs')">Выбрать тариф</button>
-              <button class="btn btn-secondary" onclick="openBotAction('buy_test')">🆓 Тест 24ч</button>
+              ${hideTrialBtn ? '' : `<button class="btn btn-secondary" onclick="openBotAction('buy_test')">🆓 Тест 24ч</button>`}
             </div>
           </div>
         `;
@@ -2120,11 +2299,11 @@
         const gbLeft = Math.max(0, Math.round((gbTotal - gbUsed) * 10) / 10);
         const ratio = Math.max(0, Math.min(1, gbLeft / gbTotal));
         const dashOffset = circumference * (1 - ratio);
-        const ringColor = ratio > 0.2 ? okColor : lowColor;
+        const ringColor = ratio > 0.2 ? normalRing : lowColor;
         const safeKey = escapeHtml(s.key || '');
 
         return `
-          <div class="card liquid-glass">
+          <div class="card liquid-glass slot-card">
             <div class="sub-card-top">
               <div class="sub-info">
                 <div class="sub-status-row">
@@ -2362,14 +2541,12 @@
       document.body.removeChild(ta);
     }
 
+    /* Без принудительного tg.close(), чтобы deep-link /start гарантированно доходил до бота */
     function openBotAction(payload) {
       const botUname = appState.bot_username || 'PinPointVPN_bot';
       const url = `https://t.me/${botUname}?start=${encodeURIComponent(payload)}`;
       if (tg && typeof tg.openTelegramLink === 'function') {
         tg.openTelegramLink(url);
-        setTimeout(() => {
-          try { tg.close(); } catch (e) {}
-        }, 120);
       } else {
         window.open(url, '_blank');
       }
@@ -2396,6 +2573,13 @@
     function updateReviewCounter() {
       const len = (document.getElementById('reviewTextInput').value || '').length;
       document.getElementById('reviewCharCounter').textContent = `${len} / 600`;
+    }
+
+    function showReviewPendingNotice() {
+      const banner = document.getElementById('reviewPendingBanner');
+      if (banner) {
+        banner.classList.add('show');
+      }
     }
 
     async function submitReview() {
@@ -2428,6 +2612,7 @@
           btn.textContent = 'Отправить на модерацию';
           if (data && data.ok) {
             closeModal('reviewModal');
+            showReviewPendingNotice();
             return showToast('✅ Отзыв отправлен на модерацию!');
           } else if (data && data.error) {
             return showToast(data.error);
@@ -2446,6 +2631,7 @@
       const fullPayload = `review_${b64}`;
 
       closeModal('reviewModal');
+      showReviewPendingNotice();
       if (fullPayload.length <= 64) {
         openBotAction(fullPayload);
       } else {
@@ -2477,8 +2663,10 @@
 
     function toggleAmbientLight(enabled) {
       localStorage.setItem('pp_ambient', enabled ? '1' : '0');
-      const canvas = document.getElementById('ambientLightCanvas');
-      canvas.classList.toggle('hidden', !enabled);
+      const lightCanvas = document.getElementById('ambientLightCanvas');
+      const snowCanvas = document.getElementById('snowCanvas');
+      if (lightCanvas) lightCanvas.classList.toggle('hidden', !enabled);
+      if (snowCanvas) snowCanvas.classList.toggle('hidden', !enabled);
     }
 
     function openWelcome() {
@@ -2603,6 +2791,62 @@
       requestAnimationFrame(loop);
     }
 
+    /* Падающий снег для новогодней темы (позади стеклянных карточек) */
+    function initNewYearSnow() {
+      const canvas = document.getElementById('snowCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = 0;
+      let height = 0;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const flakes = [];
+      const FLAKE_COUNT = 52;
+      for (let i = 0; i < FLAKE_COUNT; i++) {
+        flakes.push({
+          x: Math.random() * (width || 420),
+          y: Math.random() * (height || 820),
+          r: 1.2 + Math.random() * 2.4,
+          speedY: 0.35 + Math.random() * 0.75,
+          swayAmp: 0.25 + Math.random() * 0.55,
+          phase: Math.random() * Math.PI * 2,
+          alpha: 0.28 + Math.random() * 0.55
+        });
+      }
+
+      function renderSnow() {
+        if (currentThemeId === 'newyear' && !canvas.classList.contains('hidden')) {
+          ctx.clearRect(0, 0, width, height);
+          for (let i = 0; i < flakes.length; i++) {
+            const f = flakes[i];
+            f.phase += 0.015;
+            f.y += f.speedY;
+            f.x += Math.sin(f.phase) * f.swayAmp;
+
+            if (f.y > height + 8) {
+              f.y = -8;
+              f.x = Math.random() * width;
+            }
+            if (f.x > width + 8) f.x = -8;
+            if (f.x < -8) f.x = width + 8;
+
+            ctx.beginPath();
+            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha.toFixed(2)})`;
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(renderSnow);
+      }
+      requestAnimationFrame(renderSnow);
+    }
+
     /* Инициализация */
     (function bootstrap() {
       decodeSnapshot();
@@ -2621,6 +2865,7 @@
       const ambientEnabled = savedAmbient !== '0';
       document.getElementById('ambientToggle').checked = ambientEnabled;
       document.getElementById('ambientLightCanvas').classList.toggle('hidden', !ambientEnabled);
+      document.getElementById('snowCanvas').classList.toggle('hidden', !ambientEnabled);
 
       if (localStorage.getItem('pp_welcomed') !== '1') {
         openWelcome();
@@ -2629,7 +2874,20 @@
       renderAll();
       initLiquidGlare();
       initAmbientLight();
+      initNewYearSnow();
       fetchLiveProfile();
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          fetchLiveProfile();
+        }
+      });
+
+      if (tg && typeof tg.onEvent === 'function') {
+        try {
+          tg.onEvent('activated', fetchLiveProfile);
+        } catch (e) {}
+      }
     })();
   </script>
 </body>
