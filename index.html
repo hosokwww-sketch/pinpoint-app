@@ -1,2143 +1,2393 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="obsidian" data-glass="on">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <title>PinPoint VPN</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            color-scheme: dark;
-            --bg: #000000;
-            --surface: rgba(12, 13, 17, 0.88);
-            --surface-sub: rgba(19, 21, 27, 0.88);
-            --surface-elevated: rgba(26, 29, 37, 0.92);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-strong: rgba(255, 255, 255, 0.18);
-            --text-main: #ffffff;
-            --text-muted: #8a919e;
-            --accent: #ffffff;
-            --accent-fg: #000000;
-            --accent-soft: rgba(255, 255, 255, 0.08);
-            --state-ok: #34d399;
-            --state-warn: #fbbf24;
-            --state-crit: #f87171;
-            --radius: 22px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            min-height: 100%;
-            background: #000000;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            min-height: 100vh;
-            padding: 16px 16px 120px;
-            overflow-x: hidden;
-            color: var(--text-main);
-            background-color: #000000;
-            font-family: 'Plus Jakarta Sans', Inter, -apple-system, sans-serif;
-            font-size: 14px;
-            line-height: 1.45;
-            letter-spacing: -0.012em;
-        }
-
-        button, input {
-            font: inherit;
-            color: inherit;
-        }
-
-        button:focus-visible, a:focus-visible, input:focus-visible {
-            outline: 2px solid var(--border-strong);
-            outline-offset: 2px;
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: -0.03em;
-        }
-
-        #ambientLightCanvas {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.85;
-            filter: blur(48px);
-            -webkit-filter: blur(48px);
-            transform: translateZ(0);
-        }
-
-        .view-layer {
-            position: relative;
-            z-index: 2;
-            width: min(100%, 480px);
-            margin: 0 auto;
-        }
-
-        .app-topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 14px;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            background-color: var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-main);
-            min-width: 0;
-        }
-
-        .brand-symbol {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            background-color: var(--surface-sub);
-            border: 1px solid var(--border-strong);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            flex-shrink: 0;
-        }
-
-        .brand-symbol svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .brand-title {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
-        }
-
-        .brand-name {
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-        }
-
-        .brand-tag {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            min-width: 0;
-        }
-
-        .user-capsule {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 10px 4px 5px;
-            border-radius: 13px;
-            border: 1px solid var(--border);
-            background-color: var(--surface-sub);
-            min-width: 0;
-        }
-
-        .operator-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 9px;
-            object-fit: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--surface-elevated);
-            color: var(--text-main);
-            font-size: 13px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .user-meta {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            line-height: 1.15;
-        }
-
-        .op-title {
-            max-width: 96px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .profile-id {
-            font-size: 9px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .icon-button {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background-color: var(--surface-sub);
-            color: var(--text-main);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: border-color 0.18s, background-color 0.18s;
-            flex-shrink: 0;
-        }
-
-        .icon-button svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .icon-button:hover {
-            border-color: var(--border-strong);
-            background-color: var(--surface-elevated);
-        }
-
-        .vault-hero {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 18px;
-            padding: 22px 20px 18px;
-            border: 1px solid var(--border-strong);
-            border-radius: 26px;
-            background-color: var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .vault-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .vault-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background-color: var(--surface-sub);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .vault-label-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--state-ok);
-        }
-
-        .balance-num {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            line-height: 1.05;
-            color: var(--text-main);
-        }
-
-        .vault-subtext {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .vault-orbit {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            background-color: var(--surface-sub);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-            flex-shrink: 0;
-        }
-
-        .vault-orbit svg {
-            width: 24px;
-            height: 24px;
-            stroke: currentColor;
-            stroke-width: 1.8;
-        }
-
-        .vault-actions {
-            display: grid;
-            grid-template-columns: 1.35fr 1fr;
-            gap: 9px;
-        }
-
-        .btn-pastel, .btn-subtle {
-            min-height: 44px;
-            padding: 11px 15px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border-radius: 14px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
-        }
-
-        .btn-pastel {
-            border: 1px solid var(--accent);
-            background-color: var(--accent);
-            color: var(--accent-fg);
-        }
-
-        .btn-subtle {
-            border: 1px solid var(--border);
-            background-color: var(--surface-sub);
-            color: var(--text-main);
-        }
-
-        .btn-pastel:hover, .btn-subtle:hover {
-            border-color: var(--border-strong);
-        }
-
-        .btn-pastel:active, .btn-subtle:active {
-            transform: scale(0.98);
-        }
-
-        button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .subhead {
-            color: var(--text-muted);
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .section-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin: 22px 2px 10px;
-        }
-
-        .section-label {
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .pill-badge {
-            padding: 5px 10px;
-            border: 1px solid var(--border-strong);
-            border-radius: 999px;
-            background-color: var(--surface-sub);
-            color: var(--text-main);
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-        }
-
-        .card {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 14px;
-            padding: 18px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background-color: var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .slot-card {
-            padding: 0;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            background-color: var(--surface);
-            margin-bottom: 14px;
-            overflow: hidden;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .slot-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 14px 18px;
-            background-color: var(--surface-sub);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .slot-title-wrap {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            min-width: 0;
-            flex: 1;
-        }
-
-        .soft-beacon {
-            width: 8px;
-            height: 8px;
-            flex: none;
-            border-radius: 50%;
-            background-color: var(--state-ok);
-        }
-
-        .slot-name-field {
-            width: 100%;
-            max-width: 175px;
-            padding: 2px 6px;
-            border: 1px solid transparent;
-            border-radius: 8px;
-            outline: 0;
-            background-color: transparent;
-            color: var(--text-main);
-            font-size: 14px;
-            font-weight: 800;
-        }
-
-        .slot-name-field:focus {
-            border-color: var(--border-strong);
-            background-color: var(--surface);
-        }
-
-        .slot-body {
-            padding: 16px 18px 18px;
-        }
-
-        .traffic-bento {
-            display: grid;
-            grid-template-columns: 74px 1fr;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 14px;
-            padding: 14px;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            background-color: var(--surface-sub);
-        }
-
-        .gauge-svg-wrap {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            margin: 0 auto;
-        }
-
-        .gauge-svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .gauge-track, .gauge-flow {
-            fill: none;
-            stroke-width: 4.2;
-        }
-
-        .gauge-track {
-            stroke: var(--border);
-        }
-
-        .gauge-flow {
-            stroke: var(--text-main);
-            stroke-linecap: round;
-            transition: stroke-dasharray 0.4s ease;
-        }
-
-        .gauge-center {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gauge-pct {
-            font-size: 14px;
-            font-weight: 800;
-        }
-
-        .pill-meter {
-            display: grid;
-            grid-template-columns: repeat(14, 1fr);
-            gap: 3px;
-            margin: 9px 0;
-        }
-
-        .pill-cell {
-            height: 6px;
-            border-radius: 6px;
-            background-color: var(--border);
-        }
-
-        .pill-cell.filled {
-            background-color: var(--text-main);
-        }
-
-        .pill-cell.warn {
-            background-color: var(--state-warn);
-        }
-
-        .pill-cell.crit {
-            background-color: var(--state-crit);
-        }
-
-        .slot-specs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .spec-chip {
-            padding: 7px 10px;
-            border-radius: 10px;
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            font-size: 10px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .spec-chip b {
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .key-capsule {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
-            align-items: center;
-            gap: 6px;
-            margin: 10px 0 12px;
-            padding: 6px 6px 6px 12px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background-color: var(--surface-sub);
-        }
-
-        .key-text {
-            width: 100%;
-            overflow: hidden;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            color: var(--text-muted);
-            font: 11px 'JetBrains Mono', monospace;
-            pointer-events: none;
-        }
-
-        .empty-slot-card {
-            border: 1px dashed var(--border-strong);
-            border-radius: 22px;
-            background-color: var(--surface);
-            padding: 20px 18px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .ref-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin: 12px 0;
-        }
-
-        .ref-stat-box {
-            padding: 11px 12px;
-            border-radius: 14px;
-            background-color: var(--surface-sub);
-            border: 1px solid var(--border);
-        }
-
-        .ref-progress-track {
-            height: 8px;
-            margin: 10px 0 14px;
-            border-radius: 99px;
-            background-color: var(--surface-sub);
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .ref-progress-bar {
-            height: 100%;
-            border-radius: 99px;
-            background-color: var(--text-main);
-            transition: width 0.35s;
-        }
-
-        .ambient-field {
-            width: 100%;
-            min-height: 44px;
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            outline: 0;
-            background-color: var(--surface-sub);
-            color: var(--text-main);
-            font-size: 13px;
-        }
-
-        .ambient-field::placeholder {
-            color: var(--text-muted);
-        }
-
-        .ambient-field:focus {
-            border-color: var(--border-strong);
-        }
-
-        .page-banner {
-            padding: 20px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            background-color: var(--surface);
-            margin-bottom: 16px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .page-banner h1 {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin: 4px 0 6px;
-        }
-
-        .page-banner p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .tariff-slab {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 14px;
-            padding: 18px;
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            background-color: var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            display: flex;
-            flex-direction: column;
-            gap: 13px;
-        }
-
-        .tariff-slab.featured {
-            border-color: var(--border-strong);
-            background-color: var(--surface-sub);
-        }
-
-        .tariff-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .tariff-price-block {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .tariff-price {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1.1;
-        }
-
-        .old-price {
-            display: block;
-            color: var(--text-muted);
-            font-size: 11px;
-            text-decoration: line-through;
-        }
-
-        .tariff-specs-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 7px;
-        }
-
-        .t-spec {
-            padding: 8px 10px;
-            border-radius: 12px;
-            background-color: var(--surface-sub);
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .tariff-slab.featured .t-spec {
-            background-color: var(--surface);
-        }
-
-        .t-spec span {
-            display: block;
-            font-size: 9px;
-            color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .t-spec b {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-main);
-            margin-top: 2px;
-            display: block;
-        }
-
-        .grid-duo {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 9px;
-        }
-
-        .grid-trio {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 8px;
-        }
-
-        .picker-cell {
-            min-width: 0;
-            min-height: 44px;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background-color: var(--surface-sub);
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: border-color 0.15s, background-color 0.15s, color 0.15s;
-        }
-
-        .picker-cell.active, .picker-cell:hover {
-            border-color: var(--border-strong);
-            background-color: var(--accent-soft);
-            color: var(--text-main);
-        }
-
-        .bottom-shelf {
-            position: fixed;
-            z-index: 90;
-            bottom: max(12px, env(safe-area-inset-bottom));
-            left: 50%;
-            width: min(calc(100% - 28px), 440px);
-            padding: 6px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            transform: translateX(-50%);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            background-color: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .shelf-tab {
-            min-height: 48px;
-            padding: 6px 8px;
-            border: 1px solid transparent;
-            border-radius: 14px;
-            background-color: transparent;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 800;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            cursor: pointer;
-            transition: background-color 0.15s, color 0.15s;
-        }
-
-        .shelf-tab svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 2;
-            fill: none;
-        }
-
-        .shelf-tab.active {
-            background-color: var(--accent);
-            color: var(--accent-fg);
-        }
-
-        .tab-content {
-            display: block;
-            visibility: hidden;
-            height: 0;
-            overflow: hidden;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-
-        .tab-content.active {
-            height: auto;
-            visibility: visible;
-            overflow: visible;
-            pointer-events: auto;
-        }
-
-        .tab-content.show {
-            opacity: 1;
-        }
-
-        .curtain-wrap {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 12px;
-            background-color: rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.2s, visibility 0.2s;
-        }
-
-        .curtain-wrap.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
-
-        .curtain-panel {
-            width: 100%;
-            max-width: 480px;
-            max-height: 88vh;
-            overflow: auto;
-            padding: 18px 18px max(24px, env(safe-area-inset-bottom));
-            border: 1px solid var(--border-strong);
-            border-radius: 26px;
-            background-color: #08090c;
-            transform: translateY(16px);
-            transition: transform 0.22s ease;
-        }
-
-        .curtain-wrap.active .curtain-panel {
-            transform: translateY(0);
-        }
-
-        .sheet-handle {
-            width: 42px;
-            height: 4px;
-            border-radius: 99px;
-            background-color: var(--border-strong);
-            margin: 0 auto 14px;
-        }
-
-        #inAppPush {
-            position: fixed;
-            z-index: 500;
-            top: -110px;
-            left: 14px;
-            right: 14px;
-            width: min(calc(100% - 28px), 440px);
-            margin: auto;
-            padding: 14px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid var(--border-strong);
-            border-radius: 16px;
-            background-color: #0b0c10;
-            opacity: 0;
-            transition: top 0.3s ease, opacity 0.25s ease;
-        }
-
-        #inAppPush.show {
-            top: 14px;
-            opacity: 1;
-        }
-
-        .tx-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 8px;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background-color: var(--surface-sub);
-            font-size: 12px;
-        }
-
-        #fadeIntro, #bridgeRedirectScreen {
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            background-color: #000000;
-            flex-direction: column;
-            text-align: center;
-        }
-
-        .fade-greeting {
-            color: #ffffff;
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.45s, transform 0.45s;
-        }
-
-        .fade-caption {
-            margin-top: 10px;
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.45s 0.1s, transform 0.45s 0.1s;
-        }
-
-        .fade-greeting.show, .fade-caption.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        #bridgeRedirectScreen {
-            z-index: 1000;
-        }
-
-        @media (max-width: 380px) {
-            body { padding: 12px 12px 114px; }
-            .balance-num { font-size: 32px; }
-            .vault-actions { grid-template-columns: 1fr; }
-            .op-title { max-width: 72px; }
-            .traffic-bento { grid-template-columns: 62px 1fr; gap: 10px; padding: 11px; }
-            .gauge-svg-wrap { width: 58px; height: 58px; }
-            .key-capsule { grid-template-columns: minmax(0, 1fr) auto; }
-            .key-capsule .btn-subtle:last-child { grid-column: 1 / -1; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>PinPoint VPN</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    /* ==========================================
+       1. ТЕМИЗАЦИЯ И ПЕРЕМЕННЫЕ ЖИДКОГО СТЕКЛА
+       ========================================== */
+    :root,
+    [data-theme="obsidian"] {
+      --bg: #000000;
+      --glass-bg: rgba(16, 16, 22, 0.56);
+      --glass-bg-elevated: rgba(26, 26, 36, 0.62);
+      --glass-nav: rgba(16, 16, 24, 0.68);
+      --glass-modal: rgba(14, 14, 20, 0.84);
+      --glass-specular-top: rgba(255, 255, 255, 0.26);
+      --glass-specular-side: rgba(255, 255, 255, 0.11);
+      --glass-rim-bottom: rgba(255, 255, 255, 0.05);
+      --glass-glare: rgba(255, 255, 255, 0.14);
+      --glass-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.75);
+      --border: rgba(255, 255, 255, 0.11);
+      --border-strong: rgba(255, 255, 255, 0.2);
+      --text: #ffffff;
+      --text-muted: #9898a8;
+      --text-dim: #626273;
+      --accent: #22c55e;
+      --accent-contrast: #000000;
+      --accent-bg: rgba(34, 197, 94, 0.16);
+      --accent-border: rgba(34, 197, 94, 0.38);
+      --blue: #38bdf8;
+      --blue-bg: rgba(56, 189, 248, 0.15);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.16);
+      --ring-track: rgba(255, 255, 255, 0.1);
+      --switch-off: rgba(255, 255, 255, 0.12);
+      --switch-knob-on: #000000;
+      --orb-1: rgba(34, 197, 94, 0.32);
+      --orb-2: rgba(59, 130, 246, 0.24);
+      --orb-3: rgba(16, 185, 129, 0.22);
+    }
+
+    [data-theme="azure"] {
+      --bg: #030712;
+      --glass-bg: rgba(12, 22, 42, 0.54);
+      --glass-bg-elevated: rgba(20, 34, 62, 0.62);
+      --glass-nav: rgba(10, 19, 38, 0.68);
+      --glass-modal: rgba(9, 17, 34, 0.84);
+      --glass-specular-top: rgba(186, 230, 253, 0.34);
+      --glass-specular-side: rgba(125, 211, 252, 0.15);
+      --glass-rim-bottom: rgba(56, 189, 248, 0.08);
+      --glass-glare: rgba(186, 230, 253, 0.16);
+      --glass-shadow: 0 14px 38px -10px rgba(2, 6, 23, 0.82);
+      --border: rgba(125, 211, 252, 0.14);
+      --border-strong: rgba(125, 211, 252, 0.26);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #38bdf8;
+      --accent-contrast: #030712;
+      --accent-bg: rgba(56, 189, 248, 0.18);
+      --accent-border: rgba(56, 189, 248, 0.42);
+      --blue: #818cf8;
+      --blue-bg: rgba(129, 140, 248, 0.16);
+      --amber: #fbbf24;
+      --amber-bg: rgba(251, 191, 36, 0.16);
+      --ring-track: rgba(148, 163, 184, 0.15);
+      --switch-off: rgba(148, 163, 184, 0.18);
+      --switch-knob-on: #030712;
+      --orb-1: rgba(56, 189, 248, 0.36);
+      --orb-2: rgba(99, 102, 241, 0.28);
+      --orb-3: rgba(14, 165, 233, 0.24);
+    }
+
+    [data-theme="amethyst"] {
+      --bg: #07030f;
+      --glass-bg: rgba(22, 13, 38, 0.56);
+      --glass-bg-elevated: rgba(34, 21, 56, 0.64);
+      --glass-nav: rgba(20, 12, 36, 0.7);
+      --glass-modal: rgba(18, 10, 32, 0.85);
+      --glass-specular-top: rgba(233, 213, 255, 0.32);
+      --glass-specular-side: rgba(216, 180, 254, 0.14);
+      --glass-rim-bottom: rgba(192, 132, 252, 0.08);
+      --glass-glare: rgba(233, 213, 255, 0.15);
+      --glass-shadow: 0 14px 38px -10px rgba(5, 2, 14, 0.82);
+      --border: rgba(216, 180, 254, 0.14);
+      --border-strong: rgba(216, 180, 254, 0.26);
+      --text: #faf5ff;
+      --text-muted: #a799bd;
+      --text-dim: #6e5f87;
+      --accent: #c084fc;
+      --accent-contrast: #07030f;
+      --accent-bg: rgba(192, 132, 252, 0.18);
+      --accent-border: rgba(192, 132, 252, 0.42);
+      --blue: #f472b6;
+      --blue-bg: rgba(244, 114, 182, 0.16);
+      --amber: #fbbf24;
+      --amber-bg: rgba(251, 191, 36, 0.16);
+      --ring-track: rgba(216, 180, 254, 0.14);
+      --switch-off: rgba(216, 180, 254, 0.16);
+      --switch-knob-on: #07030f;
+      --orb-1: rgba(168, 85, 247, 0.36);
+      --orb-2: rgba(236, 72, 153, 0.25);
+      --orb-3: rgba(139, 92, 246, 0.26);
+    }
+
+    [data-theme="frost"] {
+      --bg: #eef2f7;
+      --glass-bg: rgba(255, 255, 255, 0.62);
+      --glass-bg-elevated: rgba(255, 255, 255, 0.78);
+      --glass-nav: rgba(255, 255, 255, 0.74);
+      --glass-modal: rgba(248, 250, 252, 0.9);
+      --glass-specular-top: rgba(255, 255, 255, 0.98);
+      --glass-specular-side: rgba(255, 255, 255, 0.75);
+      --glass-rim-bottom: rgba(15, 23, 42, 0.08);
+      --glass-glare: rgba(255, 255, 255, 0.65);
+      --glass-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.12);
+      --border: rgba(15, 23, 42, 0.09);
+      --border-strong: rgba(15, 23, 42, 0.16);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+      --accent: #10b981;
+      --accent-contrast: #ffffff;
+      --accent-bg: rgba(16, 185, 129, 0.14);
+      --accent-border: rgba(16, 185, 129, 0.36);
+      --blue: #2563eb;
+      --blue-bg: rgba(37, 99, 235, 0.12);
+      --amber: #d97706;
+      --amber-bg: rgba(217, 119, 6, 0.14);
+      --ring-track: rgba(15, 23, 42, 0.09);
+      --switch-off: rgba(15, 23, 42, 0.14);
+      --switch-knob-on: #ffffff;
+      --orb-1: rgba(16, 185, 129, 0.28);
+      --orb-2: rgba(56, 189, 248, 0.28);
+      --orb-3: rgba(167, 139, 250, 0.22);
+    }
+
+    :root {
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 13px;
+      --safe-bottom: env(safe-area-inset-bottom, 16px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Inter, sans-serif;
+    }
+
+    html, body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+
+    /* Плавающий свет за жидким стеклом */
+    #ambientLightCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      filter: blur(54px);
+      opacity: 0.85;
+      transition: opacity 0.35s ease;
+    }
+
+    #ambientLightCanvas.hidden {
+      opacity: 0;
+    }
+
+    /* ==========================================
+       2. УНИВЕРСАЛЬНЫЙ КЛАСС LIQUID GLASS
+       ========================================== */
+    .liquid-glass {
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(26px) saturate(185%);
+      -webkit-backdrop-filter: blur(26px) saturate(185%);
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        inset 1px 0 0 0 var(--glass-specular-side),
+        inset 0 -1px 0 0 var(--glass-rim-bottom),
+        var(--glass-shadow);
+      transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+    }
+
+    /* Режим ослабленного стекла (если пользователь отключит в настройках) */
+    [data-glass="off"] .liquid-glass {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Динамический оптический блик при касании/наведении */
+    .liquid-glass::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(
+        240px circle at var(--mx, 50%) var(--my, 20%),
+        var(--glass-glare),
+        transparent 70%
+      );
+      transition: opacity 0.28s ease;
+      z-index: 0;
+    }
+
+    [data-glass="on"] .liquid-glass.glare-active::after {
+      opacity: 1;
+    }
+
+    .liquid-glass > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 14px 16px calc(96px + var(--safe-bottom));
+    }
+
+    /* Шапка */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: var(--radius-xl);
+      margin-bottom: 16px;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .balance-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        0 4px 14px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 999px;
+      padding: 6px 8px 6px 13px;
+      cursor: pointer;
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease;
+    }
+
+    .balance-pill:active {
+      transform: scale(0.95);
+    }
+
+    .balance-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .balance-plus {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      font-weight: 800;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    /* Вкладки */
+    .tab-pane {
+      display: none;
+      animation: fadeSlide 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 18px 2px 10px;
+    }
+
+    .section-head:first-child {
+      margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .section-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      padding: 3px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Карточки */
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    /* Слот подписки */
+    .sub-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .sub-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sub-status-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .sub-slot-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.45px;
+    }
+
+    .sub-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .sub-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Кольцо трафика */
+    .ring-box {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--glass-bg-elevated);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+    }
+
+    .ring-box svg {
+      transform: rotate(-90deg);
+      width: 72px;
+      height: 72px;
+    }
+
+    .ring-label {
+      position: absolute;
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .ring-gb {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+    }
+
+    .ring-unit {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .sub-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Кнопки с эффектом жидкого стекла */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-weight: 700;
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
+        0 6px 18px -4px var(--accent-bg);
+    }
+
+    .btn-secondary {
+      background: var(--glass-bg-elevated);
+      border-color: var(--border-strong);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .btn-blue {
+      background: var(--blue-bg);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: var(--blue);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Пустое состояние */
+    .empty-card {
+      text-align: center;
+      padding: 24px 18px;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .empty-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .empty-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 16px;
+    }
+
+    .empty-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    /* Промокод */
+    .promo-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.14);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+
+    .input-field::placeholder {
+      color: var(--text-dim);
+    }
+
+    .active-discount-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* Реферальный блок */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0 14px;
+    }
+
+    .ref-stat {
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .ref-stat-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ref-stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Тарифы */
+    .discount-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-lg);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: var(--text);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .tariff-card.popular {
+      border-color: var(--accent-border);
+    }
+
+    .tariff-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tariff-title {
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-popular {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--amber-bg);
+      border: 1px solid rgba(245, 158, 11, 0.36);
+      color: var(--amber);
+    }
+
+    .tag-discount {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 8px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+    }
+
+    .tariff-price-box {
+      text-align: right;
+    }
+
+    .price-old {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-decoration: line-through;
+      display: block;
+    }
+
+    .price-now {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .tariff-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .spec-chip {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+
+    /* Отзывы */
+    .reviews-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .rating-big {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .rating-num {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .rating-stars {
+      color: var(--amber);
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .rating-count {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .review-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .review-author-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .review-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    .review-author-name {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .review-date {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .review-stars-sm {
+      font-size: 13px;
+      color: var(--amber);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+
+    .review-body {
+      font-size: 13.5px;
+      color: var(--text);
+      opacity: 0.88;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    /* Выбор тем в настройках */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 15px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      transition: transform 0.16s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .theme-option:active {
+      transform: scale(0.97);
+    }
+
+    .theme-option.active {
+      border-color: var(--accent);
+      background: var(--accent-bg);
+    }
+
+    .theme-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.45), 0 3px 8px rgba(0, 0, 0, 0.3);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-swatch-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .theme-meta {
+      min-width: 0;
+    }
+
+    .theme-name {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .theme-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Настройки */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .setting-row:first-child {
+      padding-top: 2px;
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+      padding-bottom: 2px;
+    }
+
+    .setting-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .setting-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Переключатель */
+    .switch {
+      position: relative;
+      width: 46px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--switch-off);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.22s ease, border-color 0.22s ease;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 2px;
+      top: 2px;
+      background: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .switch input:checked + .slider {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(20px);
+      background: var(--switch-knob-on);
+    }
+
+    /* Нижняя навигация (Liquid Glass Dock на 4 вкладки) */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: calc(10px + var(--safe-bottom));
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 452px;
+      background: var(--glass-nav);
+      border: 1px solid var(--border-strong);
+      border-radius: 24px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      z-index: 40;
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        inset 0 -1px 0 0 var(--glass-rim-bottom),
+        var(--glass-shadow);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      padding: 8px 4px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .nav-btn.active {
+      background: var(--glass-bg-elevated);
+      border-color: var(--border-strong);
+      color: var(--accent);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+    }
+
+    /* Модальные шторки */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 60;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: fadeIn 0.18s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 480px;
+      background: var(--glass-modal);
+      border-top: 1px solid var(--border-strong);
+      border-radius: 26px 26px 0 0;
+      padding: 18px 18px calc(24px + var(--safe-bottom));
+      max-height: 88vh;
+      overflow-y: auto;
+      backdrop-filter: blur(30px) saturate(190%);
+      -webkit-backdrop-filter: blur(30px) saturate(190%);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+    }
+
+    .modal-handle {
+      width: 38px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--border-strong);
+      margin: 0 auto 14px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      color: var(--text-muted);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .preset-btn {
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      border-radius: 13px;
+      padding: 10px 6px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .preset-btn:active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .star-picker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0 14px;
+    }
+
+    .star-btn {
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      border-radius: 13px;
+      width: 46px;
+      height: 46px;
+      font-size: 22px;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .star-btn.active {
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.45);
+      background: var(--amber-bg);
+    }
+
+    .textarea-field {
+      width: 100%;
+      min-height: 104px;
+      resize: none;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+      outline: none;
+    }
+
+    .textarea-field:focus {
+      border-color: var(--accent);
+    }
+
+    .char-counter {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+
+    /* Экран приветствия */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 80;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 36px 22px calc(28px + var(--safe-bottom));
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .welcome-overlay.open {
+      display: flex;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .welcome-h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .welcome-p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .welcome-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wf-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+    }
+
+    .wf-ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .wf-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wf-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Уведомление Toast */
+    .toast {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--glass-modal);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top), var(--glass-shadow);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
 </head>
 <body>
+  <canvas id="ambientLightCanvas"></canvas>
+  <div id="toast" class="toast"></div>
 
-    <canvas id="ambientLightCanvas"></canvas>
-
-    <!-- ЭКРАН ПЕРЕНАПРАВЛЕНИЯ В КЛИЕНТ -->
-    <div id="bridgeRedirectScreen">
-        <div class="card" style="max-width: 380px; width: 100%; padding: 26px 20px;">
-            <div style="font-size: 36px; margin-bottom: 10px;">🚀</div>
-            <div id="bridgeTitle" style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Запуск приложения...</div>
-            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.45;">
-                Если приложение не открылось автоматически, нажмите кнопку ниже:
-            </div>
-            <a id="bridgeLaunchBtn" href="#" class="btn-pastel" style="width: 100%; padding: 14px; margin-bottom: 10px;">
-                ⚡️ ОТКРЫТЬ И ДОБАВИТЬ ПОДПИСКУ
-            </a>
-            <a id="bridgeStoreBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-subtle" style="width: 100%; padding: 12px;">
-                📥 Скачать приложение
-            </a>
+  <!-- Экран приветствия -->
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <div>
+      <div class="welcome-badge">⚡ PinPoint VPN • Liquid Glass UI</div>
+      <h1 class="welcome-h1">Быстрый и стабильный интернет в 1 клик</h1>
+      <p class="welcome-p">
+        Управляйте подписками, подключайте смартфоны и компьютеры без ручных настроек и следите за трафиком в реальном времени.
+      </p>
+      <div class="welcome-features">
+        <div class="wf-item liquid-glass">
+          <div class="wf-ico">🚀</div>
+          <div>
+            <div class="wf-title">Подключение за 5 секунд</div>
+            <div class="wf-sub">Автоимпорт ключа в Happ, Hiddify, Incy и V2raytun</div>
+          </div>
         </div>
+        <div class="wf-item liquid-glass">
+          <div class="wf-ico">🌍</div>
+          <div>
+            <div class="wf-title">Европейские локации</div>
+            <div class="wf-sub">🇳🇱 Нидерланды • 🇫🇮 Финляндия • 🇨🇭 Швейцария • 🇪🇸 Испания • 🇱🇹 Литва • 🇸🇪 Швеция</div>
+          </div>
+        </div>
+        <div class="wf-item liquid-glass">
+          <div class="wf-ico">🎁</div>
+          <div>
+            <div class="wf-title">Бесплатный тест на 24 часа</div>
+            <div class="wf-sub">Проверьте скорость соединения перед выбором тарифа</div>
+          </div>
+        </div>
+      </div>
     </div>
+    <button class="btn btn-primary btn-full" onclick="closeWelcome()">Продолжить в кабинет</button>
+  </div>
 
-    <!-- ВСПЛЫВАЮЩЕЕ УВЕДОМЛЕНИЕ -->
-    <div id="inAppPush">
-        <div style="width:34px; height:34px; border-radius:10px; background:var(--surface-sub); border:1px solid var(--border-strong); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;">
-            ✓
+  <div class="app-shell">
+    <!-- Верхняя шапка -->
+    <header class="top-bar liquid-glass">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
         </div>
-        <div style="flex:1; min-width:0;">
-            <div id="pushTitle" style="font-size:13px; font-weight:800; color:var(--text-main);">Уведомление</div>
-            <div id="pushBody" style="font-size:11px; color:var(--text-muted); margin-top:2px;">Статус обновлен</div>
+        <div>
+          <div class="brand-title">PinPoint VPN</div>
+          <div class="brand-sub" id="userBadge">ID: —</div>
         </div>
+      </div>
+
+      <button class="balance-pill" onclick="openTopupModal()">
+        <span class="balance-val" id="headerBalance">0 ₽</span>
+        <span class="balance-plus">+</span>
+      </button>
+    </header>
+
+    <!-- ВКЛАДКА 1: КАБИНЕТ -->
+    <section id="tab-cabinet" class="tab-pane active">
+      <div class="section-head">
+        <span class="section-title">Ваши подключения</span>
+        <span class="section-badge" id="slotsCounter">0 / 2 слота</span>
+      </div>
+
+      <div id="subsContainer"></div>
+
+      <div class="section-head">
+        <span class="section-title">Промокод</span>
+      </div>
+      <div class="card liquid-glass">
+        <div class="promo-row">
+          <input id="promoInput" class="input-field" type="text" maxlength="32" placeholder="Введите промокод..." autocomplete="off" />
+          <button class="btn btn-primary" onclick="applyPromoCode()">Применить</button>
+        </div>
+        <div id="activeDiscountBox"></div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-title">Партнёрская программа</span>
+      </div>
+      <div class="card liquid-glass">
+        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Приглашайте друзей и получайте бонусы</div>
+        <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.4;">
+          Вы получаете процент со всех пополнений и продлений приглашённых пользователей.
+        </div>
+        <div class="ref-grid">
+          <div class="ref-stat">
+            <div class="ref-stat-val" id="refRateVal">5%</div>
+            <div class="ref-stat-lbl">Ваша ставка</div>
+          </div>
+          <div class="ref-stat">
+            <div class="ref-stat-val" id="refCountVal">0</div>
+            <div class="ref-stat-lbl">Друзей</div>
+          </div>
+          <div class="ref-stat">
+            <div class="ref-stat-val" id="refEarnVal">0 ₽</div>
+            <div class="ref-stat-lbl">Заработано</div>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="copyReferralLink()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Скопировать реферальную ссылку
+        </button>
+      </div>
+    </section>
+
+    <!-- ВКЛАДКА 2: ТАРИФЫ -->
+    <section id="tab-tariffs" class="tab-pane">
+      <div id="tariffsDiscountBanner"></div>
+
+      <div class="section-head">
+        <span class="section-title">Пробный доступ</span>
+      </div>
+      <div class="card liquid-glass">
+        <div class="tariff-top">
+          <div>
+            <div class="tariff-title">🆓 Тест на 24 часа</div>
+            <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Для проверки скорости и стабильности</div>
+          </div>
+          <div class="tariff-price-box">
+            <span class="price-now" style="color: var(--accent);">0 ₽</span>
+          </div>
+        </div>
+        <div class="tariff-specs">
+          <span class="spec-chip">⏱ 24 часа</span>
+          <span class="spec-chip">📦 10 ГБ</span>
+          <span class="spec-chip">📱 1 устройство</span>
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="openBotAction('buy_test')">Активировать бесплатный тест</button>
+      </div>
+
+      <div class="section-head">
+        <span class="section-title">Тарифные планы</span>
+        <span class="section-badge">🇳🇱 🇫🇮 🇨🇭 🇪🇸 🇱🇹 🇸🇪</span>
+      </div>
+      <div id="tariffsList"></div>
+    </section>
+
+    <!-- ВКЛАДКА 3: ОТЗЫВЫ -->
+    <section id="tab-reviews" class="tab-pane">
+      <div class="section-head">
+        <span class="section-title">Отзывы клиентов</span>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="reviews-hero">
+          <div>
+            <div class="rating-big">
+              <span class="rating-num" id="avgRatingNum">5.0</span>
+              <span class="rating-stars">★★★★★</span>
+            </div>
+            <div class="rating-count" id="reviewsCountText">Одобренные отзывы пользователей</div>
+          </div>
+          <button class="btn btn-primary" onclick="openReviewModal()">✍️ Оставить отзыв</button>
+        </div>
+      </div>
+
+      <div id="reviewsList"></div>
+    </section>
+
+    <!-- ВКЛАДКА 4: НАСТРОЙКИ -->
+    <section id="tab-settings" class="tab-pane">
+      <div class="section-head">
+        <span class="section-title">Оформление и темы</span>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="setting-title">🎨 Тема жидкого стекла</div>
+        <div class="setting-desc">Выберите оттенок стекла и подсветки интерфейса</div>
+        <div class="theme-grid" id="themeGrid">
+          <button type="button" class="theme-option active" data-theme-id="obsidian" onclick="selectTheme('obsidian')">
+            <div class="theme-swatch" style="background: #0a0a0f;">
+              <span class="theme-swatch-dot" style="background: #22c55e;"></span>
+            </div>
+            <div class="theme-meta">
+              <div class="theme-name">Обсидиан</div>
+              <div class="theme-sub">Чёрное стекло</div>
+            </div>
+          </button>
+
+          <button type="button" class="theme-option" data-theme-id="azure" onclick="selectTheme('azure')">
+            <div class="theme-swatch" style="background: #08142b;">
+              <span class="theme-swatch-dot" style="background: #38bdf8;"></span>
+            </div>
+            <div class="theme-meta">
+              <div class="theme-name">Сапфир</div>
+              <div class="theme-sub">Синий неон</div>
+            </div>
+          </button>
+
+          <button type="button" class="theme-option" data-theme-id="amethyst" onclick="selectTheme('amethyst')">
+            <div class="theme-swatch" style="background: #170b2e;">
+              <span class="theme-swatch-dot" style="background: #c084fc;"></span>
+            </div>
+            <div class="theme-meta">
+              <div class="theme-name">Аметист</div>
+              <div class="theme-sub">Фиолетовый</div>
+            </div>
+          </button>
+
+          <button type="button" class="theme-option" data-theme-id="frost" onclick="selectTheme('frost')">
+            <div class="theme-swatch" style="background: #e2e8f0;">
+              <span class="theme-swatch-dot" style="background: #10b981;"></span>
+            </div>
+            <div class="theme-meta">
+              <div class="theme-name">Светлый лёд</div>
+              <div class="theme-sub">Матовый свет</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-title">Параметры приложения</span>
+      </div>
+
+      <div class="card liquid-glass">
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">💧 Эффект жидкого стекла</div>
+            <div class="setting-desc">Глубокое преломление, блики граней и свечение</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="liquidGlassToggle" checked onchange="toggleLiquidGlass(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">✨ Плавный свет на фоне</div>
+            <div class="setting-desc">Мягкая фоновая подсветка под стеклом</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="ambientToggle" checked onchange="toggleAmbientLight(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">🔔 Уведомления в Telegram</div>
+            <div class="setting-desc">Напоминания об окончании подписки и трафика</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="notifToggle" checked onchange="toggleNotifications(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div>
+            <div class="setting-title">👋 Экран приветствия</div>
+            <div class="setting-desc">Показать вводную карточку о возможностях сервиса</div>
+          </div>
+          <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 13px;" onclick="openWelcome()">Открыть</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Нижняя навигация (4 вкладки) -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-tab="cabinet" onclick="switchTab('cabinet')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
+      <span>Кабинет</span>
+    </button>
+    <button class="nav-btn" data-tab="tariffs" onclick="switchTab('tariffs')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+      <span>Тарифы</span>
+    </button>
+    <button class="nav-btn" data-tab="reviews" onclick="switchTab('reviews')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+      <span>Отзывы</span>
+    </button>
+    <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      <span>Настройки</span>
+    </button>
+  </nav>
+
+  <!-- Модальное окно: Пополнение баланса -->
+  <div id="topupModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'topupModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title">💳 Пополнение баланса</div>
+        <button class="modal-close" onclick="closeModal('topupModal')">×</button>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Выберите сумму или введите свою (от 10 до 100 000 ₽):
+      </div>
+      <div class="preset-grid">
+        <button class="preset-btn" onclick="setTopupAmount(79)">79 ₽</button>
+        <button class="preset-btn" onclick="setTopupAmount(149)">149 ₽</button>
+        <button class="preset-btn" onclick="setTopupAmount(199)">199 ₽</button>
+        <button class="preset-btn" onclick="setTopupAmount(499)">499 ₽</button>
+      </div>
+      <input id="topupAmountInput" class="input-field" type="number" min="10" max="100000" value="149" placeholder="Сумма в рублях" style="margin-bottom: 12px;" />
+      <button class="btn btn-primary btn-full" onclick="submitTopup()">Перейти к оплате</button>
     </div>
+  </div>
 
-    <!-- ЗАСТАВКА ПРИ ПЕРВОМ ЗАПУСКЕ -->
-    <div id="fadeIntro">
-        <div id="introTitle" class="fade-greeting">PinPoint VPN</div>
-        <div id="introSub" class="fade-caption">Доступ в свободный интернет</div>
+  <!-- Модальное окно: Подключение в 1 клик -->
+  <div id="connectModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'connectModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title">⚡ Подключить устройство</div>
+        <button class="modal-close" onclick="closeModal('connectModal')">×</button>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Нажмите на установленное приложение для автоматического импорта подписки:
+      </div>
+      <div class="app-grid">
+        <button class="btn btn-primary" onclick="launchClientApp('happ')">Happ</button>
+        <button class="btn btn-primary" onclick="launchClientApp('hiddify')">Hiddify</button>
+        <button class="btn btn-blue" onclick="launchClientApp('incy')">Incy</button>
+        <button class="btn btn-blue" onclick="launchClientApp('v2raytun')">V2raytun</button>
+      </div>
+      <button class="btn btn-secondary btn-full" onclick="copyActiveKey()">📋 Скопировать ключ подписки вручную</button>
     </div>
+  </div>
 
-    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
-    <div class="view-layer" id="mainAppView">
+  <!-- Модальное окно: Докупка трафика -->
+  <div id="boosterModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'boosterModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title">➕ Докупить гигабайты</div>
+        <button class="modal-close" onclick="closeModal('boosterModal')">×</button>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+        Дополнительный пакет трафика добавится к выбранному слоту подписки:
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(15)">
+          <span>📦 +15 ГБ трафика</span>
+          <strong style="color: var(--accent);">45 ₽</strong>
+        </button>
+        <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(50)">
+          <span>📦 +50 ГБ трафика</span>
+          <strong style="color: var(--accent);">99 ₽</strong>
+        </button>
+        <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(150)">
+          <span>📦 +150 ГБ трафика</span>
+          <strong style="color: var(--accent);">165 ₽</strong>
+        </button>
+      </div>
+    </div>
+  </div>
 
-        <!-- ШАПКА -->
-        <header class="app-topbar">
-            <a class="brand" href="#" onclick="switchTab('cabinet');return false" aria-label="PinPoint VPN">
-                <span class="brand-symbol" aria-hidden="true">
-                    <svg viewBox="0 0 32 32"><path d="M16 3 28 10v12L16 29 4 22V10Z"/><path d="m10 19 6-11 6 11-6-3Z" fill="#000"/></svg>
-                </span>
-                <span class="brand-title">
-                    <span class="brand-name">PinPoint.</span>
-                    <span class="brand-tag">ДОСТУП В СВОБОДНЫЙ ИНТЕРНЕТ</span>
-                </span>
-            </a>
+  <!-- Модальное окно: Оставить отзыв -->
+  <div id="reviewModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'reviewModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title">✍️ Оставить отзыв</div>
+        <button class="modal-close" onclick="closeModal('reviewModal')">×</button>
+      </div>
 
-            <div class="topbar-right">
-                <div class="user-capsule">
-                    <img id="avatarImg" class="operator-avatar" style="display:none;" alt="Аватар">
-                    <div id="avatarFallback" class="operator-avatar">P</div>
-                    <div class="user-meta">
-                        <div id="uName" class="op-title">Клиент</div>
-                        <div id="uId" class="profile-id mono">ID: —</div>
-                    </div>
-                </div>
-                <button class="icon-button" onclick="switchTab('style')" aria-label="Настройки">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.5"/><circle cx="15" cy="17" r="2.5"/>
-                    </svg>
-                </button>
-            </div>
-        </header>
+      <div style="font-size: 13px; color: var(--text-muted); text-align: center;">Оцените работу сервиса:</div>
+      <div class="star-picker" id="starPicker">
+        <button type="button" class="star-btn active" data-star="1" onclick="selectStar(1)">★</button>
+        <button type="button" class="star-btn active" data-star="2" onclick="selectStar(2)">★</button>
+        <button type="button" class="star-btn active" data-star="3" onclick="selectStar(3)">★</button>
+        <button type="button" class="star-btn active" data-star="4" onclick="selectStar(4)">★</button>
+        <button type="button" class="star-btn active" data-star="5" onclick="selectStar(5)">★</button>
+      </div>
 
-        <!-- ВКЛАДКА 1: КАБИНЕТ -->
-        <div id="tab-cabinet" class="tab-content active show">
+      <textarea id="reviewTextInput" class="textarea-field" maxlength="600" placeholder="Расскажите о скорости, стабильности и удобстве подключения..." oninput="updateReviewCounter()"></textarea>
+      <div class="char-counter" id="reviewCharCounter">0 / 600</div>
 
-            <section class="vault-hero" aria-label="Баланс аккаунта">
-                <div class="vault-top">
-                    <div>
-                        <div class="vault-label">
-                            <span class="vault-label-dot"></span>
-                            КОШЕЛЕК PINPOINT
-                        </div>
-                        <div id="uBal" class="balance-num mono">0 ₽</div>
-                        <div class="vault-subtext">Мгновенное пополнение через СБП и банковские карты</div>
-                    </div>
-                    <div class="vault-orbit" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none">
-                            <path d="M12 3L20 7V12C20 16.97 16.58 21.37 12 22.5C7.42 21.37 4 16.97 4 12V7L12 3Z"/>
-                            <path d="M9 12.2L11.2 14.4L15.5 10"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="vault-actions">
-                    <button onclick="openCurtain('topupSheet');toggleWalletSubtab('pay')" class="btn-pastel">
-                        <span>＋</span> ПОПОЛНИТЬ СЧЕТ
-                    </button>
-                    <button onclick="openCurtain('topupSheet');toggleWalletSubtab('history')" class="btn-subtle">
-                        🧾 ИСТОРИЯ ОПЛАТ
-                    </button>
-                </div>
-            </section>
-
-            <div class="section-row">
-                <span class="section-label">МОИ ПОДКЛЮЧЕНИЯ</span>
-                <span id="slotsCount" class="pill-badge">0 / 2 АКТИВНО</span>
-            </div>
-
-            <div id="slotsCluster"></div>
-
-            <div class="section-row">
-                <span class="section-label">ПАРТНЕРСКАЯ ПРОГРАММА</span>
-                <span id="refBadgePct" class="pill-badge">СТАВКА: 5%</span>
-            </div>
-
-            <div class="card">
-                <div>
-                    <div style="font-size:16px; font-weight:800; letter-spacing:-0.02em;">Приглашайте друзей</div>
-                    <div id="refSubtitle" style="font-size:12px; color:var(--text-muted); margin-top:3px;">
-                        +1% к вознаграждению за каждого оплатившего друга (до 25%)
-                    </div>
-                </div>
-
-                <div class="ref-stats-grid">
-                    <div class="ref-stat-box">
-                        <div class="subhead">ДРУЗЕЙ</div>
-                        <div style="font-size:16px; font-weight:800; margin-top:3px;"><span id="refFriendsCount">0</span> <span style="font-size:12px; color:var(--text-muted); font-weight:600;">/ 20</span></div>
-                    </div>
-                    <div class="ref-stat-box">
-                        <div class="subhead">ЗАРАБОТАНО</div>
-                        <div id="refEarnedSum" class="mono" style="font-size:16px; font-weight:800; color:var(--text-main); margin-top:3px;">0 ₽</div>
-                    </div>
-                </div>
-
-                <div class="ref-progress-track">
-                    <div id="refProgressBar" class="ref-progress-bar" style="width: 8%;"></div>
-                </div>
-
-                <div class="grid-duo">
-                    <button onclick="shareRefLink()" class="btn-pastel">
-                        💌 ОТПРАВИТЬ ДРУГУ
-                    </button>
-                    <button onclick="copyRefLink(this)" class="btn-subtle">
-                        📋 СКОПИРОВАТЬ
-                    </button>
-                </div>
-
-                <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
-                    <div class="subhead" style="margin-bottom:8px;">АКТИВАЦИЯ ПРОМОКОДА</div>
-                    <div style="display:grid; grid-template-columns: 1fr auto; gap:8px;">
-                        <input type="text" id="promoInput" class="ambient-field mono" placeholder="Введите промокод (PIN2026)" style="text-transform:uppercase;">
-                        <button onclick="applyPromoCode()" class="btn-pastel">ПРИМЕНИТЬ</button>
-                    </div>
-                </div>
-            </div>
+      <div class="setting-row" style="border-top: 1px solid var(--border); padding-top: 12px; margin-bottom: 14px;">
+        <div>
+          <div class="setting-title">🎭 Анонимный отзыв</div>
+          <div class="setting-desc">Скрыть имя и опубликовать как «Анонимный клиент»</div>
         </div>
+        <label class="switch">
+          <input type="checkbox" id="reviewAnonToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
 
-        <!-- ВКЛАДКА 2: ТАРИФЫ -->
-        <div id="tab-tariffs" class="tab-content">
-            <div class="page-banner">
-                <div class="subhead">ТАРИФНЫЕ ПЛАНЫ</div>
-                <h1>Доступные цены</h1>
-                <p>Честные лимиты трафика, высокая скорость и до 2 независимых подписок на одном аккаунте.</p>
+      <button id="submitReviewBtn" class="btn btn-primary btn-full" onclick="submitReview()">Отправить на модерацию</button>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    const THEMES = {
+      obsidian: {
+        bg: '#000000',
+        accent: '#22c55e',
+        orbs: ['rgba(34, 197, 94, 0.34)', 'rgba(59, 130, 246, 0.24)', 'rgba(16, 185, 129, 0.22)']
+      },
+      azure: {
+        bg: '#030712',
+        accent: '#38bdf8',
+        orbs: ['rgba(56, 189, 248, 0.38)', 'rgba(99, 102, 241, 0.28)', 'rgba(14, 165, 233, 0.24)']
+      },
+      amethyst: {
+        bg: '#07030f',
+        accent: '#c084fc',
+        orbs: ['rgba(168, 85, 247, 0.38)', 'rgba(236, 72, 153, 0.26)', 'rgba(139, 92, 246, 0.26)']
+      },
+      frost: {
+        bg: '#eef2f7',
+        accent: '#10b981',
+        orbs: ['rgba(16, 185, 129, 0.32)', 'rgba(56, 189, 248, 0.32)', 'rgba(167, 139, 250, 0.25)']
+      }
+    };
+
+    let currentThemeId = 'obsidian';
+
+    const TARIFF_CATALOG = [
+      { id: 'start', name: '🚀 Старт', days: 14, gb: 50, devices: 1, price: 79, popular: false },
+      { id: 'base', name: '⚡️ Базовый', days: 30, gb: 150, devices: 1, price: 149, popular: false },
+      { id: 'pro', name: '💎 Продвинутый', days: 30, gb: 300, devices: 3, price: 199, popular: false },
+      { id: 'hit', name: '🔥 ХИТ СЕЗОНА', days: 90, gb: 900, devices: 3, price: 499, popular: true }
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const API_URL = (urlParams.get('api') || '').replace(/\/+$/, '');
+
+    let appState = {
+      user_id: tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 0,
+      balance: 0,
+      discount_pct: 0,
+      discount_tariff: 'all',
+      ref_cnt: 0,
+      ref_pct: 5,
+      ref_earn: 0,
+      notifications: true,
+      bot_username: 'PinPointVPN_bot',
+      subs: [],
+      reviews: []
+    };
+
+    let selectedSubKey = '';
+    let selectedBoosterSlot = 1;
+    let selectedReviewRating = 5;
+
+    function selectTheme(themeId, silent = false) {
+      if (!THEMES[themeId]) themeId = 'obsidian';
+      currentThemeId = themeId;
+      document.documentElement.setAttribute('data-theme', themeId);
+      localStorage.setItem('pp_theme', themeId);
+
+      document.querySelectorAll('#themeGrid .theme-option').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme-id') === themeId);
+      });
+
+      const cfg = THEMES[themeId];
+      if (tg) {
+        try {
+          tg.setHeaderColor(cfg.bg);
+          tg.setBackgroundColor(cfg.bg);
+        } catch (e) {}
+      }
+
+      if (window._updateOrbColors) {
+        window._updateOrbColors(cfg.orbs);
+      }
+
+      renderSubscriptions();
+      if (!silent) {
+        showToast('🎨 Тема оформления обновлена');
+      }
+    }
+
+    function toggleLiquidGlass(enabled) {
+      document.documentElement.setAttribute('data-glass', enabled ? 'on' : 'off');
+      localStorage.setItem('pp_liquid_glass', enabled ? '1' : '0');
+      showToast(enabled ? '💧 Эффект жидкого стекла включён' : '💧 Упрощённое стекло включено');
+    }
+
+    function decodeSnapshot() {
+      const rawSnap = urlParams.get('snap');
+      if (!rawSnap) return;
+      try {
+        const b64 = rawSnap.replace(/-/g, '+').replace(/_/g, '/');
+        const padded = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
+        const binary = atob(padded);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        const parsed = JSON.parse(new TextDecoder('utf-8').decode(bytes));
+        if (parsed && typeof parsed === 'object') {
+          appState = { ...appState, ...parsed };
+        }
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function tariffNameById(tId) {
+      if (!tId || tId === 'all') return 'все тарифы';
+      const found = TARIFF_CATALOG.find(t => t.id === tId);
+      return found ? found.name : tId;
+    }
+
+    function getDiscountedPrice(t) {
+      const pct = Number(appState.discount_pct || 0);
+      const scope = appState.discount_tariff || 'all';
+      if (pct <= 0) return t.price;
+      if (scope === 'all' || scope === t.id) {
+        return Math.max(10, Math.floor((t.price * (100 - Math.min(99, pct))) / 100));
+      }
+      return t.price;
+    }
+
+    function renderAll() {
+      document.getElementById('userBadge').textContent = appState.user_id ? `ID: ${appState.user_id}` : 'PinPoint Client';
+      document.getElementById('headerBalance').textContent = `${appState.balance || 0} ₽`;
+      document.getElementById('refRateVal').textContent = `${appState.ref_pct || 5}%`;
+      document.getElementById('refCountVal').textContent = `${appState.ref_cnt || 0}`;
+      document.getElementById('refEarnVal').textContent = `${appState.ref_earn || 0} ₽`;
+      document.getElementById('notifToggle').checked = Boolean(appState.notifications);
+
+      renderDiscountBoxes();
+      renderSubscriptions();
+      renderTariffs();
+      renderReviews();
+    }
+
+    function renderDiscountBoxes() {
+      const pct = Number(appState.discount_pct || 0);
+      const scope = appState.discount_tariff || 'all';
+      const cabBox = document.getElementById('activeDiscountBox');
+      const tarBanner = document.getElementById('tariffsDiscountBanner');
+
+      if (pct > 0) {
+        const label = scope === 'all' ? 'на все тарифы' : `на тариф «${escapeHtml(tariffNameById(scope))}»`;
+        cabBox.innerHTML = `<div class="active-discount-pill">🏷 Активна скидка ${pct}% (${label})</div>`;
+        tarBanner.innerHTML = `<div class="discount-banner"><span>🏷</span><span>У вас активирована персональная скидка <b>${pct}%</b> ${label}!</span></div>`;
+      } else {
+        cabBox.innerHTML = '';
+        tarBanner.innerHTML = '';
+      }
+    }
+
+    function renderSubscriptions() {
+      const subs = Array.isArray(appState.subs) ? appState.subs : [];
+      document.getElementById('slotsCounter').textContent = `${subs.length} / 2 слота`;
+      const container = document.getElementById('subsContainer');
+      const accentHex = (THEMES[currentThemeId] || THEMES.obsidian).accent;
+
+      if (subs.length === 0) {
+        container.innerHTML = `
+          <div class="card liquid-glass empty-card">
+            <div class="empty-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
             </div>
-
-            <!-- ТЕСТ -->
-            <div class="tariff-slab">
-                <div class="tariff-top">
-                    <div>
-                        <div class="subhead">ДЛЯ ПРОВЕРКИ</div>
-                        <div style="font-size:18px; font-weight:800; margin-top:3px;">🆓 Тест на 24 часа</div>
-                    </div>
-                    <div class="tariff-price-block">
-                        <div class="tariff-price mono">0 ₽</div>
-                    </div>
-                </div>
-                <div class="tariff-specs-row">
-                    <div class="t-spec"><span>СРОК</span><b>24 часа</b></div>
-                    <div class="t-spec"><span>ТРАФИК</span><b>10 ГБ</b></div>
-                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
-                </div>
-                <button onclick="requestTariff('test')" class="btn-subtle" style="width:100%;">
-                    ВКЛЮЧИТЬ БЕСПЛАТНЫЙ ТЕСТ
-                </button>
+            <div class="empty-title">Нет активных подключений</div>
+            <div class="empty-desc">Выберите тарифный план или активируйте бесплатный тестовый доступ на 24 часа.</div>
+            <div class="empty-btns">
+              <button class="btn btn-primary" onclick="switchTab('tariffs')">Выбрать тариф</button>
+              <button class="btn btn-secondary" onclick="openBotAction('buy_test')">🆓 Тест 24ч</button>
             </div>
+          </div>
+        `;
+        return;
+      }
 
-            <!-- СТАРТ -->
-            <div class="tariff-slab">
-                <div class="tariff-top">
-                    <div>
-                        <div class="subhead">НА 2 НЕДЕЛИ</div>
-                        <div style="font-size:18px; font-weight:800; margin-top:3px;">🚀 Тариф «Старт»</div>
-                    </div>
-                    <div class="tariff-price-block">
-                        <div class="tariff-price mono">79 ₽</div>
-                    </div>
+      const circumference = 2 * Math.PI * 29;
+      container.innerHTML = subs.map((s, idx) => {
+        const gbTotal = Math.max(1, Number(s.gb || 150));
+        const gbUsed = Math.max(0, Number(s.used_gb || 0));
+        const gbLeft = Math.max(0, Math.round((gbTotal - gbUsed) * 10) / 10);
+        const ratio = Math.max(0, Math.min(1, gbLeft / gbTotal));
+        const dashOffset = circumference * (1 - ratio);
+        const ringColor = ratio > 0.2 ? accentHex : '#f59e0b';
+        const safeKey = escapeHtml(s.key || '');
+
+        return `
+          <div class="card liquid-glass">
+            <div class="sub-card-top">
+              <div class="sub-info">
+                <div class="sub-status-row">
+                  <span class="dot-live"></span>
+                  <span class="sub-slot-tag">Слот #${idx + 1} • Активен</span>
                 </div>
-                <div class="tariff-specs-row">
-                    <div class="t-spec"><span>СРОК</span><b>14 дней</b></div>
-                    <div class="t-spec"><span>ТРАФИК</span><b>50 ГБ</b></div>
-                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
+                <div class="sub-name">${escapeHtml(s.name || 'Подписка')}</div>
+                <div class="sub-meta">
+                  Действует до: <strong>${escapeHtml(s.until || '—')}</strong><br/>
+                  Устройств: <strong>до ${s.dev || 1}</strong> • Лимит: <strong>${gbTotal} ГБ</strong>
                 </div>
-                <button onclick="requestTariff('start')" class="btn-pastel" style="width:100%;">
-                    ПОДКЛЮЧИТЬ ЗА 79 ₽
-                </button>
+              </div>
+              <div class="ring-box">
+                <svg viewBox="0 0 68 68">
+                  <circle cx="34" cy="34" r="29" fill="none" stroke="var(--ring-track)" stroke-width="5"/>
+                  <circle cx="34" cy="34" r="29" fill="none" stroke="${ringColor}" stroke-width="5"
+                    stroke-dasharray="${circumference.toFixed(1)}" stroke-dashoffset="${dashOffset.toFixed(1)}" stroke-linecap="round"/>
+                </svg>
+                <div class="ring-label">
+                  <span class="ring-gb">${gbLeft}</span>
+                  <span class="ring-unit">ГБ</span>
+                </div>
+              </div>
             </div>
-
-            <!-- БАЗОВЫЙ -->
-            <div class="tariff-slab">
-                <div class="tariff-top">
-                    <div>
-                        <div class="subhead">ОПТИМАЛЬНЫЙ НА МЕСЯЦ</div>
-                        <div style="font-size:18px; font-weight:800; margin-top:3px;">⚡️ Тариф «Базовый»</div>
-                    </div>
-                    <div class="tariff-price-block">
-                        <div class="tariff-price mono">149 ₽</div>
-                    </div>
-                </div>
-                <div class="tariff-specs-row">
-                    <div class="t-spec"><span>СРОК</span><b>30 дней</b></div>
-                    <div class="t-spec"><span>ТРАФИК</span><b>150 ГБ</b></div>
-                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>1 устр.</b></div>
-                </div>
-                <button onclick="requestTariff('base')" class="btn-pastel" style="width:100%;">
-                    ПОДКЛЮЧИТЬ ЗА 149 ₽
-                </button>
+            <div class="sub-actions">
+              <button class="btn btn-primary" onclick="openConnectModal('${safeKey}')">⚡ Подключить в 1 клик</button>
+              <button class="btn btn-secondary" onclick="openBoosterModal(${idx + 1})">+ ГБ</button>
             </div>
+          </div>
+        `;
+      }).join('');
+    }
 
-            <!-- ПРОДВИНУТЫЙ -->
-            <div class="tariff-slab">
-                <div class="tariff-top">
-                    <div>
-                        <div class="subhead">ДЛЯ ТЕЛЕФОНА, ПК И ПЛАНШЕТА</div>
-                        <div style="font-size:18px; font-weight:800; margin-top:3px;">💎 Тариф «Продвинутый»</div>
-                    </div>
-                    <div class="tariff-price-block">
-                        <span class="old-price mono">250 ₽</span>
-                        <div class="tariff-price mono">199 ₽</div>
-                    </div>
+    function renderTariffs() {
+      const pct = Number(appState.discount_pct || 0);
+      const container = document.getElementById('tariffsList');
+      container.innerHTML = TARIFF_CATALOG.map(t => {
+        const finalPrice = getDiscountedPrice(t);
+        const hasDiscount = finalPrice < t.price;
+        return `
+          <div class="card liquid-glass tariff-card ${t.popular ? 'popular' : ''}">
+            <div class="tariff-top">
+              <div>
+                <div class="tariff-title">
+                  <span>${escapeHtml(t.name)}</span>
+                  ${t.popular ? '<span class="tag-popular">Популярный</span>' : ''}
+                  ${hasDiscount ? `<span class="tag-discount">-${pct}%</span>` : ''}
                 </div>
-                <div class="tariff-specs-row">
-                    <div class="t-spec"><span>СРОК</span><b>30 дней</b></div>
-                    <div class="t-spec"><span>ТРАФИК</span><b>300 ГБ</b></div>
-                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>3 устр.</b></div>
+                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
+                  Европейские локации без ограничений скорости
                 </div>
-                <button onclick="requestTariff('pro')" class="btn-pastel" style="width:100%;">
-                    ПОДКЛЮЧИТЬ ЗА 199 ₽
-                </button>
+              </div>
+              <div class="tariff-price-box">
+                ${hasDiscount ? `<span class="price-old">${t.price} ₽</span>` : ''}
+                <span class="price-now">${finalPrice} ₽</span>
+              </div>
             </div>
-
-            <!-- ХИТ СЕЗОНА -->
-            <div class="tariff-slab featured">
-                <div class="tariff-top">
-                    <div>
-                        <span class="pill-badge" style="display:inline-block; margin-bottom:6px;">ВЫГОДА • ~166 ₽ В МЕСЯЦ</span>
-                        <div style="font-size:19px; font-weight:800;">🔥 ХИТ СЕЗОНА</div>
-                    </div>
-                    <div class="tariff-price-block">
-                        <span class="old-price mono">650 ₽</span>
-                        <div class="tariff-price mono">499 ₽</div>
-                    </div>
-                </div>
-                <div class="tariff-specs-row">
-                    <div class="t-spec"><span>СРОК</span><b>90 дней</b></div>
-                    <div class="t-spec"><span>ТРАФИК</span><b>900 ГБ</b></div>
-                    <div class="t-spec"><span>УСТРОЙСТВ</span><b>3 устр.</b></div>
-                </div>
-                <button onclick="requestTariff('hit')" class="btn-pastel" style="width:100%; padding:14px;">
-                    ПОДКЛЮЧИТЬ НА 90 ДНЕЙ ЗА 499 ₽
-                </button>
+            <div class="tariff-specs">
+              <span class="spec-chip">📅 ${t.days} дн.</span>
+              <span class="spec-chip">📦 ${t.gb} ГБ</span>
+              <span class="spec-chip">📱 ${t.devices} устр.</span>
             </div>
-        </div>
-
-        <!-- ВКЛАДКА 3: НАСТРОЙКИ -->
-        <div id="tab-style" class="tab-content">
-            <div class="page-banner">
-                <div class="subhead">ПАРАМЕТРЫ</div>
-                <h1>Настройки</h1>
-                <p>Управление фоновым освещением и уведомлениями от Telegram-бота.</p>
-            </div>
-
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-                <div>
-                    <div style="font-size:14px; font-weight:800;">Уведомления в Telegram</div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Сообщения об оплатах и остатке трафика</div>
-                </div>
-                <button id="btnNotifToggle" onclick="toggleBotNotifications()" class="btn-subtle" style="padding:9px 14px; font-size:12px; flex-shrink:0;">
-                    ВКЛЮЧЕНЫ
-                </button>
-            </div>
-
-            <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-                <div>
-                    <div style="font-size:14px; font-weight:800;">Плавающий свет на фоне</div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Мягкое перемещение света в темноте</div>
-                </div>
-                <button id="btnLightToggle" onclick="toggleAmbientLight()" class="btn-subtle" style="padding:9px 14px; font-size:12px; flex-shrink:0;">
-                    ВКЛЮЧЕН
-                </button>
-            </div>
-
-            <button onclick="replayIntro()" class="btn-subtle" style="width:100%; margin-top:4px;">
-                ↻ ПОКАЗАТЬ ЗАСТАВКУ ПРИВЕТСТВИЯ
+            <button class="btn btn-primary btn-full" onclick="openBotAction('buy_${t.id}')">
+              Подключить за ${finalPrice} ₽
             </button>
-        </div>
-    </div>
+          </div>
+        `;
+      }).join('');
+    }
 
-    <!-- НИЖНЯЯ НАВИГАЦИЯ -->
-    <nav class="bottom-shelf" id="bottomNavShelf" aria-label="Навигация">
-        <button onclick="switchTab('cabinet')" id="nav-cabinet" class="shelf-tab active">
-            <svg viewBox="0 0 24 24"><path d="M12 3L20 7V12C20 16.97 16.58 21.37 12 22.5C7.42 21.37 4 16.97 4 12V7L12 3Z"/></svg>
-            <span>Кабинет</span>
-        </button>
-        <button onclick="switchTab('tariffs')" id="nav-tariffs" class="shelf-tab">
-            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            <span>Тарифы</span>
-        </button>
-        <button onclick="switchTab('style')" id="nav-style" class="shelf-tab">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>Настройки</span>
-        </button>
-    </nav>
+    function renderReviews() {
+      const reviews = Array.isArray(appState.reviews) ? appState.reviews : [];
+      const listEl = document.getElementById('reviewsList');
+      const avgEl = document.getElementById('avgRatingNum');
+      const cntEl = document.getElementById('reviewsCountText');
 
-    <!-- ШТОРКА: ПОДКЛЮЧЕНИЕ -->
-    <div id="connectSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('connectSheet')">
-        <div class="curtain-panel">
-            <div class="sheet-handle"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <div>
-                    <div class="subhead">НАСТРОЙКА В 1 КЛИК</div>
-                    <div style="font-size:18px; font-weight:800;">Выберите приложение</div>
+      if (reviews.length === 0) {
+        avgEl.textContent = '5.0';
+        cntEl.textContent = 'Пока нет опубликованных отзывов';
+        listEl.innerHTML = `
+          <div class="card liquid-glass empty-card">
+            <div class="empty-title">Будьте первым!</div>
+            <div class="empty-desc">Оставьте отзыв о работе PinPoint VPN — после проверки модератором он появится здесь.</div>
+            <button class="btn btn-primary" onclick="openReviewModal()">✍️ Написать отзыв</button>
+          </div>
+        `;
+        return;
+      }
+
+      const sum = reviews.reduce((acc, r) => acc + Math.max(1, Math.min(5, Number(r.rating || 5))), 0);
+      const avg = (sum / reviews.length).toFixed(1);
+      avgEl.textContent = avg;
+      cntEl.textContent = `На основе ${reviews.length} одобренных отзывов`;
+
+      listEl.innerHTML = reviews.map(r => {
+        const rating = Math.max(1, Math.min(5, Number(r.rating || 5)));
+        const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+        const author = escapeHtml(r.author || 'Клиент PinPoint');
+        const initial = r.is_anon ? '🎭' : escapeHtml((r.author || 'П').charAt(0).toUpperCase());
+        return `
+          <div class="card liquid-glass">
+            <div class="review-card-head">
+              <div class="review-author-box">
+                <div class="review-avatar">${initial}</div>
+                <div style="min-width: 0;">
+                  <div class="review-author-name">${author}</div>
+                  <div class="review-date">${escapeHtml(r.date || '')}</div>
                 </div>
-                <button onclick="closeCurtain('connectSheet')" class="btn-subtle" style="padding:6px 12px; min-height:36px;">✕</button>
+              </div>
+              <div class="review-stars-sm">${stars}</div>
             </div>
-
-            <div class="grid-duo" style="margin-bottom:14px;">
-                <button id="plat_ios" onclick="renderAppList('ios')" class="picker-cell">🍏 iPhone / Mac</button>
-                <button id="plat_android" onclick="renderAppList('android')" class="picker-cell">🤖 Android / Windows</button>
-            </div>
-
-            <div id="appsContainer" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;"></div>
-
-            <div class="grid-duo">
-                <button onclick="copyCurrentKeyDirectly()" class="btn-pastel" style="grid-column: span 2;">📋 СКОПИРОВАТЬ КЛЮЧ В БУФЕР ОБМЕНА</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ШТОРКА: БУСТЕРЫ ТРАФИКА -->
-    <div id="boosterSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('boosterSheet')">
-        <div class="curtain-panel">
-            <div class="sheet-handle"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <div>
-                    <div class="subhead">ДОПОЛНИТЕЛЬНЫЙ ПАКЕТ</div>
-                    <div style="font-size:18px; font-weight:800;">Добавить гигабайты</div>
-                </div>
-                <span id="boostSlotBadge" class="pill-badge">СЛОТ #1</span>
-            </div>
-
-            <div class="grid-trio" style="margin-bottom:16px;">
-                <button onclick="chooseBoost(15, 45)" id="b_15" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
-                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+15 ГБ</span>
-                    <span class="mono" style="font-size:12px; color:var(--text-muted);">45 ₽</span>
-                </button>
-                <button onclick="chooseBoost(50, 99)" id="b_50" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
-                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+50 ГБ</span>
-                    <span class="mono" style="font-size:12px; color:var(--text-muted);">99 ₽</span>
-                </button>
-                <button onclick="chooseBoost(150, 165)" id="b_150" class="picker-cell boost-unit" style="flex-direction:column; gap:4px; padding:14px 6px;">
-                    <span style="font-size:15px; font-weight:800; color:var(--text-main);">+150 ГБ</span>
-                    <span class="mono" style="font-size:12px; color:var(--text-muted);">165 ₽</span>
-                </button>
-            </div>
-
-            <button id="boostPayBtn" onclick="dispatchBoost()" class="btn-pastel" style="width:100%; padding:15px;" disabled>
-                ВЫБЕРИТЕ ПАКЕТ ТРАФИКА
-            </button>
-        </div>
-    </div>
-
-    <!-- ШТОРКА: КОШЕЛЕК -->
-    <div id="topupSheet" class="curtain-wrap" onclick="if(event.target===this)closeCurtain('topupSheet')">
-        <div class="curtain-panel">
-            <div class="sheet-handle"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <div>
-                    <div class="subhead">КОШЕЛЕК PINPOINT</div>
-                    <div style="font-size:18px; font-weight:800;">Пополнение баланса</div>
-                </div>
-                <button onclick="closeCurtain('topupSheet')" class="btn-subtle" style="padding:6px 12px; min-height:36px;">✕</button>
-            </div>
-
-            <div class="grid-duo" style="margin-bottom:14px;">
-                <button id="subtab_pay" onclick="toggleWalletSubtab('pay')" class="picker-cell active">💳 Пополнить</button>
-                <button id="subtab_history" onclick="toggleWalletSubtab('history')" class="picker-cell">🧾 История оплат</button>
-            </div>
-
-            <div id="walletPayBlock">
-                <div class="grid-trio" style="margin-bottom:12px;">
-                    <button onclick="document.getElementById('topupInputVal').value=149" class="picker-cell mono">149 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=199" class="picker-cell mono">199 ₽</button>
-                    <button onclick="document.getElementById('topupInputVal').value=499" class="picker-cell mono">499 ₽</button>
-                </div>
-
-                <input type="number" id="topupInputVal" class="ambient-field mono" placeholder="Другая сумма в рублях (от 10 ₽)" style="margin-bottom:14px;">
-
-                <button onclick="dispatchTopup()" class="btn-pastel" style="width:100%; padding:15px;">
-                    СФОРМИРОВАТЬ СЧЕТ →
-                </button>
-            </div>
-
-            <div id="walletHistoryBlock" style="display:none;">
-                <div id="txListContainer" style="max-height: 240px; overflow-y: auto;">
-                    <div style="text-align:center; padding:16px; color:var(--text-muted); font-size:12px;">
-                        Загрузка истории операций...
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const tg = window.Telegram?.WebApp || { expand(){}, ready(){}, close(){} };
-        try { tg.expand(); tg.ready(); } catch (e) {}
-
-        const p = new URLSearchParams(window.location.search);
-        const bridgeParams = new URLSearchParams(window.location.hash.slice(1));
-        if (bridgeParams.has('r')) {
-            ['r', 'app', 'store', 'sub'].forEach(k => p.set(k, bridgeParams.get(k) || ''));
-        }
-
-        const rawApiBase = p.get('api') || window.location.origin;
-        const isSafeOrigin = /^https:\/\//i.test(rawApiBase) || /^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/i.test(rawApiBase);
-        const apiBase = isSafeOrigin ? rawApiBase : window.location.origin;
-
-        function escapeHtml(value) {
-            return String(value ?? '').replace(/[&<>"']/g, c => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[c]));
-        }
-
-        function cleanSubUrl(raw) {
-            if (!raw) return '';
-            let res = String(raw).trim();
-            try {
-                while (!/^https:\/\//i.test(res) && /%3a|%2f/i.test(res)) {
-                    const dec = decodeURIComponent(res);
-                    if (dec === res) break;
-                    res = dec;
-                }
-            } catch (e) {}
-            return res;
-        }
-
-        async function copyTextSafe(text) {
-            const clean = String(text || '');
-            if (!clean) return false;
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(clean);
-                    return true;
-                }
-            } catch (e) {}
-            try {
-                const ta = document.createElement('textarea');
-                ta.value = clean;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.focus();
-                ta.select();
-                const ok = document.execCommand('copy');
-                document.body.removeChild(ta);
-                return ok;
-            } catch (e) {
-                return false;
-            }
-        }
-
-        function haptic(style = 'light') {
-            try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
-        }
-
-        let pushTimer = null;
-        function triggerInAppPush(title, message) {
-            const push = document.getElementById('inAppPush');
-            document.getElementById('pushTitle').innerText = title;
-            document.getElementById('pushBody').innerText = message;
-            push.classList.add('show');
-            try { tg.HapticFeedback?.notificationOccurred('success'); } catch (e) {}
-            if (pushTimer) clearTimeout(pushTimer);
-            pushTimer = setTimeout(() => { push.classList.remove('show'); }, 4200);
-        }
-
-        function openBotDeepLink(startParam) {
-            const url = `https://t.me/${botUsername}?start=${encodeURIComponent(startParam)}`;
-            haptic('medium');
-            try {
-                if (tg.openTelegramLink) {
-                    tg.openTelegramLink(url);
-                    setTimeout(() => { try { tg.close(); } catch (e) {} }, 120);
-                    return;
-                }
-            } catch (e) {}
-            window.location.href = url;
-        }
-
-        async function api(path, options = {}) {
-            if (!tg.initData) {
-                throw new Error('Откройте приложение через кнопку в Telegram-боте.');
-            }
-            const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 10000);
-            try {
-                const response = await fetch(new URL(path, apiBase), {
-                    ...options,
-                    signal: controller.signal,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Telegram-Init-Data': tg.initData
-                    }
-                });
-                const data = await response.json();
-                if (!response.ok || !data.ok) {
-                    throw new Error(data.error || 'Ошибка соединения с сервером');
-                }
-                return data;
-            } finally {
-                clearTimeout(timer);
-            }
-        }
-
-        // --- BRIDGE REDIRECT MODE ---
-        let isBridgeMode = false;
-        if (p.has('r')) {
-            const targetDeepLink = p.get('r') || '';
-            const appName = p.get('app') || 'VPN';
-            const storeUrl = p.get('store') || 'https://apps.apple.com';
-            const rawSub = p.get('sub') || '';
-
-            const validDeepLink = /^(happ:\/\/add\/|v2raytun:\/\/import\/|hiddify:\/\/import\/|incy:\/\/import\/)https:\/\//i.test(targetDeepLink);
-            const validStore = /^https:\/\/(apps\.apple\.com|play\.google\.com)\//i.test(storeUrl);
-
-            if (validDeepLink) {
-                isBridgeMode = true;
-                document.getElementById('mainAppView').style.display = 'none';
-                document.getElementById('bottomNavShelf').style.display = 'none';
-                const bridge = document.getElementById('bridgeRedirectScreen');
-                bridge.style.display = 'flex';
-                document.getElementById('bridgeTitle').innerText = `Открываем ${appName}...`;
-                document.getElementById('bridgeLaunchBtn').href = targetDeepLink;
-                document.getElementById('bridgeStoreBtn').href = validStore ? storeUrl : '#';
-
-                if (rawSub) copyTextSafe(cleanSubUrl(rawSub));
-                setTimeout(() => { window.location.href = targetDeepLink; }, 150);
-            }
-        }
-
-        let botUsername = 'PinPointVPN_bot';
-        const user = tg.initDataUnsafe?.user;
-        const uid = user?.id || '';
-        const uname = user?.username ? '@' + user.username : (user?.first_name || 'Клиент');
-        let currentBalance = 0;
-        let botNotifications = 1;
-        let subs = [];
-        const avatarUrl = user?.photo_url;
-
-        document.getElementById('uName').innerText = uname;
-        document.getElementById('uId').innerText = `ID: ${uid || '—'}`;
-        document.getElementById('uBal').innerText = `${currentBalance} ₽`;
-
-        if (avatarUrl && avatarUrl !== 'none' && /^https:\/\//i.test(avatarUrl)) {
-            const img = document.getElementById('avatarImg');
-            img.src = avatarUrl;
-            img.onerror = () => {
-                img.style.display = 'none';
-                document.getElementById('avatarFallback').style.display = 'flex';
-            };
-            img.style.display = 'block';
-            document.getElementById('avatarFallback').style.display = 'none';
-        } else {
-            document.getElementById('avatarFallback').innerText = uname.replace('@', '').charAt(0).toUpperCase() || 'P';
-        }
-
-        function updateNotifBtnUI() {
-            const btn = document.getElementById('btnNotifToggle');
-            if (btn) {
-                btn.innerText = botNotifications === 1 ? 'ВКЛЮЧЕНЫ' : 'ВЫКЛЮЧЕНЫ';
-                btn.style.color = botNotifications === 1 ? 'var(--state-ok)' : 'var(--text-muted)';
-            }
-        }
-
-        function applyProfilePayload(data) {
-            if (!data) return;
-            currentBalance = Number(data.balance || 0);
-            subs = Array.isArray(data.subs) ? data.subs : [];
-            if (data.bot_username) botUsername = data.bot_username;
-            botNotifications = data.notifications === false ? 0 : 1;
-
-            document.getElementById('uBal').textContent = `${currentBalance} ₽`;
-            if (data.user_id && !uid) {
-                document.getElementById('uId').innerText = `ID: ${data.user_id}`;
-            }
-            const refCnt = Number(data.ref_cnt || 0);
-            const refEarn = Number(data.ref_earn || 0);
-            const pct = Math.min(25, 5 + refCnt);
-
-            document.getElementById('refBadgePct').textContent = `СТАВКА: ${pct}%`;
-            document.getElementById('refFriendsCount').textContent = refCnt;
-            document.getElementById('refEarnedSum').textContent = `${refEarn} ₽`;
-            document.getElementById('refProgressBar').style.width = `${Math.min(100, Math.max(8, refCnt * 5))}%`;
-            document.getElementById('refSubtitle').textContent = pct < 25
-                ? `Пригласите еще 1 друга, чтобы получать ${pct + 1}% с пополнений`
-                : 'Максимальная партнерская ставка 25% достигнута!';
-
-            updateNotifBtnUI();
-            renderSlots();
-        }
-
-        // Чтение мгновенного снапшота профиля из URL (работает даже на GitHub Pages без прямого API)
-        if (p.has('snap')) {
-            try {
-                const rawSnap = p.get('snap').replace(/-/g, '+').replace(/_/g, '/');
-                const pad = rawSnap.length % 4 ? '='.repeat(4 - (rawSnap.length % 4)) : '';
-                const bytes = Uint8Array.from(atob(rawSnap + pad), c => c.charCodeAt(0));
-                const snapData = JSON.parse(new TextDecoder('utf-8').decode(bytes));
-                applyProfilePayload(snapData);
-            } catch (e) {}
-        }
-
-        async function toggleBotNotifications() {
-            const btn = document.getElementById('btnNotifToggle');
-            btn.disabled = true;
-            try {
-                const data = await api('/api/user/settings', {
-                    method: 'POST',
-                    body: JSON.stringify({ notifications: botNotifications !== 1 })
-                });
-                botNotifications = Number(data.notifications);
-                updateNotifBtnUI();
-                triggerInAppPush('Настройки сохранены', botNotifications === 1 ? 'Уведомления в боте включены' : 'Уведомления в боте отключены');
-            } catch (e) {
-                botNotifications = botNotifications === 1 ? 0 : 1;
-                updateNotifBtnUI();
-                triggerInAppPush('Настройки обновлены', botNotifications === 1 ? 'Уведомления включены' : 'Уведомления отключены');
-            } finally {
-                btn.disabled = false;
-            }
-        }
-
-        async function refreshProfile() {
-            if (isBridgeMode) return;
-            try {
-                const data = await api('/api/user/profile');
-                applyProfilePayload(data);
-            } catch (e) {
-                // Если HTML открыт на GitHub Pages без API_PUBLIC_URL, данные уже загружены из параметра snap
-            }
-        }
-
-        function renderMeter(pct) {
-            const count = 14;
-            const filled = Math.round((pct / 100) * count);
-            let cls = 'filled';
-            if (pct <= 15) cls = 'crit';
-            else if (pct <= 30) cls = 'warn';
-
-            let out = '';
-            for (let i = 0; i < count; i++) {
-                out += `<div class="pill-cell ${i < filled ? cls : ''}"></div>`;
-            }
-            return out;
-        }
-
-        function renderSlots() {
-            const cluster = document.getElementById('slotsCluster');
-            document.getElementById('slotsCount').innerText = `${subs.length} / 2 АКТИВНО`;
-            let html = '';
-
-            for (let i = 0; i < 2; i++) {
-                const s = subs[i];
-                if (s) {
-                    const rawClean = cleanSubUrl(s.key);
-                    const cleanKey = escapeHtml(rawClean);
-                    const totalGb = Math.max(1, parseFloat(s.gb || 150));
-                    const usedGb = Math.max(0, parseFloat(s.used_gb || 0));
-                    const leftGb = Math.max(0, totalGb - usedGb).toFixed(1);
-                    const pct = Math.max(0, Math.min(100, Math.round((leftGb / totalGb) * 100)));
-
-                    const slotId = Number(s.id) || (i + 1);
-                    const savedName = escapeHtml(localStorage.getItem(`pp_name_${slotId}`) || `Подключение #${i + 1}`);
-                    const maskedKey = cleanKey ? cleanKey.slice(0, 18) + '••••••••••••' : 'N/A';
-
-                    html += `
-                        <div class="slot-card">
-                            <div class="slot-top">
-                                <div class="slot-title-wrap">
-                                    <span class="soft-beacon"></span>
-                                    <input type="text" class="slot-name-field" value="${savedName}" maxlength="22" onblur="localStorage.setItem('pp_name_${slotId}', this.value)">
-                                    <span style="font-size:11px; color:var(--text-muted);">✎</span>
-                                </div>
-                                <span class="pill-badge">${escapeHtml(s.name)}</span>
-                            </div>
-
-                            <div class="slot-body">
-                                <div class="traffic-bento">
-                                    <div class="gauge-svg-wrap">
-                                        <svg class="gauge-svg" viewBox="0 0 36 36">
-                                            <circle class="gauge-track" cx="18" cy="18" r="15.9155"></circle>
-                                            <circle class="gauge-flow" cx="18" cy="18" r="15.9155" stroke-dasharray="${pct}, 100"></circle>
-                                        </svg>
-                                        <div class="gauge-center">
-                                            <span class="gauge-pct mono">${pct}%</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div style="display:flex; justify-content:space-between; align-items:baseline;">
-                                            <span class="subhead">ОСТАТОК ТРАФИКА</span>
-                                            <span class="mono" style="font-size:15px; font-weight:800;">${leftGb} <span style="font-size:11px; color:var(--text-muted); font-weight:500;">/ ${totalGb} ГБ</span></span>
-                                        </div>
-                                        <div class="pill-meter">${renderMeter(pct)}</div>
-                                        <div class="slot-specs">
-                                            <div class="spec-chip"><span>До</span><b class="mono">${escapeHtml(s.until)}</b></div>
-                                            <div class="spec-chip"><span>Лимит</span><b>${Number(s.dev) || 1} устр.</b></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button onclick="openConnectModal(${i})" class="btn-pastel" style="width:100%; padding:13px; font-size:13px;">
-                                    ⚡️ ПОДКЛЮЧИТЬ УСТРОЙСТВО В 1 КЛИК
-                                </button>
-
-                                <div class="key-capsule">
-                                    <input type="text" id="k_${i}" class="key-text" data-raw="${cleanKey}" data-mask="${maskedKey}" data-open="0" readonly value="${maskedKey}">
-                                    <button onclick="toggleKeyReveal('k_${i}')" class="btn-subtle" style="padding:7px 10px; min-height:34px; font-size:11px;">👁</button>
-                                    <button onclick="copyKeyValue('k_${i}', this)" class="btn-subtle" style="padding:7px 12px; min-height:34px; font-size:11px;">КОПИРОВАТЬ</button>
-                                </div>
-
-                                <div class="grid-duo">
-                                    <button onclick="triggerBooster(${i + 1})" class="btn-subtle">➕ Добавить ГБ</button>
-                                    <button onclick="switchTab('tariffs')" class="btn-subtle">🔄 Новый слот / Тариф</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    html += `
-                        <div class="empty-slot-card">
-                            <div>
-                                <div class="subhead">СВОБОДНЫЙ СЛОТ #${i + 1}</div>
-                                <div style="font-size:15px; font-weight:800; margin:3px 0 4px;">Подключите устройство</div>
-                                <div style="font-size:12px; color:var(--text-muted);">Смартфон, компьютер, ноутбук или ТВ</div>
-                            </div>
-                            <button onclick="switchTab('tariffs')" class="btn-pastel" style="flex-shrink:0;">+ ТАРИФЫ</button>
-                        </div>
-                    `;
-                }
-            }
-            cluster.innerHTML = html;
-        }
-        renderSlots();
-
-        let activeKeyForConnect = '';
-
-        const VPN_APPS = {
-            ios: [
-                {
-                    name: "Happ",
-                    desc: "Рекомендуется для iPhone, iPad и Mac",
-                    deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
-                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
-                },
-                {
-                    name: "Hiddify",
-                    desc: "Удобный клиент для iOS и macOS",
-                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://apps.apple.com/app/hiddify-proxy-vpn/id6593660983"
-                },
-                {
-                    name: "Incy",
-                    desc: "Быстрый клиент для экосистемы Apple",
-                    deepLink: (url) => `incy://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://apps.apple.com/app/happ-proxy-utility/id6504287215"
-                },
-                {
-                    name: "V2rayTun",
-                    desc: "Стабильный клиент из App Store",
-                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://apps.apple.com/app/v2raytun/id6476628951"
-                }
-            ],
-            android: [
-                {
-                    name: "Happ",
-                    desc: "Быстрый клиент для Android и Windows",
-                    deepLink: (url) => `happ://add/${cleanSubUrl(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
-                },
-                {
-                    name: "Hiddify",
-                    desc: "Универсальный клиент для Android и ПК",
-                    deepLink: (url) => `hiddify://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=app.hiddify.com"
-                },
-                {
-                    name: "Incy",
-                    desc: "Легкий клиент с автоимпортом",
-                    deepLink: (url) => `incy://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=com.happproxy"
-                },
-                {
-                    name: "V2rayTun",
-                    desc: "Google Play / Windows",
-                    deepLink: (url) => `v2raytun://import/${cleanSubUrl(url)}`,
-                    storeUrl: "https://play.google.com/store/apps/details?id=com.v2raytun.android"
-                }
-            ]
-        };
-
-        function detectDevicePlatform() {
-            const tgPlatform = (window.Telegram?.WebApp?.platform || '').toLowerCase();
-            const ua = navigator.userAgent.toLowerCase();
-            if (tgPlatform === 'ios' || tgPlatform === 'macos' || /iphone|ipad|ipod|macintosh/.test(ua)) {
-                return 'ios';
-            }
-            return 'android';
-        }
-
-        function openConnectModal(slotIdx) {
-            const slotObj = subs[slotIdx];
-            if (!slotObj || !slotObj.key) return;
-            activeKeyForConnect = cleanSubUrl(slotObj.key);
-            renderAppList(detectDevicePlatform());
-            openCurtain('connectSheet');
-            haptic('light');
-        }
-
-        function renderAppList(platform) {
-            document.getElementById('plat_ios').classList.toggle('active', platform === 'ios');
-            document.getElementById('plat_android').classList.toggle('active', platform === 'android');
-
-            const container = document.getElementById('appsContainer');
-            const apps = VPN_APPS[platform] || VPN_APPS.android;
-
-            container.innerHTML = apps.map((app, idx) => `
-                <div style="background:var(--surface-sub); border:1px solid var(--border); border-radius:15px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
-                    <div style="min-width:0;">
-                        <div style="font-size:14px; font-weight:800;">${escapeHtml(app.name)}</div>
-                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${escapeHtml(app.desc)}</div>
-                    </div>
-                    <div style="display:flex; gap:6px; flex-shrink:0;">
-                        <button onclick="openExternalStore('${app.storeUrl}')" class="btn-subtle" style="padding:8px 10px; min-height:36px; font-size:11px;">СКАЧАТЬ</button>
-                        <button onclick="connectViaApp('${platform}', ${idx})" class="btn-pastel" style="padding:8px 12px; min-height:36px; font-size:11px;">ПОДКЛЮЧИТЬ</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openExternalStore(url) {
-            if (window.Telegram?.WebApp?.openLink) {
-                window.Telegram.WebApp.openLink(url);
-            } else {
-                window.open(url, '_blank', 'noopener');
-            }
-        }
-
-        function connectViaApp(platform, idx) {
-            const app = (VPN_APPS[platform] || VPN_APPS.android)[idx];
-            if (!app || !activeKeyForConnect) return;
-            const cleanUrl = cleanSubUrl(activeKeyForConnect);
-            const rawDeepLink = app.deepLink(cleanUrl);
-
-            copyTextSafe(cleanUrl);
-            haptic('medium');
-
-            const baseUrl = window.location.origin + window.location.pathname;
-            const fragment = new URLSearchParams({ r: rawDeepLink, app: app.name, store: app.storeUrl, sub: cleanUrl });
-            const bridgeUrl = `${baseUrl}#${fragment}`;
-
-            if (window.Telegram?.WebApp?.openLink) {
-                window.Telegram.WebApp.openLink(bridgeUrl);
-            } else {
-                window.open(bridgeUrl, '_blank', 'noopener');
-            }
-        }
-
-        async function copyCurrentKeyDirectly() {
-            const ok = await copyTextSafe(cleanSubUrl(activeKeyForConnect));
-            haptic('medium');
-            closeCurtain('connectSheet');
-            if (ok) {
-                triggerInAppPush('Ключ скопирован', 'Вставьте ссылку в приложение Happ, Hiddify, Incy или V2rayTun');
-            }
-        }
-
-        function toggleKeyReveal(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            const open = el.getAttribute('data-open') === '1';
-            el.value = open ? el.getAttribute('data-mask') : el.getAttribute('data-raw');
-            el.setAttribute('data-open', open ? '0' : '1');
-            haptic('light');
-        }
-
-        async function copyKeyValue(id, btn) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            await copyTextSafe(cleanSubUrl(el.getAttribute('data-raw')));
-            const old = btn.innerText;
-            btn.innerText = '✓ OK';
-            setTimeout(() => { btn.innerText = old; }, 1300);
-            haptic('medium');
-        }
-
-        async function copyRefLink(btn) {
-            await copyTextSafe(`https://t.me/${botUsername}?start=${uid}`);
-            const old = btn.innerText;
-            btn.innerText = '✓ СКОПИРОВАНО';
-            setTimeout(() => { btn.innerText = old; }, 1300);
-            haptic('light');
-        }
-
-        function shareRefLink() {
-            const link = `https://t.me/${botUsername}?start=${uid}`;
-            const text = `PinPoint VPN — быстрый и стабильный интернет. Держи 24 часа бесплатного теста:`;
-            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
-            if (tg.openTelegramLink) {
-                tg.openTelegramLink(shareUrl);
-            } else {
-                window.open(shareUrl, '_blank');
-            }
-        }
-
-        function switchTab(tab) {
-            ['cabinet', 'tariffs', 'style'].forEach(t => {
-                const el = document.getElementById(`tab-${t}`);
-                const btn = document.getElementById(`nav-${t}`);
-                if (t === tab) {
-                    el.classList.add('active');
-                    requestAnimationFrame(() => el.classList.add('show'));
-                    btn.classList.add('active');
-                } else {
-                    el.classList.remove('show');
-                    el.classList.remove('active');
-                    btn.classList.remove('active');
-                }
-            });
-            haptic('light');
-        }
-
-        function openCurtain(id) { document.getElementById(id)?.classList.add('active'); haptic('light'); }
-        function closeCurtain(id) { document.getElementById(id)?.classList.remove('active'); }
-
-        let chosenBoostGb = 0;
-        let chosenSlotNum = 1;
-
-        function triggerBooster(num) {
-            chosenSlotNum = num;
-            chosenBoostGb = 0;
-            document.getElementById('boostSlotBadge').innerText = `СЛОТ #${num}`;
-            const btn = document.getElementById('boostPayBtn');
-            btn.disabled = true;
-            btn.innerText = 'ВЫБЕРИТЕ ПАКЕТ ТРАФИКА';
-            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
-            openCurtain('boosterSheet');
-        }
-
-        function chooseBoost(gb, price) {
-            chosenBoostGb = gb;
-            document.querySelectorAll('.boost-unit').forEach(el => el.classList.remove('active'));
-            document.getElementById(`b_${gb}`)?.classList.add('active');
-            const btn = document.getElementById('boostPayBtn');
-            btn.disabled = false;
-            btn.innerText = `ДОБАВИТЬ +${gb} ГБ ЗА ${price} ₽ →`;
-            haptic('light');
-        }
-
-        function dispatchBoost() {
-            if (!chosenBoostGb) return;
-            openBotDeepLink(`boost_${chosenBoostGb}_${chosenSlotNum}`);
-        }
-
-        function dispatchTopup() {
-            const val = Number(document.getElementById('topupInputVal').value);
-            if (!Number.isInteger(val) || val < 10 || val > 100000) {
-                triggerInAppPush('Проверьте сумму', 'Введите целую сумму от 10 до 100 000 ₽');
-                return;
-            }
-            openBotDeepLink(`topup_${val}`);
-        }
-
-        function requestTariff(planId) {
-            if (subs.length >= 2) {
-                triggerInAppPush('Лимит слотов', 'У вас уже активны 2 подписки из 2 доступных.');
-                return;
-            }
-            openBotDeepLink(`buy_${planId}`);
-        }
-
-        function applyPromoCode() {
-            const val = document.getElementById('promoInput').value.trim().toUpperCase();
-            if (!/^[A-Z0-9_-]{1,32}$/.test(val)) {
-                triggerInAppPush('Неверный формат', 'Введите корректный промокод (латиница и цифры)');
-                return;
-            }
-            openBotDeepLink(`promo_${val}`);
-        }
-
-        function toggleWalletSubtab(tab) {
-            document.getElementById('subtab_pay').classList.toggle('active', tab === 'pay');
-            document.getElementById('subtab_history').classList.toggle('active', tab === 'history');
-            document.getElementById('walletPayBlock').style.display = tab === 'pay' ? 'block' : 'none';
-            document.getElementById('walletHistoryBlock').style.display = tab === 'history' ? 'block' : 'none';
-            if (tab === 'history') loadHistoryTransactions();
-            haptic('light');
-        }
-
-        async function loadHistoryTransactions() {
-            const container = document.getElementById('txListContainer');
-            try {
-                const data = await api('/api/user/transactions');
-                if (data.ok && Array.isArray(data.txs) && data.txs.length > 0) {
-                    container.innerHTML = data.txs.map(tx => `
-                        <div class="tx-item">
-                            <div>
-                                <div style="font-weight:700;">Пополнение баланса</div>
-                                <div style="font-size:10px; color:var(--text-muted);">${escapeHtml(tx.date)}</div>
-                            </div>
-                            <div class="mono" style="font-weight:800; color:var(--text-main);">+${Number(tx.amount)} ₽</div>
-                        </div>
-                    `).join('');
-                } else {
-                    container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">У вас пока нет пополнений</div>`;
-                }
-            } catch (e) {
-                container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-muted); font-size:12px;">История операций отображается в чате бота</div>`;
-            }
-        }
-
-        // ==========================================
-        // ЗАСТАВКА ПРИ ПЕРВОМ ЗАПУСКЕ
-        // ==========================================
-        function executeIntro() {
-            if (isBridgeMode) return;
-            const intro = document.getElementById('fadeIntro');
-            const tit = document.getElementById('introTitle');
-            const sub = document.getElementById('introSub');
-
-            intro.style.display = 'flex';
-            intro.style.opacity = '1';
-            setTimeout(() => { tit.classList.add('show'); sub.classList.add('show'); }, 80);
-            setTimeout(() => { tit.classList.remove('show'); sub.classList.remove('show'); }, 1850);
-            setTimeout(() => {
-                localStorage.setItem('pp_onboarded_v11', '1');
-                intro.style.transition = 'opacity 0.4s ease';
-                intro.style.opacity = '0';
-                setTimeout(() => { intro.style.display = 'none'; }, 420);
-            }, 2250);
-        }
-
-        function replayIntro() {
-            localStorage.removeItem('pp_onboarded_v11');
-            executeIntro();
-        }
-
-        if (!localStorage.getItem('pp_onboarded_v11') && !isBridgeMode) {
-            executeIntro();
-        }
-
-        // ==========================================
-        // ОПТИМИЗИРОВАННЫЙ ПЛАВАЮЩИЙ СВЕТ НА ФОНЕ
-        // ==========================================
-        const canvas = document.getElementById('ambientLightCanvas');
-        const ctx = canvas.getContext('2d', { alpha: true });
-        const RENDER_SCALE = 0.25;
-        let cWidth = 100;
-        let cHeight = 100;
-        let ambientEnabled = localStorage.getItem('pp_light_v11') !== '0';
-
-        function updateLightBtnUI() {
-            const btn = document.getElementById('btnLightToggle');
-            if (btn) {
-                btn.innerText = ambientEnabled ? 'ВКЛЮЧЕН' : 'ВЫКЛЮЧЕН';
-                btn.style.color = ambientEnabled ? 'var(--state-ok)' : 'var(--text-muted)';
-            }
-            canvas.style.display = ambientEnabled ? 'block' : 'none';
-        }
-        updateLightBtnUI();
-
-        function toggleAmbientLight() {
-            ambientEnabled = !ambientEnabled;
-            localStorage.setItem('pp_light_v11', ambientEnabled ? '1' : '0');
-            updateLightBtnUI();
-            haptic('light');
-        }
-
-        function resizeCanvas() {
-            cWidth = canvas.width = Math.max(60, Math.floor(window.innerWidth * RENDER_SCALE));
-            cHeight = canvas.height = Math.max(60, Math.floor(window.innerHeight * RENDER_SCALE));
-        }
-        window.addEventListener('resize', resizeCanvas, { passive: true });
-        resizeCanvas();
-
-        const lightOrbs = [
-            { xRatio: 0.28, yRatio: 0.22, rRatio: 0.22, speedX: 0.00032, speedY: 0.00024, phase: 0.0, alpha: 0.09 },
-            { xRatio: 0.74, yRatio: 0.56, rRatio: 0.26, speedX: 0.00021, speedY: 0.00031, phase: 2.1, alpha: 0.07 },
-            { xRatio: 0.42, yRatio: 0.84, rRatio: 0.20, speedX: 0.00027, speedY: 0.00019, phase: 4.3, alpha: 0.08 }
-        ];
-
-        let lastRender = 0;
-        function animateAmbientLight(now = 0) {
-            requestAnimationFrame(animateAmbientLight);
-            if (!ambientEnabled || document.hidden || now - lastRender < 33) return;
-            lastRender = now;
-
-            ctx.clearRect(0, 0, cWidth, cHeight);
-            const minDim = Math.min(cWidth, cHeight);
-
-            for (let i = 0; i < lightOrbs.length; i++) {
-                const orb = lightOrbs[i];
-                const x = (orb.xRatio + Math.sin(now * orb.speedX + orb.phase) * 0.24) * cWidth;
-                const y = (orb.yRatio + Math.cos(now * orb.speedY + orb.phase) * 0.20) * cHeight;
-                const r = minDim * orb.rRatio;
-
-                ctx.fillStyle = `rgba(255, 255, 255, ${orb.alpha})`;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        requestAnimationFrame(animateAmbientLight);
-        refreshProfile();
-        document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshProfile(); });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.curtain-wrap.active').forEach(el => closeCurtain(el.id));
-            }
+            <div class="review-body">${escapeHtml(r.text || '')}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* Навигация */
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const pane = document.getElementById(`tab-${tabName}`);
+      const btn = document.querySelector(`.nav-btn[data-tab="${tabName}"]`);
+      if (pane) pane.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    /* Модальные окна */
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function closeModalOnBackdrop(event, id) {
+      if (event.target && event.target.id === id) {
+        closeModal(id);
+      }
+    }
+
+    function openTopupModal() {
+      openModal('topupModal');
+    }
+
+    function setTopupAmount(val) {
+      document.getElementById('topupAmountInput').value = val;
+    }
+
+    function submitTopup() {
+      const val = parseInt(document.getElementById('topupAmountInput').value, 10);
+      if (isNaN(val) || val < 10 || val > 100000) {
+        return showToast('Введите сумму от 10 до 100 000 ₽');
+      }
+      closeModal('topupModal');
+      openBotAction(`topup_${val}`);
+    }
+
+    function openConnectModal(key) {
+      selectedSubKey = key;
+      openModal('connectModal');
+    }
+
+    function launchClientApp(app) {
+      if (!selectedSubKey) return;
+      const encoded = encodeURIComponent(selectedSubKey);
+      const links = {
+        happ: `happ://add/${selectedSubKey}`,
+        hiddify: `hiddify://import/${encoded}`,
+        incy: `incy://import?url=${encoded}`,
+        v2raytun: `v2raytun://import/${encoded}`
+      };
+      const target = links[app] || selectedSubKey;
+      copyTextSilent(selectedSubKey);
+      showToast('Ключ скопирован! Открываю приложение...');
+      try {
+        window.location.href = target;
+      } catch (e) {}
+    }
+
+    function copyActiveKey() {
+      if (!selectedSubKey) return;
+      copyTextSilent(selectedSubKey);
+      showToast('✅ Ключ подписки скопирован');
+    }
+
+    function openBoosterModal(slotNum) {
+      selectedBoosterSlot = slotNum;
+      openModal('boosterModal');
+    }
+
+    function buyBoosterPack(gb) {
+      closeModal('boosterModal');
+      openBotAction(`boost_${gb}_${selectedBoosterSlot}`);
+    }
+
+    function applyPromoCode() {
+      const input = document.getElementById('promoInput');
+      const code = (input.value || '').trim().toUpperCase();
+      if (!/^[A-Z0-9_-]{1,32}$/.test(code)) {
+        return showToast('Введите корректный промокод');
+      }
+      openBotAction(`promo_${code}`);
+    }
+
+    function copyReferralLink() {
+      const botUname = appState.bot_username || 'PinPointVPN_bot';
+      const uid = appState.user_id || '';
+      const link = `https://t.me/${botUname}?start=${uid}`;
+      copyTextSilent(link);
+      showToast('✅ Реферальная ссылка скопирована');
+    }
+
+    function copyTextSilent(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+    }
+
+    function openBotAction(payload) {
+      const botUname = appState.bot_username || 'PinPointVPN_bot';
+      const url = `https://t.me/${botUname}?start=${encodeURIComponent(payload)}`;
+      if (tg && typeof tg.openTelegramLink === 'function') {
+        tg.openTelegramLink(url);
+        setTimeout(() => {
+          try { tg.close(); } catch (e) {}
+        }, 120);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    /* Отзывы */
+    function openReviewModal() {
+      selectedReviewRating = 5;
+      selectStar(5);
+      document.getElementById('reviewTextInput').value = '';
+      document.getElementById('reviewAnonToggle').checked = false;
+      updateReviewCounter();
+      openModal('reviewModal');
+    }
+
+    function selectStar(val) {
+      selectedReviewRating = val;
+      document.querySelectorAll('#starPicker .star-btn').forEach(btn => {
+        const s = Number(btn.getAttribute('data-star'));
+        btn.classList.toggle('active', s <= val);
+      });
+    }
+
+    function updateReviewCounter() {
+      const len = (document.getElementById('reviewTextInput').value || '').length;
+      document.getElementById('reviewCharCounter').textContent = `${len} / 600`;
+    }
+
+    async function submitReview() {
+      const text = (document.getElementById('reviewTextInput').value || '').trim();
+      const isAnon = Boolean(document.getElementById('reviewAnonToggle').checked);
+      if (text.length < 5) {
+        return showToast('Напишите хотя бы 5 символов');
+      }
+
+      const btn = document.getElementById('submitReviewBtn');
+      btn.disabled = true;
+      btn.textContent = 'Отправка...';
+
+      if (API_URL && tg && tg.initData) {
+        try {
+          const resp = await fetch(`${API_URL}/api/user/reviews`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Telegram-Init-Data': tg.initData
+            },
+            body: JSON.stringify({
+              rating: selectedReviewRating,
+              text: text,
+              is_anon: isAnon
+            })
+          });
+          const data = await resp.json();
+          btn.disabled = false;
+          btn.textContent = 'Отправить на модерацию';
+          if (data && data.ok) {
+            closeModal('reviewModal');
+            return showToast('✅ Отзыв отправлен на модерацию!');
+          } else if (data && data.error) {
+            return showToast(data.error);
+          }
+        } catch (e) {}
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Отправить на модерацию';
+
+      const compact = JSON.stringify({ r: selectedReviewRating, a: isAnon ? 1 : 0, t: text });
+      const utf8Bytes = new TextEncoder().encode(compact);
+      let bin = '';
+      for (let i = 0; i < utf8Bytes.length; i++) bin += String.fromCharCode(utf8Bytes[i]);
+      const b64 = btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      const fullPayload = `review_${b64}`;
+
+      closeModal('reviewModal');
+      if (fullPayload.length <= 64) {
+        openBotAction(fullPayload);
+      } else {
+        copyTextSilent(text);
+        showToast('Текст отзыва скопирован! Вставьте его в боте');
+        openBotAction(`wrev_${selectedReviewRating}_${isAnon ? 1 : 0}`);
+      }
+    }
+
+    /* Настройки */
+    async function toggleNotifications(enabled) {
+      appState.notifications = enabled;
+      if (API_URL && tg && tg.initData) {
+        try {
+          await fetch(`${API_URL}/api/user/settings`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Telegram-Init-Data': tg.initData
+            },
+            body: JSON.stringify({ notifications: Boolean(enabled) })
+          });
+          showToast(enabled ? '🔔 Уведомления включены' : '🔕 Уведомления отключены');
+        } catch (e) {}
+      } else {
+        showToast(enabled ? '🔔 Уведомления включены' : '🔕 Уведомления отключены');
+      }
+    }
+
+    function toggleAmbientLight(enabled) {
+      localStorage.setItem('pp_ambient', enabled ? '1' : '0');
+      const canvas = document.getElementById('ambientLightCanvas');
+      canvas.classList.toggle('hidden', !enabled);
+    }
+
+    function openWelcome() {
+      document.getElementById('welcomeOverlay').classList.add('open');
+    }
+
+    function closeWelcome() {
+      localStorage.setItem('pp_welcomed', '1');
+      document.getElementById('welcomeOverlay').classList.remove('open');
+    }
+
+    /* Синхронизация с API бота */
+    async function fetchLiveProfile() {
+      if (!API_URL || !tg || !tg.initData) return;
+      try {
+        const resp = await fetch(`${API_URL}/api/user/profile`, {
+          headers: { 'X-Telegram-Init-Data': tg.initData }
         });
-    </script>
+        const data = await resp.json();
+        if (data && data.ok) {
+          appState = { ...appState, ...data };
+          renderAll();
+        }
+      } catch (e) {}
+    }
+
+    /* Интерактивный блик преломления на карточках жидкого стекла */
+    function initLiquidGlare() {
+      let activeGlassEl = null;
+
+      function updateGlare(e) {
+        const point = e.touches && e.touches[0] ? e.touches[0] : e;
+        if (!point) return;
+        const target = e.target && e.target.closest ? e.target.closest('.liquid-glass') : null;
+        if (activeGlassEl && activeGlassEl !== target) {
+          activeGlassEl.classList.remove('glare-active');
+        }
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const x = ((point.clientX - rect.left) / rect.width) * 100;
+          const y = ((point.clientY - rect.top) / rect.height) * 100;
+          target.style.setProperty('--mx', `${x.toFixed(1)}%`);
+          target.style.setProperty('--my', `${y.toFixed(1)}%`);
+          target.classList.add('glare-active');
+          activeGlassEl = target;
+        }
+      }
+
+      function clearGlare() {
+        if (activeGlassEl) {
+          activeGlassEl.classList.remove('glare-active');
+          activeGlassEl = null;
+        }
+      }
+
+      document.addEventListener('pointermove', updateGlare, { passive: true });
+      document.addEventListener('touchstart', updateGlare, { passive: true });
+      document.addEventListener('touchmove', updateGlare, { passive: true });
+      document.addEventListener('touchend', clearGlare, { passive: true });
+      document.addEventListener('pointerleave', clearGlare, { passive: true });
+    }
+
+    /* Плавающий свет под жидким стеклом */
+    function initAmbientLight() {
+      const canvas = document.getElementById('ambientLightCanvas');
+      const ctx = canvas.getContext('2d');
+      const RENDER_SCALE = 0.25;
+
+      function resize() {
+        canvas.width = Math.max(120, Math.floor(window.innerWidth * RENDER_SCALE));
+        canvas.height = Math.max(180, Math.floor(window.innerHeight * RENDER_SCALE));
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const initialOrbs = (THEMES[currentThemeId] || THEMES.obsidian).orbs;
+      const orbs = [
+        { x: 0.25, y: 0.18, vx: 0.0005, vy: 0.00038, r: 0.36, color: initialOrbs[0] },
+        { x: 0.78, y: 0.52, vx: -0.00042, vy: 0.00045, r: 0.4, color: initialOrbs[1] },
+        { x: 0.45, y: 0.84, vx: 0.00036, vy: -0.00042, r: 0.34, color: initialOrbs[2] }
+      ];
+
+      window._updateOrbColors = function(colors) {
+        if (!Array.isArray(colors)) return;
+        for (let i = 0; i < orbs.length && i < colors.length; i++) {
+          orbs[i].color = colors[i];
+        }
+      };
+
+      function loop() {
+        if (!canvas.classList.contains('hidden')) {
+          const w = canvas.width;
+          const h = canvas.height;
+          ctx.clearRect(0, 0, w, h);
+          const baseDim = Math.min(w, h);
+          for (let i = 0; i < orbs.length; i++) {
+            const o = orbs[i];
+            o.x += o.vx;
+            o.y += o.vy;
+            if (o.x < 0.05 || o.x > 0.95) o.vx *= -1;
+            if (o.y < 0.05 || o.y > 0.95) o.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(o.x * w, o.y * h, o.r * baseDim, 0, Math.PI * 2);
+            ctx.fillStyle = o.color;
+            ctx.fill();
+          }
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    }
+
+    /* Инициализация */
+    (function bootstrap() {
+      decodeSnapshot();
+
+      const savedTheme = localStorage.getItem('pp_theme') || 'obsidian';
+      selectTheme(savedTheme, true);
+
+      const savedGlass = localStorage.getItem('pp_liquid_glass');
+      const glassEnabled = savedGlass !== '0';
+      document.getElementById('liquidGlassToggle').checked = glassEnabled;
+      document.documentElement.setAttribute('data-glass', glassEnabled ? 'on' : 'off');
+
+      const savedAmbient = localStorage.getItem('pp_ambient');
+      const ambientEnabled = savedAmbient !== '0';
+      document.getElementById('ambientToggle').checked = ambientEnabled;
+      document.getElementById('ambientLightCanvas').classList.toggle('hidden', !ambientEnabled);
+
+      if (localStorage.getItem('pp_welcomed') !== '1') {
+        openWelcome();
+      }
+
+      renderAll();
+      initLiquidGlare();
+      initAmbientLight();
+      fetchLiveProfile();
+    })();
+  </script>
 </body>
 </html>
