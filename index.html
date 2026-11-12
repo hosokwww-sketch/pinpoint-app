@@ -7,186 +7,173 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     /* ==========================================
-       1. ТЕМИЗАЦИЯ И ПАРАМЕТРЫ ЖИДКОГО СТЕКЛА
+       1. АВТОРСКИЕ ТЕМЫ И ПАРАМЕТРЫ ЖИДКОГО СТЕКЛА
        ========================================== */
     :root,
     [data-theme="oled"] {
       --bg: #000000;
-      --welcome-backdrop: rgba(0, 0, 0, 0.64);
-      --glass-bg: rgba(8, 8, 10, 0.78);
+      --welcome-backdrop: rgba(0, 0, 0, 0.62);
+      --glass-bg: rgba(7, 7, 9, 0.78);
       --glass-bg-elevated: rgba(18, 18, 22, 0.86);
-      --glass-nav: rgba(10, 10, 12, 0.86);
-      --glass-modal: rgba(10, 10, 13, 0.95);
-      --slot-bg: rgba(12, 12, 16, 0.84);
-      --slot-border: rgba(255, 255, 255, 0.22);
-      --slot-accent: #ffffff;
-      --glass-specular-top: rgba(255, 255, 255, 0.24);
-      --glass-specular-side: rgba(255, 255, 255, 0.10);
+      --glass-nav: rgba(8, 8, 10, 0.84);
+      --glass-modal: rgba(8, 8, 10, 0.95);
+      --glass-specular-top: rgba(255, 255, 255, 0.25);
+      --glass-specular-side: rgba(255, 255, 255, 0.11);
       --glass-rim-bottom: rgba(255, 255, 255, 0.04);
       --glass-glare: rgba(255, 255, 255, 0.16);
       --glass-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.92);
       --border: rgba(255, 255, 255, 0.09);
-      --border-strong: rgba(255, 255, 255, 0.18);
+      --border-strong: rgba(255, 255, 255, 0.19);
       --text: #ffffff;
       --text-muted: #8e8e93;
       --text-dim: #545458;
       --accent: #ffffff;
       --accent-contrast: #000000;
-      --accent-bg: rgba(255, 255, 255, 0.11);
-      --accent-border: rgba(255, 255, 255, 0.26);
+      --accent-bg: rgba(255, 255, 255, 0.12);
+      --accent-border: rgba(255, 255, 255, 0.30);
+      --slot-bg: rgba(12, 12, 16, 0.84);
+      --slot-border: rgba(255, 255, 255, 0.22);
+      --slot-accent: #ffffff;
+      --ring-color: #ffffff;
+      --ring-track: rgba(255, 255, 255, 0.11);
       --status-ok: #30d158;
       --blue: #64d2ff;
       --blue-bg: rgba(100, 210, 255, 0.12);
-      --purple: #a855f7;
-      --purple-light: #c084fc;
-      --purple-bg: rgba(168, 85, 247, 0.16);
-      --purple-border: rgba(168, 85, 247, 0.38);
-      --ring-track: rgba(255, 255, 255, 0.10);
       --switch-off: rgba(255, 255, 255, 0.14);
       --switch-knob-on: #000000;
     }
 
     [data-theme="violet"] {
       --bg: #08060d;
-      --welcome-backdrop: rgba(8, 6, 13, 0.66);
+      --welcome-backdrop: rgba(8, 6, 13, 0.64);
       --glass-bg: rgba(18, 14, 28, 0.68);
-      --glass-bg-elevated: rgba(28, 22, 44, 0.76);
-      --glass-nav: rgba(16, 12, 26, 0.84);
-      --glass-modal: rgba(15, 11, 24, 0.95);
-      --slot-bg: rgba(34, 20, 58, 0.72);
-      --slot-border: rgba(168, 85, 247, 0.44);
-      --slot-accent: #c084fc;
-      --glass-specular-top: rgba(233, 213, 255, 0.25);
-      --glass-specular-side: rgba(216, 180, 254, 0.11);
-      --glass-rim-bottom: rgba(255, 255, 255, 0.04);
-      --glass-glare: rgba(216, 180, 254, 0.16);
+      --glass-bg-elevated: rgba(30, 22, 48, 0.76);
+      --glass-nav: rgba(16, 12, 26, 0.82);
+      --glass-modal: rgba(15, 11, 24, 0.94);
+      --glass-specular-top: rgba(233, 213, 255, 0.28);
+      --glass-specular-side: rgba(216, 180, 254, 0.12);
+      --glass-rim-bottom: rgba(168, 85, 247, 0.08);
+      --glass-glare: rgba(216, 180, 254, 0.18);
       --glass-shadow: 0 16px 38px -12px rgba(4, 2, 10, 0.86);
-      --border: rgba(216, 180, 254, 0.11);
-      --border-strong: rgba(216, 180, 254, 0.20);
+      --border: rgba(216, 180, 254, 0.12);
+      --border-strong: rgba(216, 180, 254, 0.22);
       --text: #f7f5fc;
       --text-muted: #9c95ad;
       --text-dim: #5e5770;
       --accent: #a855f7;
       --accent-contrast: #ffffff;
-      --accent-bg: rgba(168, 85, 247, 0.16);
-      --accent-border: rgba(168, 85, 247, 0.38);
-      --status-ok: #30d158;
+      --accent-bg: rgba(168, 85, 247, 0.18);
+      --accent-border: rgba(168, 85, 247, 0.44);
+      --slot-bg: rgba(34, 20, 58, 0.72);
+      --slot-border: rgba(168, 85, 247, 0.44);
+      --slot-accent: #c084fc;
+      --ring-color: #a855f7;
+      --ring-track: rgba(216, 180, 254, 0.14);
+      --status-ok: #c084fc;
       --blue: #818cf8;
       --blue-bg: rgba(129, 140, 248, 0.14);
-      --purple: #c084fc;
-      --purple-light: #d8b4fe;
-      --purple-bg: rgba(192, 132, 252, 0.16);
-      --purple-border: rgba(192, 132, 252, 0.38);
-      --ring-track: rgba(216, 180, 254, 0.11);
       --switch-off: rgba(216, 180, 254, 0.15);
       --switch-knob-on: #ffffff;
     }
 
     [data-theme="forest"] {
       --bg: #070b0a;
-      --welcome-backdrop: rgba(7, 11, 10, 0.66);
+      --welcome-backdrop: rgba(7, 11, 10, 0.64);
       --glass-bg: rgba(13, 21, 19, 0.66);
-      --glass-bg-elevated: rgba(21, 33, 30, 0.74);
-      --glass-nav: rgba(12, 19, 17, 0.82);
+      --glass-bg-elevated: rgba(21, 35, 31, 0.74);
+      --glass-nav: rgba(12, 19, 17, 0.80);
       --glass-modal: rgba(11, 18, 16, 0.94);
-      --slot-bg: rgba(16, 38, 34, 0.72);
-      --slot-border: rgba(94, 234, 212, 0.40);
-      --slot-accent: #5eead4;
-      --glass-specular-top: rgba(204, 251, 241, 0.25);
-      --glass-specular-side: rgba(153, 246, 228, 0.11);
-      --glass-rim-bottom: rgba(255, 255, 255, 0.04);
-      --glass-glare: rgba(153, 246, 228, 0.15);
+      --glass-specular-top: rgba(204, 251, 241, 0.26);
+      --glass-specular-side: rgba(153, 246, 228, 0.12);
+      --glass-rim-bottom: rgba(94, 234, 212, 0.07);
+      --glass-glare: rgba(153, 246, 228, 0.16);
       --glass-shadow: 0 16px 38px -12px rgba(2, 6, 5, 0.84);
-      --border: rgba(204, 251, 241, 0.10);
-      --border-strong: rgba(204, 251, 241, 0.19);
+      --border: rgba(204, 251, 241, 0.11);
+      --border-strong: rgba(204, 251, 241, 0.20);
       --text: #f2f7f5;
       --text-muted: #8fa39d;
       --text-dim: #576b65;
       --accent: #5eead4;
       --accent-contrast: #070b0a;
-      --accent-bg: rgba(94, 234, 212, 0.14);
-      --accent-border: rgba(94, 234, 212, 0.34);
-      --status-ok: #4ade80;
+      --accent-bg: rgba(94, 234, 212, 0.16);
+      --accent-border: rgba(94, 234, 212, 0.40);
+      --slot-bg: rgba(16, 38, 34, 0.72);
+      --slot-border: rgba(94, 234, 212, 0.40);
+      --slot-accent: #5eead4;
+      --ring-color: #5eead4;
+      --ring-track: rgba(204, 251, 241, 0.13);
+      --status-ok: #5eead4;
       --blue: #67e8f9;
       --blue-bg: rgba(103, 232, 249, 0.13);
-      --purple: #a855f7;
-      --purple-light: #c084fc;
-      --purple-bg: rgba(168, 85, 247, 0.16);
-      --purple-border: rgba(168, 85, 247, 0.36);
-      --ring-track: rgba(204, 251, 241, 0.11);
       --switch-off: rgba(204, 251, 241, 0.14);
       --switch-knob-on: #070b0a;
     }
 
-    [data-theme="daylight"] {
-      --bg: #f2f3f5;
-      --welcome-backdrop: rgba(242, 243, 245, 0.72);
-      --glass-bg: rgba(255, 255, 255, 0.70);
-      --glass-bg-elevated: rgba(255, 255, 255, 0.88);
-      --glass-nav: rgba(255, 255, 255, 0.84);
-      --glass-modal: rgba(250, 250, 252, 0.96);
-      --slot-bg: rgba(255, 255, 255, 0.86);
-      --slot-border: rgba(17, 17, 19, 0.16);
-      --slot-accent: #111113;
-      --glass-specular-top: rgba(255, 255, 255, 1);
-      --glass-specular-side: rgba(255, 255, 255, 0.82);
-      --glass-rim-bottom: rgba(0, 0, 0, 0.06);
-      --glass-glare: rgba(255, 255, 255, 0.72);
-      --glass-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.10);
-      --border: rgba(0, 0, 0, 0.08);
-      --border-strong: rgba(0, 0, 0, 0.14);
-      --text: #111113;
-      --text-muted: #636369;
-      --text-dim: #9e9ea6;
-      --accent: #111113;
-      --accent-contrast: #ffffff;
-      --accent-bg: rgba(17, 17, 19, 0.08);
-      --accent-border: rgba(17, 17, 19, 0.20);
-      --status-ok: #16a34a;
-      --blue: #0284c7;
-      --blue-bg: rgba(2, 132, 199, 0.11);
-      --purple: #7c3aed;
-      --purple-light: #9333ea;
-      --purple-bg: rgba(124, 58, 237, 0.12);
-      --purple-border: rgba(124, 58, 237, 0.28);
-      --ring-track: rgba(0, 0, 0, 0.08);
-      --switch-off: rgba(0, 0, 0, 0.13);
-      --switch-knob-on: #ffffff;
-    }
-
+    /* Новогодняя тема (Зимний рубин и падающий снег) */
     [data-theme="newyear"] {
       --bg: #070911;
-      --welcome-backdrop: rgba(7, 9, 17, 0.66);
-      --glass-bg: rgba(15, 20, 34, 0.66);
-      --glass-bg-elevated: rgba(24, 31, 50, 0.76);
-      --glass-nav: rgba(14, 18, 32, 0.84);
-      --glass-modal: rgba(13, 17, 30, 0.95);
-      --slot-bg: rgba(42, 16, 28, 0.68);
-      --slot-border: rgba(244, 63, 94, 0.45);
-      --slot-accent: #fb7185;
-      --glass-specular-top: rgba(255, 228, 235, 0.28);
-      --glass-specular-side: rgba(253, 164, 175, 0.12);
-      --glass-rim-bottom: rgba(255, 255, 255, 0.05);
-      --glass-glare: rgba(254, 205, 211, 0.18);
-      --glass-shadow: 0 16px 38px -12px rgba(3, 5, 12, 0.88);
-      --border: rgba(254, 205, 211, 0.12);
-      --border-strong: rgba(254, 205, 211, 0.22);
-      --text: #fff8fa;
-      --text-muted: #9ea6bd;
-      --text-dim: #5d657d;
+      --welcome-backdrop: rgba(7, 9, 17, 0.64);
+      --glass-bg: rgba(15, 19, 32, 0.66);
+      --glass-bg-elevated: rgba(25, 31, 50, 0.74);
+      --glass-nav: rgba(13, 17, 30, 0.82);
+      --glass-modal: rgba(12, 16, 28, 0.94);
+      --glass-specular-top: rgba(224, 242, 254, 0.32);
+      --glass-specular-side: rgba(254, 205, 211, 0.14);
+      --glass-rim-bottom: rgba(244, 63, 94, 0.10);
+      --glass-glare: rgba(224, 242, 254, 0.18);
+      --glass-shadow: 0 16px 38px -12px rgba(2, 4, 12, 0.86);
+      --border: rgba(224, 242, 254, 0.13);
+      --border-strong: rgba(254, 205, 211, 0.24);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
       --accent: #f43f5e;
       --accent-contrast: #ffffff;
       --accent-bg: rgba(244, 63, 94, 0.17);
-      --accent-border: rgba(244, 63, 94, 0.40);
+      --accent-border: rgba(244, 63, 94, 0.42);
+      --slot-bg: rgba(42, 16, 28, 0.68);
+      --slot-border: rgba(244, 63, 94, 0.45);
+      --slot-accent: #fb7185;
+      --ring-color: #fb7185;
+      --ring-track: rgba(224, 242, 254, 0.14);
       --status-ok: #fb7185;
-      --blue: #7dd3fc;
-      --blue-bg: rgba(125, 211, 252, 0.14);
-      --purple: #c084fc;
-      --purple-light: #e9d5ff;
-      --purple-bg: rgba(192, 132, 252, 0.16);
-      --purple-border: rgba(192, 132, 252, 0.38);
-      --ring-track: rgba(254, 205, 211, 0.13);
-      --switch-off: rgba(254, 205, 211, 0.16);
+      --blue: #38bdf8;
+      --blue-bg: rgba(56, 189, 248, 0.15);
+      --switch-off: rgba(224, 242, 254, 0.16);
+      --switch-knob-on: #ffffff;
+    }
+
+    /* Переработанная светлая тема (Воздушное жидкое стекло) */
+    [data-theme="daylight"] {
+      --bg: #e9eef6;
+      --welcome-backdrop: rgba(233, 238, 246, 0.74);
+      --glass-bg: rgba(255, 255, 255, 0.76);
+      --glass-bg-elevated: rgba(235, 241, 249, 0.84);
+      --glass-nav: rgba(255, 255, 255, 0.86);
+      --glass-modal: rgba(252, 253, 255, 0.95);
+      --glass-specular-top: rgba(255, 255, 255, 1);
+      --glass-specular-side: rgba(255, 255, 255, 0.85);
+      --glass-rim-bottom: rgba(15, 23, 42, 0.08);
+      --glass-glare: rgba(37, 99, 235, 0.14);
+      --glass-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.11), 0 2px 6px -1px rgba(15, 23, 42, 0.05);
+      --border: rgba(15, 23, 42, 0.09);
+      --border-strong: rgba(15, 23, 42, 0.16);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+      --accent: #2563eb;
+      --accent-contrast: #ffffff;
+      --accent-bg: rgba(37, 99, 235, 0.12);
+      --accent-border: rgba(37, 99, 235, 0.34);
+      --slot-bg: rgba(239, 246, 255, 0.84);
+      --slot-border: rgba(37, 99, 235, 0.28);
+      --slot-accent: #2563eb;
+      --ring-color: #2563eb;
+      --ring-track: rgba(37, 99, 235, 0.14);
+      --status-ok: #16a34a;
+      --blue: #0284c7;
+      --blue-bg: rgba(2, 132, 199, 0.12);
+      --switch-off: rgba(15, 23, 42, 0.16);
       --switch-knob-on: #ffffff;
     }
 
@@ -214,7 +201,7 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Плавающий свет под жидким стеклом (без CSS-градиентов) */
+    /* Плавающий свет и снежинки под жидким стеклом */
     #ambientLightCanvas {
       position: fixed;
       inset: 0;
@@ -222,31 +209,63 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      filter: blur(56px);
-      opacity: 0.85;
+      filter: blur(52px);
+      opacity: 0.86;
       transition: opacity 0.3s ease;
     }
 
-    #ambientLightCanvas.hidden {
-      opacity: 0;
-    }
-
-    /* Снежинки для новогодней темы (позади стеклянных карточек) */
     #snowCanvas {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 0;
+      z-index: 35;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s ease;
     }
 
-    #snowCanvas.active {
-      opacity: 0.92;
+    [data-theme="newyear"] #snowCanvas {
+      opacity: 1;
     }
 
+    .flag-svg {
+      display: inline-block;
+      width: 16px;
+      height: 11px;
+      border-radius: 2.5px;
+      vertical-align: -1.5px;
+      box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.28), 0 1px 3px rgba(0, 0, 0, 0.35);
+      flex-shrink: 0;
+    }
+
+    [data-theme="daylight"] .flag-svg {
+      box-shadow: 0 0 0 0.5px rgba(15, 23, 42, 0.22), 0 1px 2px rgba(15, 23, 42, 0.12);
+    }
+
+    .flags-badge-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+    }
+
+    .loc-inline-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 7px;
+      margin-top: 3px;
+    }
+
+    .loc-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    #ambientLightCanvas.hidden,
     #snowCanvas.hidden {
       opacity: 0 !important;
     }
@@ -279,7 +298,10 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
     }
 
-    /* Живой оптический блик при касании/движении (без градиентов) */
+    [data-theme="daylight"][data-glass="off"] .liquid-glass {
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    }
+
     .liquid-glass::after {
       content: "";
       position: absolute;
@@ -306,6 +328,33 @@
       z-index: 1;
     }
 
+    /* Тонкая настройка светлой темы для идеального контраста элементов */
+    [data-theme="daylight"] .btn-primary {
+      box-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
+        0 6px 16px -4px rgba(37, 99, 235, 0.38);
+    }
+
+    [data-theme="daylight"] .nav-btn.active {
+      background: #ffffff;
+      border-color: rgba(37, 99, 235, 0.22);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    [data-theme="daylight"] .theme-swatch {
+      border-color: rgba(15, 23, 42, 0.18);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+    }
+
+    [data-theme="daylight"] .modal-backdrop {
+      background: rgba(15, 23, 42, 0.38);
+    }
+
+    [data-theme="daylight"] .ring-box {
+      background: #ffffff;
+      border: 1px solid rgba(37, 99, 235, 0.14);
+    }
+
     .app-shell {
       position: relative;
       z-index: 1;
@@ -322,7 +371,36 @@
       pointer-events: none;
     }
 
-    /* Шапка с аватаркой пользователя */
+    /* Декоративные элементы новогодней темы */
+    .ny-flake-badge {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #bae6fd;
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+
+    [data-theme="newyear"] .ny-flake-badge {
+      display: inline-flex;
+    }
+
+    .ny-watermark {
+      display: none;
+      position: absolute;
+      right: -10px;
+      bottom: -14px;
+      color: rgba(254, 205, 211, 0.08);
+      pointer-events: none;
+      z-index: 0;
+      transform: rotate(18deg);
+    }
+
+    [data-theme="newyear"] .ny-watermark {
+      display: block;
+    }
+
+    /* Шапка и аватарка пользователя */
     .top-bar {
       display: flex;
       align-items: center;
@@ -349,11 +427,13 @@
       border: 1px solid var(--border-strong);
       box-shadow:
         inset 0 1px 0 0 var(--glass-specular-top),
-        0 4px 12px rgba(0, 0, 0, 0.28);
+        0 4px 12px rgba(0, 0, 0, 0.18);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text);
+      font-size: 16px;
+      font-weight: 700;
       flex-shrink: 0;
       overflow: hidden;
       position: relative;
@@ -365,27 +445,25 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 50%;
+      border-radius: inherit;
       display: none;
     }
 
-    .user-avatar-initial {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.2px;
-      user-select: none;
+    .brand-title-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
     }
 
     .brand-title {
-      font-size: 15.5px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.2px;
       line-height: 1.2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 185px;
     }
 
     .brand-sub {
@@ -402,14 +480,14 @@
       border: 1px solid var(--border-strong);
       box-shadow:
         inset 0 1px 0 0 var(--glass-specular-top),
-        0 4px 14px rgba(0, 0, 0, 0.22);
+        0 4px 14px rgba(0, 0, 0, 0.12);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-radius: 999px;
       padding: 6px 8px 6px 13px;
       cursor: pointer;
-      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease;
       flex-shrink: 0;
+      transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease;
     }
 
     .balance-pill:active {
@@ -485,6 +563,22 @@
       -webkit-backdrop-filter: blur(14px);
     }
 
+    .section-refresh-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .section-refresh-btn:active {
+      transform: scale(0.95);
+    }
+
     /* Карточки */
     .card {
       border-radius: var(--radius-xl);
@@ -492,7 +586,7 @@
       margin-bottom: 12px;
     }
 
-    /* Слот подписки в цвет выбранной темы */
+    /* Карточки слотов в цвет выбранной темы */
     .slot-card {
       background: var(--slot-bg);
       border-color: var(--slot-border);
@@ -513,7 +607,7 @@
     .sub-status-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       margin-bottom: 6px;
     }
 
@@ -620,11 +714,6 @@
       transform: scale(0.96);
     }
 
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
     .btn-primary {
       background: var(--accent);
       color: var(--accent-contrast);
@@ -728,9 +817,9 @@
       margin-top: 10px;
       padding: 6px 10px;
       border-radius: 10px;
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
-      color: var(--purple-light);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--text);
       font-size: 12px;
       font-weight: 600;
     }
@@ -764,15 +853,15 @@
       margin-top: 2px;
     }
 
-    /* Тарифы */
+    /* Тарифы (сбалансированные карточки) */
     .discount-banner {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 12px 14px;
+      padding: 11px 14px;
       border-radius: var(--radius-lg);
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
       box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
       margin-bottom: 12px;
       font-size: 13px;
@@ -781,82 +870,157 @@
       -webkit-backdrop-filter: blur(18px);
     }
 
-    .tariff-card.popular {
-      border-color: var(--purple-border);
+    .tariff-card-mid {
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border-radius: var(--radius-xl);
     }
 
-    .tariff-top {
+    .tariff-card-mid.popular {
+      border-color: var(--accent-border);
+      background: var(--slot-bg);
+    }
+
+    .tariff-mid-head {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 10px;
     }
 
     .tariff-title {
-      font-size: 17px;
+      font-size: 16.5px;
       font-weight: 700;
+      line-height: 1.25;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 7px;
     }
 
     .tag-popular {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 999px;
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
-      color: var(--purple-light);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
     }
 
     .tag-discount {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       padding: 2px 7px;
       border-radius: 8px;
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
-      color: var(--purple-light);
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--text);
     }
 
-    .tariff-price-box {
+    .tariff-mid-price {
       text-align: right;
+      flex-shrink: 0;
     }
 
     .price-old {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-dim);
       text-decoration: line-through;
-      display: block;
+      margin-right: 5px;
     }
 
     .price-now {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--text);
     }
 
-    .tariff-specs {
+    .tariff-mid-bottom {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    .spec-chip {
-      font-size: 12px;
+    .tariff-specs-compact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .spec-chip-sm {
+      font-size: 11.5px;
+      font-weight: 500;
       color: var(--text-muted);
       background: var(--glass-bg-elevated);
       border: 1px solid var(--border);
       box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
-      padding: 5px 10px;
-      border-radius: 10px;
+      padding: 4px 8px;
+      border-radius: 9px;
     }
 
-    /* Отзывы */
+    .tariff-buy-btn {
+      padding: 9px 15px;
+      font-size: 13.5px;
+      font-weight: 700;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Плашка-переход к реферальной программе под тарифами */
+    .ref-promo-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 15px;
+      border-radius: var(--radius-xl);
+      margin-top: 6px;
+      cursor: pointer;
+    }
+
+    .ref-promo-banner:active {
+      transform: scale(0.98);
+    }
+
+    .ref-promo-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .ref-promo-ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .ref-promo-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .ref-promo-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    /* Отзывы и звёздочки в цвет выбранной темы */
     .reviews-hero {
       display: flex;
       align-items: center;
@@ -877,7 +1041,7 @@
     }
 
     .rating-stars {
-      color: var(--purple);
+      color: var(--accent);
       font-size: 15px;
       letter-spacing: 1px;
     }
@@ -890,25 +1054,6 @@
       font-size: 12px;
       color: var(--text-muted);
       margin-top: 4px;
-    }
-
-    .review-pending-banner {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: var(--radius-lg);
-      background: var(--purple-bg);
-      border: 1px solid var(--purple-border);
-      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
-      margin-bottom: 12px;
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.4;
-    }
-
-    .review-pending-banner.show {
-      display: flex;
     }
 
     .review-card-head {
@@ -957,7 +1102,7 @@
 
     .review-stars-sm {
       font-size: 13px;
-      color: var(--purple);
+      color: var(--accent);
       letter-spacing: 1px;
       flex-shrink: 0;
     }
@@ -970,7 +1115,7 @@
       word-break: break-word;
     }
 
-    /* Выбор тем (5 тем, новогодняя на всю ширину) */
+    /* Выбор тем (5 тем) */
     .theme-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1168,197 +1313,6 @@
       box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
     }
 
-    /* ==========================================
-       3. ЭКРАН ПРИВЕТСТВИЯ (ПОЛНОРАЗМЕРНАЯ АВАТАРКА БОТА + ЧИСТЫЙ ТЕКСТ)
-       ========================================== */
-    .welcome-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--welcome-backdrop);
-      backdrop-filter: blur(36px) saturate(190%);
-      -webkit-backdrop-filter: blur(36px) saturate(190%);
-      z-index: 80;
-      display: none;
-      align-items: stretch;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .welcome-overlay.open {
-      display: flex;
-      opacity: 1;
-    }
-
-    .welcome-overlay.closing {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .welcome-container {
-      width: 100%;
-      max-width: 480px;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 28px 20px calc(24px + var(--safe-bottom));
-      overflow-y: auto;
-      transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
-    }
-
-    .welcome-overlay.closing .welcome-container {
-      transform: scale(1.04) translateY(-10px);
-      opacity: 0;
-    }
-
-    .welcome-lens-stage {
-      position: relative;
-      width: 112px;
-      height: 112px;
-      padding: 0;
-      margin: 4px auto 16px;
-      border-radius: 30px;
-      background: var(--glass-bg-elevated);
-      border: 1px solid var(--border-strong);
-      box-shadow:
-        inset 0 1px 0 0 var(--glass-specular-top),
-        var(--glass-shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text);
-      overflow: hidden;
-      animation: lensFloat 3.8s ease-in-out infinite;
-    }
-
-    .welcome-lens-avatar {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: inherit;
-      display: none;
-    }
-
-    .welcome-lens-rim {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      box-shadow:
-        inset 0 1px 0 0 var(--glass-specular-top),
-        inset 1px 0 0 0 var(--glass-specular-side),
-        inset 0 -1px 0 0 var(--glass-rim-bottom);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    @keyframes lensFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
-    }
-
-    .welcome-hero-head {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .welcome-brand-label {
-      display: block;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 0;
-      color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .welcome-h1 {
-      font-size: 27px;
-      font-weight: 800;
-      letter-spacing: -0.6px;
-      line-height: 1.16;
-      margin-bottom: 10px;
-    }
-
-    .welcome-p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 340px;
-      margin: 0 auto;
-    }
-
-    .welcome-features {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-
-    .wf-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-radius: var(--radius-lg);
-      padding: 13px 14px;
-    }
-
-    .wf-ico {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: var(--glass-bg-elevated);
-      border: 1px solid var(--border-strong);
-      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text);
-      flex-shrink: 0;
-    }
-
-    .wf-title {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .wf-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.35;
-    }
-
-    .welcome-cta {
-      padding: 15px 18px;
-      font-size: 15px;
-      border-radius: 16px;
-      letter-spacing: -0.1px;
-    }
-
-    .welcome-overlay.open .w-anim {
-      opacity: 0;
-      animation: welcomeSpringIn 0.56s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      animation-delay: var(--d, 0s);
-    }
-
-    @keyframes welcomeSpringIn {
-      0% {
-        opacity: 0;
-        transform: translateY(18px) scale(0.96);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
     /* Модальные шторки */
     .modal-backdrop {
       position: fixed;
@@ -1480,13 +1434,13 @@
       font-size: 22px;
       color: var(--text-dim);
       cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.18s ease, color 0.18s ease;
+      transition: transform 0.12s ease, border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
     }
 
     .star-btn.active {
-      color: var(--purple);
-      border-color: var(--purple-border);
-      background: var(--purple-bg);
+      color: var(--accent);
+      border-color: var(--accent-border);
+      background: var(--accent-bg);
     }
 
     .textarea-field {
@@ -1513,6 +1467,440 @@
       color: var(--text-dim);
       margin-top: 4px;
       margin-bottom: 12px;
+    }
+
+    /* Переключатель 2 подвкладок внутри раздела (Liquid Glass Segmented Control) */
+    .sub-tabs-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 16px;
+      background: var(--glass-bg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        var(--glass-shadow);
+      margin: 2px 0 14px;
+    }
+
+    .sub-tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 9px 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.14s ease;
+    }
+
+    .sub-tab-btn:active {
+      transform: scale(0.97);
+    }
+
+    .sub-tab-btn.active {
+      background: var(--glass-bg-elevated);
+      border-color: var(--border-strong);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+    }
+
+    [data-theme="daylight"] .sub-tab-btn.active {
+      background: #ffffff;
+      border-color: rgba(37, 99, 235, 0.22);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .sub-pane {
+      display: none;
+      animation: fadeSlide 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .sub-pane.active {
+      display: block;
+    }
+
+    /* Сгруппированные стеклянные списки (в стиле Liquid Glass) */
+    .glass-group {
+      padding: 0;
+    }
+
+    .glass-group-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .glass-group-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .glass-group-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
+    .glass-group-row {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color 0.18s ease;
+    }
+
+    .glass-group-row:last-child {
+      border-bottom: none;
+    }
+
+    .glass-group-row:active {
+      background: var(--accent-bg);
+    }
+
+    .row-chevron {
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .glass-group-row:active .row-chevron {
+      transform: translateX(2px);
+      color: var(--accent);
+    }
+
+    /* Аккордеон популярных вопросов (FAQ) */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+      cursor: pointer;
+      transition: background-color 0.18s ease, padding 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .faq-question:active {
+      background: var(--accent-bg);
+    }
+
+    .faq-item.open .faq-question {
+      padding-bottom: 8px;
+    }
+
+    .faq-plus {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), color 0.22s ease;
+    }
+
+    .faq-item.open .faq-plus {
+      transform: rotate(45deg);
+      color: var(--accent);
+    }
+
+    .faq-answer-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
+    }
+
+    .faq-item.open .faq-answer-wrap {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+
+    .faq-answer-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding: 0 16px 14px;
+    }
+
+    /* Модальное окно подтверждения действия */
+    #confirmModal {
+      z-index: 65;
+    }
+
+    .confirm-details-box {
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .confirm-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .confirm-lbl {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .confirm-val {
+      font-weight: 700;
+      color: var(--text);
+      text-align: right;
+    }
+
+    .confirm-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 10px;
+    }
+
+    /* ==========================================
+       3. ЭКРАН ПРИВЕТСТВИЯ (ПОЛНОРАЗМЕРНАЯ АВАТАРКА + ЧИСТЫЙ ТЕКСТ)
+       ========================================== */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--welcome-backdrop);
+      backdrop-filter: blur(36px) saturate(190%);
+      -webkit-backdrop-filter: blur(36px) saturate(190%);
+      z-index: 80;
+      display: none;
+      align-items: stretch;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .welcome-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .welcome-overlay.closing {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .welcome-container {
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 20px calc(24px + var(--safe-bottom));
+      overflow-y: auto;
+      transition: transform 0.36s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
+    }
+
+    .welcome-overlay.closing .welcome-container {
+      transform: scale(0.95) translateY(-12px);
+      opacity: 0;
+    }
+
+    .welcome-lens-stage {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      padding: 0;
+      margin: 4px auto 16px;
+      border-radius: 30px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        var(--glass-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      overflow: hidden;
+      animation: lensFloat 3.8s ease-in-out infinite;
+    }
+
+    .welcome-lens-avatar {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+      display: none;
+    }
+
+    .welcome-lens-rim {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow:
+        inset 0 1px 0 0 var(--glass-specular-top),
+        inset 1px 0 0 0 var(--glass-specular-side),
+        inset 0 -1px 0 0 var(--glass-rim-bottom);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes lensFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .welcome-hero-head {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .welcome-brand-label {
+      display: block;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .welcome-h1 {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .welcome-p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.48;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .welcome-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .wf-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: var(--radius-lg);
+      padding: 13px 14px;
+    }
+
+    .wf-ico {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    .wf-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wf-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    .welcome-footer {
+      padding-top: 6px;
+    }
+
+    .welcome-cta {
+      height: 50px;
+      border-radius: 16px;
+      font-size: 15px;
+      letter-spacing: -0.1px;
+    }
+
+    .welcome-overlay.open .w-anim {
+      animation: welcomeReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes welcomeReveal {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     /* Уведомление Toast */
@@ -1556,7 +1944,7 @@
       <div>
         <div class="welcome-lens-stage w-anim" style="--d: 0.04s;">
           <img id="welcomeBotAvatar" class="welcome-lens-avatar" alt="PinPoint VPN" />
-          <svg id="welcomeBotFallback" width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="welcomeBotFallback" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <path d="M9 12l2 2 4-4"/>
           </svg>
@@ -1567,7 +1955,7 @@
           <div class="welcome-brand-label w-anim" style="--d: 0.10s;">PinPoint VPN</div>
           <h1 class="welcome-h1 w-anim" style="--d: 0.16s;">Защищённый интернет<br/>в одно касание</h1>
           <p class="welcome-p w-anim" style="--d: 0.22s;">
-            Управляйте подписками, подключайте устройства без ручных настроек и контролируйте трафик в реальном времени.
+            Мгновенное подключение на смартфоне и ПК, контроль трафика в реальном времени и европейские серверы без потери скорости.
           </p>
         </div>
 
@@ -1580,42 +1968,44 @@
             </div>
             <div>
               <div class="wf-title">Импорт за 5 секунд</div>
-              <div class="wf-sub">Мгновенная настройка в Happ, Hiddify, Incy и V2raytun</div>
+              <div class="wf-sub">Автонастройка в Happ, Hiddify, Incy и V2raytun</div>
             </div>
           </div>
 
           <div class="wf-item liquid-glass w-anim" style="--d: 0.34s;">
             <div class="wf-ico">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
             </div>
             <div>
-              <div class="wf-title">5 европейских локаций</div>
-              <div class="wf-sub">🇳🇱 Нидерланды • 🇫🇮 Финляндия • 🇨🇭 Швейцария • 🇱🇹 Литва • 🇸🇪 Швеция</div>
+              <div class="wf-title">4 европейские локации</div>
+              <div class="wf-sub loc-inline-list"><span class="loc-chip"><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" y="0" fill="#AE1C28"/><rect width="18" height="4" y="4" fill="#FFFFFF"/><rect width="18" height="4" y="8" fill="#21468B"/></svg> Нидерланды</span><span class="loc-chip"><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#FFFFFF"/><rect x="5" y="0" width="3" height="12" fill="#003580"/><rect x="0" y="4.5" width="18" height="3" fill="#003580"/></svg> Финляндия</span><span class="loc-chip"><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" y="0" fill="#FDB913"/><rect width="18" height="4" y="4" fill="#006A44"/><rect width="18" height="4" y="8" fill="#C1272D"/></svg> Литва</span><span class="loc-chip"><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#006AA7"/><rect x="5" y="0" width="2.8" height="12" fill="#FECC02"/><rect x="0" y="4.6" width="18" height="2.8" fill="#FECC02"/></svg> Швеция</span></div>
             </div>
           </div>
 
           <div class="wf-item liquid-glass w-anim" style="--d: 0.40s;">
             <div class="wf-ico">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/>
-                <line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
-                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
               </svg>
             </div>
             <div>
-              <div class="wf-title">Бесплатный тест на 24 часа</div>
-              <div class="wf-sub">Проверьте скорость и пинг перед оформлением тарифа</div>
+              <div class="wf-title">Пробный доступ 24 часа</div>
+              <div class="wf-sub">Протестируйте соединение бесплатно перед покупкой</div>
             </div>
           </div>
         </div>
       </div>
 
-      <button class="btn btn-primary btn-full welcome-cta w-anim" style="--d: 0.46s;" onclick="closeWelcome()">
-        Открыть личный кабинет
-      </button>
+      <div class="welcome-footer w-anim" style="--d: 0.46s;">
+        <button class="btn btn-primary btn-full welcome-cta" onclick="closeWelcome()">
+          <span>Открыть личный кабинет</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1623,12 +2013,15 @@
     <!-- Верхняя шапка с аватаркой пользователя -->
     <header class="top-bar liquid-glass">
       <div class="brand-box">
-        <div class="user-avatar-box">
-          <img id="userAvatarImg" class="user-avatar-img" alt="Профиль" />
-          <span id="userAvatarFallback" class="user-avatar-initial">P</span>
+        <div class="user-avatar-box" id="userAvatarBox">
+          <img id="userAvatarImg" class="user-avatar-img" alt="User" />
+          <span id="userAvatarInitial">P</span>
         </div>
         <div style="min-width: 0;">
-          <div class="brand-title" id="userDisplayName">PinPoint VPN</div>
+          <div class="brand-title-row">
+            <span class="brand-title" id="userDisplayName">PinPoint VPN</span>
+            <span class="ny-flake-badge" title="Новогодняя тема">❄</span>
+          </div>
           <div class="brand-sub" id="userBadge">ID: —</div>
         </div>
       </div>
@@ -1647,93 +2040,41 @@
       </div>
 
       <div id="subsContainer"></div>
-
-      <div class="section-head">
-        <span class="section-title">Промокод</span>
-      </div>
-      <div class="card liquid-glass">
-        <div class="promo-row">
-          <input id="promoInput" class="input-field" type="text" maxlength="32" placeholder="Введите промокод..." autocomplete="off" />
-          <button class="btn btn-primary" onclick="applyPromoCode()">Применить</button>
-        </div>
-        <div id="activeDiscountBox"></div>
-      </div>
-
-      <div class="section-head">
-        <span class="section-title">Партнёрская программа</span>
-      </div>
-      <div class="card liquid-glass">
-        <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">Приглашайте друзей и получайте бонусы</div>
-        <div style="font-size: 12.5px; color: var(--text-muted); line-height: 1.4;">
-          Вы получаете процент со всех пополнений и продлений приглашённых пользователей.
-        </div>
-        <div class="ref-grid">
-          <div class="ref-stat">
-            <div class="ref-stat-val" id="refRateVal">5%</div>
-            <div class="ref-stat-lbl">Ваша ставка</div>
-          </div>
-          <div class="ref-stat">
-            <div class="ref-stat-val" id="refCountVal">0</div>
-            <div class="ref-stat-lbl">Друзей</div>
-          </div>
-          <div class="ref-stat">
-            <div class="ref-stat-val" id="refEarnVal">0 ₽</div>
-            <div class="ref-stat-lbl">Заработано</div>
-          </div>
-        </div>
-        <button class="btn btn-secondary btn-full" onclick="copyReferralLink()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-          </svg>
-          Скопировать реферальную ссылку
-        </button>
-      </div>
     </section>
 
     <!-- ВКЛАДКА 2: ТАРИФЫ -->
     <section id="tab-tariffs" class="tab-pane">
       <div id="tariffsDiscountBanner"></div>
-
-      <div id="trialTariffSection">
-        <div class="section-head">
-          <span class="section-title">Пробный доступ</span>
-        </div>
-        <div class="card liquid-glass">
-          <div class="tariff-top">
-            <div>
-              <div class="tariff-title">🆓 Тест на 24 часа</div>
-              <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Для проверки скорости и стабильности</div>
-            </div>
-            <div class="tariff-price-box">
-              <span class="price-now" style="color: var(--status-ok);">0 ₽</span>
-            </div>
-          </div>
-          <div class="tariff-specs">
-            <span class="spec-chip">⏱ 24 часа</span>
-            <span class="spec-chip">📦 10 ГБ</span>
-            <span class="spec-chip">📱 1 устройство</span>
-          </div>
-          <button class="btn btn-secondary btn-full" onclick="openBotAction('buy_test')">Активировать бесплатный тест</button>
-        </div>
-      </div>
+      <div id="trialCardContainer"></div>
 
       <div class="section-head">
         <span class="section-title">Тарифные планы</span>
-        <span class="section-badge">🇳🇱 🇫🇮 🇨🇭 🇱🇹 🇸🇪</span>
+        <span class="section-badge flags-badge-row" title="Нидерланды, Финляндия, Литва, Швеция"><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" y="0" fill="#AE1C28"/><rect width="18" height="4" y="4" fill="#FFFFFF"/><rect width="18" height="4" y="8" fill="#21468B"/></svg><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#FFFFFF"/><rect x="5" y="0" width="3" height="12" fill="#003580"/><rect x="0" y="4.5" width="18" height="3" fill="#003580"/></svg><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="4" y="0" fill="#FDB913"/><rect width="18" height="4" y="4" fill="#006A44"/><rect width="18" height="4" y="8" fill="#C1272D"/></svg><svg class="flag-svg" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#006AA7"/><rect x="5" y="0" width="2.8" height="12" fill="#FECC02"/><rect x="0" y="4.6" width="18" height="2.8" fill="#FECC02"/></svg></span>
       </div>
       <div id="tariffsList"></div>
+
+      <div class="card liquid-glass ref-promo-banner" onclick="openReferralSection()">
+        <div class="ref-promo-left">
+          <div class="ref-promo-ico">🎁</div>
+          <div style="min-width: 0;">
+            <div class="ref-promo-title">Реферальная программа • <span id="tariffsRefRateBadge">5%</span></div>
+            <div class="ref-promo-sub">Приглашайте друзей и оплачивайте подписку бонусами</div>
+          </div>
+        </div>
+        <span class="row-chevron">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+      </div>
     </section>
 
     <!-- ВКЛАДКА 3: ОТЗЫВЫ -->
     <section id="tab-reviews" class="tab-pane">
       <div class="section-head">
         <span class="section-title">Отзывы клиентов</span>
+        <button type="button" class="section-refresh-btn" onclick="refreshReviews()">🔄 Обновить</button>
       </div>
 
-      <div id="reviewPendingBanner" class="review-pending-banner">
-        <span>⏳</span>
-        <span>Ваш отзыв отправлен на проверку модератору и появится здесь сразу после одобрения.</span>
-      </div>
+      <div id="reviewPendingBanner"></div>
 
       <div class="card liquid-glass">
         <div class="reviews-hero">
@@ -1742,7 +2083,7 @@
               <span class="rating-num" id="avgRatingNum">—</span>
               <span class="rating-stars empty" id="avgRatingStars">☆☆☆☆☆</span>
             </div>
-            <div class="rating-count" id="reviewsCountText">Одобренные отзывы пользователей</div>
+            <div class="rating-count" id="reviewsCountText">Одобренные модератором отзывы</div>
           </div>
           <button class="btn btn-primary" onclick="openReviewModal()">✍️ Оставить отзыв</button>
         </div>
@@ -1751,15 +2092,105 @@
       <div id="reviewsList"></div>
     </section>
 
-    <!-- ВКЛАДКА 4: НАСТРОЙКИ -->
+    <!-- ВКЛАДКА 4: ЕЩЁ (С 2 ПОДВКЛАДКАМИ ВНУТРИ: СЕРВИС И НАСТРОЙКИ) -->
     <section id="tab-settings" class="tab-pane">
-      <div class="section-head">
-        <span class="section-title">Оформление</span>
+      <div class="sub-tabs-bar" role="tablist">
+        <button type="button" class="sub-tab-btn active" data-more-sub="service" onclick="switchMoreSubTab('service')">
+          <span>Сервис</span>
+        </button>
+        <button type="button" class="sub-tab-btn" data-more-sub="prefs" onclick="switchMoreSubTab('prefs')">
+          <span>Настройки</span>
+        </button>
       </div>
+
+      <!-- ПОДВКЛАДКА 4.1: СЕРВИС (ДРУЗЬЯ, ПРОМОКОД, ВОПРОСЫ, ДОКУМЕНТЫ) -->
+      <div id="more-sub-service" class="sub-pane active">
+        <div class="section-head" style="margin-top: 2px;">
+          <span class="section-title">Друзья</span>
+        </div>
+      <div class="card liquid-glass glass-group">
+        <div class="glass-group-header">
+          <div class="glass-group-title">Приглашено: <span id="refCountVal">0</span></div>
+          <div class="glass-group-sub">
+            Вы получили <span id="refEarnVal">0 ₽</span>. Бонус <span id="refRateVal">5%</span> от оплат друзей.
+          </div>
+        </div>
+        <button type="button" class="glass-group-row" onclick="copyReferralLink()">
+          <span>Скопировать ссылку</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        <button type="button" class="glass-group-row" onclick="shareReferralLink()">
+          <span>Отправить другу</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="section-head">
+        <span class="section-title">Промокод</span>
+      </div>
+      <div class="card liquid-glass">
+        <div class="promo-row">
+          <input id="promoInput" class="input-field" type="text" maxlength="32" placeholder="Введите промокод" autocomplete="off" />
+          <button class="btn btn-primary" onclick="applyPromoCode()">Применить</button>
+        </div>
+        <div id="activeDiscountBox"></div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-title">Вопросы</span>
+      </div>
+      <div class="card liquid-glass glass-group" id="faqContainer"></div>
+
+      <div class="section-head">
+        <span class="section-title">Связь и документы</span>
+      </div>
+      <div class="card liquid-glass glass-group">
+        <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Support')">
+          <span>Поддержка</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Channel')">
+          <span>Новости сервиса</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Politika-konfidencialnosti-10-15-99')">
+          <span>Политика конфиденциальности</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Polzovatelskoe-soglashenie-10-15-51')">
+          <span>Пользовательское соглашение</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        <button type="button" class="glass-group-row" onclick="openModal('refundModal')">
+          <span>Условия возврата</span>
+          <span class="row-chevron">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </button>
+        </div>
+      </div>
+
+      <!-- ПОДВКЛАДКА 4.2: НАСТРОЙКИ (ОФОРМЛЕНИЕ И ПАРАМЕТРЫ ПРИЛОЖЕНИЯ) -->
+      <div id="more-sub-prefs" class="sub-pane">
+        <div class="section-head" style="margin-top: 2px;">
+          <span class="section-title">Оформление</span>
+        </div>
 
       <div class="card liquid-glass">
         <div class="setting-title">Тема оформления</div>
-        <div class="setting-desc">Выберите фон, цвет слотов и оттенок жидкого стекла</div>
+        <div class="setting-desc">Выберите фон и оттенок жидкого стекла</div>
         <div class="theme-grid" id="themeGrid">
           <button type="button" class="theme-option active" data-theme-id="oled" onclick="selectTheme('oled')">
             <div class="theme-swatch" style="background: #000000;">
@@ -1772,7 +2203,7 @@
           </button>
 
           <button type="button" class="theme-option" data-theme-id="violet" onclick="selectTheme('violet')">
-            <div class="theme-swatch" style="background: #140e24;">
+            <div class="theme-swatch" style="background: #140f21;">
               <span class="theme-swatch-dot" style="background: #a855f7;"></span>
             </div>
             <div class="theme-meta">
@@ -1792,17 +2223,17 @@
           </button>
 
           <button type="button" class="theme-option" data-theme-id="daylight" onclick="selectTheme('daylight')">
-            <div class="theme-swatch" style="background: #f2f3f5;">
-              <span class="theme-swatch-dot" style="background: #111113;"></span>
+            <div class="theme-swatch" style="background: #e9eef6;">
+              <span class="theme-swatch-dot" style="background: #2563eb;"></span>
             </div>
             <div class="theme-meta">
               <div class="theme-name">Светлая</div>
-              <div class="theme-sub">Матовое стекло</div>
+              <div class="theme-sub">Воздушное стекло</div>
             </div>
           </button>
 
           <button type="button" class="theme-option wide" data-theme-id="newyear" onclick="selectTheme('newyear')">
-            <div class="theme-swatch" style="background: #1e0b16;">
+            <div class="theme-swatch" style="background: #1a0c16;">
               <span class="theme-swatch-dot" style="background: #f43f5e;"></span>
             </div>
             <div class="theme-meta">
@@ -1831,8 +2262,8 @@
 
         <div class="setting-row">
           <div>
-            <div class="setting-title">✨ Плавный свет и снег на фоне</div>
-            <div class="setting-desc">Мягкое движение света и снежинок под стеклом</div>
+            <div class="setting-title">✨ Плавный свет на фоне</div>
+            <div class="setting-desc">Мягкое движение света и снега под стеклом</div>
           </div>
           <label class="switch">
             <input type="checkbox" id="ambientToggle" checked onchange="toggleAmbientLight(this.checked)" />
@@ -1857,6 +2288,7 @@
             <div class="setting-desc">Показать вводную карточку о возможностях сервиса</div>
           </div>
           <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 13px;" onclick="openWelcome()">Открыть</button>
+        </div>
         </div>
       </div>
     </section>
@@ -1884,10 +2316,10 @@
       <span>Отзывы</span>
     </button>
     <button class="nav-btn" data-tab="settings" onclick="switchTab('settings')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
       </svg>
-      <span>Настройки</span>
+      <span>Ещё</span>
     </button>
   </nav>
 
@@ -1948,15 +2380,15 @@
       <div style="display: flex; flex-direction: column; gap: 8px;">
         <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(15)">
           <span>📦 +15 ГБ трафика</span>
-          <strong style="color: var(--status-ok);">45 ₽</strong>
+          <strong style="color: var(--slot-accent);">45 ₽</strong>
         </button>
         <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(50)">
           <span>📦 +50 ГБ трафика</span>
-          <strong style="color: var(--status-ok);">99 ₽</strong>
+          <strong style="color: var(--slot-accent);">99 ₽</strong>
         </button>
         <button class="btn btn-secondary btn-full" style="justify-content: space-between;" onclick="buyBoosterPack(150)">
           <span>📦 +150 ГБ трафика</span>
-          <strong style="color: var(--status-ok);">165 ₽</strong>
+          <strong style="color: var(--slot-accent);">165 ₽</strong>
         </button>
       </div>
     </div>
@@ -1998,6 +2430,40 @@
     </div>
   </div>
 
+  <!-- Модальное окно: Подтверждение действия -->
+  <div id="confirmModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'confirmModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title" id="confirmTitle">Подтверждение</div>
+        <button class="modal-close" onclick="closeModal('confirmModal')">×</button>
+      </div>
+      <div id="confirmQuestion" style="font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 12px;"></div>
+      <div id="confirmDetails" class="confirm-details-box"></div>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('confirmModal')">Отмена</button>
+        <button type="button" id="confirmProceedBtn" class="btn btn-primary" onclick="executeConfirmedAction()">Подтвердить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно: Условия возврата -->
+  <div id="refundModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'refundModal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-head">
+        <div class="modal-title">📄 Условия возврата</div>
+        <button class="modal-close" onclick="closeModal('refundModal')">×</button>
+      </div>
+      <div style="font-size: 13.5px; color: var(--text-muted); line-height: 1.55; display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+        <p>1. Вы можете протестировать скорость и стабильность сервиса бесплатно с помощью пробного доступа на 24 часа (10 ГБ) перед оплатой тарифа.</p>
+        <p>2. Возврат средств за неиспользованный остаток баланса кошелька возможен по обращению в поддержку в течение 24 часов с момента пополнения, если средства не были списаны на активацию подписки.</p>
+        <p>3. После выпуска и активации ключа подписки услуга считается оказанной в полном объёме. При технических сложностях напишите в поддержку — мы поможем с настройкой или перенесём доступ.</p>
+      </div>
+      <button type="button" class="btn btn-primary btn-full" onclick="closeModal('refundModal')">Понятно</button>
+    </div>
+  </div>
+
   <script>
     const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
     if (tg) {
@@ -2009,32 +2475,27 @@
       oled: {
         bg: '#000000',
         ringColor: '#ffffff',
-        lowTraffic: '#a855f7',
         orbs: ['rgba(255, 255, 255, 0.13)', 'rgba(180, 180, 195, 0.09)', 'rgba(255, 255, 255, 0.08)']
       },
       violet: {
         bg: '#08060d',
         ringColor: '#a855f7',
-        lowTraffic: '#e879f9',
-        orbs: ['rgba(168, 85, 247, 0.28)', 'rgba(124, 58, 237, 0.20)', 'rgba(192, 132, 252, 0.18)']
+        orbs: ['rgba(168, 85, 247, 0.25)', 'rgba(139, 92, 246, 0.17)', 'rgba(192, 132, 252, 0.16)']
       },
       forest: {
         bg: '#070b0a',
         ringColor: '#5eead4',
-        lowTraffic: '#a855f7',
         orbs: ['rgba(94, 234, 212, 0.22)', 'rgba(45, 212, 191, 0.15)', 'rgba(16, 185, 129, 0.16)']
-      },
-      daylight: {
-        bg: '#f2f3f5',
-        ringColor: '#111113',
-        lowTraffic: '#7c3aed',
-        orbs: ['rgba(148, 163, 184, 0.26)', 'rgba(203, 213, 225, 0.30)', 'rgba(161, 161, 170, 0.20)']
       },
       newyear: {
         bg: '#070911',
         ringColor: '#fb7185',
-        lowTraffic: '#c084fc',
-        orbs: ['rgba(244, 63, 94, 0.24)', 'rgba(125, 211, 252, 0.18)', 'rgba(225, 29, 72, 0.16)']
+        orbs: ['rgba(244, 63, 94, 0.26)', 'rgba(56, 189, 248, 0.20)', 'rgba(225, 29, 72, 0.18)']
+      },
+      daylight: {
+        bg: '#e9eef6',
+        ringColor: '#2563eb',
+        orbs: ['rgba(59, 130, 246, 0.28)', 'rgba(99, 102, 241, 0.22)', 'rgba(14, 165, 233, 0.24)']
       }
     };
 
@@ -2048,18 +2509,28 @@
     ];
 
     const urlParams = new URLSearchParams(window.location.search);
-    const API_URL = (urlParams.get('api') || '').replace(/\/+$/, '');
+    const paramApi = (urlParams.get('api') || '').replace(/\/+$/, '');
+    const autoOrigin =
+      window.location &&
+      window.location.protocol &&
+      window.location.protocol.startsWith('http') &&
+      window.location.hostname &&
+      !window.location.hostname.endsWith('github.io')
+        ? window.location.origin
+        : '';
+    const API_URL = paramApi || autoOrigin;
+
     const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
 
     let appState = {
-      user_id: tgUser && tgUser.id ? tgUser.id : 0,
+      user_id: tgUser ? tgUser.id : 0,
       balance: 0,
+      used_test: false,
       discount_pct: 0,
       discount_tariff: 'all',
       ref_cnt: 0,
       ref_pct: 5,
       ref_earn: 0,
-      used_test: false,
       notifications: true,
       bot_username: 'PinPointVPN_bot',
       subs: [],
@@ -2069,8 +2540,9 @@
     let selectedSubKey = '';
     let selectedBoosterSlot = 1;
     let selectedReviewRating = 5;
+    let hasPendingLocalReview = false;
 
-    function bindImageChain(imgId, fallbackId, sources) {
+    function loadImageChain(imgId, fallbackId, sources) {
       const img = document.getElementById(imgId);
       const fallback = document.getElementById(fallbackId);
       if (!img || !fallback) return;
@@ -2079,15 +2551,13 @@
       function tryNext() {
         if (idx >= sources.length) {
           img.style.display = 'none';
-          fallback.style.display = 'flex';
+          fallback.style.display = fallback.tagName.toLowerCase() === 'svg' ? 'block' : 'inline';
           return;
         }
         const src = sources[idx++];
         img.onload = function() {
           if (img.naturalWidth > 1 && img.naturalHeight > 1) {
             img.style.display = 'block';
-            img.style.width = '100%';
-            img.style.height = '100%';
             fallback.style.display = 'none';
           } else {
             tryNext();
@@ -2100,18 +2570,11 @@
     }
 
     function updateAvatars() {
-      // 1. Аватарка пользователя в верхней шапке
-      const displayName = tgUser
-        ? ([tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || (tgUser.username ? `@${tgUser.username}` : 'PinPoint VPN'))
+      const userName = tgUser
+        ? ([tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || tgUser.username || 'PinPoint VPN')
         : 'PinPoint VPN';
-      const nameEl = document.getElementById('userDisplayName');
-      if (nameEl) nameEl.textContent = displayName;
-
-      const initialEl = document.getElementById('userAvatarFallback');
-      if (initialEl) {
-        const cleanChar = displayName.replace(/^@+/, '').trim().charAt(0).toUpperCase();
-        initialEl.textContent = cleanChar || 'P';
-      }
+      document.getElementById('userDisplayName').textContent = userName;
+      document.getElementById('userAvatarInitial').textContent = (userName.charAt(0) || 'P').toUpperCase();
 
       const userSources = [];
       if (tgUser && tgUser.photo_url) {
@@ -2120,18 +2583,20 @@
       if (API_URL && tg && tg.initData) {
         userSources.push(`${API_URL}/api/user/avatar?init_data=${encodeURIComponent(tg.initData)}`);
       }
-      bindImageChain('userAvatarImg', 'userAvatarFallback', userSources);
+      if (tgUser && tgUser.username) {
+        userSources.push(`https://t.me/i/userpic/320/${encodeURIComponent(tgUser.username)}.jpg`);
+      }
+      loadImageChain('userAvatarImg', 'userAvatarInitial', userSources);
 
-      // 2. Полноразмерная аватарка бота на экране приветствия
-      const botUname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@+/, '');
+      const uname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@/, '');
       const botSources = [];
       if (API_URL) {
         botSources.push(`${API_URL}/bot-avatar.jpg`);
       }
-      if (botUname) {
-        botSources.push(`https://t.me/i/userpic/320/${encodeURIComponent(botUname)}.jpg`);
+      if (uname) {
+        botSources.push(`https://t.me/i/userpic/320/${encodeURIComponent(uname)}.jpg`);
       }
-      bindImageChain('welcomeBotAvatar', 'welcomeBotFallback', botSources);
+      loadImageChain('welcomeBotAvatar', 'welcomeBotFallback', botSources);
     }
 
     function selectTheme(themeId, silent = false) {
@@ -2154,11 +2619,6 @@
 
       if (window._updateOrbColors) {
         window._updateOrbColors(cfg.orbs);
-      }
-
-      const snowCanvas = document.getElementById('snowCanvas');
-      if (snowCanvas) {
-        snowCanvas.classList.toggle('active', themeId === 'newyear');
       }
 
       renderSubscriptions();
@@ -2184,10 +2644,11 @@
         for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
         const parsed = JSON.parse(new TextDecoder('utf-8').decode(bytes));
         if (parsed && typeof parsed === 'object') {
-          appState = { ...appState, ...parsed };
-          if (!Array.isArray(appState.reviews)) {
-            appState.reviews = [];
-          }
+          appState = {
+            ...appState,
+            ...parsed,
+            reviews: Array.isArray(parsed.reviews) ? parsed.reviews : []
+          };
         }
       } catch (e) {}
     }
@@ -2228,20 +2689,19 @@
       document.getElementById('userBadge').textContent = appState.user_id ? `ID: ${appState.user_id}` : 'PinPoint Client';
       document.getElementById('headerBalance').textContent = `${appState.balance || 0} ₽`;
       document.getElementById('refRateVal').textContent = `${appState.ref_pct || 5}%`;
+      const tariffsRefBadge = document.getElementById('tariffsRefRateBadge');
+      if (tariffsRefBadge) tariffsRefBadge.textContent = `${appState.ref_pct || 5}%`;
       document.getElementById('refCountVal').textContent = `${appState.ref_cnt || 0}`;
       document.getElementById('refEarnVal').textContent = `${appState.ref_earn || 0} ₽`;
       document.getElementById('notifToggle').checked = Boolean(appState.notifications);
 
-      const trialSec = document.getElementById('trialTariffSection');
-      if (trialSec) {
-        trialSec.style.display = appState.used_test ? 'none' : 'block';
-      }
-
       updateAvatars();
       renderDiscountBoxes();
       renderSubscriptions();
+      renderTrialCard();
       renderTariffs();
       renderReviews();
+      renderFaq();
     }
 
     function renderDiscountBoxes() {
@@ -2264,12 +2724,10 @@
       const subs = Array.isArray(appState.subs) ? appState.subs : [];
       document.getElementById('slotsCounter').textContent = `${subs.length} / 2 слота`;
       const container = document.getElementById('subsContainer');
-      const themeCfg = THEMES[currentThemeId] || THEMES.oled;
-      const normalRing = themeCfg.ringColor;
-      const lowColor = themeCfg.lowTraffic || '#a855f7';
+      const ringThemeColor = (THEMES[currentThemeId] || THEMES.oled).ringColor;
 
       if (subs.length === 0) {
-        const hideTrialBtn = Boolean(appState.used_test);
+        const trialUsed = Boolean(appState.used_test);
         container.innerHTML = `
           <div class="card liquid-glass empty-card">
             <div class="empty-icon">
@@ -2278,14 +2736,10 @@
               </svg>
             </div>
             <div class="empty-title">Нет активных подключений</div>
-            <div class="empty-desc">
-              ${hideTrialBtn
-                ? 'Выберите подходящий тарифный план для мгновенного подключения.'
-                : 'Выберите тарифный план или активируйте бесплатный тестовый доступ на 24 часа.'}
-            </div>
-            <div class="empty-btns ${hideTrialBtn ? 'single' : ''}">
+            <div class="empty-desc">Выберите тарифный план${trialUsed ? '' : ' или активируйте бесплатный тестовый доступ на 24 часа'}.</div>
+            <div class="empty-btns ${trialUsed ? 'single' : ''}">
               <button class="btn btn-primary" onclick="switchTab('tariffs')">Выбрать тариф</button>
-              ${hideTrialBtn ? '' : `<button class="btn btn-secondary" onclick="openBotAction('buy_test')">🆓 Тест 24ч</button>`}
+              ${trialUsed ? '' : `<button class="btn btn-secondary" onclick="requestBuyTest()">🆓 Тест 24ч</button>`}
             </div>
           </div>
         `;
@@ -2299,11 +2753,16 @@
         const gbLeft = Math.max(0, Math.round((gbTotal - gbUsed) * 10) / 10);
         const ratio = Math.max(0, Math.min(1, gbLeft / gbTotal));
         const dashOffset = circumference * (1 - ratio);
-        const ringColor = ratio > 0.2 ? normalRing : lowColor;
         const safeKey = escapeHtml(s.key || '');
 
         return `
           <div class="card liquid-glass slot-card">
+            <svg class="ny-watermark" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+              <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+              <polyline points="9 4 12 7 15 4"/><polyline points="9 20 12 17 15 20"/>
+              <polyline points="4 9 7 12 4 15"/><polyline points="20 9 17 12 20 15"/>
+            </svg>
             <div class="sub-card-top">
               <div class="sub-info">
                 <div class="sub-status-row">
@@ -2319,7 +2778,7 @@
               <div class="ring-box">
                 <svg viewBox="0 0 68 68">
                   <circle cx="34" cy="34" r="29" fill="none" stroke="var(--ring-track)" stroke-width="5"/>
-                  <circle cx="34" cy="34" r="29" fill="none" stroke="${ringColor}" stroke-width="5"
+                  <circle cx="34" cy="34" r="29" fill="none" stroke="${ringThemeColor}" stroke-width="5"
                     stroke-dasharray="${circumference.toFixed(1)}" stroke-dashoffset="${dashOffset.toFixed(1)}" stroke-linecap="round"/>
                 </svg>
                 <div class="ring-label">
@@ -2337,6 +2796,32 @@
       }).join('');
     }
 
+    function renderTrialCard() {
+      const box = document.getElementById('trialCardContainer');
+      if (appState.used_test) {
+        box.innerHTML = '';
+        return;
+      }
+      box.innerHTML = `
+        <div class="card liquid-glass tariff-card-mid">
+          <div class="tariff-mid-head">
+            <div class="tariff-title">🆓 Тест на 24 часа</div>
+            <div class="tariff-mid-price">
+              <span class="price-now" style="color: var(--slot-accent);">0 ₽</span>
+            </div>
+          </div>
+          <div class="tariff-mid-bottom">
+            <div class="tariff-specs-compact">
+              <span class="spec-chip-sm">⏱ 24 часа</span>
+              <span class="spec-chip-sm">📦 10 ГБ</span>
+              <span class="spec-chip-sm">📱 1 устр.</span>
+            </div>
+            <button type="button" class="btn btn-secondary tariff-buy-btn" onclick="requestBuyTest()">Попробовать</button>
+          </div>
+        </div>
+      `;
+    }
+
     function renderTariffs() {
       const pct = Number(appState.discount_pct || 0);
       const container = document.getElementById('tariffsList');
@@ -2344,31 +2829,28 @@
         const finalPrice = getDiscountedPrice(t);
         const hasDiscount = finalPrice < t.price;
         return `
-          <div class="card liquid-glass tariff-card ${t.popular ? 'popular' : ''}">
-            <div class="tariff-top">
-              <div>
-                <div class="tariff-title">
-                  <span>${escapeHtml(t.name)}</span>
-                  ${t.popular ? '<span class="tag-popular">Популярный</span>' : ''}
-                  ${hasDiscount ? `<span class="tag-discount">-${pct}%</span>` : ''}
-                </div>
-                <div style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
-                  Европейские локации без ограничений скорости
-                </div>
+          <div class="card liquid-glass tariff-card-mid ${t.popular ? 'popular' : ''}">
+            <div class="tariff-mid-head">
+              <div class="tariff-title">
+                <span>${escapeHtml(t.name)}</span>
+                ${t.popular ? '<span class="tag-popular">Популярный</span>' : ''}
+                ${hasDiscount ? `<span class="tag-discount">-${pct}%</span>` : ''}
               </div>
-              <div class="tariff-price-box">
+              <div class="tariff-mid-price">
                 ${hasDiscount ? `<span class="price-old">${t.price} ₽</span>` : ''}
                 <span class="price-now">${finalPrice} ₽</span>
               </div>
             </div>
-            <div class="tariff-specs">
-              <span class="spec-chip">📅 ${t.days} дн.</span>
-              <span class="spec-chip">📦 ${t.gb} ГБ</span>
-              <span class="spec-chip">📱 ${t.devices} устр.</span>
+            <div class="tariff-mid-bottom">
+              <div class="tariff-specs-compact">
+                <span class="spec-chip-sm">📅 ${t.days} дн.</span>
+                <span class="spec-chip-sm">📦 ${t.gb} ГБ</span>
+                <span class="spec-chip-sm">📱 до ${t.devices} устр.</span>
+              </div>
+              <button type="button" class="btn btn-primary tariff-buy-btn" onclick="requestBuyTariff('${t.id}')">
+                Выбрать
+              </button>
             </div>
-            <button class="btn btn-primary btn-full" onclick="openBotAction('buy_${t.id}')">
-              Подключить за ${finalPrice} ₽
-            </button>
           </div>
         `;
       }).join('');
@@ -2380,16 +2862,21 @@
       const avgEl = document.getElementById('avgRatingNum');
       const starsEl = document.getElementById('avgRatingStars');
       const cntEl = document.getElementById('reviewsCountText');
+      const pendingBanner = document.getElementById('reviewPendingBanner');
+
+      pendingBanner.innerHTML = hasPendingLocalReview
+        ? `<div class="discount-banner"><span>⏳</span><span>Ваш отзыв отправлен модератору и появится здесь сразу после проверки.</span></div>`
+        : '';
 
       if (reviews.length === 0) {
         avgEl.textContent = '—';
         starsEl.textContent = '☆☆☆☆☆';
         starsEl.classList.add('empty');
-        cntEl.textContent = 'Пока нет опубликованных отзывов';
+        cntEl.textContent = 'Отзывы появятся после проверки модератором';
         listEl.innerHTML = `
           <div class="card liquid-glass empty-card">
-            <div class="empty-title">Отзывов пока нет</div>
-            <div class="empty-desc">Здесь появляются только отзывы клиентов, прошедшие модерацию администратора.</div>
+            <div class="empty-title">Пока нет опубликованных отзывов</div>
+            <div class="empty-desc">Оставьте свой отзыв о работе PinPoint VPN — после одобрения модератором в боте он появится здесь.</div>
             <button class="btn btn-primary" onclick="openReviewModal()">✍️ Написать отзыв</button>
           </div>
         `;
@@ -2397,12 +2884,12 @@
       }
 
       const sum = reviews.reduce((acc, r) => acc + Math.max(1, Math.min(5, Number(r.rating || 5))), 0);
-      const avgNum = sum / reviews.length;
-      const rounded = Math.max(1, Math.min(5, Math.round(avgNum)));
-      avgEl.textContent = avgNum.toFixed(1);
-      starsEl.textContent = '★'.repeat(rounded) + '☆'.repeat(5 - rounded);
+      const avg = (sum / reviews.length).toFixed(1);
+      const roundedStars = Math.round(sum / reviews.length);
+      avgEl.textContent = avg;
+      starsEl.textContent = '★'.repeat(roundedStars) + '☆'.repeat(5 - roundedStars);
       starsEl.classList.remove('empty');
-      cntEl.textContent = `На основе ${reviews.length} одобренных отзывов`;
+      cntEl.textContent = `Одобренных отзывов: ${reviews.length}`;
 
       listEl.innerHTML = reviews.map(r => {
         const rating = Math.max(1, Math.min(5, Number(r.rating || 5)));
@@ -2428,6 +2915,24 @@
     }
 
     /* Навигация */
+    function switchMoreSubTab(subName) {
+      document.querySelectorAll('#tab-settings .sub-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('#tab-settings .sub-tab-btn').forEach(b => b.classList.remove('active'));
+      const pane = document.getElementById(`more-sub-${subName}`);
+      const btn = document.querySelector(`#tab-settings .sub-tab-btn[data-more-sub="${subName}"]`);
+      if (pane) pane.classList.add('active');
+      if (btn) btn.classList.add('active');
+      if (tg && tg.HapticFeedback) {
+        try { tg.HapticFeedback.selectionChanged(); } catch (e) {}
+      }
+    }
+
+    function openReferralSection() {
+      switchTab('settings');
+      switchMoreSubTab('service');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function switchTab(tabName) {
       document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -2435,6 +2940,17 @@
       const btn = document.querySelector(`.nav-btn[data-tab="${tabName}"]`);
       if (pane) pane.classList.add('active');
       if (btn) btn.classList.add('active');
+      if (tabName === 'reviews') {
+        fetchLiveProfile(false);
+      }
+    }
+
+    async function refreshReviews() {
+      showToast('🔄 Обновляю отзывы...');
+      const ok = await fetchLiveProfile(true);
+      if (!ok) {
+        showToast('Для мгновенного обновления откройте приложение через меню бота');
+      }
     }
 
     /* Модальные окна */
@@ -2460,13 +2976,90 @@
       document.getElementById('topupAmountInput').value = val;
     }
 
+    let pendingConfirmCallback = null;
+
+    function openConfirmModal({ title, question, rows, confirmText, onConfirm }) {
+      document.getElementById('confirmTitle').textContent = title || 'Подтверждение';
+      document.getElementById('confirmQuestion').textContent = question || 'Вы уверены?';
+      const detailsEl = document.getElementById('confirmDetails');
+      if (Array.isArray(rows) && rows.length > 0) {
+        detailsEl.innerHTML = rows.map(r => `
+          <div class="confirm-row">
+            <span class="confirm-lbl">${escapeHtml(r.label)}</span>
+            <span class="confirm-val">${escapeHtml(r.value)}</span>
+          </div>
+        `).join('');
+        detailsEl.style.display = 'flex';
+      } else {
+        detailsEl.innerHTML = '';
+        detailsEl.style.display = 'none';
+      }
+      const btn = document.getElementById('confirmProceedBtn');
+      btn.textContent = confirmText || 'Подтвердить';
+      pendingConfirmCallback = typeof onConfirm === 'function' ? onConfirm : null;
+      openModal('confirmModal');
+    }
+
+    function executeConfirmedAction() {
+      const cb = pendingConfirmCallback;
+      pendingConfirmCallback = null;
+      closeModal('confirmModal');
+      if (cb) cb();
+    }
+
     function submitTopup() {
       const val = parseInt(document.getElementById('topupAmountInput').value, 10);
       if (isNaN(val) || val < 10 || val > 100000) {
         return showToast('Введите сумму от 10 до 100 000 ₽');
       }
+      const curBal = Number(appState.balance || 0);
       closeModal('topupModal');
-      openBotAction(`topup_${val}`);
+      openConfirmModal({
+        title: '💳 Пополнение баланса',
+        question: `Вы точно хотите пополнить баланс на ${val} ₽?`,
+        rows: [
+          { label: 'Сумма к зачислению', value: `${val} ₽` },
+          { label: 'Текущий баланс', value: `${curBal} ₽` },
+          { label: 'После пополнения', value: `${curBal + val} ₽` }
+        ],
+        confirmText: `Пополнить ${val} ₽`,
+        onConfirm: () => openBotAction(`topup_${val}`, true)
+      });
+    }
+
+    function requestBuyTariff(tId) {
+      const t = TARIFF_CATALOG.find(item => item.id === tId);
+      if (!t) return;
+      const finalPrice = getDiscountedPrice(t);
+      const curBal = Number(appState.balance || 0);
+      const paymentDesc = curBal >= finalPrice
+        ? `С баланса (останется ${curBal - finalPrice} ₽)`
+        : `Баланс ${curBal} ₽ + доплата ${finalPrice - curBal} ₽`;
+
+      openConfirmModal({
+        title: '⚡️ Покупка тарифа',
+        question: `Вы точно хотите подключить тариф «${t.name}»?`,
+        rows: [
+          { label: 'Условия', value: `${t.days} дн. • ${t.gb} ГБ • до ${t.devices} устр.` },
+          { label: 'Стоимость', value: `${finalPrice} ₽` },
+          { label: 'Способ оплаты', value: paymentDesc }
+        ],
+        confirmText: `Купить за ${finalPrice} ₽`,
+        onConfirm: () => openBotAction(`buy_${t.id}`, true)
+      });
+    }
+
+    function requestBuyTest() {
+      openConfirmModal({
+        title: '🆓 Пробный доступ',
+        question: 'Вы точно хотите активировать бесплатный тест на 24 часа?',
+        rows: [
+          { label: 'Параметры', value: '24 часа • 10 ГБ • 1 устройство' },
+          { label: 'Стоимость', value: '0 ₽ (доступно 1 раз)' }
+        ],
+        confirmText: 'Активировать тест',
+        onConfirm: () => openBotAction('buy_test', true)
+      });
     }
 
     function openConnectModal(key) {
@@ -2503,8 +3096,20 @@
     }
 
     function buyBoosterPack(gb) {
+      const prices = { 15: 45, 50: 99, 150: 165 };
+      const price = prices[gb] || 0;
       closeModal('boosterModal');
-      openBotAction(`boost_${gb}_${selectedBoosterSlot}`);
+      openConfirmModal({
+        title: '➕ Докупка трафика',
+        question: `Вы точно хотите докупить +${gb} ГБ для Слота #${selectedBoosterSlot}?`,
+        rows: [
+          { label: 'Дополнительный пакет', value: `+${gb} ГБ` },
+          { label: 'Слот подписки', value: `Слот #${selectedBoosterSlot}` },
+          { label: 'Стоимость', value: `${price} ₽` }
+        ],
+        confirmText: `Докупить за ${price} ₽`,
+        onConfirm: () => openBotAction(`boost_${gb}_${selectedBoosterSlot}`, true)
+      });
     }
 
     function applyPromoCode() {
@@ -2513,7 +3118,99 @@
       if (!/^[A-Z0-9_-]{1,32}$/.test(code)) {
         return showToast('Введите корректный промокод');
       }
-      openBotAction(`promo_${code}`);
+      openConfirmModal({
+        title: '🏷 Активация промокода',
+        question: `Вы точно хотите применить промокод «${code}»?`,
+        rows: [
+          { label: 'Промокод', value: code },
+          { label: 'Действие', value: 'Проверка и начисление бонуса в боте' }
+        ],
+        confirmText: 'Применить код',
+        onConfirm: () => openBotAction(`promo_${code}`, true)
+      });
+    }
+
+    const FAQ_ITEMS = [
+      {
+        q: 'Как подключить VPN?',
+        a: 'Откройте вкладку «Кабинет», нажмите кнопку «Подключить в 1 клик» на карточке активной подписки и выберите приложение (Happ, Hiddify, Incy или V2raytun) — профиль импортируется автоматически. Также ключ можно скопировать вручную и вставить из буфера обмена.'
+      },
+      {
+        q: 'Сколько стран доступно?',
+        a: 'Сейчас доступны 4 европейские локации: Нидерланды, Финляндия, Литва и Швеция. Все серверы работают на высокой скорости и включены в любой тариф без доплат.'
+      },
+      {
+        q: 'Продлевается ли подписка сама?',
+        a: 'Нет, автосписаний с карты или баланса нет. Когда срок действия или пакет гигабайт подойдёт к концу, бот заранее пришлёт напоминание, и вы сможете продлить подписку вручную.'
+      },
+      {
+        q: 'Не работает подключение',
+        a: 'Проверьте остаток гигабайт и срок подписки в разделе «Кабинет», обновите профиль подписки внутри приложения (Happ, Hiddify, Incy или V2raytun) и попробуйте выбрать другую локацию. Если проблема сохраняется — напишите в «Поддержку».'
+      }
+    ];
+
+    function renderFaq() {
+      const container = document.getElementById('faqContainer');
+      if (!container) return;
+      container.innerHTML = FAQ_ITEMS.map((item, idx) => `
+        <div class="faq-item" data-faq-idx="${idx}">
+          <button type="button" class="faq-question" onclick="toggleFaq(${idx})">
+            <span>${escapeHtml(item.q)}</span>
+            <span class="faq-plus">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner">
+              <div class="faq-answer-text">${escapeHtml(item.a)}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getReferralUrl() {
+      const botUname = appState.bot_username || 'PinPointVPN_bot';
+      const uid = appState.user_id || '';
+      return `https://t.me/${botUname}?start=${uid}`;
+    }
+
+    function shareReferralLink() {
+      const link = getReferralUrl();
+      const text = 'Попробуй PinPoint VPN — быстрый и стабильный интернет в 1 клик:';
+      const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`;
+      if (tg && typeof tg.openTelegramLink === 'function') {
+        tg.openTelegramLink(shareUrl);
+      } else {
+        window.open(shareUrl, '_blank');
+      }
+    }
+
+    function openExternalLink(url) {
+      if (!url) return;
+      if (url.startsWith('https://t.me/') && tg && typeof tg.openTelegramLink === 'function') {
+        tg.openTelegramLink(url);
+      } else if (tg && typeof tg.openLink === 'function') {
+        tg.openLink(url);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    function toggleFaq(idx) {
+      const items = document.querySelectorAll('#faqContainer .faq-item');
+      items.forEach((el, i) => {
+        if (i === idx) {
+          el.classList.toggle('open');
+        } else {
+          el.classList.remove('open');
+        }
+      });
+      if (tg && tg.HapticFeedback) {
+        try { tg.HapticFeedback.selectionChanged(); } catch (e) {}
+      }
     }
 
     function copyReferralLink() {
@@ -2525,28 +3222,28 @@
     }
 
     function copyTextSilent(text) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
         document.execCommand('copy');
-      } catch (e) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).catch(() => {});
-        }
+        document.body.removeChild(ta);
       }
-      document.body.removeChild(ta);
     }
 
-    /* Без принудительного tg.close(), чтобы deep-link /start гарантированно доходил до бота */
-    function openBotAction(payload) {
+    function openBotAction(payload, shouldClose = true) {
       const botUname = appState.bot_username || 'PinPointVPN_bot';
       const url = `https://t.me/${botUname}?start=${encodeURIComponent(payload)}`;
       if (tg && typeof tg.openTelegramLink === 'function') {
         tg.openTelegramLink(url);
+        if (shouldClose) {
+          setTimeout(() => {
+            try { tg.close(); } catch (e) {}
+          }, 160);
+        }
       } else {
         window.open(url, '_blank');
       }
@@ -2573,13 +3270,6 @@
     function updateReviewCounter() {
       const len = (document.getElementById('reviewTextInput').value || '').length;
       document.getElementById('reviewCharCounter').textContent = `${len} / 600`;
-    }
-
-    function showReviewPendingNotice() {
-      const banner = document.getElementById('reviewPendingBanner');
-      if (banner) {
-        banner.classList.add('show');
-      }
     }
 
     async function submitReview() {
@@ -2611,8 +3301,9 @@
           btn.disabled = false;
           btn.textContent = 'Отправить на модерацию';
           if (data && data.ok) {
+            hasPendingLocalReview = true;
+            renderReviews();
             closeModal('reviewModal');
-            showReviewPendingNotice();
             return showToast('✅ Отзыв отправлен на модерацию!');
           } else if (data && data.error) {
             return showToast(data.error);
@@ -2630,14 +3321,17 @@
       const b64 = btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
       const fullPayload = `review_${b64}`;
 
+      hasPendingLocalReview = true;
+      renderReviews();
       closeModal('reviewModal');
-      showReviewPendingNotice();
+
       if (fullPayload.length <= 64) {
-        openBotAction(fullPayload);
+        showToast('Передаю отзыв в бот...');
+        openBotAction(fullPayload, true);
       } else {
         copyTextSilent(text);
         showToast('Текст отзыва скопирован! Вставьте его в боте');
-        openBotAction(`wrev_${selectedReviewRating}_${isAnon ? 1 : 0}`);
+        openBotAction(`wrev_${selectedReviewRating}_${isAnon ? 1 : 0}`, true);
       }
     }
 
@@ -2663,17 +3357,19 @@
 
     function toggleAmbientLight(enabled) {
       localStorage.setItem('pp_ambient', enabled ? '1' : '0');
-      const lightCanvas = document.getElementById('ambientLightCanvas');
-      const snowCanvas = document.getElementById('snowCanvas');
-      if (lightCanvas) lightCanvas.classList.toggle('hidden', !enabled);
-      if (snowCanvas) snowCanvas.classList.toggle('hidden', !enabled);
+      document.getElementById('ambientLightCanvas').classList.toggle('hidden', !enabled);
+      document.getElementById('snowCanvas').classList.toggle('hidden', !enabled);
     }
 
+    /* Управление экраном приветствия */
     function openWelcome() {
       const overlay = document.getElementById('welcomeOverlay');
       overlay.classList.remove('closing');
       overlay.classList.add('open');
       document.body.classList.add('welcome-active');
+      if (tg && tg.HapticFeedback) {
+        try { tg.HapticFeedback.impactOccurred('light'); } catch (e) {}
+      }
     }
 
     function closeWelcome() {
@@ -2681,14 +3377,17 @@
       const overlay = document.getElementById('welcomeOverlay');
       overlay.classList.add('closing');
       document.body.classList.remove('welcome-active');
+      if (tg && tg.HapticFeedback) {
+        try { tg.HapticFeedback.impactOccurred('medium'); } catch (e) {}
+      }
       setTimeout(() => {
         overlay.classList.remove('open', 'closing');
-      }, 340);
+      }, 360);
     }
 
     /* Синхронизация с API бота */
-    async function fetchLiveProfile() {
-      if (!API_URL || !tg || !tg.initData) return;
+    async function fetchLiveProfile(notifyUser = false) {
+      if (!API_URL || !tg || !tg.initData) return false;
       try {
         const resp = await fetch(`${API_URL}/api/user/profile`, {
           headers: { 'X-Telegram-Init-Data': tg.initData }
@@ -2701,8 +3400,11 @@
             reviews: Array.isArray(data.reviews) ? data.reviews : []
           };
           renderAll();
+          if (notifyUser) showToast('✅ Данные обновлены');
+          return true;
         }
       } catch (e) {}
+      return false;
     }
 
     /* Интерактивный блик преломления на карточках жидкого стекла */
@@ -2741,15 +3443,19 @@
       document.addEventListener('pointerleave', clearGlare, { passive: true });
     }
 
-    /* Плавающий свет под жидким стеклом */
-    function initAmbientLight() {
+    /* Плавающий свет и мягкий новогодний снег под жидким стеклом */
+    function initAmbientAndSnow() {
       const canvas = document.getElementById('ambientLightCanvas');
       const ctx = canvas.getContext('2d');
+      const snowCanvas = document.getElementById('snowCanvas');
+      const sctx = snowCanvas.getContext('2d');
       const RENDER_SCALE = 0.25;
 
       function resize() {
         canvas.width = Math.max(120, Math.floor(window.innerWidth * RENDER_SCALE));
         canvas.height = Math.max(180, Math.floor(window.innerHeight * RENDER_SCALE));
+        snowCanvas.width = window.innerWidth;
+        snowCanvas.height = window.innerHeight;
       }
       resize();
       window.addEventListener('resize', resize);
@@ -2757,9 +3463,65 @@
       const initialOrbs = (THEMES[currentThemeId] || THEMES.oled).orbs;
       const orbs = [
         { x: 0.25, y: 0.18, vx: 0.00048, vy: 0.00036, r: 0.36, color: initialOrbs[0] },
-        { x: 0.78, y: 0.52, vx: -0.00040, vy: 0.00044, r: 0.40, color: initialOrbs[1] },
+        { x: 0.78, y: 0.52, vx: -0.00040, vy: 0.00044, r: 0.4, color: initialOrbs[1] },
         { x: 0.45, y: 0.84, vx: 0.00034, vy: -0.00040, r: 0.34, color: initialOrbs[2] }
       ];
+
+      function drawSnowflake(sctx, x, y, radius, rotation, alpha) {
+        sctx.save();
+        sctx.translate(x, y);
+        sctx.rotate(rotation);
+        sctx.strokeStyle = `rgba(240, 249, 255, ${alpha.toFixed(2)})`;
+        sctx.lineWidth = Math.max(0.95, radius * 0.16);
+        sctx.lineCap = 'round';
+
+        const branchPos = radius * 0.56;
+        const branchLen = radius * 0.34;
+
+        sctx.beginPath();
+        for (let i = 0; i < 6; i++) {
+          const angle = (Math.PI / 3) * i;
+          const cosA = Math.cos(angle);
+          const sinA = Math.sin(angle);
+
+          sctx.moveTo(0, 0);
+          sctx.lineTo(cosA * radius, sinA * radius);
+
+          if (radius >= 4.0) {
+            const bx = cosA * branchPos;
+            const by = sinA * branchPos;
+            const leftA = angle - 0.58;
+            const rightA = angle + 0.58;
+            sctx.moveTo(bx, by);
+            sctx.lineTo(bx + Math.cos(leftA) * branchLen, by + Math.sin(leftA) * branchLen);
+            sctx.moveTo(bx, by);
+            sctx.lineTo(bx + Math.cos(rightA) * branchLen, by + Math.sin(rightA) * branchLen);
+          }
+        }
+        sctx.stroke();
+
+        sctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.95, alpha + 0.15).toFixed(2)})`;
+        sctx.beginPath();
+        sctx.arc(0, 0, Math.max(0.8, radius * 0.14), 0, Math.PI * 2);
+        sctx.fill();
+        sctx.restore();
+      }
+
+      const flakes = Array.from({ length: 38 }, (_, idx) => {
+        const isLarge = idx % 3 === 0;
+        return {
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          r: isLarge ? (4.8 + Math.random() * 3.4) : (2.5 + Math.random() * 2.0),
+          vy: isLarge ? (0.55 + Math.random() * 0.55) : (0.35 + Math.random() * 0.45),
+          swayAmp: 0.25 + Math.random() * 0.42,
+          swaySpeed: 0.012 + Math.random() * 0.014,
+          phase: Math.random() * Math.PI * 2,
+          rot: Math.random() * Math.PI * 2,
+          vRot: (-0.015 + Math.random() * 0.030),
+          a: isLarge ? (0.52 + Math.random() * 0.34) : (0.34 + Math.random() * 0.30)
+        };
+      });
 
       window._updateOrbColors = function(colors) {
         if (!Array.isArray(colors)) return;
@@ -2785,73 +3547,56 @@
             ctx.fillStyle = o.color;
             ctx.fill();
           }
+
+          if (currentThemeId === 'newyear') {
+            const sw = snowCanvas.width;
+            const sh = snowCanvas.height;
+            sctx.clearRect(0, 0, sw, sh);
+            for (let i = 0; i < flakes.length; i++) {
+              const f = flakes[i];
+              f.phase += f.swaySpeed;
+              f.y += f.vy;
+              f.x += Math.sin(f.phase) * f.swayAmp;
+              f.rot += f.vRot;
+              if (f.y > sh + 12) {
+                f.y = -12;
+                f.x = Math.random() * sw;
+              }
+              if (f.x < -12) f.x = sw + 12;
+              if (f.x > sw + 12) f.x = -12;
+              drawSnowflake(sctx, f.x, f.y, f.r, f.rot, f.a);
+            }
+          } else {
+            sctx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+          }
         }
         requestAnimationFrame(loop);
       }
       requestAnimationFrame(loop);
     }
 
-    /* Падающий снег для новогодней темы (позади стеклянных карточек) */
-    function initNewYearSnow() {
-      const canvas = document.getElementById('snowCanvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let width = 0;
-      let height = 0;
-
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+    /* Автообновление при возврате из Telegram-бота */
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        fetchLiveProfile(false);
       }
-      resize();
-      window.addEventListener('resize', resize);
-
-      const flakes = [];
-      const FLAKE_COUNT = 52;
-      for (let i = 0; i < FLAKE_COUNT; i++) {
-        flakes.push({
-          x: Math.random() * (width || 420),
-          y: Math.random() * (height || 820),
-          r: 1.2 + Math.random() * 2.4,
-          speedY: 0.35 + Math.random() * 0.75,
-          swayAmp: 0.25 + Math.random() * 0.55,
-          phase: Math.random() * Math.PI * 2,
-          alpha: 0.28 + Math.random() * 0.55
-        });
-      }
-
-      function renderSnow() {
-        if (currentThemeId === 'newyear' && !canvas.classList.contains('hidden')) {
-          ctx.clearRect(0, 0, width, height);
-          for (let i = 0; i < flakes.length; i++) {
-            const f = flakes[i];
-            f.phase += 0.015;
-            f.y += f.speedY;
-            f.x += Math.sin(f.phase) * f.swayAmp;
-
-            if (f.y > height + 8) {
-              f.y = -8;
-              f.x = Math.random() * width;
-            }
-            if (f.x > width + 8) f.x = -8;
-            if (f.x < -8) f.x = width + 8;
-
-            ctx.beginPath();
-            ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha.toFixed(2)})`;
-            ctx.fill();
-          }
-        }
-        requestAnimationFrame(renderSnow);
-      }
-      requestAnimationFrame(renderSnow);
+    });
+    if (tg && typeof tg.onEvent === 'function') {
+      tg.onEvent('activated', () => fetchLiveProfile(false));
     }
 
     /* Инициализация */
     (function bootstrap() {
       decodeSnapshot();
 
-      const legacyMap = { obsidian: 'oled', azure: 'violet', amethyst: 'violet', graphite: 'violet', frost: 'daylight' };
+      const legacyMap = {
+        obsidian: 'oled',
+        azure: 'violet',
+        graphite: 'violet',
+        amethyst: 'forest',
+        frost: 'daylight',
+        frozen: 'newyear'
+      };
       const rawTheme = localStorage.getItem('pp_theme') || 'oled';
       const savedTheme = legacyMap[rawTheme] || rawTheme;
       selectTheme(savedTheme, true);
@@ -2873,21 +3618,8 @@
 
       renderAll();
       initLiquidGlare();
-      initAmbientLight();
-      initNewYearSnow();
-      fetchLiveProfile();
-
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') {
-          fetchLiveProfile();
-        }
-      });
-
-      if (tg && typeof tg.onEvent === 'function') {
-        try {
-          tg.onEvent('activated', fetchLiveProfile);
-        } catch (e) {}
-      }
+      initAmbientAndSnow();
+      fetchLiveProfile(false);
     })();
   </script>
 </body>
