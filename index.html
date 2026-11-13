@@ -6,9 +6,6 @@
   <title>PinPoint VPN</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    /* ==========================================
-       1. АВТОРСКИЕ ТЕМЫ И ПАРАМЕТРЫ ЖИДКОГО СТЕКЛА
-       ========================================== */
     :root,
     [data-theme="oled"] {
       --bg: #000000;
@@ -109,7 +106,6 @@
       --switch-knob-on: #070b0a;
     }
 
-    /* Новогодняя тема (Зимний рубин и падающий снег) */
     [data-theme="newyear"] {
       --bg: #070911;
       --welcome-backdrop: rgba(7, 9, 17, 0.64);
@@ -143,7 +139,6 @@
       --switch-knob-on: #ffffff;
     }
 
-    /* Переработанная светлая тема (Воздушное жидкое стекло) */
     [data-theme="daylight"] {
       --bg: #e9eef6;
       --welcome-backdrop: rgba(233, 238, 246, 0.74);
@@ -201,7 +196,6 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Плавающий свет и снежинки под жидким стеклом */
     #ambientLightCanvas {
       position: fixed;
       inset: 0;
@@ -270,9 +264,6 @@
       opacity: 0 !important;
     }
 
-    /* ==========================================
-       2. ЭФФЕКТ ЖИДКОГО СТЕКЛА (LIQUID GLASS)
-       ========================================== */
     .liquid-glass {
       position: relative;
       background: var(--glass-bg);
@@ -328,7 +319,6 @@
       z-index: 1;
     }
 
-    /* Тонкая настройка светлой темы для идеального контраста элементов */
     [data-theme="daylight"] .btn-primary {
       box-shadow:
         inset 0 1px 0 0 rgba(255, 255, 255, 0.35),
@@ -371,7 +361,6 @@
       pointer-events: none;
     }
 
-    /* Декоративные элементы новогодней темы */
     .ny-flake-badge {
       display: none;
       align-items: center;
@@ -400,7 +389,6 @@
       display: block;
     }
 
-    /* Шапка и аватарка пользователя */
     .top-bar {
       display: flex;
       align-items: center;
@@ -516,7 +504,6 @@
       line-height: 1;
     }
 
-    /* Вкладки */
     .tab-pane {
       display: none;
       animation: fadeSlide 0.22s cubic-bezier(0.22, 1, 0.36, 1);
@@ -579,14 +566,12 @@
       transform: scale(0.95);
     }
 
-    /* Карточки */
     .card {
       border-radius: var(--radius-xl);
       padding: 16px;
       margin-bottom: 12px;
     }
 
-    /* Карточки слотов в цвет выбранной темы */
     .slot-card {
       background: var(--slot-bg);
       border-color: var(--slot-border);
@@ -647,7 +632,6 @@
       font-weight: 600;
     }
 
-    /* Кольцо трафика */
     .ring-box {
       position: relative;
       width: 72px;
@@ -694,7 +678,6 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Кнопки */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -741,7 +724,6 @@
       width: 100%;
     }
 
-    /* Пустое состояние */
     .empty-card {
       text-align: center;
       padding: 24px 18px;
@@ -784,7 +766,6 @@
       grid-template-columns: 1fr;
     }
 
-    /* Промокод */
     .promo-row {
       display: flex;
       gap: 8px;
@@ -824,36 +805,6 @@
       font-weight: 600;
     }
 
-    /* Реферальный блок */
-    .ref-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin: 12px 0 14px;
-    }
-
-    .ref-stat {
-      background: var(--glass-bg-elevated);
-      border: 1px solid var(--border);
-      box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
-      border-radius: var(--radius-md);
-      padding: 10px 8px;
-      text-align: center;
-    }
-
-    .ref-stat-val {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .ref-stat-lbl {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* Тарифы (сбалансированные карточки) */
     .discount-banner {
       display: flex;
       align-items: center;
@@ -969,7 +920,6 @@
       flex-shrink: 0;
     }
 
-    /* Плашка-переход к реферальной программе под тарифами */
     .ref-promo-banner {
       display: flex;
       align-items: center;
@@ -1020,7 +970,6 @@
       line-height: 1.3;
     }
 
-    /* Отзывы и звёздочки в цвет выбранной темы */
     .reviews-hero {
       display: flex;
       align-items: center;
@@ -1115,7 +1064,6 @@
       word-break: break-word;
     }
 
-    /* Выбор тем (5 тем) */
     .theme-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1188,7 +1136,6 @@
       margin-top: 2px;
     }
 
-    /* Настройки */
     .setting-row {
       display: flex;
       align-items: center;
@@ -1218,7 +1165,6 @@
       margin-top: 2px;
     }
 
-    /* Переключатель */
     .switch {
       position: relative;
       width: 46px;
@@ -1265,7 +1211,6 @@
       background: var(--switch-knob-on);
     }
 
-    /* Нижняя навигация */
     .bottom-nav {
       position: fixed;
       left: 50%;
@@ -1313,7 +1258,6 @@
       box-shadow: inset 0 1px 0 0 var(--glass-specular-top);
     }
 
-    /* Модальные шторки */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1409,11 +1353,101 @@
       color: var(--accent);
     }
 
-    .app-grid {
+    /* Выбор устройства и приложений в модалке 1-клик подключения */
+    .device-picker-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-bottom: 14px;
+    }
+
+    .device-pill-btn {
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.14s ease;
+    }
+
+    .device-pill-btn:active {
+      transform: scale(0.97);
+    }
+
+    .device-pill-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-bg);
+      color: var(--text);
+    }
+
+    .device-detected-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      flex-shrink: 0;
+    }
+
+    .connect-apps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .connect-app-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 15px;
+      background: var(--glass-bg-elevated);
+      border: 1px solid var(--border);
+    }
+
+    .connect-app-meta {
+      min-width: 0;
+    }
+
+    .connect-app-name {
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .connect-app-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: var(--accent-bg);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+    }
+
+    .connect-app-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .connect-app-btns .btn {
+      padding: 8px 11px;
+      font-size: 12.5px;
+      border-radius: 10px;
     }
 
     .star-picker {
@@ -1469,7 +1503,6 @@
       margin-bottom: 12px;
     }
 
-    /* Переключатель 2 подвкладок внутри раздела (Liquid Glass Segmented Control) */
     .sub-tabs-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1529,7 +1562,6 @@
       display: block;
     }
 
-    /* Сгруппированные стеклянные списки (в стиле Liquid Glass) */
     .glass-group {
       padding: 0;
     }
@@ -1593,7 +1625,6 @@
       color: var(--accent);
     }
 
-    /* Аккордеон популярных вопросов (FAQ) */
     .faq-item {
       border-bottom: 1px solid var(--border);
     }
@@ -1667,7 +1698,6 @@
       padding: 0 16px 14px;
     }
 
-    /* Модальное окно подтверждения действия */
     #confirmModal {
       z-index: 65;
     }
@@ -1709,9 +1739,6 @@
       gap: 10px;
     }
 
-    /* ==========================================
-       3. ЭКРАН ПРИВЕТСТВИЯ (ПОЛНОРАЗМЕРНАЯ АВАТАРКА + ЧИСТЫЙ ТЕКСТ)
-       ========================================== */
     .welcome-overlay {
       position: fixed;
       inset: 0;
@@ -1903,7 +1930,23 @@
       }
     }
 
-    /* Уведомление Toast */
+    /* Внешний экран запуска deep-link (если открыто в браузере по ?deeplink=) */
+    .deeplink-screen {
+      position: relative;
+      z-index: 90;
+      min-height: 100vh;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 24px 18px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .deeplink-screen.active {
+      display: flex;
+    }
+
     .toast {
       position: fixed;
       top: 16px;
@@ -1938,6 +1981,9 @@
   <canvas id="snowCanvas"></canvas>
   <div id="toast" class="toast"></div>
 
+  <!-- Экран внешнего запуска приложения (без 404 на GitHub Pages) -->
+  <div id="deeplinkScreen" class="deeplink-screen"></div>
+
   <!-- Экран приветствия -->
   <div id="welcomeOverlay" class="welcome-overlay">
     <div class="welcome-container">
@@ -1968,7 +2014,7 @@
             </div>
             <div>
               <div class="wf-title">Импорт за 5 секунд</div>
-              <div class="wf-sub">Автонастройка в Happ, Hiddify, Incy и V2raytun</div>
+              <div class="wf-sub">Автонастройка в Happ, Hiddify, Incy и V2rayTun</div>
             </div>
           </div>
 
@@ -2009,8 +2055,7 @@
     </div>
   </div>
 
-  <div class="app-shell">
-    <!-- Верхняя шапка с аватаркой пользователя -->
+  <div class="app-shell" id="appShell">
     <header class="top-bar liquid-glass">
       <div class="brand-box">
         <div class="user-avatar-box" id="userAvatarBox">
@@ -2092,7 +2137,7 @@
       <div id="reviewsList"></div>
     </section>
 
-    <!-- ВКЛАДКА 4: ЕЩЁ (С 2 ПОДВКЛАДКАМИ ВНУТРИ: СЕРВИС И НАСТРОЙКИ) -->
+    <!-- ВКЛАДКА 4: ЕЩЁ -->
     <section id="tab-settings" class="tab-pane">
       <div class="sub-tabs-bar" role="tablist">
         <button type="button" class="sub-tab-btn active" data-more-sub="service" onclick="switchMoreSubTab('service')">
@@ -2103,199 +2148,197 @@
         </button>
       </div>
 
-      <!-- ПОДВКЛАДКА 4.1: СЕРВИС (ДРУЗЬЯ, ПРОМОКОД, ВОПРОСЫ, ДОКУМЕНТЫ) -->
       <div id="more-sub-service" class="sub-pane active">
         <div class="section-head" style="margin-top: 2px;">
           <span class="section-title">Друзья</span>
         </div>
-      <div class="card liquid-glass glass-group">
-        <div class="glass-group-header">
-          <div class="glass-group-title">Приглашено: <span id="refCountVal">0</span></div>
-          <div class="glass-group-sub">
-            Вы получили <span id="refEarnVal">0 ₽</span>. Бонус <span id="refRateVal">5%</span> от оплат друзей.
+        <div class="card liquid-glass glass-group">
+          <div class="glass-group-header">
+            <div class="glass-group-title">Приглашено: <span id="refCountVal">0</span></div>
+            <div class="glass-group-sub">
+              Вы получили <span id="refEarnVal">0 ₽</span>. Бонус <span id="refRateVal">5%</span> от оплат друзей.
+            </div>
           </div>
+          <button type="button" class="glass-group-row" onclick="copyReferralLink()">
+            <span>Скопировать ссылку</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
+          <button type="button" class="glass-group-row" onclick="shareReferralLink()">
+            <span>Отправить другу</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
         </div>
-        <button type="button" class="glass-group-row" onclick="copyReferralLink()">
-          <span>Скопировать ссылку</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-        <button type="button" class="glass-group-row" onclick="shareReferralLink()">
-          <span>Отправить другу</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-      </div>
 
-      <div class="section-head">
-        <span class="section-title">Промокод</span>
-      </div>
-      <div class="card liquid-glass">
-        <div class="promo-row">
-          <input id="promoInput" class="input-field" type="text" maxlength="32" placeholder="Введите промокод" autocomplete="off" />
-          <button class="btn btn-primary" onclick="applyPromoCode()">Применить</button>
+        <div class="section-head">
+          <span class="section-title">Промокод</span>
         </div>
-        <div id="activeDiscountBox"></div>
-      </div>
+        <div class="card liquid-glass">
+          <div class="promo-row">
+            <input id="promoInput" class="input-field" type="text" maxlength="32" placeholder="Введите промокод" autocomplete="off" />
+            <button class="btn btn-primary" onclick="applyPromoCode()">Применить</button>
+          </div>
+          <div id="activeDiscountBox"></div>
+        </div>
 
-      <div class="section-head">
-        <span class="section-title">Вопросы</span>
-      </div>
-      <div class="card liquid-glass glass-group" id="faqContainer"></div>
+        <div class="section-head">
+          <span class="section-title">Вопросы</span>
+        </div>
+        <div class="card liquid-glass glass-group" id="faqContainer"></div>
 
-      <div class="section-head">
-        <span class="section-title">Связь и документы</span>
-      </div>
-      <div class="card liquid-glass glass-group">
-        <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Support')">
-          <span>Поддержка</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-        <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Channel')">
-          <span>Новости сервиса</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-        <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Politika-konfidencialnosti-10-15-99')">
-          <span>Политика конфиденциальности</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-        <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Polzovatelskoe-soglashenie-10-15-51')">
-          <span>Пользовательское соглашение</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
-        <button type="button" class="glass-group-row" onclick="openModal('refundModal')">
-          <span>Условия возврата</span>
-          <span class="row-chevron">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </span>
-        </button>
+        <div class="section-head">
+          <span class="section-title">Связь и документы</span>
+        </div>
+        <div class="card liquid-glass glass-group">
+          <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Support')">
+            <span>Поддержка</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
+          <button type="button" class="glass-group-row" onclick="openExternalLink('https://t.me/PinPoint_Channel')">
+            <span>Новости сервиса</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
+          <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Politika-konfidencialnosti-10-15-99')">
+            <span>Политика конфиденциальности</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
+          <button type="button" class="glass-group-row" onclick="openExternalLink('https://telegra.ph/Polzovatelskoe-soglashenie-10-15-51')">
+            <span>Пользовательское соглашение</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
+          <button type="button" class="glass-group-row" onclick="openModal('refundModal')">
+            <span>Условия возврата</span>
+            <span class="row-chevron">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+          </button>
         </div>
       </div>
 
-      <!-- ПОДВКЛАДКА 4.2: НАСТРОЙКИ (ОФОРМЛЕНИЕ И ПАРАМЕТРЫ ПРИЛОЖЕНИЯ) -->
       <div id="more-sub-prefs" class="sub-pane">
         <div class="section-head" style="margin-top: 2px;">
           <span class="section-title">Оформление</span>
         </div>
 
-      <div class="card liquid-glass">
-        <div class="setting-title">Тема оформления</div>
-        <div class="setting-desc">Выберите фон и оттенок жидкого стекла</div>
-        <div class="theme-grid" id="themeGrid">
-          <button type="button" class="theme-option active" data-theme-id="oled" onclick="selectTheme('oled')">
-            <div class="theme-swatch" style="background: #000000;">
-              <span class="theme-swatch-dot" style="background: #ffffff;"></span>
-            </div>
-            <div class="theme-meta">
-              <div class="theme-name">Чёрная</div>
-              <div class="theme-sub">Чистый OLED</div>
-            </div>
-          </button>
+        <div class="card liquid-glass">
+          <div class="setting-title">Тема оформления</div>
+          <div class="setting-desc">Выберите фон и оттенок жидкого стекла</div>
+          <div class="theme-grid" id="themeGrid">
+            <button type="button" class="theme-option active" data-theme-id="oled" onclick="selectTheme('oled')">
+              <div class="theme-swatch" style="background: #000000;">
+                <span class="theme-swatch-dot" style="background: #ffffff;"></span>
+              </div>
+              <div class="theme-meta">
+                <div class="theme-name">Чёрная</div>
+                <div class="theme-sub">Чистый OLED</div>
+              </div>
+            </button>
 
-          <button type="button" class="theme-option" data-theme-id="violet" onclick="selectTheme('violet')">
-            <div class="theme-swatch" style="background: #140f21;">
-              <span class="theme-swatch-dot" style="background: #a855f7;"></span>
-            </div>
-            <div class="theme-meta">
-              <div class="theme-name">Фиолетовая</div>
-              <div class="theme-sub">Глубокий аметист</div>
-            </div>
-          </button>
+            <button type="button" class="theme-option" data-theme-id="violet" onclick="selectTheme('violet')">
+              <div class="theme-swatch" style="background: #140f21;">
+                <span class="theme-swatch-dot" style="background: #a855f7;"></span>
+              </div>
+              <div class="theme-meta">
+                <div class="theme-name">Фиолетовая</div>
+                <div class="theme-sub">Глубокий аметист</div>
+              </div>
+            </button>
 
-          <button type="button" class="theme-option" data-theme-id="forest" onclick="selectTheme('forest')">
-            <div class="theme-swatch" style="background: #0d1614;">
-              <span class="theme-swatch-dot" style="background: #5eead4;"></span>
-            </div>
-            <div class="theme-meta">
-              <div class="theme-name">Хвоя</div>
-              <div class="theme-sub">Тёмный шалфей</div>
-            </div>
-          </button>
+            <button type="button" class="theme-option" data-theme-id="forest" onclick="selectTheme('forest')">
+              <div class="theme-swatch" style="background: #0d1614;">
+                <span class="theme-swatch-dot" style="background: #5eead4;"></span>
+              </div>
+              <div class="theme-meta">
+                <div class="theme-name">Хвоя</div>
+                <div class="theme-sub">Тёмный шалфей</div>
+              </div>
+            </button>
 
-          <button type="button" class="theme-option" data-theme-id="daylight" onclick="selectTheme('daylight')">
-            <div class="theme-swatch" style="background: #e9eef6;">
-              <span class="theme-swatch-dot" style="background: #2563eb;"></span>
-            </div>
-            <div class="theme-meta">
-              <div class="theme-name">Светлая</div>
-              <div class="theme-sub">Воздушное стекло</div>
-            </div>
-          </button>
+            <button type="button" class="theme-option" data-theme-id="daylight" onclick="selectTheme('daylight')">
+              <div class="theme-swatch" style="background: #e9eef6;">
+                <span class="theme-swatch-dot" style="background: #2563eb;"></span>
+              </div>
+              <div class="theme-meta">
+                <div class="theme-name">Светлая</div>
+                <div class="theme-sub">Воздушное стекло</div>
+              </div>
+            </button>
 
-          <button type="button" class="theme-option wide" data-theme-id="newyear" onclick="selectTheme('newyear')">
-            <div class="theme-swatch" style="background: #1a0c16;">
-              <span class="theme-swatch-dot" style="background: #f43f5e;"></span>
-            </div>
-            <div class="theme-meta">
-              <div class="theme-name">❄️ Новогодняя</div>
-              <div class="theme-sub">Зимний рубин и падающий снег</div>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <div class="section-head">
-        <span class="section-title">Параметры приложения</span>
-      </div>
-
-      <div class="card liquid-glass">
-        <div class="setting-row">
-          <div>
-            <div class="setting-title">💧 Эффект жидкого стекла</div>
-            <div class="setting-desc">Глубокое преломление и блики по граням</div>
+            <button type="button" class="theme-option wide" data-theme-id="newyear" onclick="selectTheme('newyear')">
+              <div class="theme-swatch" style="background: #1a0c16;">
+                <span class="theme-swatch-dot" style="background: #f43f5e;"></span>
+              </div>
+              <div class="theme-meta">
+                <div class="theme-name">❄️ Новогодняя</div>
+                <div class="theme-sub">Зимний рубин и падающий снег</div>
+              </div>
+            </button>
           </div>
-          <label class="switch">
-            <input type="checkbox" id="liquidGlassToggle" checked onchange="toggleLiquidGlass(this.checked)" />
-            <span class="slider"></span>
-          </label>
         </div>
 
-        <div class="setting-row">
-          <div>
-            <div class="setting-title">✨ Плавный свет на фоне</div>
-            <div class="setting-desc">Мягкое движение света и снега под стеклом</div>
-          </div>
-          <label class="switch">
-            <input type="checkbox" id="ambientToggle" checked onchange="toggleAmbientLight(this.checked)" />
-            <span class="slider"></span>
-          </label>
+        <div class="section-head">
+          <span class="section-title">Параметры приложения</span>
         </div>
 
-        <div class="setting-row">
-          <div>
-            <div class="setting-title">🔔 Уведомления в Telegram</div>
-            <div class="setting-desc">Напоминания об окончании подписки и трафика</div>
+        <div class="card liquid-glass">
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">💧 Эффект жидкого стекла</div>
+              <div class="setting-desc">Глубокое преломление и блики по граням</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="liquidGlassToggle" checked onchange="toggleLiquidGlass(this.checked)" />
+              <span class="slider"></span>
+            </label>
           </div>
-          <label class="switch">
-            <input type="checkbox" id="notifToggle" checked onchange="toggleNotifications(this.checked)" />
-            <span class="slider"></span>
-          </label>
-        </div>
 
-        <div class="setting-row">
-          <div>
-            <div class="setting-title">👋 Экран приветствия</div>
-            <div class="setting-desc">Показать вводную карточку о возможностях сервиса</div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">✨ Плавный свет на фоне</div>
+              <div class="setting-desc">Мягкое движение света и снега под стеклом</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="ambientToggle" checked onchange="toggleAmbientLight(this.checked)" />
+              <span class="slider"></span>
+            </label>
           </div>
-          <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 13px;" onclick="openWelcome()">Открыть</button>
-        </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">🔔 Уведомления в Telegram</div>
+              <div class="setting-desc">Напоминания об окончании подписки и трафика</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="notifToggle" checked onchange="toggleNotifications(this.checked)" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-title">👋 Экран приветствия</div>
+              <div class="setting-desc">Показать вводную карточку о возможностях сервиса</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 8px 12px; font-size: 13px;" onclick="openWelcome()">Открыть</button>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- Нижняя навигация (4 вкладки) -->
-  <nav class="bottom-nav">
+  <!-- Нижняя навигация -->
+  <nav class="bottom-nav" id="bottomNav">
     <button class="nav-btn active" data-tab="cabinet" onclick="switchTab('cabinet')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
@@ -2345,7 +2388,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно: Подключение в 1 клик -->
+  <!-- Модальное окно: Подключение в 1 клик (с автоопределением устройства и выбором ОС) -->
   <div id="connectModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event, 'connectModal')">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
@@ -2353,15 +2396,14 @@
         <div class="modal-title">⚡ Подключить устройство</div>
         <button class="modal-close" onclick="closeModal('connectModal')">×</button>
       </div>
-      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
-        Нажмите на установленное приложение для автоматического импорта подписки:
+      <div id="connectDeviceHint" style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
+        Выберите устройство, которое хотите подключить:
       </div>
-      <div class="app-grid">
-        <button class="btn btn-primary" onclick="launchClientApp('happ')">Happ</button>
-        <button class="btn btn-primary" onclick="launchClientApp('hiddify')">Hiddify</button>
-        <button class="btn btn-blue" onclick="launchClientApp('incy')">Incy</button>
-        <button class="btn btn-blue" onclick="launchClientApp('v2raytun')">V2raytun</button>
-      </div>
+      <div class="device-picker-grid" id="connectDeviceGrid"></div>
+      <div class="connect-apps-list" id="connectAppsList"></div>
+      <button id="connectBrowserFallbackBtn" class="btn btn-blue btn-full" style="margin-bottom: 8px; display: none;" onclick="openConnectViaBrowser()">
+        🌐 Не открылось? Запустить через браузер
+      </button>
       <button class="btn btn-secondary btn-full" onclick="copyActiveKey()">📋 Скопировать ключ подписки вручную</button>
     </div>
   </div>
@@ -2499,6 +2541,47 @@
       }
     };
 
+    const DEVICE_CATALOG = {
+      ios: {
+        label: '🍏 iPhone / iPad',
+        short: 'iOS',
+        apps: [
+          { id: 'happ', name: 'Happ', recommended: true, store: 'https://apps.apple.com/app/happ-proxy-utility/id6504287215' },
+          { id: 'v2raytun', name: 'V2rayTun', recommended: false, store: 'https://apps.apple.com/app/v2raytun/id6476628951' },
+          { id: 'hiddify', name: 'Hiddify', recommended: false, store: 'https://apps.apple.com/app/hiddify-proxy-vpn/id6596777532' },
+          { id: 'incy', name: 'Incy', recommended: false, store: 'https://apps.apple.com/app/incy-vpn/id6742828749' }
+        ]
+      },
+      android: {
+        label: '🤖 Android',
+        short: 'Android',
+        apps: [
+          { id: 'happ', name: 'Happ', recommended: true, store: 'https://play.google.com/store/apps/details?id=com.happproxy' },
+          { id: 'v2raytun', name: 'V2rayTun', recommended: false, store: 'https://play.google.com/store/apps/details?id=com.v2raytun.android' },
+          { id: 'hiddify', name: 'Hiddify', recommended: false, store: 'https://play.google.com/store/apps/details?id=app.hiddify.com' },
+          { id: 'incy', name: 'Incy', recommended: false, store: 'https://play.google.com/store/apps/details?id=app.incy.vpn' }
+        ]
+      },
+      windows: {
+        label: '🪟 Windows',
+        short: 'Windows',
+        apps: [
+          { id: 'hiddify', name: 'Hiddify', recommended: true, store: 'https://github.com/hiddify/hiddify-app/releases/latest' },
+          { id: 'happ', name: 'Happ Desktop', recommended: false, store: 'https://github.com/Happ-proxy/happ-desktop/releases/latest' },
+          { id: 'v2raytun', name: 'V2rayTun', recommended: false, store: 'https://v2raytun.com/' }
+        ]
+      },
+      macos: {
+        label: '💻 macOS',
+        short: 'macOS',
+        apps: [
+          { id: 'happ', name: 'Happ', recommended: true, store: 'https://apps.apple.com/app/happ-proxy-utility/id6504287215' },
+          { id: 'hiddify', name: 'Hiddify', recommended: false, store: 'https://github.com/hiddify/hiddify-app/releases/latest' },
+          { id: 'v2raytun', name: 'V2rayTun', recommended: false, store: 'https://apps.apple.com/app/v2raytun/id6476628951' }
+        ]
+      }
+    };
+
     let currentThemeId = 'oled';
 
     const TARIFF_CATALOG = [
@@ -2538,9 +2621,37 @@
     };
 
     let selectedSubKey = '';
+    let selectedConnectDevice = 'ios';
+    let detectedUserDevice = 'ios';
+    let lastAttemptedDeeplink = '';
+    let lastAttemptedApp = 'happ';
     let selectedBoosterSlot = 1;
     let selectedReviewRating = 5;
     let hasPendingLocalReview = false;
+
+    function detectUserDevice() {
+      const plat = tg && tg.platform ? String(tg.platform).toLowerCase() : '';
+      if (plat === 'ios') return 'ios';
+      if (plat === 'android') return 'android';
+      if (plat === 'macos') return 'macos';
+
+      const ua = (navigator.userAgent || '').toLowerCase();
+      if (/iphone|ipad|ipod/.test(ua)) return 'ios';
+      if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) return 'ios';
+      if (/android/.test(ua)) return 'android';
+      if (/macintosh|mac os x/.test(ua)) return 'macos';
+      if (/windows|win32|win64/.test(ua)) return 'windows';
+      return 'ios';
+    }
+
+    function buildClientDeeplink(appId, key) {
+      const encoded = encodeURIComponent(key);
+      if (appId === 'happ') return `happ://add/${key}`;
+      if (appId === 'hiddify') return `hiddify://import/${encoded}`;
+      if (appId === 'incy') return `incy://import?url=${encoded}`;
+      if (appId === 'v2raytun') return `v2raytun://import/${encoded}`;
+      return key;
+    }
 
     function loadImageChain(imgId, fallbackId, sources) {
       const img = document.getElementById(imgId);
@@ -2753,7 +2864,6 @@
         const gbLeft = Math.max(0, Math.round((gbTotal - gbUsed) * 10) / 10);
         const ratio = Math.max(0, Math.min(1, gbLeft / gbTotal));
         const dashOffset = circumference * (1 - ratio);
-        const safeKey = escapeHtml(s.key || '');
 
         return `
           <div class="card liquid-glass slot-card">
@@ -2788,7 +2898,7 @@
               </div>
             </div>
             <div class="sub-actions">
-              <button class="btn btn-primary" onclick="openConnectModal('${safeKey}')">⚡ Подключить в 1 клик</button>
+              <button class="btn btn-primary" onclick="openConnectModal(${idx})">⚡ Подключить в 1 клик</button>
               <button class="btn btn-secondary" onclick="openBoosterModal(${idx + 1})">+ ГБ</button>
             </div>
           </div>
@@ -2914,7 +3024,6 @@
       }).join('');
     }
 
-    /* Навигация */
     function switchMoreSubTab(subName) {
       document.querySelectorAll('#tab-settings .sub-pane').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('#tab-settings .sub-tab-btn').forEach(b => b.classList.remove('active'));
@@ -2953,7 +3062,6 @@
       }
     }
 
-    /* Модальные окна */
     function openModal(id) {
       document.getElementById(id).classList.add('open');
     }
@@ -3062,26 +3170,106 @@
       });
     }
 
-    function openConnectModal(key) {
-      selectedSubKey = key;
+    /* Логика 1-клик подключения с выбором устройства и автоопределением */
+    function openConnectModal(subIdx, forcedDevice = null) {
+      const subs = Array.isArray(appState.subs) ? appState.subs : [];
+      const sub = subs[subIdx] || subs[0];
+      if (!sub || !sub.key) {
+        return showToast('Нет активной подписки');
+      }
+      selectedSubKey = sub.key;
+      detectedUserDevice = detectUserDevice();
+      const initialDev = forcedDevice && DEVICE_CATALOG[forcedDevice] ? forcedDevice : detectedUserDevice;
+      document.getElementById('connectBrowserFallbackBtn').style.display = 'none';
+      selectConnectDevice(initialDev);
       openModal('connectModal');
     }
 
-    function launchClientApp(app) {
+    function selectConnectDevice(devId) {
+      if (!DEVICE_CATALOG[devId]) devId = 'ios';
+      selectedConnectDevice = devId;
+
+      const hintEl = document.getElementById('connectDeviceHint');
+      if (devId === detectedUserDevice) {
+        hintEl.innerHTML = `Определено ваше устройство: <b>${escapeHtml(DEVICE_CATALOG[devId].label)}</b>. Выберите приложение:`;
+      } else {
+        hintEl.innerHTML = `Выбрано устройство: <b>${escapeHtml(DEVICE_CATALOG[devId].label)}</b>. Выберите приложение:`;
+      }
+
+      const gridEl = document.getElementById('connectDeviceGrid');
+      gridEl.innerHTML = Object.entries(DEVICE_CATALOG).map(([id, cfg]) => {
+        const isActive = id === selectedConnectDevice;
+        const isDetected = id === detectedUserDevice;
+        return `
+          <button type="button" class="device-pill-btn ${isActive ? 'active' : ''}" onclick="selectConnectDevice('${id}')">
+            <span>${escapeHtml(cfg.label)}</span>
+            ${isDetected ? '<span class="device-detected-tag">Ваше</span>' : ''}
+          </button>
+        `;
+      }).join('');
+
+      const apps = DEVICE_CATALOG[devId].apps;
+      const listEl = document.getElementById('connectAppsList');
+      listEl.innerHTML = apps.map(app => `
+        <div class="connect-app-row">
+          <div class="connect-app-meta">
+            <div class="connect-app-name">
+              <span>${escapeHtml(app.name)}</span>
+              ${app.recommended ? '<span class="connect-app-badge">Топ</span>' : ''}
+            </div>
+          </div>
+          <div class="connect-app-btns">
+            <button type="button" class="btn btn-secondary" onclick="openExternalLink('${escapeHtml(app.store)}')">📥 Скачать</button>
+            <button type="button" class="btn btn-primary" onclick="launchClientApp('${app.id}')">⚡ Подключить</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function triggerHiddenDeeplink(url) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 250);
+    }
+
+    function buildExternalBrowserConnectUrl(deeplink, appId) {
+      if (API_URL) {
+        return `${API_URL}/open?to=${encodeURIComponent(deeplink)}&app=${encodeURIComponent(appId)}&dev=${encodeURIComponent(selectedConnectDevice)}&key=${encodeURIComponent(selectedSubKey)}`;
+      }
+      const base = `${window.location.origin}${window.location.pathname}`;
+      return `${base}?deeplink=${encodeURIComponent(deeplink)}&app=${encodeURIComponent(appId)}&dev=${encodeURIComponent(selectedConnectDevice)}&key=${encodeURIComponent(selectedSubKey)}`;
+    }
+
+    function launchClientApp(appId) {
       if (!selectedSubKey) return;
-      const encoded = encodeURIComponent(selectedSubKey);
-      const links = {
-        happ: `happ://add/${selectedSubKey}`,
-        hiddify: `hiddify://import/${encoded}`,
-        incy: `incy://import?url=${encoded}`,
-        v2raytun: `v2raytun://import/${encoded}`
-      };
-      const target = links[app] || selectedSubKey;
+      const target = buildClientDeeplink(appId, selectedSubKey);
+      lastAttemptedDeeplink = target;
+      lastAttemptedApp = appId;
+
       copyTextSilent(selectedSubKey);
-      showToast('Ключ скопирован! Открываю приложение...');
-      try {
-        window.location.href = target;
-      } catch (e) {}
+      showToast('Ключ скопирован! Запускаю приложение...');
+
+      if (API_URL && tg && typeof tg.openLink === 'function') {
+        tg.openLink(buildExternalBrowserConnectUrl(target, appId));
+        return;
+      }
+
+      triggerHiddenDeeplink(target);
+      const fallbackBtn = document.getElementById('connectBrowserFallbackBtn');
+      if (fallbackBtn) fallbackBtn.style.display = 'inline-flex';
+    }
+
+    function openConnectViaBrowser() {
+      if (!lastAttemptedDeeplink) return;
+      const url = buildExternalBrowserConnectUrl(lastAttemptedDeeplink, lastAttemptedApp);
+      if (tg && typeof tg.openLink === 'function') {
+        tg.openLink(url);
+      } else {
+        window.open(url, '_blank');
+      }
     }
 
     function copyActiveKey() {
@@ -3133,7 +3321,7 @@
     const FAQ_ITEMS = [
       {
         q: 'Как подключить VPN?',
-        a: 'Откройте вкладку «Кабинет», нажмите кнопку «Подключить в 1 клик» на карточке активной подписки и выберите приложение (Happ, Hiddify, Incy или V2raytun) — профиль импортируется автоматически. Также ключ можно скопировать вручную и вставить из буфера обмена.'
+        a: 'Откройте вкладку «Кабинет», нажмите кнопку «Подключить в 1 клик» на карточке активной подписки — приложение автоматически определит ваше устройство и предложит импорт в Happ, V2rayTun, Hiddify или Incy.'
       },
       {
         q: 'Сколько стран доступно?',
@@ -3145,7 +3333,7 @@
       },
       {
         q: 'Не работает подключение',
-        a: 'Проверьте остаток гигабайт и срок подписки в разделе «Кабинет», обновите профиль подписки внутри приложения (Happ, Hiddify, Incy или V2raytun) и попробуйте выбрать другую локацию. Если проблема сохраняется — напишите в «Поддержку».'
+        a: 'Проверьте остаток гигабайт и срок подписки в разделе «Кабинет», обновите профиль подписки внутри приложения (Happ, Hiddify, Incy или V2rayTun) и попробуйте выбрать другую локацию. Если проблема сохраняется — напишите в «Поддержку».'
       }
     ];
 
@@ -3172,7 +3360,7 @@
     }
 
     function getReferralUrl() {
-      const botUname = appState.bot_username || 'PinPointVPN_bot';
+      const botUname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@/, '');
       const uid = appState.user_id || '';
       return `https://t.me/${botUname}?start=${uid}`;
     }
@@ -3214,9 +3402,7 @@
     }
 
     function copyReferralLink() {
-      const botUname = appState.bot_username || 'PinPointVPN_bot';
-      const uid = appState.user_id || '';
-      const link = `https://t.me/${botUname}?start=${uid}`;
+      const link = getReferralUrl();
       copyTextSilent(link);
       showToast('✅ Реферальная ссылка скопирована');
     }
@@ -3235,7 +3421,7 @@
     }
 
     function openBotAction(payload, shouldClose = true) {
-      const botUname = appState.bot_username || 'PinPointVPN_bot';
+      const botUname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@/, '');
       const url = `https://t.me/${botUname}?start=${encodeURIComponent(payload)}`;
       if (tg && typeof tg.openTelegramLink === 'function') {
         tg.openTelegramLink(url);
@@ -3249,7 +3435,6 @@
       }
     }
 
-    /* Отзывы */
     function openReviewModal() {
       selectedReviewRating = 5;
       selectStar(5);
@@ -3335,7 +3520,6 @@
       }
     }
 
-    /* Настройки */
     async function toggleNotifications(enabled) {
       appState.notifications = enabled;
       if (API_URL && tg && tg.initData) {
@@ -3361,7 +3545,6 @@
       document.getElementById('snowCanvas').classList.toggle('hidden', !enabled);
     }
 
-    /* Управление экраном приветствия */
     function openWelcome() {
       const overlay = document.getElementById('welcomeOverlay');
       overlay.classList.remove('closing');
@@ -3385,7 +3568,6 @@
       }, 360);
     }
 
-    /* Синхронизация с API бота */
     async function fetchLiveProfile(notifyUser = false) {
       if (!API_URL || !tg || !tg.initData) return false;
       try {
@@ -3407,7 +3589,6 @@
       return false;
     }
 
-    /* Интерактивный блик преломления на карточках жидкого стекла */
     function initLiquidGlare() {
       let activeGlassEl = null;
 
@@ -3443,7 +3624,6 @@
       document.addEventListener('pointerleave', clearGlare, { passive: true });
     }
 
-    /* Плавающий свет и мягкий новогодний снег под жидким стеклом */
     function initAmbientAndSnow() {
       const canvas = document.getElementById('ambientLightCanvas');
       const ctx = canvas.getContext('2d');
@@ -3575,7 +3755,42 @@
       requestAnimationFrame(loop);
     }
 
-    /* Автообновление при возврате из Telegram-бота */
+    function handleExternalDeeplinkMode() {
+      const deeplink = (urlParams.get('deeplink') || '').trim();
+      if (!deeplink) return false;
+
+      const allowed = ['happ://', 'hiddify://', 'v2raytun://', 'incy://'].some(p => deeplink.startsWith(p));
+      if (!allowed) return false;
+
+      const appId = (urlParams.get('app') || 'happ').toLowerCase();
+      const devId = (urlParams.get('dev') || detectUserDevice()).toLowerCase();
+      const rawKey = (urlParams.get('key') || '').trim();
+      const devCfg = DEVICE_CATALOG[devId] || DEVICE_CATALOG.ios;
+      const appCfg = devCfg.apps.find(a => a.id === appId) || devCfg.apps[0];
+
+      document.getElementById('appShell').style.display = 'none';
+      document.getElementById('bottomNav').style.display = 'none';
+      document.getElementById('welcomeOverlay').classList.remove('open');
+
+      const screen = document.getElementById('deeplinkScreen');
+      screen.classList.add('active');
+      screen.innerHTML = `
+        <div class="card liquid-glass" style="text-align: center; padding: 24px 18px;">
+          <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
+          <div style="font-size: 19px; font-weight: 800; margin-bottom: 6px;">Запуск ${escapeHtml(appCfg.name)}</div>
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.45;">
+            Устройство: <b>${escapeHtml(devCfg.label)}</b>.<br/>Если приложение не открылось автоматически, нажмите кнопку ниже:
+          </div>
+          <a class="btn btn-primary btn-full" style="margin-bottom: 10px;" href="${escapeHtml(deeplink)}">Открыть ${escapeHtml(appCfg.name)}</a>
+          <a class="btn btn-secondary btn-full" style="margin-bottom: 10px;" href="${escapeHtml(appCfg.store)}" target="_blank" rel="noopener">📥 Скачать ${escapeHtml(appCfg.name)}</a>
+          ${rawKey ? `<button type="button" class="btn btn-secondary btn-full" onclick="copyTextSilent(${JSON.stringify(rawKey)}); showToast('✅ Ключ скопирован');">📋 Скопировать ключ вручную</button>` : ''}
+        </div>
+      `;
+
+      setTimeout(() => triggerHiddenDeeplink(deeplink), 220);
+      return true;
+    }
+
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
         fetchLiveProfile(false);
@@ -3585,10 +3800,7 @@
       tg.onEvent('activated', () => fetchLiveProfile(false));
     }
 
-    /* Инициализация */
     (function bootstrap() {
-      decodeSnapshot();
-
       const legacyMap = {
         obsidian: 'oled',
         azure: 'violet',
@@ -3612,15 +3824,35 @@
       document.getElementById('ambientLightCanvas').classList.toggle('hidden', !ambientEnabled);
       document.getElementById('snowCanvas').classList.toggle('hidden', !ambientEnabled);
 
+      initLiquidGlare();
+      initAmbientAndSnow();
+
+      if (handleExternalDeeplinkMode()) {
+        return;
+      }
+
+      decodeSnapshot();
+
       if (localStorage.getItem('pp_welcomed') !== '1') {
         openWelcome();
       }
 
       renderAll();
-      initLiquidGlare();
-      initAmbientAndSnow();
       fetchLiveProfile(false);
+
+      const startTab = urlParams.get('tab');
+      const startDev = urlParams.get('device');
+      if (startTab === 'tariffs' || startTab === 'reviews' || startTab === 'settings') {
+        switchTab(startTab);
+      } else if (startTab === 'connect') {
+        switchTab('cabinet');
+        if (Array.isArray(appState.subs) && appState.subs.length > 0) {
+          openConnectModal(0, startDev);
+        }
+      }
     })();
   </script>
 </body>
 </html>
+
+
