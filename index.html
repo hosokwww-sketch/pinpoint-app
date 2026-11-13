@@ -519,20 +519,32 @@
     ];
 
     const urlParams = new URLSearchParams(window.location.search);
-    const paramApi = (urlParams.get('api') || '').replace(/\/+$/, '');
+    const rawApiParam = (urlParams.get('api') || '').trim().replace(/\/+$/, '');
+    let paramApi = '';
+    if (rawApiParam) {
+      try {
+        const parsedApi = new URL(rawApiParam);
+        const isLocalHttp = parsedApi.protocol === 'http:' && (parsedApi.hostname === 'localhost' || parsedApi.hostname === '127.0.0.1');
+        if ((parsedApi.protocol === 'https:' || isLocalHttp) && !parsedApi.username && !parsedApi.password) {
+          paramApi = parsedApi.origin;
+        }
+      } catch (e) {}
+    }
     const autoOrigin = window.location && window.location.protocol && window.location.protocol.startsWith('http') && window.location.hostname && !window.location.hostname.endsWith('github.io') ? window.location.origin : '';
     const API_URL = paramApi || autoOrigin;
     const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
 
     let currentThemeId = 'oled';
     let appState = { user_id: tgUser ? tgUser.id : 0, balance: 0, used_test: false, discount_pct: 0, discount_tariff: 'all', ref_cnt: 0, ref_pct: 5, ref_earn: 0, notifications: true, auto_renew: false, bot_username: 'PinPointVPN_bot', subs: [], reviews: [] };
-    let selectedSubIndex = 0, selectedSubId = 0, selectedSubKey = '', selectedConnectDevice = 'ios', detectedUserDevice = 'ios', lastAttemptedDeeplink = '', lastAttemptedApp = 'happ', selectedBoosterSlot = 1, selectedReviewRating = 5, hasPendingLocalReview = false, pendingAutoConnectDev = null;
+    let selectedSubIndex = 0, selectedSubId = 0, selectedSubKey = '', selectedSubOpenToken = '', selectedConnectDevice = 'ios', detectedUserDevice = 'ios', lastAttemptedDeeplink = '', lastAttemptedApp = 'happ', selectedBoosterSlot = 1, selectedReviewRating = 5, hasPendingLocalReview = false, pendingAutoConnectDev = null;
+    const _removingSessionIds = new Set();
 
     function ppEmoji(id, fallback) {
-      if (API_URL && id) {
-        return `<img class="tg-ce-img" src="${API_URL}/emoji/${encodeURIComponent(id)}" alt="${escapeHtml(fallback)}" loading="lazy" onerror="this.outerHTML=this.alt" />`;
+      const safeFb = escapeHtml(fallback);
+      if (API_URL && id && /^\d{1,24}$/.test(String(id))) {
+        return `<img class="tg-ce-img" src="${escapeHtml(API_URL)}/emoji/${encodeURIComponent(id)}" alt="${safeFb}" loading="lazy" onerror="this.replaceWith(document.createTextNode(this.alt || ''))" />`;
       }
-      return escapeHtml(fallback);
+      return safeFb;
     }
 
     function hydrateStaticEmojis() {
@@ -582,15 +594,37 @@
       tryNext();
     }
 
+    async function loadAuthedAvatar(imgId, fallbackId, fallbackSources) {
+      const img = document.getElementById(imgId), fallback = document.getElementById(fallbackId);
+      if (!img || !fallback) return;
+      if (API_URL && tg && tg.initData) {
+        try {
+          const resp = await fetch(`${API_URL}/api/user/avatar`, { headers: { 'X-Telegram-Init-Data': tg.initData } });
+          if (resp.ok) {
+            const blob = await resp.blob();
+            if (blob && blob.size > 0) {
+              if (window._userAvatarObjUrl) URL.revokeObjectURL(window._userAvatarObjUrl);
+              const objUrl = URL.createObjectURL(blob);
+              window._userAvatarObjUrl = objUrl;
+              img.onload = function() { img.style.display = 'block'; fallback.style.display = 'none'; };
+              img.onerror = function() { loadImageChain(imgId, fallbackId, fallbackSources); };
+              img.src = objUrl;
+              return;
+            }
+          }
+        } catch (e) {}
+      }
+      loadImageChain(imgId, fallbackId, fallbackSources);
+    }
+
     function updateAvatars() {
       const userName = tgUser ? ([tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') || tgUser.username || 'PinPoint VPN') : 'PinPoint VPN';
       document.getElementById('userDisplayName').textContent = userName;
       document.getElementById('userAvatarInitial').textContent = (userName.charAt(0) || 'P').toUpperCase();
       const userSources = [];
       if (tgUser && tgUser.photo_url) userSources.push(tgUser.photo_url);
-      if (API_URL && tg && tg.initData) userSources.push(`${API_URL}/api/user/avatar?init_data=${encodeURIComponent(tg.initData)}`);
       if (tgUser && tgUser.username) userSources.push(`https://t.me/i/userpic/320/${encodeURIComponent(tgUser.username)}.jpg`);
-      loadImageChain('userAvatarImg', 'userAvatarInitial', userSources);
+      loadAuthedAvatar('userAvatarImg', 'userAvatarInitial', userSources);
       const uname = (appState.bot_username || 'PinPointVPN_bot').replace(/^@/, '');
       const botSources = [];
       if (API_URL) botSources.push(`${API_URL}/bot-avatar.jpg`);
@@ -651,7 +685,7 @@
     }
 
     function escapeHtml(str) {
-      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     function tariffNameById(tId) {
@@ -829,7 +863,7 @@
       const subs = Array.isArray(appState.subs) ? appState.subs : [];
       const idx = subs[subIdx] ? subIdx : 0, sub = subs[idx];
       if (!sub || !sub.key) return showToast('Нет активной подписки');
-      selectedSubIndex = idx; selectedSubId = Number(sub.id || 0); selectedSubKey = sub.key;
+      selectedSubIndex = idx; selectedSubId = Number(sub.id || 0); selectedSubKey = sub.key; selectedSubOpenToken = sub.open_tok || '';
       detectedUserDevice = detectUserDevice();
       const initialDev = forcedDevice && DEVICE_CATALOG[forcedDevice] ? forcedDevice : detectedUserDevice;
       document.getElementById('connectBrowserFallbackBtn').style.display = 'none';
@@ -884,7 +918,9 @@
     }
 
     function buildExternalBrowserConnectUrl(deeplink, appId) {
-      if (API_URL) return `${API_URL}/open?to=${encodeURIComponent(deeplink)}&app=${encodeURIComponent(appId)}&dev=${encodeURIComponent(selectedConnectDevice)}&uid=${encodeURIComponent(appState.user_id || '')}&sid=${encodeURIComponent(selectedSubId || '')}&key=${encodeURIComponent(selectedSubKey)}`;
+      if (API_URL && selectedSubOpenToken) {
+        return `${API_URL}/open?app=${encodeURIComponent(appId)}&dev=${encodeURIComponent(selectedConnectDevice)}&uid=${encodeURIComponent(appState.user_id || '')}&sid=${encodeURIComponent(selectedSubId || '')}&tok=${encodeURIComponent(selectedSubOpenToken)}`;
+      }
       return `${window.location.origin}${window.location.pathname}?deeplink=${encodeURIComponent(deeplink)}&app=${encodeURIComponent(appId)}&dev=${encodeURIComponent(selectedConnectDevice)}&key=${encodeURIComponent(selectedSubKey)}`;
     }
 
@@ -895,7 +931,10 @@
       recordDeviceSession(selectedSubIndex, selectedSubId, selectedConnectDevice, appId);
       copyTextSilent(selectedSubKey);
       showToast('Ключ скопирован! Запускаю приложение...');
-      if (API_URL && tg && typeof tg.openLink === 'function') { tg.openLink(buildExternalBrowserConnectUrl(target, appId)); return; }
+      if (API_URL && selectedSubOpenToken && tg && typeof tg.openLink === 'function') {
+        tg.openLink(buildExternalBrowserConnectUrl(target, appId));
+        return;
+      }
       triggerHiddenDeeplink(target);
       const fallbackBtn = document.getElementById('connectBrowserFallbackBtn');
       if (fallbackBtn) fallbackBtn.style.display = 'inline-flex';
@@ -932,16 +971,20 @@
     }
 
     async function removeDeviceSession(sessionId) {
+      if (_removingSessionIds.has(sessionId)) return;
       const sub = (appState.subs || [])[selectedSubIndex]; if (!sub) return;
       if (API_URL && tg && tg.initData) {
+        _removingSessionIds.add(sessionId);
         try {
           const resp = await fetch(`${API_URL}/api/user/sessions/remove`, {
             method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg.initData },
             body: JSON.stringify({ session_id: sessionId, sub_id: selectedSubId })
           });
           const data = await resp.json();
-          if (data && data.ok) { sub.sessions = data.sessions || []; renderSessionsModalList(); renderSubscriptions(); return showToast('✅ Сессия отвязана'); }
-        } catch (e) {}
+          if (resp.ok && data && data.ok) { sub.sessions = data.sessions || []; renderSessionsModalList(); renderSubscriptions(); return showToast('✅ Сессия отвязана'); }
+        } catch (e) {} finally {
+          _removingSessionIds.delete(sessionId);
+        }
       }
       openBotAction(`delsess_${sessionId}`, true);
     }
@@ -988,8 +1031,13 @@
     }
     function openExternalLink(url) {
       if (!url) return;
-      if (url.startsWith('https://t.me/') && tg && typeof tg.openTelegramLink === 'function') tg.openTelegramLink(url);
-      else if (tg && typeof tg.openLink === 'function') tg.openLink(url); else window.open(url, '_blank');
+      let parsed;
+      try { parsed = new URL(String(url)); } catch (e) { return; }
+      if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return;
+      const safeUrl = parsed.href;
+      if (safeUrl.startsWith('https://t.me/') && tg && typeof tg.openTelegramLink === 'function') tg.openTelegramLink(safeUrl);
+      else if (tg && typeof tg.openLink === 'function') tg.openLink(safeUrl);
+      else window.open(safeUrl, '_blank', 'noopener,noreferrer');
     }
     function toggleFaq(idx) {
       document.querySelectorAll('#faqContainer .faq-item').forEach((el, i) => { if (i === idx) el.classList.toggle('open'); else el.classList.remove('open'); });
@@ -998,7 +1046,16 @@
     function copyReferralLink() { copyTextSilent(getReferralUrl()); showToast('✅ Реферальная ссылка скопирована'); }
     function copyTextSilent(text) {
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {});
-      else { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+      else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
     }
     function openBotAction(payload, shouldClose = true) {
       const url = `https://t.me/${(appState.bot_username || 'PinPointVPN_bot').replace(/^@/, '')}?start=${encodeURIComponent(payload)}`;
@@ -1035,13 +1092,47 @@
     }
 
     async function toggleNotifications(enabled) {
-      appState.notifications = enabled;
-      if (API_URL && tg && tg.initData) { try { await fetch(`${API_URL}/api/user/settings`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg.initData }, body: JSON.stringify({ notifications: Boolean(enabled) }) }); } catch (e) {} }
+      const prev = Boolean(appState.notifications);
+      appState.notifications = Boolean(enabled);
+      if (API_URL && tg && tg.initData) {
+        try {
+          const resp = await fetch(`${API_URL}/api/user/settings`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg.initData }, body: JSON.stringify({ notifications: Boolean(enabled) }) });
+          const data = await resp.json().catch(() => null);
+          if (!resp.ok || !data || !data.ok) {
+            appState.notifications = prev;
+            const el = document.getElementById('notifToggle');
+            if (el) el.checked = prev;
+            return showToast((data && data.error) || 'Не удалось сохранить настройку');
+          }
+        } catch (e) {
+          appState.notifications = prev;
+          const el = document.getElementById('notifToggle');
+          if (el) el.checked = prev;
+          return showToast('Ошибка сети при сохранении настройки');
+        }
+      }
       showToast(enabled ? '🔔 Уведомления включены' : '🔕 Уведомления отключены');
     }
     async function toggleAutoRenew(enabled) {
-      appState.auto_renew = enabled;
-      if (API_URL && tg && tg.initData) { try { await fetch(`${API_URL}/api/user/settings`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg.initData }, body: JSON.stringify({ auto_renew: Boolean(enabled) }) }); } catch (e) {} }
+      const prev = Boolean(appState.auto_renew);
+      appState.auto_renew = Boolean(enabled);
+      if (API_URL && tg && tg.initData) {
+        try {
+          const resp = await fetch(`${API_URL}/api/user/settings`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Telegram-Init-Data': tg.initData }, body: JSON.stringify({ auto_renew: Boolean(enabled) }) });
+          const data = await resp.json().catch(() => null);
+          if (!resp.ok || !data || !data.ok) {
+            appState.auto_renew = prev;
+            const el = document.getElementById('autoRenewToggle');
+            if (el) el.checked = prev;
+            return showToast((data && data.error) || 'Не удалось сохранить настройку');
+          }
+        } catch (e) {
+          appState.auto_renew = prev;
+          const el = document.getElementById('autoRenewToggle');
+          if (el) el.checked = prev;
+          return showToast('Ошибка сети при сохранении настройки');
+        }
+      }
       showToast(enabled ? '🔄 Автопродление с баланса включено' : '🔄 Автопродление выключено');
     }
     function toggleAmbientLight(enabled) {
@@ -1079,7 +1170,15 @@
         const point = e.touches && e.touches[0] ? e.touches[0] : e; if (!point) return;
         const target = e.target && e.target.closest ? e.target.closest('.liquid-glass') : null;
         if (activeGlassEl && activeGlassEl !== target) activeGlassEl.classList.remove('glare-active');
-        if (target) { const rect = target.getBoundingClientRect(); target.style.setProperty('--mx', `${(((point.clientX - rect.left) / rect.width) * 100).toFixed(1)}%`); target.style.setProperty('--my', `${(((point.clientY - rect.top) / rect.height) * 100).toFixed(1)}%`); target.classList.add('glare-active'); activeGlassEl = target; }
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            target.style.setProperty('--mx', `${(((point.clientX - rect.left) / rect.width) * 100).toFixed(1)}%`);
+            target.style.setProperty('--my', `${(((point.clientY - rect.top) / rect.height) * 100).toFixed(1)}%`);
+            target.classList.add('glare-active');
+            activeGlassEl = target;
+          }
+        }
       }
       function clearGlare() { if (activeGlassEl) { activeGlassEl.classList.remove('glare-active'); activeGlassEl = null; } }
       document.addEventListener('pointermove', updateGlare, { passive: true }); document.addEventListener('touchstart', updateGlare, { passive: true }); document.addEventListener('touchmove', updateGlare, { passive: true }); document.addEventListener('touchend', clearGlare, { passive: true }); document.addEventListener('pointerleave', clearGlare, { passive: true });
@@ -1126,13 +1225,14 @@
 
     function handleExternalDeeplinkMode() {
       const deeplink = (urlParams.get('deeplink') || '').trim(); if (!deeplink) return false;
-      if (!['happ://', 'hiddify://', 'v2raytun://', 'incy://'].some(p => deeplink.startsWith(p))) return false;
+      if (/[\s"'<>\\]/.test(deeplink) || !['happ://', 'hiddify://', 'v2raytun://', 'incy://'].some(p => deeplink.startsWith(p))) return false;
       const appId = (urlParams.get('app') || 'happ').toLowerCase(), devId = (urlParams.get('dev') || detectUserDevice()).toLowerCase(), rawKey = (urlParams.get('key') || '').trim();
-      window._dlRawKey = rawKey;
+      const safeRawKey = !/[\x00-\x1f<>]/.test(rawKey) ? rawKey : '';
+      window._dlRawKey = safeRawKey;
       const devCfg = DEVICE_CATALOG[devId] || DEVICE_CATALOG.ios, appCfg = devCfg.apps.find(a => a.id === appId) || devCfg.apps[0];
       document.getElementById('appShell').style.display = 'none'; document.getElementById('bottomNav').style.display = 'none'; document.getElementById('welcomeOverlay').classList.remove('open');
       const screen = document.getElementById('deeplinkScreen'); screen.classList.add('active');
-      screen.innerHTML = `<div class="card liquid-glass" style="text-align:center;padding:24px 18px;"><div style="font-size:28px;margin-bottom:8px;">⚡</div><div style="font-size:19px;font-weight:800;margin-bottom:6px;">Запуск ${escapeHtml(appCfg.name)}</div><div style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.45;">Устройство: <b>${escapeHtml(devCfg.label)}</b>.<br/>Если приложение не открылось автоматически, нажмите кнопку ниже:</div><a class="btn btn-primary btn-full" style="margin-bottom:10px;" href="${escapeHtml(deeplink)}">Открыть ${escapeHtml(appCfg.name)}</a><a class="btn btn-secondary btn-full" style="margin-bottom:10px;" href="${escapeHtml(appCfg.store)}" target="_blank" rel="noopener">📥 Скачать ${escapeHtml(appCfg.name)}</a>${rawKey ? `<button type="button" class="btn btn-secondary btn-full" onclick="copyDeeplinkKey()">${ppEmoji(CE.KEY, '🔑')} Скопировать ключ вручную</button>` : ''}</div>`;
+      screen.innerHTML = `<div class="card liquid-glass" style="text-align:center;padding:24px 18px;"><div style="font-size:28px;margin-bottom:8px;">⚡</div><div style="font-size:19px;font-weight:800;margin-bottom:6px;">Запуск ${escapeHtml(appCfg.name)}</div><div style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.45;">Устройство: <b>${escapeHtml(devCfg.label)}</b>.<br/>Если приложение не открылось автоматически, нажмите кнопку ниже:</div><a class="btn btn-primary btn-full" style="margin-bottom:10px;" href="${escapeHtml(deeplink)}">Открыть ${escapeHtml(appCfg.name)}</a><a class="btn btn-secondary btn-full" style="margin-bottom:10px;" href="${escapeHtml(appCfg.store)}" target="_blank" rel="noopener">📥 Скачать ${escapeHtml(appCfg.name)}</a>${safeRawKey ? `<button type="button" class="btn btn-secondary btn-full" onclick="copyDeeplinkKey()">${ppEmoji(CE.KEY, '🔑')} Скопировать ключ вручную</button>` : ''}</div>`;
       setTimeout(() => triggerHiddenDeeplink(deeplink), 220);
       return true;
     }
